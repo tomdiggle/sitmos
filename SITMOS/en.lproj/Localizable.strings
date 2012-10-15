@@ -1,0 +1,155 @@
+/**
+ * Copyright (c) 2012, Tom Diggle
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software
+ * is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/* text label for error creating file title */
+"ErrorCreatingFileTitle" = "Error Creating File";
+
+/* text label for error creating file desc */
+"ErrorCreatingFileDesc" = "If error persists try reinstalling the app.";
+
+/* text label for ok */
+"OK" = "OK";
+
+/* text label for cancel */
+"Cancel" = "Cancel";
+
+/* text label for sorry */
+"Sorry" = "Sorry";
+
+/* text label for episode playback failed */
+"EpisodePlaybackFailed" = "Episode Playback Failed, please try again.";
+
+/* text label for check out */
+"CheckOut" = "Check out";
+
+/* text label for play */
+"Play" = "Play";
+
+/* text label for of */
+"Of" = "of";
+
+/* text label for no */
+"No" = "No";
+
+/* text label for yes */
+"Yes" = "Yes";
+
+/* text label for stream */
+"Stream" = "Stream";
+
+/* text label for download */
+"Download" = "Download";
+
+/* text label for Delete */
+"Delete" = "Delete";
+
+/* text label for continue */
+"Continue" = "Continue";
+
+/* text label for audio */
+"Audio" = "Audio";
+
+/* text label for video */
+"Video" = "Video";
+
+/* text label for delete download */
+"DeleteDownload" = "Delete download";
+
+/* text label for mark as played */
+"MarkAsPlayed" = "Mark as played";
+
+/* text label for mark as unplayed */
+"MarkAsUnplayed" = "Mark as unplayed";
+
+/* text label for review on the app store */
+"ReviewOnAppStore" = "Review on the App Store";
+
+/* text label for cellular data */
+"CellularData" = "Cellular Data";
+
+/* text label for episodes */
+"Episodes" = "Episodes";
+
+/* text label for delete */
+"Delete" = "Delete";
+
+/* text label for streaming */
+"Streaming" = "Streaming";
+
+/* text label for downloading */
+"Downloading" = "Downloading";
+
+/* text label for settings */
+"Settings" = "Settings";
+
+/* text label for settings episodes section footer */
+"SettingsEpisodesSectionFooter" = "An episode can be deleted automatically once it has been played.";
+
+/* text label for streaming with cellular data title */
+"StreamingWithCellularDataTitle" = "Streaming with Cellular Data?";
+ 
+/* text label for streaming with cellular data message */
+"StreamingWithCellularDataMessage" = "There is currently no WiFi available. Do you really want to use cellular data for streaming this episode?";
+
+/* text label for downloading with cellular data title */
+"DownloadingWithCellularDataTitle" = "Downloading with Cellular Data?";
+
+/* text label for downloading with cellular data message */
+"DownloadingWithCellularDataMessage" = "There is currently no WiFi available. Do you really want to use cellular data for downloading this episode?";
+
+/* text label for never */
+"Never" = "Never";
+
+/* text label for automatically */
+"Automatically" = "Automatically";
+
+/* text label for version */
+"Version" = "Version";
+
+/* text label for done */
+"Done" = "Done";
+
+/* text label for unplayed episode badge */
+"UnplayedBadge" = "Unplayed Badge";
+
+/* text label for import episodes title */
+"ImportEpisodesTitle" = "Import Episodes?";
+
+/* text label for import episodes desc */
+"ImportEpisodesDesc" = "It looks like you have some episodes of SITMOS already on your iPod, would you like to import them?";
+
+/* text label for importing episodes */
+"ImportingEpisodes" = "Importing Episodes";
+
+/* text label for this may take a while */
+"ThisMayTakeAWhile" = "This may take a while";
+
+/* text label for completed */
+"Completed" = "Completed";
+
+/* text label for fetching feed */
+"FetchingFeed" = "Fetching Feed";
+
+/* text label for buffering */
+"Buffering" = "Buffering...";
+
+/* text label for retry */
+"Retry" = "Retry";

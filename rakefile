@@ -1,0 +1,13 @@
+desc 'Setup with example files'
+task :setup do
+# Copy test flight files
+  puts 'Copying example IGTestFlight files into place'
+  `cp SITMOS/IGTestFlightExample.h SITMOS/IGTestFlight.h`
+  `cp SITMOS/IGTestFlightExample.m SITMOS/IGTestFlight.m`
+
+  # Done
+  puts 'Done! You\'re ready to get started!'
+end
+
+# Run setup by default
+task :default => :setup
