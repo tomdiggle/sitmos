@@ -14,4 +14,4 @@ Run the following commands to get started:
     $ rake setup
     
 ##  License
-The SITMOS - Podcast App source code is distributed under the [The MIT License license](https://github.com/tomdiggle/sitmos/blob/master/LICENSE).
+The SITMOS - Podcast App source code is distributed under the [The MIT License](https://github.com/tomdiggle/sitmos/blob/master/LICENSE).
