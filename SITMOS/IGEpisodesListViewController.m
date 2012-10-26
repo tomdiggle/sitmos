@@ -65,6 +65,13 @@
         [_tableView addSubview:refreshView];
         _refreshHeaderView = refreshView;
     }
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideSearchBar];
+        });
+    });
 }
 
 - (void)viewDidLoad
@@ -363,6 +370,15 @@
     _filteredEpisodeArray = [NSMutableArray arrayWithArray:tempArray];
 }
 
+#pragma mark - Hide Search Bar
+
+- (void)hideSearchBar
+{
+    CGRect newBounds = [_tableView bounds];
+    newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
+    [_tableView setBounds:newBounds];
+}
+
 #pragma mark - Play Episode
 
 - (void)playEpisode:(IGEpisode *)episode
@@ -504,6 +520,7 @@
 {
 	_reloading = NO;
 	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
+    [self hideSearchBar];
 }
 
 #pragma mark - IGEpisodeTableViewCellDelegate Methods
