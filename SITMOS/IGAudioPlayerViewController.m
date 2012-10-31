@@ -435,7 +435,6 @@
     [_durationLabel setText:[self durationString]];
     [_progressSlider setProgress:[_mediaPlayer duration]];
     [_progressSlider setValue:[_mediaPlayer currentTime]];
-    [_progressSlider setNeedsDisplay];
 }
 
 #pragma mark - Swipe Gesture Recognizer 
