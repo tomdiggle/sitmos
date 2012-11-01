@@ -27,7 +27,6 @@
 #import "IGEpisodeDownloadOperation.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGSettingsViewController.h"
-#import "IGInitialSetup.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "MBProgressHUD.h"
@@ -507,6 +506,11 @@
 {
     NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
     IGFeedRefreshOperation *operation = [IGFeedRefreshOperation refreshFeedWithURL:[NSURL URLWithString:IGSITMOSFeedURL]];
+    operation.completionBlock = ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self doneLoadingTableViewData];
+        });
+    };
     [operationQueue addOperation:operation];
 }
 
@@ -576,9 +580,6 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
 	[self reloadTableViewDataSource];
-	[self performSelector:@selector(doneLoadingTableViewData)
-               withObject:nil
-               afterDelay:0];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
