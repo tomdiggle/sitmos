@@ -363,7 +363,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     return [_player rate] < 0.01;
 }
 
-/*
 - (Float64)availableDuration
 {
     NSArray *loadedTimeRanges = [[_player currentItem] loadedTimeRanges];
@@ -378,7 +377,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     Float64 durationSeconds = CMTimeGetSeconds(timeRange.duration);
     
     return startSeconds + durationSeconds;
-}*/
+}
 
 - (void)setPlaybackRate:(float)playbackRate
 {

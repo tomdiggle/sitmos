@@ -134,6 +134,11 @@
  */
 - (void)seekToTime:(Float64)time;
 
-//- (Float64)availableDuration;
+/**
+ * Indicates the duration that is available to play with out buffering.
+ *
+ * @return The available duration in seconds. 
+ */
+- (Float64)availableDuration;
 
 @end

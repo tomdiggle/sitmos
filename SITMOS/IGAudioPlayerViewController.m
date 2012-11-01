@@ -433,7 +433,7 @@
     [_progressSlider setMaximumValue:[_mediaPlayer duration]];
     [_currentTimeLabel setText:[self currentTimeString]];
     [_durationLabel setText:[self durationString]];
-    [_progressSlider setProgress:[_mediaPlayer duration]];
+    [_progressSlider setProgress:[_mediaPlayer availableDuration]];
     [_progressSlider setValue:[_mediaPlayer currentTime]];
 }
 
