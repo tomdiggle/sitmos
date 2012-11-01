@@ -94,6 +94,8 @@
     
     _mediaPlayer = [IGMediaPlayer sharedInstance];
     
+    [self refreshFeed];
+    
     _longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                          action:@selector(longPress:)];
     [_longPressRecognizer setMinimumPressDuration:1.0];
@@ -373,6 +375,9 @@
 
 - (void)hideSearchBar
 {
+    // Check search bar is visible before continuing
+    if (_tableView.bounds.origin.y >= _searchBar.bounds.size.height) return;
+    
     CGRect newBounds = [_tableView bounds];
     newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
     [_tableView setBounds:newBounds];
