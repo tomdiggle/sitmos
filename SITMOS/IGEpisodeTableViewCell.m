@@ -78,7 +78,7 @@
         case IG_DOWNLOADING:
             [self observeDownloadingEpisodeNotification];
             [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-stop-button"]
+            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"]
                                     forState:UIControlStateNormal];
             [_downloadProgressView setAlpha:1.0f];
             break;
