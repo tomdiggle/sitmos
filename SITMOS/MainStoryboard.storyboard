@@ -482,6 +482,7 @@
                                         </state>
                                         <connections>
                                             <action selector="previousTrackButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="VXw-oa-qvR"/>
+                                            <action selector="seekBackward:" destination="U3O-W2-aEf" eventType="touchDown" id="xOb-C6-BS7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -578,6 +579,7 @@
                 <relationship kind="action" name="playButtonTapped:"/>
                 <relationship kind="action" name="playbackSpeedButtonTapped:"/>
                 <relationship kind="action" name="previousTrackButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
                 <relationship kind="action" name="seekForward:"/>
                 <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
                 <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>

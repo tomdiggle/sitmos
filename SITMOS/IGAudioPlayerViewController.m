@@ -230,15 +230,34 @@
     }
 }
 
+/**
+ * Invoked when the previous track button is held down for more than 1 second.
+ */
+- (IBAction)seekBackward:(id)sender
+{
+    int64_t delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [_mediaPlayer beginSeekingBackward];
+    });
+}
+
 - (IBAction)previousTrackButtonTapped:(id)sender
 {
-    IGEpisode *previousEpisode = [_episode previousEpisode];
-    
-    if (previousEpisode)
+    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingBackward)
     {
-        [self setEpisode:previousEpisode];
-        [self setTitle:[previousEpisode title]];
-        [self startPlayback];
+        [_mediaPlayer endSeeking];
+    }
+    else
+    {
+        IGEpisode *previousEpisode = [_episode previousEpisode];
+        
+        if (previousEpisode)
+        {
+            [self setEpisode:previousEpisode];
+            [self setTitle:[previousEpisode title]];
+            [self startPlayback];
+        }
     }
 }
 

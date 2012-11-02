@@ -127,6 +127,11 @@ typedef enum {
 - (void)beginSeekingForward;
 
 /**
+ * Starts seeking backward through the audio or video medium.
+ */
+- (void)beginSeekingBackward;
+
+/**
  * Ends seeking through the audio or video medium.
  */
 - (void)endSeeking;

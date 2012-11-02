@@ -365,6 +365,12 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [_player setRate:2.0f];
 }
 
+- (void)beginSeekingBackward
+{
+    [self setPlaybackState:IGMediaPlayerPlaybackStateSeekingBackward];
+    [_player setRate:-2.0f];
+}
+
 - (void)endSeeking
 {
     [self play];
