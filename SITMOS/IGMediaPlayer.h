@@ -21,6 +21,14 @@
 
 @class IGEpisode;
 
+typedef enum {
+    IGMediaPlayerPlaybackStateStopped,
+    IGMediaPlayerPlaybackStatePlaying,
+    IGMediaPlayerPlaybackStatePaused,
+    IGMediaPlayerPlaybackStateSeekingForward,
+    IGMediaPlayerPlaybackStateSeekingBackward
+} IGMediaPlayerPlaybackState;
+
 /**
  * The IGMediaPlayer class provides a centralized point of control for media playing in SITMOS.
  *
@@ -52,6 +60,12 @@
  * 0.0 means “stopped”, 1.0 means “play at the natural rate of the current item”.
  */
 @property (nonatomic) float playbackRate;
+
+/**
+ * 
+ *
+ */
+@property (readonly, nonatomic) IGMediaPlayerPlaybackState playbackState;
 
 #pragma mark - Getting the Media Player Instance
 
@@ -106,6 +120,16 @@
  * The previous episode is determined by the current episode's pubDate.
  */
 - (void)playPreviousEpisode;
+
+/**
+ * Starts seeking forward through the audio or video medium.
+ */
+- (void)beginSeekingForward;
+
+/**
+ * Ends seeking through the audio or video medium.
+ */
+- (void)endSeeking;
 
 /**
  * Indicates whether the media player is playing.

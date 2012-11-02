@@ -54,6 +54,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (strong, nonatomic) AVURLAsset *asset;
 @property (readwrite, nonatomic) Float64 currentTime;
 @property (readwrite, nonatomic) Float64 duration;
+@property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
 @property BOOL pausedByInterruption;
 
 - (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
@@ -301,10 +302,12 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (void)play
 {
-    if (_player && [self isPlaying]) return;
+//    if (_player && [self isPlaying]) return;
 
     [_player setRate:_playbackRate];
 
+    [self setPlaybackState:IGMediaPlayerPlaybackStatePlaying];
+    
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
 
@@ -313,6 +316,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [_player pause];
 
     [self saveProgress:[self currentTime]];
+    
+    [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
     
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
@@ -326,6 +331,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [self saveProgress:[self currentTime]];
     [self setPlayer:nil];
     [self setEpisode:nil];
+    [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
 
@@ -351,6 +357,17 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         [self setEpisode:previousEpisode];
         [self start];
     }
+}
+
+- (void)beginSeekingForward
+{
+    [self setPlaybackState:IGMediaPlayerPlaybackStateSeekingForward];
+    [_player setRate:2.0f];
+}
+
+- (void)endSeeking
+{
+    [self play];
 }
 
 - (BOOL)isPlaying

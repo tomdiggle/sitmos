@@ -162,6 +162,12 @@
         case UIEventSubtypeRemoteControlPreviousTrack:
             [mediaPlayer playPreviousEpisode];
             break;
+        case UIEventSubtypeRemoteControlBeginSeekingForward:
+            [mediaPlayer beginSeekingForward];
+            break;
+        case UIEventSubtypeRemoteControlEndSeekingForward:
+            [mediaPlayer endSeeking];
+            break;
 		default:
 			break;
 	}
