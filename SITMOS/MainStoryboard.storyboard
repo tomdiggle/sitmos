@@ -468,7 +468,7 @@
                                         </state>
                                         <connections>
                                             <action selector="nextTrackButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="Lr1-NS-Zls"/>
-                                            <action selector="seekForward:" destination="U3O-W2-aEf" eventType="touchDown" id="iw7-sd-QTo"/>
+                                            <outletCollection property="gestureRecognizers" destination="BrA-NH-ES8" appends="YES" id="SXP-c4-hev"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPI-Eh-kSX">
@@ -535,6 +535,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="234-ks-gua" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BrA-NH-ES8" userLabel="Seek Forward">
+                    <connections>
+                        <action selector="seekForward:" destination="U3O-W2-aEf" id="mG7-MR-f15"/>
+                    </connections>
+                </pongPressGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.99999999999999989" id="PMf-Za-T0r" userLabel="Seek Backward">
                     <connections>
                         <action selector="seekBackward:" destination="U3O-W2-aEf" id="76W-KA-Rw6"/>
@@ -641,6 +646,7 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

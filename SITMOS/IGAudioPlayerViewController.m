@@ -204,29 +204,28 @@
  */
 - (IBAction)seekForward:(id)sender
 {
-    int64_t delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    if ([sender state] == UIGestureRecognizerStateBegan)
+    {
         [_mediaPlayer beginSeekingForward];
-    });
+    }
+    else if ([sender state] == UIGestureRecognizerStateEnded)
+    {
+        if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
+        {
+            [_mediaPlayer endSeeking];
+        }
+    }
 }
 
 - (IBAction)nextTrackButtonTapped:(id)sender
 {
-    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
+    IGEpisode *nextEpisode = [_episode nextEpisode];
+    
+    if (nextEpisode)
     {
-        [_mediaPlayer endSeeking];
-    }
-    else
-    {
-        IGEpisode *nextEpisode = [_episode nextEpisode];
-        
-        if (nextEpisode)
-        {
-            [self setEpisode:nextEpisode];
-            [self setTitle:[nextEpisode title]];
-            [self startPlayback];
-        }
+        [self setEpisode:nextEpisode];
+        [self setTitle:[nextEpisode title]];
+        [self startPlayback];
     }
 }
 
