@@ -524,7 +524,6 @@
                         <outlet property="playButton" destination="Di9-qD-9IU" id="5du-qW-ub6"/>
                         <outlet property="playbackSpeedButton" destination="plD-H1-etf" id="oEo-yx-Goj"/>
                         <outlet property="progressSlider" destination="rXD-kk-NH2" id="H18-oO-S46"/>
-                        <outlet property="skippingBackButton" destination="hXy-rf-8bw" id="kbh-N5-5Zt"/>
                         <outlet property="skippingBackLabel" destination="lTH-0D-bN6" id="w45-Jc-BUN"/>
                         <outlet property="upperPlayerControls" destination="Eho-1U-gZx" id="5FB-U5-fwY"/>
                         <outlet property="view" destination="CrI-Jn-xth" id="b50-oi-7lA"/>
@@ -589,7 +588,6 @@
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="playbackSpeedButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="progressSlider" candidateClass="TDSlider"/>
-                <relationship kind="outlet" name="skippingBackButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="skippingBackLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="upperPlayerControls" candidateClass="UIView"/>
                 <relationship kind="outlet" name="volumeSlider" candidateClass="MPVolumeView"/>

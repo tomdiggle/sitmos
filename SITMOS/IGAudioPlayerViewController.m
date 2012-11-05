@@ -36,7 +36,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *durationLabel;
 @property (strong, nonatomic) IBOutlet TDSlider *progressSlider;
 @property (strong, nonatomic) IBOutlet UIButton *playbackSpeedButton;
-@property (strong, nonatomic) IBOutlet UIButton *skippingBackButton;
 @property (strong, nonatomic) IBOutlet UILabel *skippingBackLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) IBOutlet UIView *lowerPlayerControls;
@@ -171,8 +170,8 @@
     rotationAnimation.toValue = [NSNumber numberWithFloat:-M_PI * 2.0];
     rotationAnimation.duration = 0.4f;
     rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    [_skippingBackButton.layer addAnimation:rotationAnimation
-                                       forKey:@"rotationAnimation"];
+    [[sender layer] addAnimation:rotationAnimation
+                          forKey:@"rotationAnimation"];
     [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - 30.0f];
     
     if ([_mediaPlayer isPaused])
