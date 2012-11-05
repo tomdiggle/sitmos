@@ -215,14 +215,7 @@
 
 - (IBAction)nextTrackButtonTapped:(id)sender
 {
-    IGEpisode *nextEpisode = [_episode nextEpisode];
-    
-    if (nextEpisode)
-    {
-        [self setEpisode:nextEpisode];
-        [self setTitle:[nextEpisode title]];
-        [self startPlayback];
-    }
+    [_mediaPlayer playNextEpisode];
 }
 
 /**
