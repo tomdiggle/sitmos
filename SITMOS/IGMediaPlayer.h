@@ -117,7 +117,7 @@ typedef enum {
 /** 
  * Begins playback of the previous episode.
  *
- * The previous episode is determined by the current episode's pubDate.
+ * If more than 3 seconds of the episode have elapsed then it will re-start from the beginning, otherwise the previous episode (which is determined by the current episode's pubDate) will begin playing.
  */
 - (void)playPreviousEpisode;
 

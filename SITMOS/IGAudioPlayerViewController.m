@@ -249,14 +249,7 @@
 
 - (IBAction)previousTrackButtonTapped:(id)sender
 {
-    IGEpisode *previousEpisode = [_episode previousEpisode];
-    
-    if (previousEpisode)
-    {
-        [self setEpisode:previousEpisode];
-        [self setTitle:[previousEpisode title]];
-        [self startPlayback];
-    }
+    [_mediaPlayer playPreviousEpisode];
 }
 
 /**
@@ -531,6 +524,9 @@
         // This is here for when the audio is paused and next/previous episode
         // button is pressed. It re-starts the progress update timer.
         [self startPlaybackProgressUpdateTimer];
+        
+        // Shows the buffering HUD if needed.
+        [self showBufferingHUD];
     }
 
     

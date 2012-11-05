@@ -282,8 +282,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     if (!_player)
     {
         // Get a new AVPlayer initialized to play the specified player item.
-        [self setPlayer:[AVPlayer playerWithPlayerItem:_playerItem]];	
-		
+        [self setPlayer:[AVPlayer playerWithPlayerItem:_playerItem]];
+        
         [_player addObserver:self 
                   forKeyPath:kCurrentItemKey 
                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
@@ -349,13 +349,20 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (void)playPreviousEpisode
 {
-    IGEpisode *previousEpisode = [_episode previousEpisode];
-    
-    if (previousEpisode)
+    if ([self currentTime] > 3.0f)
     {
-        [self stop];
-        [self setEpisode:previousEpisode];
-        [self start];
+        [self seekToBeginning];
+    }
+    else
+    {
+        IGEpisode *previousEpisode = [_episode previousEpisode];
+        
+        if (previousEpisode)
+        {
+            [self stop];
+            [self setEpisode:previousEpisode];
+            [self start];
+        }
     }
 }
 
@@ -374,6 +381,11 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)endSeeking
 {
     [self play];
+}
+
+- (void)seekToBeginning
+{
+    [_player seekToTime:kCMTimeZero];
 }
 
 - (BOOL)isPlaying
