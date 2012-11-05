@@ -22,7 +22,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "IGAudioPlayerViewController.h"
-#import "IGEpisodeDownloadOperation.h"
 #import "IGEpisode.h"
 #import "TDSlider.h"
 #import "RIButtonItem.h"
@@ -39,12 +38,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *playbackSpeedButton;
 @property (strong, nonatomic) IBOutlet UIButton *skippingBackButton;
 @property (strong, nonatomic) IBOutlet UILabel *skippingBackLabel;
-@property (strong, nonatomic) IBOutlet UIButton *shareButton;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) IBOutlet UIView *lowerPlayerControls;
 @property (strong, nonatomic) IBOutlet UIButton *playButton;
-@property (strong, nonatomic) IBOutlet UIButton *nextTrackButton;
-@property (strong, nonatomic) IBOutlet UIButton *previousTrackButton;
 @property (strong, nonatomic) IBOutlet MPVolumeView *volumeSlider;
 @property (strong, nonatomic) IGMediaPlayer *mediaPlayer;
 @property (strong, nonatomic) NSTimer *playbackProgressUpdateTimer;
@@ -253,8 +249,9 @@
 }
 
 /**
- Invoked when user moves slider. The time played and time left labels 
- get updated while the slider is moving.
+ * Invoked when user moves slider. The time played and time left labels get updated while the slider is moving.
+ *
+ * @param slider The progress slider.
  */
 - (IBAction)seekToTime:(UISlider *)slider
 {
@@ -266,8 +263,9 @@
 }
 
 /**
- Invoked when the progress slider is touched down. Stops the playback progress update timer
- from updating the progress slider while the user is seeking.
+ * Invoked when the progress slider is touched down. Stops the playback progress update timer from updating the progress slider while the user is seeking.
+ *
+ * @param slider The progress slider.
  */
 - (IBAction)seekToTimeStart:(UISlider *)slider
 {
@@ -275,8 +273,9 @@
 }
 
 /**
- Invoked when the progress slider is touched up. Starts the playback progress update timer
- so the progress slider can be updated with the current playback progress and restarts playback.
+ * Invoked when the progress slider is touched up. Starts the playback progress update timer so the progress slider can be updated with the current playback progress and restarts playback.
+ *
+ * @param slider The progress slider.
  */
 - (IBAction)seekToTimeStop:(UISlider *)slider
 {
@@ -301,17 +300,17 @@
     
     if ([[sender imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"playback-speed-2x"]])
     {
-        [_playbackSpeedButton setImage:[UIImage imageNamed:@"playback-speed-1x"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"playback-speed-1x"] forState:UIControlStateNormal];
         [_mediaPlayer setPlaybackRate:1.0f];
     }
     else if ([[sender imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"playback-speed-1-5x"]])
     {
-        [_playbackSpeedButton setImage:[UIImage imageNamed:@"playback-speed-2x"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"playback-speed-2x"] forState:UIControlStateNormal];
         [_mediaPlayer setPlaybackRate:2.0f];
     }
     else
     {
-        [_playbackSpeedButton setImage:[UIImage imageNamed:@"playback-speed-1-5x"] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"playback-speed-1-5x"] forState:UIControlStateNormal];
         [_mediaPlayer setPlaybackRate:1.5f];
     }
 }
@@ -319,7 +318,7 @@
 #pragma mark - Playback Methods
 
 /**
- Invoked when viewDidLoad is called. Starts playback of episode.
+ * Invoked when viewDidLoad is called. Starts playback of episode.
  */
 - (void)startPlayback
 {
@@ -347,31 +346,32 @@
 }
 
 /**
- Begins playback of episode.
+ * Restarts playback of episode, starts the playback progress update timer and changes the play button image to the pause icon.
  */
 - (void)play
 {
     [self startPlaybackProgressUpdateTimer];
-    
     [_mediaPlayer play];
-    
     [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
 }
 
 /**
- Pauses playback of episode.
+ * Pauses playback of episode, stops the playback progress timer and chanegs the play button image to the play icon.
  */
 - (void)pause
 {
     [self stopPlaybackProgressUpdateTimer];
-    
     [_mediaPlayer pause];
-    
     [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
 }
 
 #pragma mark - Timing
 
+/**
+ * Returns a formatted NSString of the current time of the current episode.
+ *
+ * @return A formatted NSString of the current time of the current episode.
+ */
 - (NSString *)currentTimeString
 {
     Float64 currentTime = [_mediaPlayer currentTime];
@@ -383,6 +383,11 @@
     return hoursPlayed > 0 ? [NSString stringWithFormat:@"%2d:%02d:%02d", hoursPlayed, minutesPlayed, secondsPlayed] : [NSString stringWithFormat:@"%2d:%02d", minutesPlayed, secondsPlayed];
 }
 
+/**
+ * Returns a formatted NSString of the duration of the current episode.
+ *
+ * @return A formatted NSString of the duration of the current episode.
+ */
 - (NSString *)durationString
 {
     Float64 currentTime = [_mediaPlayer currentTime];
@@ -398,7 +403,7 @@
 #pragma mark - Buffering HUD
 
 /**
- Shows the buffering hud on the main thread if it's not already being displayed.
+ * Shows the buffering hud on the main thread if it's not already being displayed.
  */
 - (void)showBufferingHUD
 {
@@ -419,7 +424,7 @@
 }
 
 /**
- Hides the buffering hud if it's being displayed.
+ * Hides the buffering hud if it's being displayed.
  */
 - (void)hideBufferingHUD
 {
@@ -451,9 +456,7 @@
 }
 
 /**
- Invoked while audio is playing by the playback progress update timer.
- Updates the progress slider's progress value and the time played and time
- left labels.
+ * Invoked while audio is playing by the playback progress update timer. Updates the progress slider's progress value and the time played and time left labels.
  */
 - (void)updatePlaybackProgress
 {
@@ -476,7 +479,7 @@
 #pragma mark - Media Player Notification Observer Methods
 
 /**
- When playback has finsihed pop the view back to the episode lists view controller.
+ * When playback has finsihed pop the view back to the episode lists view controller.
  */
 - (void)playbackEnded:(NSNotification *)notification
 {
@@ -491,12 +494,11 @@
 }
 
 /**
- Invoked when playback fails. Displays an error message to user and will pop the view controller back to the 
- episodes list when OK is tapped.
+ * Invoked when playback fails. Displays an error message to user and will pop the view controller back to the episodes list when OK is tapped.
  */
 - (void)playbackFailed:(NSNotification *)notification
 {
-    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"OK", "text label for OK")];
+    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"OK", "text label for ok")];
     cancelItem.action = ^{
         [_mediaPlayer stop];
         [[self navigationController] popViewControllerAnimated:YES];
@@ -509,8 +511,7 @@
 }
 
 /**
- Invokced when the media playback state has changed.
- Syncs the play/pause button to match the current media player state.
+ * Invokced when the media playback state has changed. Syncs the play/pause button to match the current media player state.
  */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
@@ -544,8 +545,7 @@
 #pragma mark - UIApplication Notification Observer Methods 
 
 /**
- When the application enters the background stop the playback progress update timer
- because there is no need to be updating the UI while in the background.
+ * When the application enters the background stop the playback progress update timer because there is no need to be updating the UI while in the background.
  */
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
@@ -553,8 +553,7 @@
 }
 
 /**
- When the application enters the foreground start updating the UI by starting
- the playback progress update timer.
+ * When the application enters the foreground start updating the UI by starting the playback progress update timer.
  */
 - (void)applicationDidEnterForeground:(NSNotification *)notification
 {
