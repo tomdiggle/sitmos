@@ -161,6 +161,22 @@
     [_skippingBackLabel setFont:[UIFont fontWithName:IGFontNameRegular size:10.0f]];
 }
 
+- (void)updatePlayButtonImage
+{
+    if ([_mediaPlayer isPaused])
+	{
+        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
+        [_playButton setAccessibilityLabel:NSLocalizedString(@"Play", @"accessibility label for play")];
+        [_playButton setAccessibilityHint:NSLocalizedString(@"PlaysEpisode", @"accessibility hint for plays episode")];
+	}
+	else
+	{
+        [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
+        [_playButton setAccessibilityLabel:NSLocalizedString(@"Pause", @"accessibility label for pause")];
+        [_playButton setAccessibilityHint:NSLocalizedString(@"PausesEpisode", @"accessibility hint for pauses episode")];
+	}
+}
+
 #pragma mark - IBActions
 
 - (IBAction)skippingBackButtonTapped:(id)sender
@@ -184,12 +200,12 @@
 {
     if ([[_playButton currentImage] isEqual:[UIImage imageNamed:@"play-button"]])
 	{
-        [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
+        [self updatePlayButtonImage];
 		[self play];
 	}
 	else
 	{
-        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
+        [self updatePlayButtonImage];
 		[self pause];
 	}
 }
@@ -344,7 +360,7 @@
 {
     [self startPlaybackProgressUpdateTimer];
     [_mediaPlayer play];
-    [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
+    [self updatePlayButtonImage];
 }
 
 /**
@@ -354,7 +370,7 @@
 {
     [self stopPlaybackProgressUpdateTimer];
     [_mediaPlayer pause];
-    [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
+    [self updatePlayButtonImage];
 }
 
 #pragma mark - Timing
@@ -525,13 +541,10 @@
     
     if ([[userInfo valueForKey:@"isPlaying"] boolValue])
     {
-        [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
         [self hideBufferingHUD];
     }
-    else
-    {
-        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
-    }
+    
+    [self updatePlayButtonImage];
 }
 
 #pragma mark - UIApplication Notification Observer Methods 

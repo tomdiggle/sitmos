@@ -55,6 +55,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0Z-5z-vuV" userLabel="More Info Button">
+                                                    <accessibility key="accessibilityConfiguration" hint="Displays more information about episode." label="More Info"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="Rcw-8I-BGo"/>
                                                     </constraints>
@@ -214,6 +215,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqi-kL-pgq" userLabel="Episode Summary">
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" summaryElement="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="131" id="HIA-BM-FPF"/>
                                 </constraints>
@@ -596,6 +600,7 @@
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
             <relationships>
+                <relationship kind="action" name="playButtonTapped:"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeDurationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodePublishedLabel" candidateClass="UILabel"/>

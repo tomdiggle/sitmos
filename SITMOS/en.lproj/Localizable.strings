@@ -43,6 +43,9 @@
 /* text label for play */
 "Play" = "Play";
 
+/* text label for pause */
+"Pause" = "Pause";
+
 /* text label for of */
 "Of" = "of";
 
@@ -153,3 +156,9 @@
 
 /* text label for retry */
 "Retry" = "Retry";
+
+/* accessibility hint for plays episode */
+"PlaysEpisode" = "Plays episode.";
+
+/* accessibility hint for pauses episdoe */
+"PausesEpisode" = "Pauses episode.";

@@ -168,6 +168,8 @@
     [selectedBackgroundView setBackgroundColor:kRGBA(217, 236, 245, 1)];
     [episodeCell setSelectedBackgroundView:selectedBackgroundView];
     
+    [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
+    
     return episodeCell;
 }
 

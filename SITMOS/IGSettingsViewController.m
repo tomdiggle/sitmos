@@ -158,6 +158,7 @@
         if (indexPath.row == 0)
         {
             [[cell textLabel] setText:NSLocalizedString(@"ReviewOnAppStore", @"text label for review on the app store")];
+            [cell setAccessibilityTraits:UIAccessibilityTraitLink];
         }
         
         return cell;
