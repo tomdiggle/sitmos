@@ -411,13 +411,27 @@
             }];
         }];
         
-        [mediaPlayer setStoppedBlock:^(Float64 currentTime) {
+        [mediaPlayer setStoppedBlock:^(Float64 currentTime, BOOL playbackEnded) {
             // Delete episode?
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             if ([userDefaults boolForKey:IGSettingEpisodesDelete])
             {
                 [episode deleteDownloadedEpisode];
             }
+            
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                BOOL markAsPlayed = [localEpisode isPlayed];
+                Float64 progress = currentTime;
+                if (playbackEnded)
+                {
+                    markAsPlayed = YES;
+                    progress = 0;
+                }
+                [localEpisode markAsPlayed:markAsPlayed];
+                [localEpisode setProgress:@(progress)];
+                [localContext MR_saveNestedContexts];
+            }];
         }];
     });
     
