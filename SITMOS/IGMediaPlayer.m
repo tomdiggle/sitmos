@@ -298,12 +298,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (void)play
 {
-//    if (_player && [self isPlaying]) return;
-
     [_player setRate:_playbackRate];
-
     [self setPlaybackState:IGMediaPlayerPlaybackStatePlaying];
-    
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
 
@@ -314,10 +310,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     {
         _pausedBlock([self currentTime]);
     }
-    [self saveProgress:[self currentTime]];
     [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
-    
 }
 
 - (void)stop
@@ -329,7 +323,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     {
         _stoppedBlock([self currentTime]);
     }
-    [self saveProgress:[self currentTime]];
     [self setPlayer:nil];
     [self setEpisode:nil];
     [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
@@ -404,7 +397,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
  */
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
-    [self saveProgress:0];
     [self markAsPlayed];
     [self removeNowPlayingInfo];
     [self setEpisode:nil];
@@ -442,20 +434,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 }
 
 #pragma mark - Save & Load Progress
-
-/**
- * Invoked when playback is paused or stopped. Saves the episode's current progress so playback of that episode can resume where left off.
- */
-- (void)saveProgress:(Float64)progress
-{
-    if (isnan(progress)) return;
-    
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[_episode objectID]];
-        [localEpisode setProgress:@(progress)];
-        [localContext MR_saveNestedContexts];
-    }];
-}
 
 /**
  * Seeks the player to the last saved progress, if progress is 0 starts from the beginning.
