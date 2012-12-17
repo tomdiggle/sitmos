@@ -23,7 +23,6 @@
 
 #import "IGAppDelegate.h"
 #import "IGTestFlight.h"
-#import "IGEpisode.h"
 #import "IGInitialSetup.h"
 
 @implementation IGAppDelegate
@@ -39,11 +38,7 @@
     [self applyStylesheet];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        if ([IGEpisode MR_countOfEntities] == 0)
-        {
-            // Run the initial setup only if no entites exist
-            [IGInitialSetup runInitialSetup];
-        }
+        [IGInitialSetup runInitialSetup];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playbackStateChanged:)
@@ -66,6 +61,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
