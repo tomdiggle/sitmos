@@ -60,6 +60,7 @@
 		3235957515755737007D5D90 /* audio-player-lower-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */; };
 		3235957615755737007D5D90 /* audio-player-lower-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */; };
 		32392331167F59CE00301439 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392330167F59CE00301439 /* DACircularProgressView.m */; };
+		32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -140,7 +141,6 @@
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
 		32FBC4B416108C7A005078EC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FBC4B316108C7A005078EC /* SystemConfiguration.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
-		32FBC4E5161394EC005078EC /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4E4161394EC005078EC /* EGORefreshTableHeaderView.m */; };
 		32FBC4E81618AFC3005078EC /* nav-button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E61618AFC3005078EC /* nav-button-highlighted.png */; };
 		32FBC4E91618AFC3005078EC /* nav-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E71618AFC3005078EC /* nav-button-highlighted@2x.png */; };
 		32FBC4EC1618B0FC005078EC /* nav-back-button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4EA1618B0FC005078EC /* nav-back-button-highlighted.png */; };
@@ -215,6 +215,8 @@
 		3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg@2x.png"; sourceTree = "<group>"; };
 		3239232F167F59CE00301439 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		32392330167F59CE00301439 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -342,8 +344,6 @@
 		32FBC4B316108C7A005078EC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
 		32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsEpisodesDeleteViewController.m; sourceTree = "<group>"; };
-		32FBC4E3161394EC005078EC /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		32FBC4E4161394EC005078EC /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		32FBC4E61618AFC3005078EC /* nav-button-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button-highlighted.png"; sourceTree = "<group>"; };
 		32FBC4E71618AFC3005078EC /* nav-button-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button-highlighted@2x.png"; sourceTree = "<group>"; };
 		32FBC4EA1618B0FC005078EC /* nav-back-button-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button-highlighted.png"; sourceTree = "<group>"; };
@@ -408,7 +408,6 @@
 				321D8C47145F1D8B008698DC /* SITMOS */,
 				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
-				32FBC4E2161394EC005078EC /* EGORefreshTableHeaderView */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
 				32647629161B710E00B7A76E /* MagicalRecord */,
 				32A3C5CD15C9C4290083D165 /* MBProgressHUD */,
@@ -489,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				3239232E167F59CE00301439 /* DACircularProgress */,
+				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				322D96BE162B138900D7D5D6 /* Reachability */,
 				324D0391164071D200D0143C /* TDSlider */,
 			);
@@ -511,6 +511,15 @@
 				32392330167F59CE00301439 /* DACircularProgressView.m */,
 			);
 			path = DACircularProgress;
+			sourceTree = "<group>";
+		};
+		32392332167F5A6C00301439 /* EGORefreshTableHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */,
+				32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */,
+			);
+			path = EGORefreshTableHeaderView;
 			sourceTree = "<group>";
 		};
 		324D0391164071D200D0143C /* TDSlider */ = {
@@ -825,15 +834,6 @@
 			path = MJPopupViewController;
 			sourceTree = "<group>";
 		};
-		32FBC4E2161394EC005078EC /* EGORefreshTableHeaderView */ = {
-			isa = PBXGroup;
-			children = (
-				32FBC4E3161394EC005078EC /* EGORefreshTableHeaderView.h */,
-				32FBC4E4161394EC005078EC /* EGORefreshTableHeaderView.m */,
-			);
-			path = EGORefreshTableHeaderView;
-			sourceTree = "<group>";
-		};
 		32FBC52B16199830005078EC /* TSLibraryImport */ = {
 			isa = PBXGroup;
 			children = (
@@ -1001,7 +1001,6 @@
 				32EDEE4815FFBDB7009A047A /* UIViewController+MJPopupViewController.m in Sources */,
 				327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
-				32FBC4E5161394EC005078EC /* EGORefreshTableHeaderView.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
 				32FBC52E16199830005078EC /* TSLibraryImport.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
@@ -1034,6 +1033,7 @@
 				322D96F9162B138A00D7D5D6 /* Reachability.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392331167F59CE00301439 /* DACircularProgressView.m in Sources */,
+				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
