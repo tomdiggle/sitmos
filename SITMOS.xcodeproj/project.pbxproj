@@ -17,7 +17,6 @@
 		32056E2F15E1983400235783 /* progress-slider-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E2D15E1983300235783 /* progress-slider-fill@2x.png */; };
 		32056E3215E286D700235783 /* nav-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E3015E286D700235783 /* nav-button.png */; };
 		32056E3315E286D700235783 /* nav-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E3115E286D700235783 /* nav-button@2x.png */; };
-		32073D3315CEDC5800FD602B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32073D3115CEDC5800FD602B /* libTestFlight.a */; };
 		3208439816061D470082F5B0 /* download-progress-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439616061D470082F5B0 /* download-progress-bg.png */; };
 		3208439916061D470082F5B0 /* download-progress-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439716061D470082F5B0 /* download-progress-bg@2x.png */; };
 		320843C8160657F50082F5B0 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 320843C5160657F50082F5B0 /* Ubuntu-M.ttf */; };
@@ -92,6 +91,7 @@
 		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
 		3239239E167F5CCF00301439 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239239D167F5CCF00301439 /* TBXML.m */; };
+		323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323923A0167F5CF900301439 /* libTestFlight.a */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -164,8 +164,6 @@
 		32056E2D15E1983300235783 /* progress-slider-fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-slider-fill@2x.png"; sourceTree = "<group>"; };
 		32056E3015E286D700235783 /* nav-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button.png"; sourceTree = "<group>"; };
 		32056E3115E286D700235783 /* nav-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button@2x.png"; sourceTree = "<group>"; };
-		32073D3115CEDC5800FD602B /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		32073D3215CEDC5800FD602B /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		3208439616061D470082F5B0 /* download-progress-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-progress-bg.png"; sourceTree = "<group>"; };
 		3208439716061D470082F5B0 /* download-progress-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-progress-bg@2x.png"; sourceTree = "<group>"; };
 		320843C5160657F50082F5B0 /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ubuntu-M.ttf"; path = "Assets/Ubuntu-M.ttf"; sourceTree = "<group>"; };
@@ -281,6 +279,8 @@
 		32392399167F5C9100301439 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		3239239C167F5CCF00301439 /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
 		3239239D167F5CCF00301439 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		323923A0167F5CF900301439 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		323923A1167F5CF900301439 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 				321D8C42145F1D8B008698DC /* UIKit.framework in Frameworks */,
 				321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */,
 				321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */,
-				32073D3315CEDC5800FD602B /* libTestFlight.a in Frameworks */,
+				323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +410,6 @@
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
 				321D8C3E145F1D8B008698DC /* Products */,
-				325D6B0815CECE35001BACFC /* TestFlight */,
 				32FBC52B16199830005078EC /* TSLibraryImport */,
 				327E9FAD1556A55400612C8B /* UIAlertView-Blocks */,
 			);
@@ -491,6 +490,7 @@
 				322D96BE162B138900D7D5D6 /* Reachability */,
 				3239239B167F5CCF00301439 /* TBXML */,
 				324D0391164071D200D0143C /* TDSlider */,
+				3239239F167F5CF900301439 /* TestFlight */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -662,6 +662,15 @@
 			path = TBXML;
 			sourceTree = "<group>";
 		};
+		3239239F167F5CF900301439 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				323923A0167F5CF900301439 /* libTestFlight.a */,
+				323923A1167F5CF900301439 /* TestFlight.h */,
+			);
+			path = TestFlight;
+			sourceTree = "<group>";
+		};
 		324D0391164071D200D0143C /* TDSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -671,15 +680,6 @@
 			name = TDSlider;
 			path = TDSlider/TDSlider;
 			sourceTree = "<group>";
-		};
-		325D6B0815CECE35001BACFC /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				32073D3115CEDC5800FD602B /* libTestFlight.a */,
-				32073D3215CEDC5800FD602B /* TestFlight.h */,
-			);
-			path = TestFlight;
-			sourceTree = SOURCE_ROOT;
 		};
 		326556C815D2FEA5000EE239 /* Feed Refresh */ = {
 			isa = PBXGroup;
@@ -1125,7 +1125,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/Vendor/TestFlight\"",
 				);
 				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1149,7 +1149,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/Vendor/TestFlight\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1196,7 +1196,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TestFlight\"",
+					"\"$(SRCROOT)/Vendor/TestFlight\"",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
