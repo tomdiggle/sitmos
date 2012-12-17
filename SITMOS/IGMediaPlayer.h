@@ -19,8 +19,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@class IGEpisode;
-
 typedef enum {
     IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStatePlaying,
@@ -45,9 +43,9 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
 @interface IGMediaPlayer : NSObject
 
 /**
- * The current episode object that is being played.
+ * The time the media player will begin playback from.
  */
-@property (strong, nonatomic) IGEpisode *episode;
+@property (assign, nonatomic) Float64 startFromTime;
 
 /**
  * The player’s current item. (read-only)
@@ -67,8 +65,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
 @property (nonatomic) float playbackRate;
 
 /**
- * 
- *
+ * The current playback state of the media player.
  */
 @property (readonly, nonatomic) IGMediaPlayerPlaybackState playbackState;
 
@@ -103,9 +100,9 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
 
 /** 
  * Starts playback by creating an asset for inspection of a resource referenced by a given URL.
- * @warning *Important:* This method must be called first when wanting to play a new episode.
+ * @warning *Important:* This method must be called first when wanting to play new content.
  */
-- (void)start;
+- (void)startWithContentURL:(NSURL *)url
 
 /**
  * Begins playback of current episode.

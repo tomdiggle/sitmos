@@ -24,7 +24,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "IGMediaPlayer.h"
-#import "IGEpisode.h"
 
 static IGMediaPlayer *__sharedInstance = nil;
 
@@ -52,6 +51,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (strong, nonatomic) AVPlayer *player;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVURLAsset *asset;
+@property (strong, nonatomic) NSURL *contentURL;
 @property (readwrite, nonatomic) Float64 currentTime;
 @property (readwrite, nonatomic) Float64 duration;
 @property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
@@ -131,7 +131,11 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         {
             case AVPlayerStatusReadyToPlay:
                 [self addNowPlayingInfo];
-                [self loadProgress];
+                if (_startFromTime > 0)
+                {
+                    [self seekToTime:_startFromTime];
+                }
+                [self play];
                 
                 break;
             case AVPlayerStatusFailed:
@@ -176,9 +180,21 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 #pragma mark - Managing Playback
 
-- (void)start
+- (void)startWithContentURL:(NSURL *)url
 {    
-    _asset = [_episode isCompletelyDownloaded] ? [AVURLAsset URLAssetWithURL:[_episode fileURL] options:nil] : [AVURLAsset URLAssetWithURL:[NSURL URLWithString:[_episode downloadURL]] options:nil];
+    if ([url isEqual:_contentURL])
+    {
+        [self play];
+        return;
+    }
+    
+    _contentURL = url;
+    
+    // Stop any existing tracks playing before starting a new track
+    [self stop];
+    
+    _asset = [[AVURLAsset alloc] initWithURL:url
+                                     options:nil];
     
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
     
@@ -316,15 +332,14 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (void)stop
 {
-    if (!_episode) return;
-    
     [_player pause];
     if (_stoppedBlock)
     {
         _stoppedBlock([self currentTime]);
     }
+    _currentTime = 0.0f;
+    _duration = 0.0f;
     [self setPlayer:nil];
-    [self setEpisode:nil];
     [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
@@ -398,7 +413,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
     [self removeNowPlayingInfo];
-    [self setEpisode:nil];
     [self postNotification:IGMediaPlayerPlaybackEndedNotification];
 }
 
@@ -419,7 +433,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)postNotification:(NSString *)notificationName
 {
     NSDictionary *userInfo = @{
-                                @"episodeTitle" : _episode ? [_episode title] : @"",
                                 @"isPlaying" :[NSNumber numberWithBool:[self isPlaying]],
                                 @"isPaused" : [NSNumber numberWithBool:[self isPaused]]
                             };
@@ -430,24 +443,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     });
-}
-
-#pragma mark - Save & Load Progress
-
-/**
- * Seeks the player to the last saved progress, if progress is 0 starts from the beginning.
- */
-- (void)loadProgress
-{
-    if ([[_episode progress] intValue] <= 0)
-    {
-        [self play];
-    }
-    else
-    {
-        [_player seekToTime:CMTimeMakeWithSeconds([[_episode progress] doubleValue], NSEC_PER_SEC)];
-        [self play];
-    } 
 }
 
 #pragma mark - MPNowPlayingInfoCenter
