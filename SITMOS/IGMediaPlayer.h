@@ -30,6 +30,8 @@ typedef enum {
     IGMediaPlayerPlaybackStateSeekingBackward
 } IGMediaPlayerPlaybackState;
 
+typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);
+
 /**
  * The IGMediaPlayer class provides a centralized point of control for media playing in SITMOS.
  *
@@ -67,6 +69,11 @@ typedef enum {
  *
  */
 @property (readonly, nonatomic) IGMediaPlayerPlaybackState playbackState;
+
+/**
+ * The block to execute when media playback has paused.
+ */
+@property (copy, nonatomic) IGMediaPlayerPausedBlock pausedBlock;
 
 #pragma mark - Getting the Media Player Instance
 

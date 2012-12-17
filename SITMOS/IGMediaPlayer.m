@@ -310,12 +310,14 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)pause
 {
     [_player pause];
-
+    if (_pausedBlock)
+    {
+        _pausedBlock([self currentTime]);
+    }
     [self saveProgress:[self currentTime]];
-    
     [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
-    
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
+    
 }
 
 - (void)stop
