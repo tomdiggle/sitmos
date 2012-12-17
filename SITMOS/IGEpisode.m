@@ -91,12 +91,6 @@
 {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[self filePath]]) return;
     
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([[mediaPlayer episode] isEqual:self])
-    {
-        [mediaPlayer stop];
-    }
-    
     [[NSFileManager defaultManager] removeItemAtPath:[self filePath]
                                                error:nil];
 }
