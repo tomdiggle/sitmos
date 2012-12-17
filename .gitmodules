@@ -4,3 +4,6 @@
 [submodule "Vendor/TDSlider"]
 	path = Vendor/TDSlider
 	url = https://github.com/tomdiggle/TDSlider.git
+[submodule "Vendor/MagicalRecord"]
+	path = Vendor/MagicalRecord
+	url = https://github.com/magicalpanda/MagicalRecord.git
