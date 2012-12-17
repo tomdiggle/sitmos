@@ -90,6 +90,7 @@
 		3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239238E167F5BF300301439 /* MBProgressHUD.m */; };
 		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
 		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
+		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -135,7 +136,6 @@
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
 		32A3C5CB15C9B7690083D165 /* audio-player-upper-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */; };
 		32A3C5CC15C9B7690083D165 /* audio-player-upper-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */; };
-		32A799E7149EB23C00A7B0AE /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
@@ -277,6 +277,8 @@
 		32392392167F5C3200301439 /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
 		32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
 		32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
+		32392398167F5C9100301439 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		32392399167F5C9100301439 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -336,8 +338,6 @@
 		32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg@2x.png"; sourceTree = "<group>"; };
 		32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg.png"; sourceTree = "<group>"; };
 		32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg@2x.png"; sourceTree = "<group>"; };
-		32A799E5149EB23C00A7B0AE /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
-		32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
 		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
@@ -409,7 +409,6 @@
 				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
-				32A799E4149EB23C00A7B0AE /* NSDate-Helper */,
 				321D8C3E145F1D8B008698DC /* Products */,
 				32965D7D14894913000593B4 /* TBXML */,
 				325D6B0815CECE35001BACFC /* TestFlight */,
@@ -489,6 +488,7 @@
 				32392336167F5B0100301439 /* MagicalRecord */,
 				3239238C167F5BE100301439 /* MBProgressHUD */,
 				32392390167F5C3200301439 /* MJPopupViewController */,
+				32392397167F5C9100301439 /* NSDate-Helper */,
 				322D96BE162B138900D7D5D6 /* Reachability */,
 				324D0391164071D200D0143C /* TDSlider */,
 			);
@@ -642,6 +642,15 @@
 				32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */,
 			);
 			path = MJPopupViewController;
+			sourceTree = "<group>";
+		};
+		32392397167F5C9100301439 /* NSDate-Helper */ = {
+			isa = PBXGroup;
+			children = (
+				32392398167F5C9100301439 /* NSDate+Helper.h */,
+				32392399167F5C9100301439 /* NSDate+Helper.m */,
+			);
+			path = "NSDate-Helper";
 			sourceTree = "<group>";
 		};
 		324D0391164071D200D0143C /* TDSlider */ = {
@@ -826,15 +835,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		32A799E4149EB23C00A7B0AE /* NSDate-Helper */ = {
-			isa = PBXGroup;
-			children = (
-				32A799E5149EB23C00A7B0AE /* NSDate+Helper.h */,
-				32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */,
-			);
-			path = "NSDate-Helper";
-			sourceTree = "<group>";
-		};
 		32FBC52B16199830005078EC /* TSLibraryImport */ = {
 			isa = PBXGroup;
 			children = (
@@ -987,7 +987,6 @@
 				32678CFC147EFA54007BD110 /* IGFeedRefreshOperation.m in Sources */,
 				32965D8314894913000593B4 /* TBXML.m in Sources */,
 				3293D647148BBCF20052B427 /* SITMOS.xcdatamodeld in Sources */,
-				32A799E7149EB23C00A7B0AE /* NSDate+Helper.m in Sources */,
 				329272A814A75F0800119D48 /* IGAudioPlayerViewController.m in Sources */,
 				3263830B14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m in Sources */,
 				328E276B153DDFB0005AE70B /* IGMediaPlayer.m in Sources */,
@@ -1035,6 +1034,7 @@
 				3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */,
 				32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */,
 				32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */,
+				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
