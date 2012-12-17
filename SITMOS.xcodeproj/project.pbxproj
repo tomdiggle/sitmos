@@ -87,6 +87,7 @@
 		32392389167F5B0100301439 /* MagicalRecord+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239236B167F5B0100301439 /* MagicalRecord+Setup.m */; };
 		3239238A167F5B0100301439 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239236D167F5B0100301439 /* MagicalRecord+ShorthandSupport.m */; };
 		3239238B167F5B0100301439 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239236F167F5B0100301439 /* MagicalRecord.m */; };
+		3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239238E167F5BF300301439 /* MBProgressHUD.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -132,7 +133,6 @@
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
 		32A3C5CB15C9B7690083D165 /* audio-player-upper-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */; };
 		32A3C5CC15C9B7690083D165 /* audio-player-upper-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */; };
-		32A3C5D015C9C4290083D165 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3C5CF15C9C4290083D165 /* MBProgressHUD.m */; };
 		32A799E7149EB23C00A7B0AE /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EDEE4715FFBDB7009A047A /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDEE4415FFBDB7009A047A /* MJPopupBackgroundView.m */; };
@@ -271,6 +271,8 @@
 		3239236F167F5B0100301439 /* MagicalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalRecord.m; sourceTree = "<group>"; };
 		32392370167F5B0100301439 /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		32392371167F5B0100301439 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
+		3239238D167F5BF300301439 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
+		3239238E167F5BF300301439 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -330,8 +332,6 @@
 		32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg@2x.png"; sourceTree = "<group>"; };
 		32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg.png"; sourceTree = "<group>"; };
 		32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg@2x.png"; sourceTree = "<group>"; };
-		32A3C5CE15C9C4290083D165 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		32A3C5CF15C9C4290083D165 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		32A799E5149EB23C00A7B0AE /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -409,7 +409,6 @@
 				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
-				32A3C5CD15C9C4290083D165 /* MBProgressHUD */,
 				32EDEE4215FFBDB7009A047A /* MJPopupViewController */,
 				32A799E4149EB23C00A7B0AE /* NSDate-Helper */,
 				321D8C3E145F1D8B008698DC /* Products */,
@@ -486,6 +485,7 @@
 		322D96BD162B138900D7D5D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				3239238C167F5BE100301439 /* MBProgressHUD */,
 				3239232E167F59CE00301439 /* DACircularProgress */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32392336167F5B0100301439 /* MagicalRecord */,
@@ -622,6 +622,15 @@
 				32392370167F5B0100301439 /* MagicalRecordShorthand.h */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		3239238C167F5BE100301439 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				3239238D167F5BF300301439 /* MBProgressHUD.h */,
+				3239238E167F5BF300301439 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		324D0391164071D200D0143C /* TDSlider */ = {
@@ -806,15 +815,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		32A3C5CD15C9C4290083D165 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				32A3C5CE15C9C4290083D165 /* MBProgressHUD.h */,
-				32A3C5CF15C9C4290083D165 /* MBProgressHUD.m */,
-			);
-			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
 		32A799E4149EB23C00A7B0AE /* NSDate-Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -995,7 +995,6 @@
 				327E9FB41556A55400612C8B /* RIButtonItem.m in Sources */,
 				327E9FB51556A55400612C8B /* UIActionSheet+Blocks.m in Sources */,
 				327E9FB61556A55400612C8B /* UIAlertView+Blocks.m in Sources */,
-				32A3C5D015C9C4290083D165 /* MBProgressHUD.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */,
 				32EDEE4715FFBDB7009A047A /* MJPopupBackgroundView.m in Sources */,
@@ -1035,6 +1034,7 @@
 				32392389167F5B0100301439 /* MagicalRecord+Setup.m in Sources */,
 				3239238A167F5B0100301439 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3239238B167F5B0100301439 /* MagicalRecord.m in Sources */,
+				3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
