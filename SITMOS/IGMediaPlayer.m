@@ -397,7 +397,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
  */
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
-    [self markAsPlayed];
     [self removeNowPlayingInfo];
     [self setEpisode:nil];
     [self postNotification:IGMediaPlayerPlaybackEndedNotification];
@@ -449,20 +448,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         [_player seekToTime:CMTimeMakeWithSeconds([[_episode progress] doubleValue], NSEC_PER_SEC)];
         [self play];
     } 
-}
-
-#pragma mark - Mark As Played
-
-/**
- * Invoked when the episode reaches the end. Marks the episode as played.
- */
-- (void)markAsPlayed
-{
-    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[_episode objectID]];
-        [localEpisode markAsPlayed:YES];
-        [localContext MR_saveNestedContexts];
-    }];
 }
 
 #pragma mark - MPNowPlayingInfoCenter
