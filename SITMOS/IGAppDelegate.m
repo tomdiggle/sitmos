@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#import "TestFlight.h"
+
 #import "IGAppDelegate.h"
 #import "IGTestFlight.h"
 #import "IGEpisode.h"
