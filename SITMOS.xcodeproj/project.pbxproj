@@ -93,6 +93,9 @@
 		3239239E167F5CCF00301439 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239239D167F5CCF00301439 /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323923A0167F5CF900301439 /* libTestFlight.a */; };
 		323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A5167F5DD800301439 /* TSLibraryImport.m */; };
+		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
+		323923AF167F5E0500301439 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */; };
+		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -112,9 +115,6 @@
 		327766DA160D161B00D7DEF4 /* nav-settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 327766D8160D161B00D7DEF4 /* nav-settings-icon.png */; };
 		327766DB160D161B00D7DEF4 /* nav-settings-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327766D9160D161B00D7DEF4 /* nav-settings-icon@2x.png */; };
 		327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */; };
-		327E9FB41556A55400612C8B /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9FAF1556A55400612C8B /* RIButtonItem.m */; };
-		327E9FB51556A55400612C8B /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9FB11556A55400612C8B /* UIActionSheet+Blocks.m */; };
-		327E9FB61556A55400612C8B /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9FB31556A55400612C8B /* UIAlertView+Blocks.m */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
@@ -283,6 +283,12 @@
 		323923A1167F5CF900301439 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		323923A4167F5DD800301439 /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
 		323923A5167F5DD800301439 /* TSLibraryImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLibraryImport.m; sourceTree = "<group>"; };
+		323923A8167F5E0500301439 /* RIButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIButtonItem.h; sourceTree = "<group>"; };
+		323923A9167F5E0500301439 /* RIButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIButtonItem.m; sourceTree = "<group>"; };
+		323923AA167F5E0500301439 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
+		323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
+		323923AC167F5E0500301439 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
+		323923AD167F5E0500301439 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -307,12 +313,6 @@
 		327766D9160D161B00D7DEF4 /* nav-settings-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-settings-icon@2x.png"; sourceTree = "<group>"; };
 		327766DC160F631C00D7DEF4 /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
 		327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsViewController.m; sourceTree = "<group>"; };
-		327E9FAE1556A55400612C8B /* RIButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIButtonItem.h; sourceTree = "<group>"; };
-		327E9FAF1556A55400612C8B /* RIButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIButtonItem.m; sourceTree = "<group>"; };
-		327E9FB01556A55400612C8B /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
-		327E9FB11556A55400612C8B /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
-		327E9FB21556A55400612C8B /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
-		327E9FB31556A55400612C8B /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3285E113156C43A0009E128A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -410,7 +410,6 @@
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
 				321D8C3E145F1D8B008698DC /* Products */,
-				327E9FAD1556A55400612C8B /* UIAlertView-Blocks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -491,6 +490,7 @@
 				324D0391164071D200D0143C /* TDSlider */,
 				3239239F167F5CF900301439 /* TestFlight */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
+				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -680,6 +680,19 @@
 			path = TSLibraryImport;
 			sourceTree = "<group>";
 		};
+		323923A7167F5E0500301439 /* UIAlertView-Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				323923A8167F5E0500301439 /* RIButtonItem.h */,
+				323923A9167F5E0500301439 /* RIButtonItem.m */,
+				323923AA167F5E0500301439 /* UIActionSheet+Blocks.h */,
+				323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */,
+				323923AC167F5E0500301439 /* UIAlertView+Blocks.h */,
+				323923AD167F5E0500301439 /* UIAlertView+Blocks.m */,
+			);
+			path = "UIAlertView-Blocks";
+			sourceTree = "<group>";
+		};
 		324D0391164071D200D0143C /* TDSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -785,19 +798,6 @@
 			);
 			path = Graphics;
 			sourceTree = "<group>";
-		};
-		327E9FAD1556A55400612C8B /* UIAlertView-Blocks */ = {
-			isa = PBXGroup;
-			children = (
-				327E9FAE1556A55400612C8B /* RIButtonItem.h */,
-				327E9FAF1556A55400612C8B /* RIButtonItem.m */,
-				327E9FB01556A55400612C8B /* UIActionSheet+Blocks.h */,
-				327E9FB11556A55400612C8B /* UIActionSheet+Blocks.m */,
-				327E9FB21556A55400612C8B /* UIAlertView+Blocks.h */,
-				327E9FB31556A55400612C8B /* UIAlertView+Blocks.m */,
-			);
-			path = "UIAlertView-Blocks";
-			sourceTree = SOURCE_ROOT;
 		};
 		328E2767153DDF91005AE70B /* MediaPlayer */ = {
 			isa = PBXGroup;
@@ -990,9 +990,6 @@
 				3263830B14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m in Sources */,
 				328E276B153DDFB0005AE70B /* IGMediaPlayer.m in Sources */,
 				32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */,
-				327E9FB41556A55400612C8B /* RIButtonItem.m in Sources */,
-				327E9FB51556A55400612C8B /* UIActionSheet+Blocks.m in Sources */,
-				327E9FB61556A55400612C8B /* UIAlertView+Blocks.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */,
 				327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */,
@@ -1035,6 +1032,9 @@
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 				3239239E167F5CCF00301439 /* TBXML.m in Sources */,
 				323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */,
+				323923AE167F5E0500301439 /* RIButtonItem.m in Sources */,
+				323923AF167F5E0500301439 /* UIActionSheet+Blocks.m in Sources */,
+				323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
