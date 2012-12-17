@@ -49,3 +49,5 @@ NSString * const IGSettingCellularDataStreaming = @"IGSettingCellularDataStreami
 NSString * const IGSettingCellularDataDownloading = @"IGSettingCellularDataDownloading";
 NSString * const IGSettingEpisodesDelete = @"IGSettingEpisodesDelete"; // YES will delete episode automatically, NO will never delete episode after playback has finished.
 NSString * const IGSettingUnseenBadge = @"IGSettingUnseenBadge";
+NSString * const IGSettingSkippingForwardTime = @"IGSettingSkippingForwardTime";
+NSString * const IGSettingSkippingBackwardTime = @"IGSettingSkippingBackwardTime";
