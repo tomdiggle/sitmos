@@ -45,7 +45,6 @@
 @property (strong, nonatomic) IGEpisodeMoreInfoViewController *episodeMoreInfoViewController;
 @property (strong, nonatomic) NSOperationQueue *downloadEpisodeQueue;
 @property (strong, nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
-@property (strong, nonatomic) IGMediaPlayer *mediaPlayer;
 @property (strong, nonatomic) NSMutableArray *filteredEpisodeArray;
 @property BOOL reloading;
 
@@ -91,8 +90,6 @@
                                                  withPredicate:nil
                                                        groupBy:nil
                                                       delegate:self];
-    
-    _mediaPlayer = [IGMediaPlayer sharedInstance];
     
     [self refreshFeed];
     
@@ -400,11 +397,12 @@
 {
     dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
 	dispatch_async(startPlaybackQueue, ^{
-        [_mediaPlayer setStartFromTime:[[episode progress] floatValue]];
+        IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+        [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
         NSURL *contentURL = [episode isCompletelyDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-        [_mediaPlayer startWithContentURL:contentURL];
+        [mediaPlayer startWithContentURL:contentURL];
         
-        [_mediaPlayer setPausedBlock:^(Float64 currentTime) {
+        [mediaPlayer setPausedBlock:^(Float64 currentTime) {
             // Save current time so playback can resume where left off
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                 IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
@@ -413,7 +411,7 @@
             }];
         }];
         
-        [_mediaPlayer setStoppedBlock:^(Float64 currentTime) {
+        [mediaPlayer setStoppedBlock:^(Float64 currentTime) {
             // Delete episode?
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             if ([userDefaults boolForKey:IGSettingEpisodesDelete])
