@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGEpisode.h"
 

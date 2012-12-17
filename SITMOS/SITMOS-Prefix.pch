@@ -33,7 +33,6 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
-    #import <QuartzCore/QuartzCore.h>
     #import "CoreData+MagicalRecord.h"
     #import "NSDate+Helper.h"
     #import "IGDefines.h"
