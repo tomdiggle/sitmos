@@ -516,20 +516,45 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 #pragma mark - MPNowPlayingInfoCenter
 
 /**
- * Invoked when playback is started. Adds title, album title, artist and artwork to the now playing info center.
+ * Invoked when playback is started. Gets the title, artist and album title from the players current item and asset and sets the now playing info.
  */
 - (void)addNowPlayingInfo
 {
-    MPMediaItemArtwork *propertyArtwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"audio-player-bg"]];
-    NSDictionary *nowPlayingInfo = @{
-                                        MPMediaItemPropertyTitle: [_episode title],
-                                        MPMediaItemPropertyAlbumTitle: @"Stuck in the Middle of Somewhere",
-                                        MPMediaItemPropertyArtist: @"Joel Gardiner and Derek Sweet",
-                                        MPMediaItemPropertyArtwork: propertyArtwork
-                                    };
-    
-    MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
-    [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
+    AVAsset *asset = [[_player currentItem] asset];
+    [asset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:@"commonMetadata"] completionHandler: ^{
+        NSString *title = nil;
+        NSArray *titles = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
+                                                         withKey:AVMetadataCommonKeyTitle
+                                                        keySpace:AVMetadataKeySpaceCommon];
+        if (titles > 0)
+        {
+            title = [[titles objectAtIndex:0] stringValue];
+        }
+        
+        NSString *artist = nil;
+        NSArray *artists = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
+                                                          withKey:AVMetadataCommonKeyArtist
+                                                         keySpace:AVMetadataKeySpaceCommon];
+        if (artists > 0)
+        {
+            artist = [[artists objectAtIndex:0] stringValue];
+        }
+        
+        NSString *albumTitle = nil;
+        NSArray *albumTitles = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
+                                                              withKey:AVMetadataCommonKeyAlbumName
+                                                             keySpace:AVMetadataKeySpaceCommon];
+        if (albumTitles > 0)
+        {
+            albumTitle = [[albumTitles objectAtIndex:0] stringValue];
+        }
+        
+        MPMediaItemArtwork *propertyArtwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"audio-player-bg"]];
+        NSDictionary *nowPlayingInfo = @{MPMediaItemPropertyTitle: title, MPMediaItemPropertyAlbumTitle: albumTitle, MPMediaItemPropertyArtist: artist, MPMediaItemPropertyArtwork: propertyArtwork};
+        
+        MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+        [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
+    }];
 }
 
 /**
