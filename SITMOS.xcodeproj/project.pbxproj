@@ -90,7 +90,7 @@
 		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
 		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
-		3239239E167F5CCF00301439 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239239D167F5CCF00301439 /* TBXML.m */; };
+		3239239E167F5CCF00301439 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239239D167F5CCF00301439 /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323923A0167F5CF900301439 /* libTestFlight.a */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
