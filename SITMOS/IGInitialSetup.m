@@ -32,7 +32,8 @@
 
 @interface IGInitialSetup () <MBProgressHUDDelegate>
 
-@property (nonatomic, strong) MBProgressHUD *HUD;
+@property (strong, nonatomic) IGAppDelegate *appDelegate;
+@property (strong, nonatomic) MBProgressHUD *HUD;
 @property NSUInteger numberOfEpisodesToImport;
 @property NSUInteger numberOfEpisodesImported;
 
@@ -47,10 +48,20 @@
     return [[self alloc] init];
 }
 
-+ (void)createEpisodesDirectory
++ (BOOL)createEpisodesDirectory
 {
+    NSError *error = nil;
     NSURL *episodesDirectory = [[IGInitialSetup cachesDirectory] URLByAppendingPathComponent:@"Episodes"];
-    [[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:NO attributes:nil error:nil];
+    [[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+    
+    if (error)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 + (NSURL *)cachesDirectory
@@ -72,31 +83,37 @@
     _numberOfEpisodesToImport = 0;
     _numberOfEpisodesImported = 0;
     
-    IGAppDelegate *appDelegate = (IGAppDelegate *)[[UIApplication sharedApplication] delegate];
-    _HUD = [[MBProgressHUD alloc] initWithWindow:[appDelegate window]];
+    _appDelegate = (IGAppDelegate *)[[UIApplication sharedApplication] delegate];
+    _HUD = [[MBProgressHUD alloc] initWithWindow:[_appDelegate window]];
     [_HUD setDelegate:self];
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelFont = [UIFont fontWithName:IGFontNameMedium size:16.0f];
     _HUD.detailsLabelFont = [UIFont fontWithName:IGFontNameRegular size:12.0f];
     _HUD.dimBackground = YES;
-    [[appDelegate window] addSubview:_HUD];
     
     [self start];
     
     return self;
 }
 
+- (void)dealloc
+{
+    _appDelegate = nil;
+    _HUD = nil;
+}
+
 - (void)start
 {
-    // Register default settings
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:YES forKey:IGSettingCellularDataStreaming];
-    [userDefaults setBool:YES forKey:IGSettingCellularDataDownloading];
-    [userDefaults setBool:NO forKey:IGSettingEpisodesDelete];
-    [userDefaults setBool:NO forKey:IGSettingUnseenBadge];
+    [self setUpUserDefaults];
     
-    // Create the directory the downloaded episodes will be stored in
-    [IGInitialSetup createEpisodesDirectory];
+    if (![IGInitialSetup createEpisodesDirectory])
+    {
+        // No need to continue if the episodes directory already exists
+        return;
+    }
+    
+    // Add the HUD view to the appDelegate
+    [[_appDelegate window] addSubview:_HUD];
     
     // Search for any episodes already on the device
     MPMediaPropertyPredicate *albumTitlePredicate = [MPMediaPropertyPredicate predicateWithValue:@"Stuck in the Middle of Somewhere"
@@ -131,6 +148,36 @@
                                                cancelButtonItem:cancelItem
                                                otherButtonItems:importItem, nil];
     [alertView show];
+}
+
+#pragma mark - Set Up User Defaults
+
+/**
+ * Registers the default settings if they don't already exist.
+ */
+- (void)setUpUserDefaults
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![userDefaults objectForKey:IGSettingCellularDataStreaming])
+    {
+        [userDefaults setBool:YES forKey:IGSettingCellularDataStreaming];
+    }
+    
+    if (![userDefaults objectForKey:IGSettingCellularDataDownloading])
+    {
+        [userDefaults setBool:YES forKey:IGSettingCellularDataDownloading];
+    }
+    
+    if (![userDefaults objectForKey:IGSettingEpisodesDelete])
+    {
+        [userDefaults setBool:NO forKey:IGSettingEpisodesDelete];
+    }
+    
+    if (![userDefaults objectForKey:IGSettingUnseenBadge])
+    {
+        [userDefaults setBool:NO forKey:IGSettingUnseenBadge];
+    }
 }
 
 #pragma mark - Fetch Podcast Feed
