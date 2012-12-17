@@ -92,6 +92,7 @@
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
 		3239239E167F5CCF00301439 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239239D167F5CCF00301439 /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323923A0167F5CF900301439 /* libTestFlight.a */; };
+		323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A5167F5DD800301439 /* TSLibraryImport.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -146,7 +147,6 @@
 		32FBC4EC1618B0FC005078EC /* nav-back-button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4EA1618B0FC005078EC /* nav-back-button-highlighted.png */; };
 		32FBC4ED1618B0FC005078EC /* nav-back-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4EB1618B0FC005078EC /* nav-back-button-highlighted@2x.png */; };
 		32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGTestFlight.m */; };
-		32FBC52E16199830005078EC /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC52D16199830005078EC /* TSLibraryImport.m */; };
 		32FBC53116199C04005078EC /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC52F16199C04005078EC /* checkmark.png */; };
 		32FBC53216199C04005078EC /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC53016199C04005078EC /* checkmark@2x.png */; };
 		32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC54D1619AAA5005078EC /* IGInitialSetup.m */; };
@@ -281,6 +281,8 @@
 		3239239D167F5CCF00301439 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		323923A0167F5CF900301439 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		323923A1167F5CF900301439 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		323923A4167F5DD800301439 /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
+		323923A5167F5DD800301439 /* TSLibraryImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLibraryImport.m; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -350,8 +352,6 @@
 		32FBC4EB1618B0FC005078EC /* nav-back-button-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button-highlighted@2x.png"; sourceTree = "<group>"; };
 		32FBC4EE1618DE66005078EC /* IGTestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGTestFlight.h; sourceTree = "<group>"; };
 		32FBC4EF1618DE66005078EC /* IGTestFlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGTestFlight.m; sourceTree = "<group>"; };
-		32FBC52C16199830005078EC /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
-		32FBC52D16199830005078EC /* TSLibraryImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLibraryImport.m; sourceTree = "<group>"; };
 		32FBC52F16199C04005078EC /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		32FBC53016199C04005078EC /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
 		32FBC54C1619AAA5005078EC /* IGInitialSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGInitialSetup.h; sourceTree = "<group>"; };
@@ -410,7 +410,6 @@
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
 				321D8C3E145F1D8B008698DC /* Products */,
-				32FBC52B16199830005078EC /* TSLibraryImport */,
 				327E9FAD1556A55400612C8B /* UIAlertView-Blocks */,
 			);
 			sourceTree = "<group>";
@@ -491,6 +490,7 @@
 				3239239B167F5CCF00301439 /* TBXML */,
 				324D0391164071D200D0143C /* TDSlider */,
 				3239239F167F5CF900301439 /* TestFlight */,
+				323923A3167F5DD800301439 /* TSLibraryImport */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -671,6 +671,15 @@
 			path = TestFlight;
 			sourceTree = "<group>";
 		};
+		323923A3167F5DD800301439 /* TSLibraryImport */ = {
+			isa = PBXGroup;
+			children = (
+				323923A4167F5DD800301439 /* TSLibraryImport.h */,
+				323923A5167F5DD800301439 /* TSLibraryImport.m */,
+			);
+			path = TSLibraryImport;
+			sourceTree = "<group>";
+		};
 		324D0391164071D200D0143C /* TDSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,15 +844,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		32FBC52B16199830005078EC /* TSLibraryImport */ = {
-			isa = PBXGroup;
-			children = (
-				32FBC52C16199830005078EC /* TSLibraryImport.h */,
-				32FBC52D16199830005078EC /* TSLibraryImport.m */,
-			);
-			path = TSLibraryImport;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -998,7 +998,6 @@
 				327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
-				32FBC52E16199830005078EC /* TSLibraryImport.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
 				322D96F9162B138A00D7D5D6 /* Reachability.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
@@ -1035,6 +1034,7 @@
 				32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 				3239239E167F5CCF00301439 /* TBXML.m in Sources */,
+				323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
