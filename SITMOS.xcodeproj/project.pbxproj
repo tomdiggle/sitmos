@@ -88,6 +88,8 @@
 		3239238A167F5B0100301439 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239236D167F5B0100301439 /* MagicalRecord+ShorthandSupport.m */; };
 		3239238B167F5B0100301439 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239236F167F5B0100301439 /* MagicalRecord.m */; };
 		3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239238E167F5BF300301439 /* MBProgressHUD.m */; };
+		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
+		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -135,8 +137,6 @@
 		32A3C5CC15C9B7690083D165 /* audio-player-upper-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */; };
 		32A799E7149EB23C00A7B0AE /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
-		32EDEE4715FFBDB7009A047A /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDEE4415FFBDB7009A047A /* MJPopupBackgroundView.m */; };
-		32EDEE4815FFBDB7009A047A /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EDEE4615FFBDB7009A047A /* UIViewController+MJPopupViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
 		32FBC4B416108C7A005078EC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FBC4B316108C7A005078EC /* SystemConfiguration.framework */; };
@@ -273,6 +273,10 @@
 		32392371167F5B0100301439 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		3239238D167F5BF300301439 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		3239238E167F5BF300301439 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
+		32392391167F5C3200301439 /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		32392392167F5C3200301439 /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -335,10 +339,6 @@
 		32A799E5149EB23C00A7B0AE /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		32A799E6149EB23C00A7B0AE /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		32EDEE4315FFBDB7009A047A /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
-		32EDEE4415FFBDB7009A047A /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
-		32EDEE4515FFBDB7009A047A /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
-		32EDEE4615FFBDB7009A047A /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
 		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
 		32FBC4B316108C7A005078EC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -409,7 +409,6 @@
 				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
-				32EDEE4215FFBDB7009A047A /* MJPopupViewController */,
 				32A799E4149EB23C00A7B0AE /* NSDate-Helper */,
 				321D8C3E145F1D8B008698DC /* Products */,
 				32965D7D14894913000593B4 /* TBXML */,
@@ -485,10 +484,11 @@
 		322D96BD162B138900D7D5D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				3239238C167F5BE100301439 /* MBProgressHUD */,
 				3239232E167F59CE00301439 /* DACircularProgress */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32392336167F5B0100301439 /* MagicalRecord */,
+				3239238C167F5BE100301439 /* MBProgressHUD */,
+				32392390167F5C3200301439 /* MJPopupViewController */,
 				322D96BE162B138900D7D5D6 /* Reachability */,
 				324D0391164071D200D0143C /* TDSlider */,
 			);
@@ -631,6 +631,17 @@
 				3239238E167F5BF300301439 /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		32392390167F5C3200301439 /* MJPopupViewController */ = {
+			isa = PBXGroup;
+			children = (
+				32392391167F5C3200301439 /* MJPopupBackgroundView.h */,
+				32392392167F5C3200301439 /* MJPopupBackgroundView.m */,
+				32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */,
+				32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */,
+			);
+			path = MJPopupViewController;
 			sourceTree = "<group>";
 		};
 		324D0391164071D200D0143C /* TDSlider */ = {
@@ -824,17 +835,6 @@
 			path = "NSDate-Helper";
 			sourceTree = "<group>";
 		};
-		32EDEE4215FFBDB7009A047A /* MJPopupViewController */ = {
-			isa = PBXGroup;
-			children = (
-				32EDEE4315FFBDB7009A047A /* MJPopupBackgroundView.h */,
-				32EDEE4415FFBDB7009A047A /* MJPopupBackgroundView.m */,
-				32EDEE4515FFBDB7009A047A /* UIViewController+MJPopupViewController.h */,
-				32EDEE4615FFBDB7009A047A /* UIViewController+MJPopupViewController.m */,
-			);
-			path = MJPopupViewController;
-			sourceTree = "<group>";
-		};
 		32FBC52B16199830005078EC /* TSLibraryImport */ = {
 			isa = PBXGroup;
 			children = (
@@ -997,8 +997,6 @@
 				327E9FB61556A55400612C8B /* UIAlertView+Blocks.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */,
-				32EDEE4715FFBDB7009A047A /* MJPopupBackgroundView.m in Sources */,
-				32EDEE4815FFBDB7009A047A /* UIViewController+MJPopupViewController.m in Sources */,
 				327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
@@ -1035,6 +1033,8 @@
 				3239238A167F5B0100301439 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				3239238B167F5B0100301439 /* MagicalRecord.m in Sources */,
 				3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */,
+				32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */,
+				32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
