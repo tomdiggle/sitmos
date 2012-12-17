@@ -89,13 +89,10 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 + (IGMediaPlayer *)sharedInstance
 {
-    @synchronized(self)
-    {
-        if (!__sharedInstance)
-        {
-            __sharedInstance = [[self alloc] init];
-        }
-    }
+    static dispatch_once_t once = 0;
+    dispatch_once(&once, ^{
+        __sharedInstance = [[self alloc] init];
+    });
     
     return __sharedInstance;
 }
