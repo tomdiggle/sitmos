@@ -325,7 +325,10 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     if (!_episode) return;
     
     [_player pause];
-
+    if (_stoppedBlock)
+    {
+        _stoppedBlock([self currentTime]);
+    }
     [self saveProgress:[self currentTime]];
     [self setPlayer:nil];
     [self setEpisode:nil];
