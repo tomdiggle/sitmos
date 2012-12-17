@@ -112,11 +112,26 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, AudioRouteChangeListenerCallback, (__bridge void *)self);
     
     _player = nil;
+    _startFromTime = 0.0f;
     _duration = 0.0f;
     _currentTime = 0.0f;
     _playbackRate = 1.0f;
     
     return self;
+}
+
+#pragma mark - Clean Up
+
+/**
+ * Invoked when playback is stopped or has reached the end.
+ */
+- (void)cleanUp
+{
+    _startFromTime = 0.0f;
+    _currentTime = 0.0f;
+    _duration = 0.0f;
+    _contentURL = nil;
+    _player = nil;
 }
 
 #pragma mark - KVO
@@ -335,13 +350,11 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [_player pause];
     if (_stoppedBlock)
     {
-        _stoppedBlock([self currentTime]);
+        _stoppedBlock([self currentTime], NO);
     }
-    _currentTime = 0.0f;
-    _duration = 0.0f;
-    [self setPlayer:nil];
     [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
+    [self cleanUp];
 }
 
 - (void)beginSeekingForward
@@ -412,8 +425,13 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
  */
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
+    if (_stoppedBlock)
+    {
+        _stoppedBlock([self currentTime], YES);
+    }
     [self removeNowPlayingInfo];
     [self postNotification:IGMediaPlayerPlaybackEndedNotification];
+    [self cleanUp];
 }
 
 #pragma mark - Managing Time

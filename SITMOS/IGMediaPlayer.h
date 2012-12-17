@@ -30,7 +30,7 @@ typedef enum {
 
 typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);
 
-typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
+typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnded);
 
 /**
  * The IGMediaPlayer class provides a centralized point of control for media playing in SITMOS.
