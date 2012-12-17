@@ -178,6 +178,16 @@
     {
         [userDefaults setBool:NO forKey:IGSettingUnseenBadge];
     }
+    
+    if (![userDefaults objectForKey:IGSettingSkippingForwardTime])
+    {
+        [userDefaults setInteger:30 forKey:IGSettingSkippingForwardTime];
+    }
+    
+    if (![userDefaults objectForKey:IGSettingSkippingBackwardTime])
+    {
+        [userDefaults setInteger:30 forKey:IGSettingSkippingBackwardTime];
+    }
 }
 
 #pragma mark - Fetch Podcast Feed
