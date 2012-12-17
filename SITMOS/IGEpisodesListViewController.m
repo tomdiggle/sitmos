@@ -333,15 +333,6 @@
     [episodeCell setPlayed:[episode isPlayed]];
     [episodeCell setPlaybackProgress:[[episode progress] floatValue]];
     
-    if ([[_mediaPlayer episode] isEqual:episode] && ([_mediaPlayer isPlaying] || [_mediaPlayer isPaused]))
-    {
-        [episodeCell setPlaybackStatus:IG_PLAYING];
-    }
-    else
-    {
-        [episodeCell setPlaybackStatus:IG_STOPPED];
-    }
-    
     if ([episode isCompletelyDownloaded])
     {
         [episodeCell setDownloadStatus:IG_DOWNLOADED];
@@ -391,24 +382,49 @@
 {
     if ([episode isAudio])
     {
-        if ([episode isCompletelyDownloaded] || [[_mediaPlayer episode] isEqual:episode])
+        if (![episode isCompletelyDownloaded])
         {
-            [self playAudioEpisode:episode];
+            dispatch_queue_t canStreamEpisodeQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.canStreamEpisodeQueue", NULL);
+            dispatch_async(canStreamEpisodeQueue, ^{
+                [self canStreamEpisode:episode];
+            });
         }
         else
         {
-            dispatch_queue_t ableToStreamEpisodeQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.ableToStreamEpisodeQueue", NULL);
-            dispatch_async(ableToStreamEpisodeQueue, ^{
-                [self canStreamEpisode:episode];
-            });
+            [self playAudioEpisode:episode];
         }
     }
 }
 
 - (void)playAudioEpisode:(IGEpisode *)episode
 {
+    dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
+	dispatch_async(startPlaybackQueue, ^{
+        [_mediaPlayer setStartFromTime:[[episode progress] floatValue]];
+        NSURL *contentURL = [episode isCompletelyDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+        [_mediaPlayer startWithContentURL:contentURL];
+        
+        [_mediaPlayer setPausedBlock:^(Float64 currentTime) {
+            // Save current time so playback can resume where left off
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                [localEpisode setProgress:@(currentTime)];
+                [localContext MR_saveNestedContexts];
+            }];
+        }];
+        
+        [_mediaPlayer setStoppedBlock:^(Float64 currentTime) {
+            // Delete episode?
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            if ([userDefaults boolForKey:IGSettingEpisodesDelete])
+            {
+                [episode deleteDownloadedEpisode];
+            }
+        }];
+    });
+    
     IGAudioPlayerViewController *audioPlayer = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
-    [audioPlayer setEpisode:episode];
+    [audioPlayer setTitle:[episode title]];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav-back-arrow"]
                                                                              style:UIBarButtonItemStyleBordered

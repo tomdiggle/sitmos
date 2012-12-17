@@ -102,7 +102,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
  * Starts playback by creating an asset for inspection of a resource referenced by a given URL.
  * @warning *Important:* This method must be called first when wanting to play new content.
  */
-- (void)startWithContentURL:(NSURL *)url
+- (void)startWithContentURL:(NSURL *)url;
 
 /**
  * Begins playback of current episode.

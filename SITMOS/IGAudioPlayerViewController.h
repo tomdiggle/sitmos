@@ -19,10 +19,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@class IGEpisode;
-
 @interface IGAudioPlayerViewController : UIViewController
-
-@property (strong, nonatomic) IGEpisode *episode;
 
 @end

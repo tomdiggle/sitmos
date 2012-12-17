@@ -22,7 +22,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "IGAudioPlayerViewController.h"
-#import "IGEpisode.h"
 #import "TDSlider.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
@@ -55,11 +54,7 @@
 {
     [super viewDidLoad];
     
-    [self setTitle:[_episode title]];
-    
     _mediaPlayer = [IGMediaPlayer sharedInstance];
-    
-    [self startPlayback];
     
     [self applyStylesheet]; 
     
@@ -105,6 +100,13 @@
     [rightRecognizer setNumberOfTouchesRequired:1];
     [rightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
     [_backgroundImageView addGestureRecognizer:rightRecognizer];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self startPlaybackProgressUpdateTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -293,7 +295,7 @@
 
 - (IBAction)shareEpisodeButtonTapped:(id)sender
 {
-    NSString *shareText = [NSString stringWithFormat:@"%@ %@ %@ Stuck in the Middle of Somewhere http://sitmos.net/audio.php", NSLocalizedString(@"CheckOut", "text label for check out"), [_episode title], NSLocalizedString(@"Of", "text label for of")];
+    NSString *shareText = [NSString stringWithFormat:@"%@ %@ %@ Stuck in the Middle of Somewhere http://sitmos.net/audio.php", NSLocalizedString(@"CheckOut", "text label for check out"), [self title], NSLocalizedString(@"Of", "text label for of")];
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[shareText]
                                                                                          applicationActivities:nil];
     activityViewController.excludedActivityTypes = @[UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
@@ -324,34 +326,6 @@
 }
 
 #pragma mark - Playback Methods
-
-/**
- * Invoked when viewDidLoad is called. Starts playback of episode.
- */
-- (void)startPlayback
-{
-    [self startPlaybackProgressUpdateTimer];
-    
-    dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
-	dispatch_async(startPlaybackQueue, ^{
-        if (![[_mediaPlayer episode] isEqual:_episode])
-        {
-            [self showBufferingHUD];
-            
-            // Stop any media that is already playing so the position is saved
-            [_mediaPlayer stop];
-            [_mediaPlayer setEpisode:_episode];
-            
-            [_mediaPlayer start];
-        }
-        else
-        {
-            // This episode is already loaded into the media player so just
-            // continue playing.
-            [self play];
-        }
-	});
-}
 
 /**
  * Restarts playback of episode, starts the playback progress update timer and changes the play button image to the pause icon.
@@ -422,12 +396,6 @@
             _bufferingHUD.labelText = NSLocalizedString(@"Buffering", @"text label for buffering");
             [[self view] addSubview:_bufferingHUD];
         }
-        
-        // Only show the buffering hud if episode is streaming
-        if (![_episode isCompletelyDownloaded])
-        {
-            [_bufferingHUD show:YES];
-        }
     });
 }
 
@@ -491,13 +459,6 @@
  */
 - (void)playbackEnded:(NSNotification *)notification
 {
-    // Delete episode automatically once it has been played?
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults boolForKey:IGSettingEpisodesDelete])
-    {
-        [_episode deleteDownloadedEpisode];
-    }
-    
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
@@ -524,21 +485,6 @@
 - (void)playbackStateChanged:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
-    
-    if (![[userInfo valueForKey:@"episodeTitle"] isEqual:[_episode title]])
-    {
-        [self setEpisode:[_mediaPlayer episode]];
-        [self setTitle:[_episode title]];
-        
-        // This is here for when the audio is paused and next/previous episode
-        // button is pressed. It re-starts the progress update timer.
-        [self startPlaybackProgressUpdateTimer];
-        
-        // Shows the buffering HUD if needed.
-        [self showBufferingHUD];
-    }
-
-    
     if ([[userInfo valueForKey:@"isPlaying"] boolValue])
     {
         [self hideBufferingHUD];
