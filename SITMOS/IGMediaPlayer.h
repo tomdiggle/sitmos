@@ -123,20 +123,6 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime);
 - (void)stop;
 
 /**
- * Begins playback of the next episode.
- *
- * The next episode is determined by current episode's pubDate.
- */
-- (void)playNextEpisode;
-
-/** 
- * Begins playback of the previous episode.
- *
- * If more than 3 seconds of the episode have elapsed then it will re-start from the beginning, otherwise the previous episode (which is determined by the current episode's pubDate) will begin playing.
- */
-- (void)playPreviousEpisode;
-
-/**
  * Starts seeking forward through the audio or video medium.
  */
 - (void)beginSeekingForward;

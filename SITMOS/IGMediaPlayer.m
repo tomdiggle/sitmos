@@ -336,37 +336,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
 
-- (void)playNextEpisode
-{
-    IGEpisode *nextEpisode = [_episode nextEpisode];
-    
-    if (nextEpisode)
-    {
-        [self stop];
-        [self setEpisode:nextEpisode];
-        [self start];
-    }
-}
-
-- (void)playPreviousEpisode
-{
-    if ([self currentTime] > 3.0f)
-    {
-        [self seekToBeginning];
-    }
-    else
-    {
-        IGEpisode *previousEpisode = [_episode previousEpisode];
-        
-        if (previousEpisode)
-        {
-            [self stop];
-            [self setEpisode:previousEpisode];
-            [self start];
-        }
-    }
-}
-
 - (void)beginSeekingForward
 {
     [self setPlaybackState:IGMediaPlayerPlaybackStateSeekingForward];

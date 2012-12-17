@@ -181,7 +181,7 @@
 
 - (IBAction)skippingBackButtonTapped:(id)sender
 {
-    CABasicAnimation *rotationAnimation;
+    /*CABasicAnimation *rotationAnimation;
     rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotationAnimation.toValue = [NSNumber numberWithFloat:-M_PI * 2.0];
     rotationAnimation.duration = 0.4f;
@@ -193,7 +193,7 @@
     if ([_mediaPlayer isPaused])
     {
         [self updatePlaybackProgress];
-    }
+    }*/
 }
 
 - (IBAction)playButtonTapped:(id)sender
@@ -230,7 +230,7 @@
 
 - (IBAction)nextTrackButtonTapped:(id)sender
 {
-    [_mediaPlayer playNextEpisode];
+    
 }
 
 /**
@@ -253,7 +253,7 @@
 
 - (IBAction)previousTrackButtonTapped:(id)sender
 {
-    [_mediaPlayer playPreviousEpisode];
+    
 }
 
 /**

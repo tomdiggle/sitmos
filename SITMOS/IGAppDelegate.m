@@ -159,10 +159,10 @@
             [mediaPlayer isPaused] ? [mediaPlayer play] : [mediaPlayer pause];
 			break;
 		case UIEventSubtypeRemoteControlNextTrack:
-            [mediaPlayer playNextEpisode];
+            
             break;
         case UIEventSubtypeRemoteControlPreviousTrack:
-            [mediaPlayer playPreviousEpisode];
+            
             break;
         case UIEventSubtypeRemoteControlBeginSeekingBackward:
             [mediaPlayer beginSeekingBackward];
