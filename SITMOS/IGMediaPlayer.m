@@ -55,7 +55,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (readwrite, nonatomic) Float64 currentTime;
 @property (readwrite, nonatomic) Float64 duration;
 @property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
-@property BOOL pausedByInterruption;
 
 - (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
 - (void)handleAudioRouteChange:(const void *)inPropertyValue;
@@ -551,7 +550,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 		if ([self isPlaying]) 
         {
 			[self pause];
-            _pausedByInterruption = YES;
+            [self setPlaybackState:IGMediaPlayerPlaybackStatePausedByInterruption];
 		} 
 	}
 	else if (inInterruptionState == kAudioSessionEndInterruption) 
@@ -559,15 +558,13 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         UInt32 shouldResume = 0;
         UInt32 size = sizeof(shouldResume);
         
-        if (_pausedByInterruption)
+        if (_playbackState == IGMediaPlayerPlaybackStatePausedByInterruption)
         {
             if (!AudioSessionGetProperty(kAudioSessionProperty_InterruptionType, &size, &shouldResume) && shouldResume == kAudioSessionInterruptionType_ShouldResume && [self isPaused])
             {
                 AudioSessionSetActive(TRUE);
                 [self play];
             }
-            
-            _pausedByInterruption = NO;
         }
 	}
 }

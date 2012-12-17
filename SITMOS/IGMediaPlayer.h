@@ -25,6 +25,7 @@ typedef enum {
     IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStatePlaying,
     IGMediaPlayerPlaybackStatePaused,
+    IGMediaPlayerPlaybackStatePausedByInterruption,
     IGMediaPlayerPlaybackStateSeekingForward,
     IGMediaPlayerPlaybackStateSeekingBackward
 } IGMediaPlayerPlaybackState;
