@@ -24,25 +24,6 @@
 
 @implementation IGEpisodeTableViewCell
 
-#pragma mark - Initializers 
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (!(self = [super initWithCoder:aDecoder]))
-    {
-        return nil;
-    }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackStateChanged:)
-                                                     name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                   object:nil];
-    });
-    
-    return self;
-}
-
 - (void)awakeFromNib
 {
     [_episodeTitleLabel setFont:[UIFont fontWithName:IGFontNameRegular
@@ -55,10 +36,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                  object:nil];
-    
     _delegate = nil;
 }
 
@@ -183,25 +160,6 @@
                                       animated:YES];
         }
     }];
-}
-
-#pragma mark - IGMediaPlayer Notification Methods
-
-- (void)playbackStateChanged:(NSNotification *)notification
-{
-    NSDictionary *userInfo = [notification userInfo];
-    if ([[_episodeTitleLabel text] isEqualToString:[userInfo valueForKey:@"episodeTitle"]] && [[userInfo valueForKey:@"isPlaying"] boolValue])
-    {
-        [self setPlaybackStatus:IG_PLAYING];
-    }
-    else if ([[_episodeTitleLabel text] isEqualToString:[userInfo valueForKey:@"episodeTitle"]] && [[userInfo valueForKey:@"isPaused"] boolValue])
-    {
-        [self setPlaybackStatus:IG_PAUSED];
-    }
-    else
-    {
-        [self setPlaybackStatus:IG_STOPPED];
-    }
 }
 
 @end
