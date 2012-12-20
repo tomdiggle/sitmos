@@ -28,6 +28,20 @@ self._key_ = (_value_); \
 #define kRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 /* */
+typedef enum {
+    IGEpisodePlayedStatusPlayed,
+    IGEpisodePlayedStatusUnplayed,
+    IGEpisodePlayedStatusHalfPlayed
+} IGEpisodePlayedStatus;
+
+/* */
+typedef enum {
+    IGEpisodeDownloadStatusDownloaded,
+    IGEpisodeDownloadStatusNotDownloaded,
+    IGEpisodeDownloadStatusDownloading,
+} IGEpisodeDownloadStatus;
+
+/* */
 extern NSString * const IGDownloadProgressNotification;
 
 /* */
