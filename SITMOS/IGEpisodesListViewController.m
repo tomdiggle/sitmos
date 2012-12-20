@@ -327,27 +327,11 @@
     [[episodeCell episodeTitleLabel] setText:[episode title]];
     NSString *episodeDateDuration = [NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:[episode pubDate] withFormat:@"dd MMM yyyy"], [episode duration]];
     [[episodeCell episodeDateAndDurationLabel] setText:episodeDateDuration];
-    [episodeCell setPlayed:[episode isPlayed]];
-    [episodeCell setPlaybackProgress:[[episode progress] floatValue]];
-    
-    if ([episode isCompletelyDownloaded])
-    {
-        [episodeCell setDownloadStatus:IG_DOWNLOADED];
-    }
-    else if ([self episodeIsDownloading:episode])
-    {
-        [episodeCell setDownloadStatus:IG_DOWNLOADING];
-    }
-    else if ([episode isPartiallyDownloaded])
-    {
-        [episodeCell setDownloadStatus:IG_DOWNLOADING_PAUSED];
-        CGFloat progress = (float)[episode downloadedFileSize] / [[episode fileSize] floatValue];
-        [[episodeCell downloadProgressView] setProgress:progress];
-    }
-    else
-    {
-        [episodeCell setDownloadStatus:IG_NOT_DOWNLOADED];
-    }
+    [episodeCell setPlayedStatus:[episode playedStatus]];
+    [episodeCell setDownloadStatus:[episode downloadStatus]];
+//        [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloadingPaused];
+//        CGFloat progress = (float)[episode downloadedFileSize] / [[episode fileSize] floatValue];
+//        [[episodeCell downloadProgressView] setProgress:progress];
 }
 
 #pragma mark - Content Filtering
