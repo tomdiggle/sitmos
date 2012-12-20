@@ -99,6 +99,10 @@
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
+		32523C751683AAEE006E9FFB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32523C741683AAEE006E9FFB /* SenTestingKit.framework */; };
+		32523C761683AAEE006E9FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
+		32523C771683AAEE006E9FFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C43145F1D8B008698DC /* Foundation.framework */; };
+		32523C7D1683AAEE006E9FFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 32523C7B1683AAEE006E9FFB /* InfoPlist.strings */; };
 		325920A115DC185100345666 /* previous-track-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3259209F15DC185100345666 /* previous-track-button.png */; };
 		325920A215DC185100345666 /* previous-track-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A015DC185100345666 /* previous-track-button@2x.png */; };
 		325920A615DC1B5700345666 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A415DC1B5700345666 /* play-button.png */; };
@@ -293,6 +297,11 @@
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
 		324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button@2x.png"; sourceTree = "<group>"; };
+		32523C731683AAEE006E9FFB /* SITMOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SITMOSTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32523C741683AAEE006E9FFB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		32523C7A1683AAEE006E9FFB /* SITMOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SITMOSTests-Info.plist"; sourceTree = "<group>"; };
+		32523C7C1683AAEE006E9FFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		32523C811683AAEE006E9FFB /* SITMOSTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SITMOSTests-Prefix.pch"; sourceTree = "<group>"; };
 		3259209F15DC185100345666 /* previous-track-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous-track-button.png"; sourceTree = "<group>"; };
 		325920A015DC185100345666 /* previous-track-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous-track-button@2x.png"; sourceTree = "<group>"; };
 		325920A415DC1B5700345666 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
@@ -381,6 +390,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32523C6F1683AAEE006E9FFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32523C751683AAEE006E9FFB /* SenTestingKit.framework in Frameworks */,
+				32523C761683AAEE006E9FFB /* UIKit.framework in Frameworks */,
+				32523C771683AAEE006E9FFB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -408,6 +427,7 @@
 				321D8C47145F1D8B008698DC /* SITMOS */,
 				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
+				32523C781683AAEE006E9FFB /* SITMOSTests */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
 				321D8C3E145F1D8B008698DC /* Products */,
 			);
@@ -417,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				321D8C3D145F1D8B008698DC /* SITMOS.app */,
+				32523C731683AAEE006E9FFB /* SITMOSTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -436,6 +457,7 @@
 				321D8C41145F1D8B008698DC /* UIKit.framework */,
 				321D8C43145F1D8B008698DC /* Foundation.framework */,
 				321D8C45145F1D8B008698DC /* CoreGraphics.framework */,
+				32523C741683AAEE006E9FFB /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -703,6 +725,24 @@
 			path = TDSlider/TDSlider;
 			sourceTree = "<group>";
 		};
+		32523C781683AAEE006E9FFB /* SITMOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				32523C791683AAEE006E9FFB /* Supporting Files */,
+			);
+			path = SITMOSTests;
+			sourceTree = "<group>";
+		};
+		32523C791683AAEE006E9FFB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				32523C7A1683AAEE006E9FFB /* SITMOSTests-Info.plist */,
+				32523C7B1683AAEE006E9FFB /* InfoPlist.strings */,
+				32523C811683AAEE006E9FFB /* SITMOSTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		326556C815D2FEA5000EE239 /* Feed Refresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -864,6 +904,24 @@
 			productReference = 321D8C3D145F1D8B008698DC /* SITMOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		32523C721683AAEE006E9FFB /* SITMOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32523C851683AAEE006E9FFB /* Build configuration list for PBXNativeTarget "SITMOSTests" */;
+			buildPhases = (
+				32523C6E1683AAEE006E9FFB /* Sources */,
+				32523C6F1683AAEE006E9FFB /* Frameworks */,
+				32523C701683AAEE006E9FFB /* Resources */,
+				32523C711683AAEE006E9FFB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SITMOSTests;
+			productName = SITMOSTests;
+			productReference = 32523C731683AAEE006E9FFB /* SITMOSTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -885,6 +943,7 @@
 			projectRoot = "";
 			targets = (
 				321D8C3C145F1D8B008698DC /* SITMOS */,
+				32523C721683AAEE006E9FFB /* SITMOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -973,7 +1032,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32523C701683AAEE006E9FFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32523C7D1683AAEE006E9FFB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32523C711683AAEE006E9FFB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		321D8C39145F1D8B008698DC /* Sources */ = {
@@ -1038,6 +1121,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32523C6E1683AAEE006E9FFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -1045,6 +1135,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				321D8C4B145F1D8B008698DC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		32523C7B1683AAEE006E9FFB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				32523C7C1683AAEE006E9FFB /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1158,6 +1256,85 @@
 			};
 			name = "App Store";
 		};
+		32523C821683AAEE006E9FFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		32523C831683AAEE006E9FFB /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = "App Store";
+		};
+		32523C841683AAEE006E9FFB /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Testing;
+		};
 		325D6B0F15CED798001BACFC /* Testing */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1228,6 +1405,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
+		};
+		32523C851683AAEE006E9FFB /* Build configuration list for PBXNativeTarget "SITMOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32523C821683AAEE006E9FFB /* Debug */,
+				32523C831683AAEE006E9FFB /* App Store */,
+				32523C841683AAEE006E9FFB /* Testing */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
