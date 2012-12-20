@@ -24,14 +24,6 @@
 
 @implementation IGEpisodeTableViewCell
 
-- (void)awakeFromNib
-{
-    [_episodeTitleLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                                size:14.0f]];
-    [_episodeDateAndDurationLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                                          size:13.0f]];
-}
-
 #pragma mark - Memory Management
 
 - (void)dealloc
@@ -41,69 +33,58 @@
 
 #pragma mark - Setters
 
-- (void)setDownloadStatus:(IGDownloadStatus)downloadStatus
+- (void)setDownloadStatus:(IGEpisodeDownloadStatus)downloadStatus
 {
     _downloadStatus = downloadStatus;
-        
+    
     switch (downloadStatus)
     {
-        case IG_DOWNLOADED:
-            [_downloadEpisodeButton setAlpha:0];
-            [_downloadProgressView setAlpha:0];
+        case IGEpisodeDownloadStatusDownloaded:
+            NSLog(@"Episode %@ downloaded", self.episodeTitleLabel.text);
+            [_downloadProgressView setAlpha:0.0f];
+            [_downloadEpisodeButton setAlpha:0.0f];
             break;
-            
-        case IG_DOWNLOADING:
-            [self observeDownloadingEpisodeNotification];
-            [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"]
-                                    forState:UIControlStateNormal];
+         
+        case IGEpisodeDownloadStatusDownloading:
+            NSLog(@"Episode %@ downloading", self.episodeTitleLabel.text);
             [_downloadProgressView setAlpha:1.0f];
-            break;
-            
-        case IG_DOWNLOADING_PAUSED:
             [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-resume-button"]
-                                    forState:UIControlStateNormal];
-            [_downloadProgressView setAlpha:1.0f];
+            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"] forState:UIControlStateNormal];
             break;
             
-        case IG_NOT_DOWNLOADED:
+        case IGEpisodeDownloadStatusNotDownloaded:
+            NSLog(@"Episode %@ not downloaded", self.episodeTitleLabel.text);
+            [_downloadProgressView setAlpha:0.0f];
             [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-start-button"]
-                                    forState:UIControlStateNormal];
-            [_downloadProgressView setAlpha:0];
-            [_downloadProgressView setProgress:0];
+            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-start-button"] forState:UIControlStateNormal];
             break;
-            
         default:
             break;
     }
 }
 
-- (void)setPlaybackStatus:(IGPlaybackStatus)playbackStatus
+- (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
 {
-    _playbackStatus = playbackStatus;
-        
-    switch (playbackStatus) 
+    _playedStatus = playedStatus;
+    
+    switch (playedStatus)
     {
-        case IG_STOPPED:
-            if (!_played && _playbackProgress > 0)
-            {
-                [_helperIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
-            }
-            else if (!_played)
-            {
-                [_helperIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
-            }
-            else
-            {
-                [_helperIconImageView setImage:nil];
-            }
+        case IGEpisodePlayedStatusPlayed:
+            NSLog(@"Episode %@ played", self.episodeTitleLabel.text);
+            [_playedStatusIconImageView setImage:nil];
+//            [_episodeDateAndDurationLabel setFrame:CGRectMake(11.0f, 25.0f, 144.0f, 21.0f)];
             break;
             
-        case IG_PAUSED:
-        case IG_PLAYING:
-            [_helperIconImageView setImage:[UIImage imageNamed:@"episode-playing-icon"]];
+        case IGEpisodePlayedStatusHalfPlayed:
+            NSLog(@"Episode %@ half played", self.episodeTitleLabel.text);
+            [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
+//            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
+            break;
+            
+        case IGEpisodePlayedStatusUnplayed:
+            NSLog(@"Episode %@ unplayed", self.episodeTitleLabel.text);
+            [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
+//            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
             break;
             
         default:
@@ -118,9 +99,10 @@
     [_delegate igEpisodeTableViewCell:self
              downloadEpisodeWithTitle:[_episodeTitleLabel text]];
     
-    if (_downloadStatus != IG_DOWNLOADING)
+    if (_downloadStatus != IGEpisodeDownloadStatusDownloading)
     {
-        [self setDownloadStatus:IG_DOWNLOADING];
+        [self observeDownloadingEpisodeNotification];
+        [self setDownloadStatus:IGEpisodeDownloadStatusDownloading];
     }
 }
 
@@ -145,12 +127,12 @@
         
         if ([[userInfo valueForKey:@"isCancelled"] boolValue])
         {
-            [self setDownloadStatus:IG_DOWNLOADING_PAUSED];
+            [self setDownloadStatus:IGEpisodeDownloadStatusDownloading];
             [[NSNotificationCenter defaultCenter] removeObserver:dataObserver];
         }
         else if ([[userInfo valueForKey:@"isFinished"] boolValue])
         {
-            [self setDownloadStatus:IG_DOWNLOADED];
+            [self setDownloadStatus:IGEpisodeDownloadStatusDownloaded];
             [[NSNotificationCenter defaultCenter] removeObserver:dataObserver];
         }
         else

@@ -23,19 +23,6 @@
 
 @protocol IGEpisodeTableViewCellDelegate;
 
-typedef enum {
-    IG_DOWNLOADED,
-    IG_DOWNLOADING,
-    IG_DOWNLOADING_PAUSED,
-    IG_NOT_DOWNLOADED
-} IGDownloadStatus;
-
-typedef enum {
-    IG_PAUSED,
-    IG_PLAYING,
-    IG_STOPPED,
-} IGPlaybackStatus;
-
 /**
  * The IGEpisodeTableViewCell class defines the attributes and behaviour of the cells that appear in IGEpisodesListViewController's UITableView.
  */
@@ -53,8 +40,6 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UILabel *episodeDateAndDurationLabel;
 
 /**
- * Returns the download episode button of the table cell.
- *
  * Returns the download episode button (UIButton object) of the table cell. The image is set by setting the downloadStatus object.
  *
  * @see downloadStatus
@@ -69,11 +54,9 @@ typedef enum {
 /**
  * Returns the helper icon image view of the table cell.
  *
- * Returns the helper icon image view (UIImageView object) of the table cell. The image is set by setting the playbackStatus object.
- *
- * @see playbackStatus
+ * @see playedStatus
  */
-@property (strong, nonatomic) IBOutlet UIImageView *helperIconImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *playedStatusIconImageView;
 
 /**
  * Returns the download progress view of the table cell.
@@ -83,26 +66,14 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet DACircularProgressView *downloadProgressView;
 
 /**
- * Indicates the current progress of the episode.
- *
- * Used to determine if episode has been half played.
- */
-@property (nonatomic) float playbackProgress;
-
-/**
- * Returns YES if episode has been played, NO otherwise.
- */
-@property (nonatomic) BOOL played;
-
-/**
  * Returns the download status of the episode.
  */
-@property (nonatomic) IGDownloadStatus downloadStatus;
+@property (nonatomic) IGEpisodeDownloadStatus downloadStatus;
 
 /**
- * Returns the playback status of the episode.
+ * Returns the played status of the episode.
  */
-@property (nonatomic) IGPlaybackStatus playbackStatus;
+@property (nonatomic) IGEpisodePlayedStatus playedStatus;
 
 /**
  * The object that acts as the delegate of the receiving episode table view cell.

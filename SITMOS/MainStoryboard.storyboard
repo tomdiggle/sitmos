@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C3012" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
     <dependencies>
         <development version="4500" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
         <!--Episodes List View Controller - SITMOS-->
@@ -35,22 +35,22 @@
                                                         <constraint firstAttribute="height" constant="21" id="1M5-uU-4CU"/>
                                                         <constraint firstAttribute="width" constant="117" id="7aw-DD-ule"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Date - Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BS9-Zv-AAN" userLabel="Episode Published Date &amp; Time Label">
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="160" id="1QD-6P-NA9"/>
                                                         <constraint firstAttribute="height" constant="21" id="6lp-2L-jUl"/>
-                                                        <constraint firstAttribute="width" constant="144" id="JOK-YH-WsJ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKo-8d-EBW" userLabel="Helper Icon">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKo-8d-EBW" userLabel="Played Status Icon">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="DtH-Xn-o2d"/>
+                                                        <constraint firstAttribute="height" constant="14" id="HFQ-ay-gkp"/>
                                                         <constraint firstAttribute="width" constant="10" id="xgW-rb-5qj"/>
                                                     </constraints>
                                                 </imageView>
@@ -94,28 +94,28 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="Gja-eO-WLS" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" constant="6" id="1Lp-ZD-b9d"/>
-                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="BS9-Zv-AAN" secondAttribute="leading" type="default" id="31a-Cz-gCS"/>
                                             <constraint firstItem="Qty-Bq-yU4" firstAttribute="bottom" secondItem="m0Z-5z-vuV" secondAttribute="bottom" type="default" id="3fG-Dw-5GX"/>
                                             <constraint firstItem="m0Z-5z-vuV" firstAttribute="leading" secondItem="Sjp-Hz-nmv" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="71H-Em-XYQ"/>
-                                            <constraint firstItem="tKo-8d-EBW" firstAttribute="leading" secondItem="Itm-hO-l8f" secondAttribute="leading" constant="11" id="BFM-Uv-82v"/>
+                                            <constraint firstItem="BS9-Zv-AAN" firstAttribute="centerY" secondItem="tKo-8d-EBW" secondAttribute="centerY" type="default" id="I31-ya-v0G"/>
                                             <constraint firstItem="m0Z-5z-vuV" firstAttribute="leading" secondItem="Qty-Bq-yU4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Jvl-3d-RgG"/>
+                                            <constraint firstItem="Sjp-Hz-nmv" firstAttribute="centerY" secondItem="Itm-hO-l8f" secondAttribute="centerY" type="default" id="Q3a-3j-FcG"/>
+                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="Itm-hO-l8f" secondAttribute="leading" constant="11" id="S31-Ea-NBm"/>
                                             <constraint firstItem="Sjp-Hz-nmv" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" constant="10" id="V7g-4b-5mR"/>
                                             <constraint firstItem="m0Z-5z-vuV" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" type="default" id="XaR-TZ-Uod"/>
                                             <constraint firstItem="Qty-Bq-yU4" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" type="default" id="YAU-t6-a9y"/>
                                             <constraint firstItem="m0Z-5z-vuV" firstAttribute="trailing" secondItem="Itm-hO-l8f" secondAttribute="trailing" type="default" id="aR5-aJ-VkY"/>
-                                            <constraint firstItem="Sjp-Hz-nmv" firstAttribute="centerY" secondItem="tKo-8d-EBW" secondAttribute="centerY" type="default" id="jyO-Qm-YKx"/>
-                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="Itm-hO-l8f" secondAttribute="leading" constant="31" id="meX-uA-e8T"/>
-                                            <constraint firstAttribute="bottom" secondItem="BS9-Zv-AAN" secondAttribute="bottom" constant="4" id="rRh-zm-58n"/>
+                                            <constraint firstAttribute="bottom" secondItem="BS9-Zv-AAN" secondAttribute="bottom" constant="4" id="aiM-th-vyV"/>
+                                            <constraint firstItem="tKo-8d-EBW" firstAttribute="leading" secondItem="BS9-Zv-AAN" secondAttribute="leading" type="default" id="fF9-5R-2Yd"/>
                                             <constraint firstItem="Qty-Bq-yU4" firstAttribute="leading" secondItem="Sjp-Hz-nmv" secondAttribute="leading" type="default" id="xoh-yj-cEi"/>
-                                            <constraint firstItem="tKo-8d-EBW" firstAttribute="centerY" secondItem="Itm-hO-l8f" secondAttribute="centerY" type="default" id="zDb-B0-01m"/>
+                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="tKo-8d-EBW" secondAttribute="leading" type="default" id="xqp-42-qUC"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="downloadEpisodeButton" destination="Qty-Bq-yU4" id="Cd4-4M-HXv"/>
                                             <outlet property="downloadProgressView" destination="Sjp-Hz-nmv" id="Tmn-4b-dRD"/>
                                             <outlet property="episodeDateAndDurationLabel" destination="BS9-Zv-AAN" id="qbn-rt-8Ae"/>
                                             <outlet property="episodeTitleLabel" destination="Gja-eO-WLS" id="umG-D9-8z2"/>
-                                            <outlet property="helperIconImageView" destination="tKo-8d-EBW" id="sRc-PS-yhI"/>
                                             <outlet property="moreInfoButton" destination="m0Z-5z-vuV" id="TSp-yB-Yrv"/>
+                                            <outlet property="playedStatusIconImageView" destination="tKo-8d-EBW" id="dk7-IW-ses"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -618,17 +618,20 @@
         <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
             <relationships>
+                <relationship kind="action" name="downloadButtonTapped:"/>
+                <relationship kind="action" name="moreInfoButtonTapped:"/>
                 <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
                 <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="helperIconImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="moreInfoButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playedStatusIconImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
