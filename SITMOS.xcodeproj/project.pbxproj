@@ -103,6 +103,13 @@
 		32523C761683AAEE006E9FFB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
 		32523C771683AAEE006E9FFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C43145F1D8B008698DC /* Foundation.framework */; };
 		32523C7D1683AAEE006E9FFB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 32523C7B1683AAEE006E9FFB /* InfoPlist.strings */; };
+		32523C891683AC27006E9FFB /* IGMediaPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523C881683AC27006E9FFB /* IGMediaPlayerTests.m */; };
+		32523C921683AD3F006E9FFB /* IGMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 328E276A153DDFB0005AE70B /* IGMediaPlayer.m */; };
+		32523C931683AD53006E9FFB /* IGDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290193D15D18A4A00104FD8 /* IGDefines.m */; };
+		32523C941683AE20006E9FFB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
+		32523C951683AE29006E9FFB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322AD78C153613BA00988B31 /* MediaPlayer.framework */; };
+		32523C961683AE2C006E9FFB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
+		32523C971683AE59006E9FFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		325920A115DC185100345666 /* previous-track-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3259209F15DC185100345666 /* previous-track-button.png */; };
 		325920A215DC185100345666 /* previous-track-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A015DC185100345666 /* previous-track-button@2x.png */; };
 		325920A615DC1B5700345666 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A415DC1B5700345666 /* play-button.png */; };
@@ -302,6 +309,8 @@
 		32523C7A1683AAEE006E9FFB /* SITMOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SITMOSTests-Info.plist"; sourceTree = "<group>"; };
 		32523C7C1683AAEE006E9FFB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32523C811683AAEE006E9FFB /* SITMOSTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SITMOSTests-Prefix.pch"; sourceTree = "<group>"; };
+		32523C871683AC27006E9FFB /* IGMediaPlayerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMediaPlayerTests.h; sourceTree = "<group>"; };
+		32523C881683AC27006E9FFB /* IGMediaPlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMediaPlayerTests.m; sourceTree = "<group>"; };
 		3259209F15DC185100345666 /* previous-track-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous-track-button.png"; sourceTree = "<group>"; };
 		325920A015DC185100345666 /* previous-track-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "previous-track-button@2x.png"; sourceTree = "<group>"; };
 		325920A415DC1B5700345666 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
@@ -397,6 +406,10 @@
 				32523C751683AAEE006E9FFB /* SenTestingKit.framework in Frameworks */,
 				32523C761683AAEE006E9FFB /* UIKit.framework in Frameworks */,
 				32523C771683AAEE006E9FFB /* Foundation.framework in Frameworks */,
+				32523C941683AE20006E9FFB /* AudioToolbox.framework in Frameworks */,
+				32523C951683AE29006E9FFB /* MediaPlayer.framework in Frameworks */,
+				32523C961683AE2C006E9FFB /* AVFoundation.framework in Frameworks */,
+				32523C971683AE59006E9FFB /* CoreMedia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +742,8 @@
 			isa = PBXGroup;
 			children = (
 				32523C791683AAEE006E9FFB /* Supporting Files */,
+				32523C871683AC27006E9FFB /* IGMediaPlayerTests.h */,
+				32523C881683AC27006E9FFB /* IGMediaPlayerTests.m */,
 			);
 			path = SITMOSTests;
 			sourceTree = "<group>";
@@ -1125,6 +1140,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32523C891683AC27006E9FFB /* IGMediaPlayerTests.m in Sources */,
+				32523C921683AD3F006E9FFB /* IGMediaPlayer.m in Sources */,
+				32523C931683AD53006E9FFB /* IGDefines.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
