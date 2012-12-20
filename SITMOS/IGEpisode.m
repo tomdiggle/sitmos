@@ -143,6 +143,8 @@
     return NO;
 }
 
+#pragma mark - Played/Unplayed Management
+
 - (void)markAsPlayed:(BOOL)isPlayed
 {
     [self setPlayed:[NSNumber numberWithBool:isPlayed]];
@@ -159,6 +161,38 @@
 - (BOOL)isPlayed
 {
     return [[self played] boolValue];
+}
+
+- (IGEpisodePlayedStatus)playedStatus
+{
+    if ([self isPlayed])
+    {
+        return IGEpisodePlayedStatusPlayed;
+    }
+    else if (![self isPlayed] && [[self progress] isEqualToNumber:@0])
+    {
+        return IGEpisodePlayedStatusHalfPlayed;
+    }
+    else
+    {
+        return IGEpisodePlayedStatusUnplayed;
+    }
+}
+
+- (IGEpisodeDownloadStatus)downloadStatus
+{
+    if ([self isCompletelyDownloaded])
+    {
+        return IGEpisodeDownloadStatusDownloaded;
+    }
+    else if ([self isPartiallyDownloaded])
+    {
+        return IGEpisodeDownloadStatusDownloading;
+    }
+    else
+    {
+        return IGEpisodeDownloadStatusNotDownloaded;
+    }
 }
 
 - (IGEpisode *)nextEpisode

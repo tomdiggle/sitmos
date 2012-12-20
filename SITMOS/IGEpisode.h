@@ -79,9 +79,7 @@
  */
 
 /**
- * Returns the full file path of the episode.
- *
- * Episodes are stored in <APP>/Library/Caches/Episodes
+ * Returns the full file path of the episode. Episodes are stored in "<APP>/Library/Caches/Episodes".
  */
 - (NSString *)filePath;
 
@@ -154,6 +152,16 @@
  * @return YES if the episode has been played, NO otherwise.
  */
 - (BOOL)isPlayed;
+
+/**
+ * Returns the played status of the episode.
+ */
+- (IGEpisodePlayedStatus)playedStatus;
+
+/**
+ * Returns the download status of the episode.
+ */
+- (IGEpisodeDownloadStatus)downloadStatus;
 
 #pragma mark - Next/Previous Episode
 
