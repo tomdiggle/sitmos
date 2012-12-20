@@ -196,7 +196,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 #pragma mark - Managing Playback
 
 - (void)startWithContentURL:(NSURL *)url
-{    
+{
+    NSParameterAssert(url != nil);
+    
     if ([url isEqual:_contentURL])
     {
         [self play];
