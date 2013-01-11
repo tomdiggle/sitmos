@@ -57,9 +57,6 @@ extern NSString * const IGSITMOSFeedURL;
 /* */
 extern NSString * const IGSITMOSErrorDomain;
 
-/* */
-extern NSString * const IGDateFormat;
-
 /* Fonts */
 extern NSString * const IGFontNameRegular;
 extern NSString * const IGFontNameMedium;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -19,12 +19,14 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@interface IGFeedRefreshOperation : NSOperation
+#import "AFHTTPClient.h"
 
-+ (IGFeedRefreshOperation *)refreshFeedWithURL:(NSURL *)url;
+@class IGRSSXMLRequestOperation;
 
-@property BOOL isFinished;
-@property BOOL isExecuting;
-@property BOOL isCancelled;
+@interface IGHTTPClient : AFHTTPClient
+
++ (IGHTTPClient *)sharedClient;
+
+- (void)syncPodcastFeedWithSuccess:(void(^)(void))success failure:(void (^)(NSError *error))failure;
 
 @end

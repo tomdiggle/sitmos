@@ -23,7 +23,6 @@
 #import "IGEpisodeTableViewCell.h"
 #import "IGEpisode.h"
 #import "IGAudioPlayerViewController.h"
-#import "IGFeedRefreshOperation.h"
 #import "IGEpisodeDownloadOperation.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGSettingsViewController.h"
@@ -35,6 +34,7 @@
 #import "UIAlertView+Blocks.h"
 #import "DACircularProgressView.h"
 #import "Reachability.h"
+#import "IGHTTPClient.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeMoreInfoViewControllerDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
@@ -523,14 +523,13 @@
 
 - (void)refreshFeed
 {
-    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-    IGFeedRefreshOperation *operation = [IGFeedRefreshOperation refreshFeedWithURL:[NSURL URLWithString:IGSITMOSFeedURL]];
-    operation.completionBlock = ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self doneLoadingTableViewData];
-        });
-    };
-    [operationQueue addOperation:operation];
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    [httpClient syncPodcastFeedWithSuccess:^{
+        [self doneLoadingTableViewData];
+    } failure:^(NSError *error) {
+        // handle error
+        [self doneLoadingTableViewData];
+    }];
 }
 
 - (void)reloadTableViewDataSource

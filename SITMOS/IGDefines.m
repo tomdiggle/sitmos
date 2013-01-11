@@ -37,9 +37,6 @@ NSString * const IGSITMOSFeedURL = @"http://www.dereksweet.com/sitmos/sitmos.xml
 /* */
 NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
 
-/* */
-NSString * const IGDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
-
 /* Fonts */
 NSString * const IGFontNameRegular = @"Ubuntu";
 NSString * const IGFontNameMedium = @"Ubuntu-Medium";

@@ -24,7 +24,7 @@
 
 #import "IGInitialSetup.h"
 #import "IGAppDelegate.h"
-#import "IGFeedRefreshOperation.h"
+#import "IGHTTPClient.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
 #import "MBProgressHUD.h"
@@ -202,9 +202,8 @@
     _HUD.labelText = NSLocalizedString(@"FetchingFeed", @"text label for fetching feed");
     _HUD.detailsLabelText = nil;
     
-    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-    IGFeedRefreshOperation *operation = [IGFeedRefreshOperation refreshFeedWithURL:[NSURL URLWithString:IGSITMOSFeedURL]];
-    operation.completionBlock = ^{
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    [httpClient syncPodcastFeedWithSuccess:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             // Must be called on main thread so the HUD gets hidden
             _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
@@ -212,8 +211,10 @@
             _HUD.labelText = NSLocalizedString(@"Completed", @"text label for Completed");
             [_HUD hide:YES afterDelay:1];
         });
-    };
-    [operationQueue addOperation:operation];
+    } failure:^(NSError *error) {
+        // handle error
+        NSLog(@"error %@", error);
+    }];
 }
 
 #pragma mark - Import Episodes

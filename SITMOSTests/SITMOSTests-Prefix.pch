@@ -5,7 +5,8 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-//    #import "CoreData+MagicalRecord.h"
+    #import <CoreData/CoreData.h>
+    #import "CoreData+MagicalRecord.h"
 //    #import "NSDate+Helper.h"
     #import "IGDefines.h"
     #import "IGMediaPlayer.h"
