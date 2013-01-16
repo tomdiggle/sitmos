@@ -21,8 +21,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const IGEpisodeParserDateFormat;
+
 @interface IGEpisodeParser : NSObject
 
-+ (IGEpisodeParser *)EpisodeParserWithXMLParser:(NSXMLParser *)XMLParser success:(void(^)(NSArray *episodes))success failure:(void (^)(NSError *error))failure;
++ (IGEpisodeParser *)EpisodeParserWithXMLParser:(NSXMLParser *)XMLParser success:(void (^)(void))success failure:(void (^)(NSError *error))failure;
 
 @end

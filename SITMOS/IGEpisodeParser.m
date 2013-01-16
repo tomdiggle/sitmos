@@ -20,11 +20,14 @@
  */
 
 #import "IGEpisodeParser.h"
+#import "IGEpisode.h"
+
+NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 @interface IGEpisodeParser () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSXMLParser *XMLParser;
-@property (nonatomic, copy) void (^success)(NSArray *episodes);
+@property (nonatomic, copy) void (^success)(void);
 @property (nonatomic, copy) void (^failure)(NSError *error);
 @property (nonatomic, strong) NSMutableDictionary *currentEpisode;
 @property (nonatomic, strong) NSMutableArray *episodes;
@@ -34,7 +37,7 @@
 
 @implementation IGEpisodeParser
 
-+ (IGEpisodeParser *)EpisodeParserWithXMLParser:(NSXMLParser *)XMLParser success:(void(^)(NSArray *episodes))success failure:(void (^)(NSError *error))failure
++ (IGEpisodeParser *)EpisodeParserWithXMLParser:(NSXMLParser *)XMLParser success:(void (^)(void))success failure:(void (^)(NSError *error))failure
 {
     IGEpisodeParser *episodeParser = [[IGEpisodeParser alloc] initWithXMLParser:XMLParser success:success failure:failure];
     [episodeParser start];
@@ -42,7 +45,7 @@
     return episodeParser;
 }
 
-- (id)initWithXMLParser:(NSXMLParser *)XMLParser success:(void(^)(NSArray *episodes))success failure:(void (^)(NSError *error))failure
+- (id)initWithXMLParser:(NSXMLParser *)XMLParser success:(void (^)(void))success failure:(void (^)(NSError *error))failure
 {
     if (!(self = [super init]))
     {
@@ -121,13 +124,61 @@
     
     if ([elementName isEqualToString:@"rss"])
     {
-        _success(_episodes);
+        [self buildEpisodes];
     }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     [_tmpString appendString:string];
+}
+
+#pragma mark - Build Episodes
+
+/*
+ Builds the episodes from parsed xml data and saves them into the Core Data stack.
+ */
+- (void)buildEpisodes
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
+    NSDate *latestEpisodePubDate = [dateFormatter dateFromString:[[_episodes lastObject] valueForKey:@"pubDate"]];
+    
+    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
+        [_episodes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *title = [obj objectForKey:@"title"];
+            NSArray *anyDuplicates = [IGEpisode MR_findByAttribute:@"title"
+                                                         withValue:title];
+            if ([anyDuplicates count] == 0)
+            {
+                IGEpisode *episode = [IGEpisode MR_createInContext:localContext];
+                [episode setTitle:title];
+                [episode setSummary:[obj objectForKey:@"summary"]];
+                [episode setDownloadURL:[obj objectForKey:@"url"]];
+                [episode setType:[obj objectForKey:@"type"]];
+                [episode setDuration:[obj objectForKey:@"duration"]];
+                
+                NSDate *episodePubDate = [dateFormatter dateFromString:[obj objectForKey:@"pubDate"]];
+                [episode setPubDate:episodePubDate];
+                
+                NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+                [episode setFileSize:[numberFormatter numberFromString:[obj objectForKey:@"length"]]];
+                numberFormatter = nil;
+                
+                NSString *episodeFileName = [NSString stringWithFormat:@"%@.mp3", title];
+                [episode setFileName:episodeFileName];
+                
+                // Only mark the latest episode as unplayed
+                if ([episodePubDate isEqualToDate:latestEpisodePubDate])
+                {
+                    [episode markAsPlayed:NO];
+                }
+            }
+        }];
+//            [localContext MR_saveNestedContexts];
+    } completion:^{
+        _success();
+    }];
 }
 
 @end

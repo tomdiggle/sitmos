@@ -22,7 +22,6 @@
 #import "IGHTTPClient.h"
 #import "IGRSSXMLRequestOperation.h"
 #import "IGEpisodeParser.h"
-#import "IGEpisodeBuilder.h"
 
 @implementation IGHTTPClient
 
@@ -45,15 +44,11 @@
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:IGEpisodeBuilderDateFormat];
+        [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
         if ([self podcastfeedModified:[dateFormatter dateFromString:[[response allHeaderFields] valueForKey:@"Last-Modified"]]])
         {
-            [IGEpisodeParser EpisodeParserWithXMLParser:XMLParser success:^(NSArray *episodes) {
-                [IGEpisodeBuilder EpisodeBuilderWithEpisodes:episodes success:^{
-                    success();
-                } failure:^(NSError *error) {
-                    failure(error);
-                }];
+            [IGEpisodeParser EpisodeParserWithXMLParser:XMLParser success:^{
+                success();
             } failure:^(NSError *error) {
                 failure(error);
             }];
@@ -74,7 +69,7 @@
 - (BOOL)podcastfeedModified:(NSDate *)lastModifiedDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:IGEpisodeBuilderDateFormat];
+    [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDate *feedLastRefreshed = [dateFormatter dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]];
     
