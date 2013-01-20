@@ -52,9 +52,6 @@ extern NSString * const IGMediaPlayerPlaybackBufferEmptyNotification;
 extern NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification;
 
 /* */
-extern NSString * const IGSITMOSFeedURL;
-
-/* */
 extern NSString * const IGSITMOSErrorDomain;
 
 /* Fonts */

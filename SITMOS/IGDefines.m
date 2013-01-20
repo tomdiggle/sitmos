@@ -32,9 +32,6 @@ NSString * const IGMediaPlayerPlaybackBufferEmptyNotification = @"IGMediaPlayerP
 NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"IGMediaPlayerPlaybackLikelyToKeepUpNotification";
 
 /* */
-NSString * const IGSITMOSFeedURL = @"http://www.dereksweet.com/sitmos/sitmos.xml";
-
-/* */
 NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
 
 /* Fonts */
