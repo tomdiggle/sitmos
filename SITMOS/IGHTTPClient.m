@@ -35,11 +35,22 @@
     return sharedClient;
 }
 
+#pragma mark -
+
+- (NSURL *)audioFeedURL
+{
+#ifdef DEVELOPMENT
+    return [NSURL URLWithString:@"https://dl.dropbox.com/u/17688395/sitmos-audio-feed.xml"];
+#else
+    return [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
+#endif
+}
+
 #pragma mark - Sync Podcast Feed
 
 - (void)syncPodcastFeedWithSuccess:(void(^)(void))success failure:(void (^)(NSError *error))failure
 {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:IGSITMOSFeedURL]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[self audioFeedURL]];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
