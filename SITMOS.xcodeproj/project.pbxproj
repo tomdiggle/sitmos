@@ -1318,7 +1318,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"DEVELOPMENT=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -1372,7 +1372,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor/TestFlight\"",
 				);
-				OTHER_CFLAGS = "-DDEBUG";
+				OTHER_CFLAGS = "-DEVELOPMENT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
