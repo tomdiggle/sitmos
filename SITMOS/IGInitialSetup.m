@@ -114,6 +114,12 @@
     
     // Add the HUD view to the appDelegate
     [[_appDelegate window] addSubview:_HUD];
+
+#if TARGET_IPHONE_SIMULATOR
+    // Searching for media while targeting the simulator causes a bunch of errors to be displayed in the console, so just skip it.
+    [self fetchPodcastFeed];
+    return;
+#endif
     
     // Search for any episodes already on the device
     MPMediaPropertyPredicate *albumTitlePredicate = [MPMediaPropertyPredicate predicateWithValue:@"Stuck in the Middle of Somewhere"
