@@ -55,8 +55,6 @@
     self.view.layer.masksToBounds = YES;
     self.view.backgroundColor = kRGBA(245, 245, 245, 1);
     
-    [self applyStylesheet];
-    
     [_episodeTitleLabel setText:[_episode title]];
     [_episodePublishedLabel setText:[NSDate stringFromDate:[_episode pubDate] withFormat:@"dd MMM yyyy"]];
     [_episodeDurationLabel setText:[_episode duration]];
@@ -109,34 +107,6 @@
 - (IBAction)playButtonTapped:(id)sender
 {
     [_delegate igEpisodeMoreInfoViewControllerPlayButtonTapped:self];
-}
-
-#pragma mark - Stylesheet
-
-- (void)applyStylesheet
-{
-    [_publishedLabel setFont:[UIFont fontWithName:IGFontNameMedium
-                                             size:12.0f]];
-    [_durationLabel setFont:[UIFont fontWithName:IGFontNameMedium
-                                            size:12.0f]];
-    [_typeLabel setFont:[UIFont fontWithName:IGFontNameMedium
-                                        size:12.0f]];
-    [_sizeLabel setFont:[UIFont fontWithName:IGFontNameMedium
-                                        size:12.0f]];
-    [_episodeTitleLabel setFont:[UIFont fontWithName:IGFontNameMedium
-                                         size:14.0f]];
-    [_episodePublishedLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                             size:12.0f]];
-    [_episodeDurationLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                            size:12.0f]];
-    [_episodeTypeLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                        size:12.0f]];
-    [_episodeSizeLabel setFont:[UIFont fontWithName:IGFontNameRegular
-                                        size:12.0f]];
-    [_summaryTextView setFont:[UIFont fontWithName:IGFontNameRegular
-                                              size:12.0f]];
-    [[_playButton titleLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                                      size:12.0f]];
 }
 
 @end
