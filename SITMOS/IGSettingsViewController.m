@@ -94,7 +94,7 @@
         [[cell textLabel] setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
         [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
                                                   size:17.0f]];
-        [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
         if (indexPath.row == 0)
         {
