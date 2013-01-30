@@ -39,6 +39,7 @@ typedef enum {
     IGEpisodeDownloadStatusDownloaded,
     IGEpisodeDownloadStatusNotDownloaded,
     IGEpisodeDownloadStatusDownloading,
+    IGEpisodeDownloadStatusDownloadingPaused
 } IGEpisodeDownloadStatus;
 
 /* */

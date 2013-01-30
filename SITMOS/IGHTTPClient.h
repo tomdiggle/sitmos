@@ -23,10 +23,81 @@
 
 @class IGRSSXMLRequestOperation;
 
+extern NSString * const IGHTTPClientNetworkErrorDomain;
+
+typedef enum {
+    IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed
+} IGHTTPClientNetworkError;
+
+/**
+ * The IGHTTPClient class provides a centralized point of control for network connections.
+ *
+ * You can access this object by invoking the sharedClient class method.
+ *
+ *      IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
+ */
+
 @interface IGHTTPClient : AFHTTPClient
 
+/**
+ * The current download request operations. (read-only)
+ */
+@property (nonatomic, strong, readonly) NSMutableArray *downloadRequestOperations;
+
+#pragma mark - Getting the HTTP Client Instance
+
+/**
+ * @name Getting the HTTP Client Instance
+ */
+
+/**
+ * Returns the singleton HTTP client instance.
+ *
+ * @return The HTTP client instance.
+ */
 + (IGHTTPClient *)sharedClient;
 
-- (void)syncPodcastFeedWithSuccess:(void(^)(void))success failure:(void (^)(NSError *error))failure;
+#pragma mark - Syncing Podcast Feed
+
+/**
+ * @name Syncing Podcast Feed
+ */
+
+/**
+ * Syncs the podcast feed and executes a handler block when the request successful or fails.
+ *
+ * @param The success handler block to execute.
+ * @param The failure handler block to execute.
+ */
+- (void)syncPodcastFeedWithSuccess:(void (^)(void))success
+                           failure:(void (^)(NSError *error))failure;
+
+#pragma mark - Downloading Episode
+
+/**
+ * @name Downloading Episode
+ */
+
+/**
+ * Starts downloading the episode from the downloadURL parameter and saves to the saveToURL parameter. While download is in progress the downloadProgress handler block is executed, if download is successful the success handler block is executed or if download fails the failure handler block is executed. The download operation is added to the downloadRequestOperations array and removed if download is successful or fails.
+ *
+ * @param The URL to download the episode from.
+ * @param The URL to save the download to.
+ * @param The download progress handler block to execute.
+ * @param The success handler block to execute.
+ * @param The failure handler block to execute.
+ */
+- (void)downloadEpisodeWithURL:(NSURL *)downloadURL
+                     saveToURL:(NSURL *)saveToURL
+              downloadProgress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))downloadProgress
+                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+/**
+ * Returns the AFHTTPRequestOperation for the given URL.
+ *
+ * @return The request operation. Returns nil if a request operation is not found.
+ */
+- (AFHTTPRequestOperation *)requestOperationForURL:(NSURL *)url;
 
 @end

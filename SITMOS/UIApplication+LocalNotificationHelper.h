@@ -19,24 +19,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//
-// Prefix header for all source files of the 'SITMOS' target in the 'SITMOS' project
-//
+#import <UIKit/UIKit.h>
 
-#import <Availability.h>
+@interface UIApplication (LocalNotificationHelper)
 
-#ifndef __IPHONE_6_0
-#warning "This project uses features only available in iOS SDK 6.0 and later."
-#endif
++ (void)scheduleLocalNotificationWithParameters:(NSDictionary *)parameters;
 
-#ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import <SystemConfiguration/SystemConfiguration.h>
-    #import <MobileCoreServices/MobileCoreServices.h>
-    #import <CoreData/CoreData.h>
-    #import "CoreData+MagicalRecord.h"
-    #import "NSDate+Helper.h"
-    #import "IGDefines.h"
-    #import "IGMediaPlayer.h"
-#endif
+@end

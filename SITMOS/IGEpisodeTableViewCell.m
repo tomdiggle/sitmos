@@ -40,23 +40,26 @@
     switch (downloadStatus)
     {
         case IGEpisodeDownloadStatusDownloaded:
-            NSLog(@"Episode %@ downloaded", self.episodeTitleLabel.text);
             [_downloadProgressView setAlpha:0.0f];
             [_downloadEpisodeButton setAlpha:0.0f];
             break;
          
         case IGEpisodeDownloadStatusDownloading:
-            NSLog(@"Episode %@ downloading", self.episodeTitleLabel.text);
             [_downloadProgressView setAlpha:1.0f];
             [_downloadEpisodeButton setAlpha:1.0f];
             [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"] forState:UIControlStateNormal];
             break;
             
         case IGEpisodeDownloadStatusNotDownloaded:
-            NSLog(@"Episode %@ not downloaded", self.episodeTitleLabel.text);
             [_downloadProgressView setAlpha:0.0f];
             [_downloadEpisodeButton setAlpha:1.0f];
             [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-start-button"] forState:UIControlStateNormal];
+            break;
+            
+            case IGEpisodeDownloadStatusDownloadingPaused:
+            [_downloadProgressView setAlpha:1.0f];
+            [_downloadEpisodeButton setAlpha:1.0f];
+            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-resume-button"] forState:UIControlStateNormal];
             break;
         default:
             break;
@@ -96,52 +99,16 @@
 
 - (IBAction)downloadButtonTapped:(id)sender
 {
-    [_delegate igEpisodeTableViewCell:self
-             downloadEpisodeWithTitle:[_episodeTitleLabel text]];
+    if (![sender isKindOfClass:[UIButton class]]) return;
     
-    if (_downloadStatus != IGEpisodeDownloadStatusDownloading)
-    {
-        [self observeDownloadingEpisodeNotification];
-        [self setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-    }
+    [_delegate igEpisodeTableViewCell:self
+             downloadEpisodeButtonTapped:sender];
 }
 
 - (IBAction)moreInfoButtonTapped:(id)sender
 {
     [_delegate igEpisodeTableViewCell:self
  displayMoreInfoAboutEpisodeWithTitle:[_episodeTitleLabel text]];
-}
-
-#pragma mark - Observe Downloading Episode Notification
-
-/**
- * Invoked while episdoe is downloading. Observes the download progress notification while the download is in progress it
- * will update the download progress view. When the download is complete it will remove download progress view from view
- * and remove the observer.
- */
-- (void)observeDownloadingEpisodeNotification
-{
-    __block NSNotification *dataObserver = [[NSNotificationCenter defaultCenter] addObserverForName:IGDownloadProgressNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        NSDictionary *userInfo = [note userInfo];
-        if (![[_episodeTitleLabel text] isEqual:[userInfo valueForKey:@"episodeTitle"]]) return;
-        
-        if ([[userInfo valueForKey:@"isCancelled"] boolValue])
-        {
-            [self setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-            [[NSNotificationCenter defaultCenter] removeObserver:dataObserver];
-        }
-        else if ([[userInfo valueForKey:@"isFinished"] boolValue])
-        {
-            [self setDownloadStatus:IGEpisodeDownloadStatusDownloaded];
-            [[NSNotificationCenter defaultCenter] removeObserver:dataObserver];
-        }
-        else
-        {
-            CGFloat progress = [[userInfo valueForKey:@"bytesDownloaded"] floatValue] / [[userInfo valueForKey:@"contentLength"] floatValue];
-            [_downloadProgressView setProgress:progress
-                                      animated:YES];
-        }
-    }];
 }
 
 @end

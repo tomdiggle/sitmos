@@ -19,15 +19,21 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@class IGEpisode;
+#import "UIApplication+LocalNotificationHelper.h"
 
-@interface IGEpisodeDownloadOperation : NSOperation
+@implementation UIApplication (LocalNotificationHelper)
 
-@property (strong, nonatomic) IGEpisode *episode;
-@property BOOL isFinished;
-@property BOOL isExecuting;
-@property BOOL isCancelled;
-
-+ (id)operationWithEpisode:(IGEpisode *)episode;
++ (void)scheduleLocalNotificationWithParameters:(NSDictionary *)parameters
+{
+    NSParameterAssert(parameters != nil);
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    [localNotification setFireDate:[parameters valueForKey:@"fireDate"]];
+    [localNotification setTimeZone:[parameters valueForKey:@"timeZone"]];
+    [localNotification setAlertAction:[parameters valueForKey:@"alertAction"]];
+    [localNotification setAlertBody:[parameters valueForKey:@"alertBody"]];
+    [localNotification setSoundName:[parameters valueForKey:@"soundName"]];
+    [[self sharedApplication] scheduleLocalNotification:localNotification];
+}
 
 @end

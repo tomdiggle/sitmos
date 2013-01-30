@@ -116,7 +116,7 @@
 "DownloadingWithCellularDataTitle" = "Downloading with Cellular Data?";
 
 /* text label for downloading with cellular data message */
-"DownloadingWithCellularDataMessage" = "There is currently no WiFi available. Do you really want to use cellular data for downloading this episode?";
+"DownloadingWithCellularDataMessage" = "Downloading with cellular data is switched off. Do you want to switch it on?";
 
 /* text label for never */
 "Never" = "Never";
@@ -162,3 +162,9 @@
 
 /* accessibility hint for pauses episdoe */
 "PausesEpisode" = "Pauses episode.";
+
+/* text label for successfully downloaded episode */
+"SuccessfullyDownloadedEpisode" = "Successfully downloaded %@";
+
+/* text label for failed to download episode */
+"FailedToDownloadEpisode" = "Failed to download %@";

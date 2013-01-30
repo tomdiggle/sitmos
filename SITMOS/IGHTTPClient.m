@@ -22,8 +22,19 @@
 #import "IGHTTPClient.h"
 #import "IGRSSXMLRequestOperation.h"
 #import "IGEpisodeParser.h"
+#import "AFNetworkActivityIndicatorManager.h"
+
+NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDomain";
+
+@interface IGHTTPClient ()
+
+@property (nonatomic, strong, readwrite) NSMutableArray *downloadRequestOperations;
+
+@end
 
 @implementation IGHTTPClient
+
+#pragma mark - Class Methods
 
 + (IGHTTPClient *)sharedClient
 {
@@ -35,7 +46,22 @@
     return sharedClient;
 }
 
-#pragma mark -
+#pragma mark - Initializers
+
+- (id)init
+{
+    NSURL *baseURL = [NSURL URLWithString:@"http://www.dereksweet.com/"];
+    
+    if ((self = [super initWithBaseURL:baseURL]))
+    {
+        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        _downloadRequestOperations = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
+#pragma mark - Feed URLs
 
 - (NSURL *)audioFeedURL
 {
@@ -46,9 +72,10 @@
 #endif
 }
 
-#pragma mark - Sync Podcast Feed
+#pragma mark - Syncing Podcast Feed
 
-- (void)syncPodcastFeedWithSuccess:(void(^)(void))success failure:(void (^)(NSError *error))failure
+- (void)syncPodcastFeedWithSuccess:(void (^)(void))success
+                           failure:(void (^)(NSError *error))failure
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[self audioFeedURL]];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
@@ -56,7 +83,7 @@
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
-        if ([self podcastfeedModified:[dateFormatter dateFromString:[[response allHeaderFields] valueForKey:@"Last-Modified"]]])
+        if ([self podcastFeedModified:[dateFormatter dateFromString:[[response allHeaderFields] valueForKey:@"Last-Modified"]]])
         {
             [IGEpisodeParser EpisodeParserWithXMLParser:XMLParser success:^{
                 success();
@@ -75,9 +102,11 @@
 }
 
 /**
- If the last modified date from the response headers is after the feed last refresehed key stored in the user defaults return YES otherwise return NO.
+ * Checks to see if the feed has been modifed since last update.
+ *
+ * @return YES if feed has been modified since last update, NO otherwise.
  */
-- (BOOL)podcastfeedModified:(NSDate *)lastModifiedDate
+- (BOOL)podcastFeedModified:(NSDate *)lastModifiedDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
@@ -93,6 +122,60 @@
     }
     
     return NO;
+}
+
+#pragma mark - Downloading Episode
+
+- (void)downloadEpisodeWithURL:(NSURL *)downloadURL
+                     saveToURL:(NSURL *)saveToURL
+              downloadProgress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))downloadProgress
+                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
+    AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
+    if (!allowCellularDataDownloading && networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN)
+    {
+        // If data downloading is not allowed on cellular return an error
+        NSError *error = [NSError errorWithDomain:IGHTTPClientNetworkErrorDomain
+                                             code:IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed
+                                         userInfo:nil];
+        failure(nil, error);
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:downloadURL];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setOutputStream:[NSOutputStream outputStreamWithURL:saveToURL append:YES]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [_downloadRequestOperations removeObject:operation];
+        success(operation, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [_downloadRequestOperations removeObject:operation];
+        failure(operation, error);
+    }];
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        downloadProgress(bytesRead, totalBytesRead, totalBytesExpectedToRead);
+    }];
+    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
+    
+    [self enqueueHTTPRequestOperation:operation];
+    [_downloadRequestOperations addObject:operation];
+    [operation start];
+}
+
+- (AFHTTPRequestOperation *)requestOperationForURL:(NSURL *)url
+{
+    __block AFHTTPRequestOperation *requestOperation = nil;
+    [_downloadRequestOperations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([[[obj request] URL] isEqual:url])
+        {
+            requestOperation = obj;
+            *stop = YES;
+        }
+    }];
+    
+    return requestOperation;
 }
 
 @end

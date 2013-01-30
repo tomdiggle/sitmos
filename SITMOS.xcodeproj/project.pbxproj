@@ -69,6 +69,9 @@
 		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
 		323923AF167F5E0500301439 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */; };
 		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
+		323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
+		323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
+		323D5A3A16B842F30074E91F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -167,7 +170,6 @@
 		325920AB15DC23D700345666 /* pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A915DC23D700345666 /* pause-button@2x.png */; };
 		326345A815C1D6BB00B30163 /* unplayed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 326345A615C1D6BB00B30163 /* unplayed-icon.png */; };
 		326345A915C1D6BB00B30163 /* unplayed-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 326345A715C1D6BB00B30163 /* unplayed-icon@2x.png */; };
-		3263830B14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3263830A14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m */; };
 		32647680161CC9C000B7A76E /* skipping-back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3264767F161CC9C000B7A76E /* skipping-back-button.png */; };
 		32678CEF147EDE7C007BD110 /* IGEpisodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeTableViewCell.m */; };
 		327766DA160D161B00D7DEF4 /* nav-settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 327766D8160D161B00D7DEF4 /* nav-settings-icon.png */; };
@@ -198,7 +200,6 @@
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
-		32FBC4B416108C7A005078EC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FBC4B316108C7A005078EC /* SystemConfiguration.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
 		32FBC4E81618AFC3005078EC /* nav-button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E61618AFC3005078EC /* nav-button-highlighted.png */; };
 		32FBC4E91618AFC3005078EC /* nav-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E71618AFC3005078EC /* nav-button-highlighted@2x.png */; };
@@ -291,6 +292,10 @@
 		323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		323923AC167F5E0500301439 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		323923AD167F5E0500301439 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
+		323D5A3316B824270074E91F /* UIApplication+LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+LocalNotificationHelper.h"; sourceTree = "<group>"; };
+		323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+LocalNotificationHelper.m"; sourceTree = "<group>"; };
+		323D5A3716B842770074E91F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		323D5A3916B842F30074E91F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
 		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
@@ -394,8 +399,6 @@
 		325920A915DC23D700345666 /* pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-button@2x.png"; sourceTree = "<group>"; };
 		326345A615C1D6BB00B30163 /* unplayed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unplayed-icon.png"; sourceTree = "<group>"; };
 		326345A715C1D6BB00B30163 /* unplayed-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unplayed-icon@2x.png"; sourceTree = "<group>"; };
-		3263830914FEE4FD00EC18BB /* IGEpisodeDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeDownloadOperation.h; sourceTree = "<group>"; };
-		3263830A14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeDownloadOperation.m; sourceTree = "<group>"; };
 		3264767F161CC9C000B7A76E /* skipping-back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skipping-back-button.png"; sourceTree = "<group>"; };
 		32678CED147EDE7C007BD110 /* IGEpisodeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeTableViewCell.h; sourceTree = "<group>"; };
 		32678CEE147EDE7C007BD110 /* IGEpisodeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeTableViewCell.m; sourceTree = "<group>"; };
@@ -433,7 +436,6 @@
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
 		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
-		32FBC4B316108C7A005078EC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
 		32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsEpisodesDeleteViewController.m; sourceTree = "<group>"; };
 		32FBC4E61618AFC3005078EC /* nav-button-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button-highlighted.png"; sourceTree = "<group>"; };
@@ -455,8 +457,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				323D5A3A16B842F30074E91F /* MobileCoreServices.framework in Frameworks */,
+				323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */,
 				32523E69169B2748006E9FFB /* libz.dylib in Frameworks */,
-				32FBC4B416108C7A005078EC /* SystemConfiguration.framework in Frameworks */,
 				3216588715D4600200DA8920 /* MessageUI.framework in Frameworks */,
 				327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */,
 				327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */,
@@ -500,15 +503,6 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		320D2D6E15D594EB00FBBE5E /* Episode Download */ = {
-			isa = PBXGroup;
-			children = (
-				3263830914FEE4FD00EC18BB /* IGEpisodeDownloadOperation.h */,
-				3263830A14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m */,
-			);
-			name = "Episode Download";
-			sourceTree = "<group>";
-		};
 		321D8C32145F1D8B008698DC = {
 			isa = PBXGroup;
 			children = (
@@ -533,19 +527,20 @@
 		321D8C40145F1D8B008698DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32E6BB95152A08EA00C78815 /* AudioToolbox.framework */,
+				327E9FBD1558F96300612C8B /* AVFoundation.framework */,
+				3293D63D148BBC090052B427 /* CoreData.framework */,
+				321D8C45145F1D8B008698DC /* CoreGraphics.framework */,
+				327E9FC11559329A00612C8B /* CoreMedia.framework */,
+				321D8C43145F1D8B008698DC /* Foundation.framework */,
 				32523EDE16ADB986006E9FFB /* GHUnitIOS.framework */,
 				32523E68169B2747006E9FFB /* libz.dylib */,
-				32FBC4B316108C7A005078EC /* SystemConfiguration.framework */,
-				3216588615D4600200DA8920 /* MessageUI.framework */,
-				327E9FC11559329A00612C8B /* CoreMedia.framework */,
-				327E9FBD1558F96300612C8B /* AVFoundation.framework */,
 				322AD78C153613BA00988B31 /* MediaPlayer.framework */,
-				32E6BB95152A08EA00C78815 /* AudioToolbox.framework */,
+				3216588615D4600200DA8920 /* MessageUI.framework */,
+				323D5A3916B842F30074E91F /* MobileCoreServices.framework */,
 				32934D10149E66C400E939C0 /* QuartzCore.framework */,
-				3293D63D148BBC090052B427 /* CoreData.framework */,
+				323D5A3716B842770074E91F /* SystemConfiguration.framework */,
 				321D8C41145F1D8B008698DC /* UIKit.framework */,
-				321D8C43145F1D8B008698DC /* Foundation.framework */,
-				321D8C45145F1D8B008698DC /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -557,8 +552,9 @@
 				321D8C51145F1D8B008698DC /* IGAppDelegate.m */,
 				32FBC54C1619AAA5005078EC /* IGInitialSetup.h */,
 				32FBC54D1619AAA5005078EC /* IGInitialSetup.m */,
+				323D5A3316B824270074E91F /* UIApplication+LocalNotificationHelper.h */,
+				323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */,
 				32523DEB1688BF65006E9FFB /* Networking */,
-				320D2D6E15D594EB00FBBE5E /* Episode Download */,
 				329886871461DE9C006B7BDE /* View Controllers */,
 				32678CEC147EB939007BD110 /* Table View Cells */,
 				328E2767153DDF91005AE70B /* MediaPlayer */,
@@ -1043,7 +1039,7 @@
 		321D8C34145F1D8B008698DC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 321D8C37145F1D8B008698DC /* Build configuration list for PBXProject "SITMOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1171,7 +1167,6 @@
 				32678CEF147EDE7C007BD110 /* IGEpisodeTableViewCell.m in Sources */,
 				3293D647148BBCF20052B427 /* SITMOS.xcdatamodeld in Sources */,
 				329272A814A75F0800119D48 /* IGAudioPlayerViewController.m in Sources */,
-				3263830B14FEE4FD00EC18BB /* IGEpisodeDownloadOperation.m in Sources */,
 				328E276B153DDFB0005AE70B /* IGMediaPlayer.m in Sources */,
 				32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
@@ -1230,6 +1225,7 @@
 				32523F7916ADD1BD006E9FFB /* MagicalRecord+Setup.m in Sources */,
 				32523F7B16ADD1BD006E9FFB /* MagicalRecord+ShorthandSupport.m in Sources */,
 				32523F7D16ADD1BD006E9FFB /* MagicalRecord.m in Sources */,
+				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,6 +1306,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1324,6 +1324,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PROVISIONING_PROFILE = "";
@@ -1338,6 +1339,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -1345,6 +1350,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1508,6 +1514,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -1515,6 +1525,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1581,6 +1592,7 @@
 				32523ED816ADB53B006E9FFB /* Testing */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

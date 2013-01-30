@@ -91,7 +91,7 @@
 @protocol IGEpisodeTableViewCellDelegate <NSObject>
 
 /**
- * Asks the delegate to display more info about the episode with the given title.
+ * Tells the delegate that the user tapped the more info button.
  *
  * @param episodeTableViewCell The episode table view cell object requesting the information.
  * @param title The title of the episode.
@@ -99,11 +99,11 @@
 - (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title;
 
 /**
- * Asks the delegate to download the episode with the given title.d
+ * Tells the delegate that the user tapped the download button.
  *
  * @param episodeTableViewCell The episode table view cell object requesting the information.
- * @param title The title of the episode.
+ * @param button The button that has been tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell downloadEpisodeWithTitle:(NSString *)title;
+- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button;
 
 @end
