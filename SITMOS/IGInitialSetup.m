@@ -172,7 +172,7 @@
     
     if (![userDefaults objectForKey:IGSettingCellularDataDownloading])
     {
-        [userDefaults setBool:YES forKey:IGSettingCellularDataDownloading];
+        [userDefaults setBool:NO forKey:IGSettingCellularDataDownloading];
     }
     
     if (![userDefaults objectForKey:IGSettingEpisodesDelete])
