@@ -45,7 +45,6 @@
 @property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
 @property (strong, nonatomic) IGEpisodeMoreInfoViewController *episodeMoreInfoViewController;
 @property (strong, nonatomic) NSOperationQueue *downloadEpisodeQueue;
-@property (strong, nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
 @property (strong, nonatomic) NSMutableArray *filteredEpisodeArray;
 @property BOOL reloading;
 
@@ -93,11 +92,6 @@
                                                       delegate:self];
     
     [self refreshFeed];
-    
-    _longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                         action:@selector(longPress:)];
-    [_longPressRecognizer setMinimumPressDuration:1.0];
-    [_tableView addGestureRecognizer:_longPressRecognizer];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -247,7 +241,7 @@
 
 #pragma mark - UILongPressGestureRecognizer Selector Method
 // TODO Refactor
-- (void)longPress:(UILongPressGestureRecognizer *)gestureRecognizer
+- (IBAction)displayMoreOptions:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     CGPoint p = [gestureRecognizer locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];

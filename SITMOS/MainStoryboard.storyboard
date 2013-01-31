@@ -122,6 +122,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="azn-Zd-amG" id="5W4-eu-LZH"/>
                                     <outlet property="delegate" destination="azn-Zd-amG" id="nBU-gW-Xil"/>
+                                    <outletCollection property="gestureRecognizers" destination="use-01-Nna" appends="YES" id="x1d-OA-7mu"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -147,6 +148,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5rM-m7-1KS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.99999999999999989" id="use-01-Nna" userLabel="DIsplay More Options">
+                    <connections>
+                        <action selector="displayMoreOptions:" destination="azn-Zd-amG" id="hXa-kA-gv0"/>
+                    </connections>
+                </pongPressGestureRecognizer>
                 <searchDisplayController id="fWW-ug-PSa">
                     <connections>
                         <outlet property="delegate" destination="azn-Zd-amG" id="fTs-de-0JK"/>
@@ -585,6 +591,17 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="nextTrackButtonTapped:"/>
+                <relationship kind="action" name="playButtonTapped:"/>
+                <relationship kind="action" name="playbackSpeedButtonTapped:"/>
+                <relationship kind="action" name="previousTrackButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
+                <relationship kind="action" name="seekForward:"/>
+                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
+                <relationship kind="action" name="shareEpisodeButtonTapped:"/>
+                <relationship kind="action" name="skippingBackButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
@@ -631,6 +648,7 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
                 <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
