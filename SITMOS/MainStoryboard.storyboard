@@ -299,18 +299,13 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="durationLabel" destination="nyJ-3q-FEA" id="HXe-iS-gZv"/>
                         <outlet property="episodeDurationLabel" destination="eKK-ug-Qq1" id="e0o-nM-bxR"/>
                         <outlet property="episodePublishedLabel" destination="Vc5-6Q-6GW" id="bNF-3K-o1E"/>
                         <outlet property="episodeSizeLabel" destination="Iq5-Q5-lev" id="FdX-E5-4sw"/>
                         <outlet property="episodeTitleLabel" destination="1uW-2r-fEB" id="qDh-aj-Aac"/>
                         <outlet property="episodeTypeLabel" destination="bMk-Qk-Zv3" id="9Wy-gA-abJ"/>
                         <outlet property="playedStatusImageView" destination="yYp-dp-2qc" id="8ZB-Re-Hqg"/>
-                        <outlet property="publishedLabel" destination="5Sx-LX-rET" id="Ire-hr-Ba2"/>
-                        <outlet property="sizeLabel" destination="eHX-kF-4O7" id="AZ3-wQ-gRl"/>
                         <outlet property="summaryTextView" destination="bqi-kL-pgq" id="ftJ-R4-fto"/>
-                        <outlet property="typeLabel" destination="HpV-cB-NhX" id="VEt-vT-Won"/>
-                        <outlet property="view" destination="RAr-0w-hMD" id="D6H-g5-uSo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mh0-xm-hPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -586,7 +581,6 @@
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeDurationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodePublishedLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeSizeLabel" candidateClass="UILabel"/>
@@ -594,17 +588,12 @@
                 <relationship kind="outlet" name="episodeTypeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="playedStatusImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="publishedLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="sizeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="summaryTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="typeLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
             <relationships>
-                <relationship kind="action" name="downloadButtonTapped:"/>
-                <relationship kind="action" name="moreInfoButtonTapped:"/>
                 <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
                 <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="UILabel"/>
@@ -616,8 +605,6 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

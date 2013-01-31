@@ -26,10 +26,6 @@
 
 @interface IGEpisodeMoreInfoViewController ()
 
-@property (strong, nonatomic) IBOutlet UILabel *publishedLabel;
-@property (strong, nonatomic) IBOutlet UILabel *durationLabel;
-@property (strong, nonatomic) IBOutlet UILabel *typeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *episodePublishedLabel;
 @property (strong, nonatomic) IBOutlet UILabel *episodeDurationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *episodeTypeLabel;
