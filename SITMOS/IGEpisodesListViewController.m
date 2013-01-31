@@ -27,7 +27,6 @@
 #import "IGSettingsViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
-#import "MBProgressHUD.h"
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
