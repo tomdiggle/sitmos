@@ -42,11 +42,6 @@
 
 @implementation IGEpisodeMoreInfoViewController
 
-- (void)dealloc
-{
-    _delegate = nil;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,13 +95,6 @@
     {
         [_episodeTitleLabel setFrame:CGRectMake(6.0f, 6.0f, 140.0f, 21.0f)];
     }
-}
-
-#pragma mark - IBAction
-
-- (IBAction)playButtonTapped:(id)sender
-{
-    [_delegate igEpisodeMoreInfoViewControllerPlayButtonTapped:self];
 }
 
 @end

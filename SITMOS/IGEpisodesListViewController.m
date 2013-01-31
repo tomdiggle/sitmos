@@ -36,7 +36,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeMoreInfoViewControllerDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
+@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -619,7 +619,6 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
     
     _episodeMoreInfoViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGEpisodeMoreInfoViewController"];
     [_episodeMoreInfoViewController setEpisode:episode];
-    [_episodeMoreInfoViewController setDelegate:self];
     [self presentPopupViewController:_episodeMoreInfoViewController
                        animationType:MJPopupViewAnimationFade];
 }
@@ -654,19 +653,6 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
         [self episodeTableViewCell:episodeTableViewCell
             pauseDownloadOperation:requestOperation];
     }
-}
-
-#pragma mark - IGEpisodeMoreInfoViewControllerDelegate
-
-- (void)igEpisodeMoreInfoViewControllerPlayButtonTapped:(IGEpisodeMoreInfoViewController *)viewController
-{
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[[viewController episode] title]];
-    
-    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationFade];
-    _episodeMoreInfoViewController = nil;
-
-    [self playEpisode:episode];
 }
 
 #pragma mark - EGORefreshTableHeaderDelegate Methods

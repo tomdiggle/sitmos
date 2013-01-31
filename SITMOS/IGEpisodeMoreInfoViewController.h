@@ -21,18 +21,9 @@
 
 @class IGEpisode;
 
-@protocol IGEpisodeMoreInfoViewControllerDelegate;
-
 @interface IGEpisodeMoreInfoViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *episodeTitleLabel;
 @property (strong, nonatomic) IGEpisode *episode;
-@property (weak, nonatomic) id <IGEpisodeMoreInfoViewControllerDelegate> delegate;
-
-@end
-
-@protocol IGEpisodeMoreInfoViewControllerDelegate <NSObject>
-
-- (void)igEpisodeMoreInfoViewControllerPlayButtonTapped:(IGEpisodeMoreInfoViewController *)viewController;
 
 @end

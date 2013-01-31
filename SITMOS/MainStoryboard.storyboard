@@ -173,23 +173,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="212"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LK1-Hp-6oM" userLabel="Play Episode Button">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="qDk-K9-VdT"/>
-                                    <constraint firstAttribute="width" constant="76" id="yUV-0o-6TB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="playButtonTapped:" destination="uvh-Y8-wsD" eventType="touchUpInside" id="yQn-KT-4F4"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Published" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sx-LX-rET" userLabel="Published Label">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="fDo-iq-EN0"/>
@@ -285,7 +268,6 @@
                             <constraint firstItem="HpV-cB-NhX" firstAttribute="leading" secondItem="RAr-0w-hMD" secondAttribute="leading" constant="146" id="ALj-K0-4Rz"/>
                             <constraint firstItem="1uW-2r-fEB" firstAttribute="leading" secondItem="RAr-0w-hMD" secondAttribute="leading" constant="21" id="BYE-Bc-6Tk"/>
                             <constraint firstItem="eKK-ug-Qq1" firstAttribute="top" secondItem="nyJ-3q-FEA" secondAttribute="top" type="default" id="DSb-FA-GIP"/>
-                            <constraint firstAttribute="trailing" secondItem="LK1-Hp-6oM" secondAttribute="trailing" constant="6" id="FsU-mu-Tod"/>
                             <constraint firstItem="nyJ-3q-FEA" firstAttribute="leading" secondItem="5Sx-LX-rET" secondAttribute="leading" type="default" id="IYt-zM-eum"/>
                             <constraint firstItem="bMk-Qk-Zv3" firstAttribute="leading" secondItem="Iq5-Q5-lev" secondAttribute="leading" type="default" id="JWP-yW-meW"/>
                             <constraint firstItem="Vc5-6Q-6GW" firstAttribute="top" secondItem="5Sx-LX-rET" secondAttribute="top" type="default" id="MDD-SZ-87w"/>
@@ -302,7 +284,6 @@
                             <constraint firstItem="eKK-ug-Qq1" firstAttribute="leading" secondItem="Vc5-6Q-6GW" secondAttribute="leading" type="default" id="hR4-9s-OOw"/>
                             <constraint firstItem="eHX-kF-4O7" firstAttribute="top" secondItem="Iq5-Q5-lev" secondAttribute="top" type="default" id="i49-jX-86W"/>
                             <constraint firstItem="eKK-ug-Qq1" firstAttribute="top" secondItem="eHX-kF-4O7" secondAttribute="top" type="default" id="kcX-lj-00b"/>
-                            <constraint firstItem="LK1-Hp-6oM" firstAttribute="top" secondItem="1uW-2r-fEB" secondAttribute="top" type="default" id="lpd-KZ-jAU"/>
                             <constraint firstItem="eKK-ug-Qq1" firstAttribute="trailing" secondItem="Vc5-6Q-6GW" secondAttribute="trailing" type="default" id="rPm-2c-7jw"/>
                             <constraint firstItem="bMk-Qk-Zv3" firstAttribute="baseline" secondItem="HpV-cB-NhX" secondAttribute="baseline" type="default" id="sTC-76-N5l"/>
                             <constraint firstItem="1uW-2r-fEB" firstAttribute="top" secondItem="RAr-0w-hMD" secondAttribute="top" constant="6" id="svq-BI-LNa"/>
@@ -324,7 +305,6 @@
                         <outlet property="episodeSizeLabel" destination="Iq5-Q5-lev" id="FdX-E5-4sw"/>
                         <outlet property="episodeTitleLabel" destination="1uW-2r-fEB" id="qDh-aj-Aac"/>
                         <outlet property="episodeTypeLabel" destination="bMk-Qk-Zv3" id="9Wy-gA-abJ"/>
-                        <outlet property="playButton" destination="LK1-Hp-6oM" id="wFw-2B-Zvd"/>
                         <outlet property="playedStatusImageView" destination="yYp-dp-2qc" id="8ZB-Re-Hqg"/>
                         <outlet property="publishedLabel" destination="5Sx-LX-rET" id="Ire-hr-Ba2"/>
                         <outlet property="sizeLabel" destination="eHX-kF-4O7" id="AZ3-wQ-gRl"/>
@@ -591,17 +571,6 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
-                <relationship kind="action" name="nextTrackButtonTapped:"/>
-                <relationship kind="action" name="playButtonTapped:"/>
-                <relationship kind="action" name="playbackSpeedButtonTapped:"/>
-                <relationship kind="action" name="previousTrackButtonTapped:"/>
-                <relationship kind="action" name="seekBackward:"/>
-                <relationship kind="action" name="seekForward:"/>
-                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
-                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
-                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
-                <relationship kind="action" name="shareEpisodeButtonTapped:"/>
-                <relationship kind="action" name="skippingBackButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
@@ -617,7 +586,6 @@
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="playButtonTapped:"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodeDurationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="episodePublishedLabel" candidateClass="UILabel"/>
