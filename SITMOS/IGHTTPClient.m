@@ -23,12 +23,13 @@
 #import "IGRSSXMLRequestOperation.h"
 #import "IGEpisodeParser.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "AFDownloadRequestOperation.h"
 
 NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDomain";
 
 @interface IGHTTPClient ()
 
-@property (nonatomic, strong, readwrite) NSMutableArray *downloadRequestOperations;
+@property (nonatomic, strong) dispatch_queue_t callbackQueue;
 
 @end
 
@@ -55,7 +56,7 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
     if ((self = [super initWithBaseURL:baseURL]))
     {
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-        _downloadRequestOperations = [[NSMutableArray alloc] init];
+        _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
     }
     
     return self;
@@ -66,10 +67,26 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 - (NSURL *)audioFeedURL
 {
 #ifdef DEVELOPMENT
-    return [NSURL URLWithString:@"https://dl.dropbox.com/u/17688395/sitmos-audio-feed.xml"];
+    return [NSURL URLWithString:@"http://www.tomdiggle.com/sitmos-test-feed/sitmos-audio-feed.xml"];
 #else
     return [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
 #endif
+}
+
+#pragma mark - AFHTTPClient
+
+- (NSMutableURLRequest *)requestWithURL:(NSURL *)url
+{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+	return request;
+}
+
+- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation
+{
+	operation.successCallbackQueue = _callbackQueue;
+	operation.failureCallbackQueue = _callbackQueue;
+	[super enqueueHTTPRequestOperation:operation];
 }
 
 #pragma mark - Syncing Podcast Feed
@@ -77,8 +94,7 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 - (void)syncPodcastFeedWithSuccess:(void (^)(void))success
                            failure:(void (^)(NSError *error))failure
 {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[self audioFeedURL]];
-    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    NSMutableURLRequest *request = [self requestWithURL:[self audioFeedURL]];
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -127,10 +143,9 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 #pragma mark - Downloading Episode
 
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
-                     saveToURL:(NSURL *)saveToURL
-              downloadProgress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))downloadProgress
+                    targetPath:(NSString *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
     AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
@@ -143,31 +158,29 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
         failure(nil, error);
     }
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:downloadURL];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setOutputStream:[NSOutputStream outputStreamWithURL:saveToURL append:YES]];
+    NSMutableURLRequest *request = [self requestWithURL:downloadURL];
+    AFDownloadRequestOperation *operation = [[AFDownloadRequestOperation alloc] initWithRequest:request
+                                                                                     targetPath:targetPath
+                                                                                   shouldResume:YES];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [_downloadRequestOperations removeObject:operation];
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [_downloadRequestOperations removeObject:operation];
         failure(operation, error);
     }];
-    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        downloadProgress(bytesRead, totalBytesRead, totalBytesExpectedToRead);
-    }];
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
-    
     [self enqueueHTTPRequestOperation:operation];
-    [_downloadRequestOperations addObject:operation];
-    [operation start];
+}
+
+- (NSArray *)downloadOperations
+{
+    return [[self operationQueue] operations];
 }
 
 - (AFHTTPRequestOperation *)requestOperationForURL:(NSURL *)url
 {
     __block AFHTTPRequestOperation *requestOperation = nil;
-    [_downloadRequestOperations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    NSArray *downloadOperations = [self downloadOperations];
+    [downloadOperations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([[[obj request] URL] isEqual:url])
         {
             requestOperation = obj;

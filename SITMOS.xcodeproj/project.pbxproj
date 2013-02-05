@@ -198,6 +198,7 @@
 		32A3C5CB15C9B7690083D165 /* audio-player-upper-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */; };
 		32A3C5CC15C9B7690083D165 /* audio-player-upper-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
+		32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
@@ -434,6 +435,8 @@
 		32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg.png"; sourceTree = "<group>"; };
 		32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg@2x.png"; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		32EA273816C0074E00BB528E /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFDownloadRequestOperation.h; path = AFDownloadRequestOperation/AFDownloadRequestOperation.h; sourceTree = "<group>"; };
+		32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = "<group>"; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
 		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
@@ -585,6 +588,7 @@
 		322D96BD162B138900D7D5D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				32EA273716C0073B00BB528E /* AFDownloadRequestOperation */,
 				32523D7A1688BEEF006E9FFB /* AFNetworking */,
 				3239232E167F59CE00301439 /* DACircularProgress */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
@@ -996,6 +1000,15 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		32EA273716C0073B00BB528E /* AFDownloadRequestOperation */ = {
+			isa = PBXGroup;
+			children = (
+				32EA273816C0074E00BB528E /* AFDownloadRequestOperation.h */,
+				32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */,
+			);
+			name = AFDownloadRequestOperation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1226,6 +1239,7 @@
 				32523F7B16ADD1BD006E9FFB /* MagicalRecord+ShorthandSupport.m in Sources */,
 				32523F7D16ADD1BD006E9FFB /* MagicalRecord.m in Sources */,
 				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
+				32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

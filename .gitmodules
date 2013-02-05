@@ -16,3 +16,6 @@
 [submodule "Vendor/gh-unit"]
 	path = Vendor/gh-unit
 	url = https://github.com/gabriel/gh-unit.git
+[submodule "Vendor/AFDownloadRequestOperation"]
+	path = Vendor/AFDownloadRequestOperation
+	url = https://github.com/steipete/AFDownloadRequestOperation.git

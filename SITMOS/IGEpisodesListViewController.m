@@ -133,7 +133,7 @@
     {
         return [_filteredEpisodeArray count];
     }
-        
+    
     id <NSFetchedResultsSectionInfo> sectionInfo = nil;
     sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
 	return [sectionInfo numberOfObjects];
@@ -175,36 +175,36 @@
 
 #pragma mark - NSFetchResultsControllerDelegate
 
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
 	[_tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
     NSArray *array = nil;
 	switch (type)
     {
 		case NSFetchedResultsChangeInsert:
             array = @[newIndexPath];
-            [_tableView insertRowsAtIndexPaths:array 
+            [_tableView insertRowsAtIndexPaths:array
                               withRowAnimation:UITableViewRowAnimationFade];
 			break;
             
 		case NSFetchedResultsChangeDelete:
             array = @[indexPath];
-            [_tableView deleteRowsAtIndexPaths:array 
+            [_tableView deleteRowsAtIndexPaths:array
                               withRowAnimation:UITableViewRowAnimationLeft];
 			break;
             
 		case NSFetchedResultsChangeUpdate:
-            [self updateEpisodeCell:(IGEpisodeTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath] 
+            [self updateEpisodeCell:(IGEpisodeTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath]
                             episode:[_fetchedResultsController objectAtIndexPath:indexPath]];
 			break;
 	}
 }
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller 
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
 	[_tableView endUpdates];
 }
@@ -322,14 +322,9 @@
     [[episodeCell episodeTitleLabel] setText:[episode title]];
     NSString *episodeDateDuration = [NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:[episode pubDate] withFormat:@"dd MMM yyyy"], [episode duration]];
     [[episodeCell episodeDateAndDurationLabel] setText:episodeDateDuration];
+    [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
     [episodeCell setPlayedStatus:[episode playedStatus]];
     [episodeCell setDownloadStatus:[episode downloadStatus]];
-    
-    if ([episodeCell downloadStatus] == IGEpisodeDownloadStatusDownloading)
-    {
-        float progress = (float)[episode downloadedFileSize] / [[episode fileSize] floatValue];
-        [[episodeCell downloadProgressView] setProgress:progress];
-    }
 }
 
 #pragma mark - Content Filtering
@@ -503,81 +498,46 @@
 /**
  * Sets up the download operation and begins downloading the episode.
  *
- * @param episodeTableViewCell The episode table view cell which needs to be updated while downloading is active.
- * @param episodeTitle The episode title.
  * @param downloadFromURL The URL to download the episode from.
- * @param saveToURL The URL to save the episode to.
+ * @param targetPath The path to save the episode to.
  */
-- (void)episodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
-startDownloadingEpisodeWithTitle:(NSString *)episodeTitle
-             downloadFromURL:(NSURL *)downloadFromURL
-                   saveToURL:(NSURL *)saveToURL
+- (void)startDownloadFromURL:(NSURL *)downloadFromURL
+                  targetPath:(NSString *)targetPath
 {
-    // The table view cell's download status is set here because there is a slight delay before the downloadProgress handler block is exectued.
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-    
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
-    [sharedClient downloadEpisodeWithURL:downloadFromURL saveToURL:saveToURL downloadProgress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        
-        // Animate the download progress view
-        float progress = ((float)totalBytesRead) / totalBytesExpectedToRead;
-        [[episodeTableViewCell downloadProgressView] setProgress:progress];
-        [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-        
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        [self episodeTableViewCell:episodeTableViewCell
-        downloadOperationSucceeded:operation];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [self episodeTableViewCell:episodeTableViewCell
-                 downloadOperation:operation
-                   failedWithError:error];
-        
-    }];
+    [sharedClient downloadEpisodeWithURL:downloadFromURL targetPath:targetPath success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Reload the table view's data if a download succeeds
+            [_tableView reloadData];
+        });
+        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
+        {
+            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL"
+                                                          withValue:[[operation request] URL]];
+            // If app is in background state display a local notification alerting the user that the download has finished.
+            NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"SuccessfullyDownloadedEpisode", @"text label for successfully downloaded episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
+            [UIApplication scheduleLocalNotificationWithParameters:parameters];
+        }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             NSLog(@"failed downloading with error %@", error);
+             [self downloadOperation:operation
+                     failedWithError:error];
+         
+             // Reload the table view's data if a download fails
+             [_tableView reloadData];
+         });
+     }];
 }
-
-- (void)episodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
-      pauseDownloadOperation:(AFHTTPRequestOperation *)operation
-{
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloadingPaused];
-    [operation pause];
-}
-
-- (void)episodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
-     resumeDownloadOperation:(AFHTTPRequestOperation *)operation
-{
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-    [operation resume];
-}
-
-- (void)episodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
-  downloadOperationSucceeded:(AFHTTPRequestOperation *)operation
-{
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloaded];
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[[episodeTableViewCell episodeTitleLabel] text]];
-    
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
-    {
-        // If app is in background state display a local notification alerting the user that the download has finished.
-        NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"SuccessfullyDownloadedEpisode", @"text label for successfully downloaded episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
-        [UIApplication scheduleLocalNotificationWithParameters:parameters];
-    }
-}
-
+ 
 // TODO handle other types of errors
 // More than likely will need refactoring
-- (void)episodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
-           downloadOperation:(AFHTTPRequestOperation *)operation
-             failedWithError:(NSError *)error
+- (void)downloadOperation:(AFHTTPRequestOperation *)operation
+          failedWithError:(NSError *)error
 {
-    NSLog(@"Failed to download %@, %@", [[episodeTableViewCell episodeTitleLabel] text], error);
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusNotDownloaded];
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[[episodeTableViewCell episodeTitleLabel] text]];
-    
+    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL"
+                                                  withValue:[[operation request] URL]];
+
     if ([error code] == IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed)
     {
         RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
@@ -586,19 +546,17 @@ startDownloadingEpisodeWithTitle:(NSString *)episodeTitle
             [[NSUserDefaults standardUserDefaults] setBool:YES
                                                     forKey:IGSettingCellularDataDownloading];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self episodeTableViewCell:episodeTableViewCell
-      startDownloadingEpisodeWithTitle:[episode title]
-                       downloadFromURL:[NSURL URLWithString:[episode downloadURL]]
-                             saveToURL:[episode fileURL]];
+            [self startDownloadFromURL:[NSURL URLWithString:[episode downloadURL]]
+                            targetPath:[episode filePath]];
         };
-        
+
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
                                                             message:NSLocalizedString(@"DownloadingWithCellularDataMessage", @"text label for downloading with cellular data message")
                                                    cancelButtonItem:cancelItem
                                                    otherButtonItems:downloadItem, nil];
         [alertView show];
     }
-    
+ 
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
     {
         NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
@@ -628,31 +586,29 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
  */
 - (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
    downloadEpisodeButtonTapped:(UIButton *)button
-{
+{    
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:[[episodeTableViewCell episodeTitleLabel] text]];
     NSURL *downloadFromURL = [NSURL URLWithString:[episode downloadURL]];
     
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
     AFHTTPRequestOperation *requestOperation = [sharedClient requestOperationForURL:downloadFromURL];
-    
+     
     if (!requestOperation)
     {
-        [self episodeTableViewCell:episodeTableViewCell
-  startDownloadingEpisodeWithTitle:[episode title]
-                   downloadFromURL:downloadFromURL
-                         saveToURL:[episode fileURL]];
+        [self startDownloadFromURL:downloadFromURL
+                        targetPath:[episode filePath]];
     }
     else if ([requestOperation isPaused])
     {
-        [self episodeTableViewCell:episodeTableViewCell
-           resumeDownloadOperation:requestOperation];
+        [requestOperation resume];
     }
     else
     {
-        [self episodeTableViewCell:episodeTableViewCell
-            pauseDownloadOperation:requestOperation];
+        [requestOperation pause];
     }
+    
+    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
 }
 
 #pragma mark - EGORefreshTableHeaderDelegate Methods

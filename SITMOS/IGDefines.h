@@ -36,10 +36,9 @@ typedef enum {
 
 /* */
 typedef enum {
-    IGEpisodeDownloadStatusDownloaded,
-    IGEpisodeDownloadStatusNotDownloaded,
+    IGEpisodeDownloadStatusNotDownloading,
     IGEpisodeDownloadStatusDownloading,
-    IGEpisodeDownloadStatusDownloadingPaused
+    IGEpisodeDownloadStatusDownloaded
 } IGEpisodeDownloadStatus;
 
 /* */

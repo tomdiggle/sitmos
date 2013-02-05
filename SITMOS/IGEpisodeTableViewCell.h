@@ -32,38 +32,45 @@
 /**
  * Returns the label used for the episode's title.
  */
-@property (strong, nonatomic) IBOutlet UILabel *episodeTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *episodeTitleLabel;
 
 /**
  * Returns the label used for the episode's published date and duration.
  */
-@property (strong, nonatomic) IBOutlet UILabel *episodeDateAndDurationLabel;
+@property (nonatomic, weak) IBOutlet UILabel *episodeDateAndDurationLabel;
 
 /**
  * Returns the download episode button (UIButton object) of the table cell. The image is set by setting the downloadStatus object.
  *
  * @see downloadStatus
  */
-@property (strong, nonatomic) IBOutlet UIButton *downloadEpisodeButton;
+@property (nonatomic, weak) IBOutlet UIButton *downloadEpisodeButton;
 
 /**
  * Returns the more info button of the table cell.
  */
-@property (strong, nonatomic) IBOutlet UIButton *moreInfoButton;
+@property (nonatomic, weak) IBOutlet UIButton *moreInfoButton;
+
+/**
+ * Returns the download url of the episode.
+ *
+ * @discussion Used to search for the download operation if downloadStatus is set to IGEpisodeDownloadStatusDownloading. 
+ */
+@property (nonatomic, strong) NSURL *downloadURL;
 
 /**
  * Returns the helper icon image view of the table cell.
  *
  * @see playedStatus
  */
-@property (strong, nonatomic) IBOutlet UIImageView *playedStatusIconImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *playedStatusIconImageView;
 
 /**
  * Returns the download progress view of the table cell.
  *
  * Returns the download progress view (DACircularProgressView object) of the table cell. The download progress view is only visible when the episode is downloading.
  */
-@property (strong, nonatomic) IBOutlet DACircularProgressView *downloadProgressView;
+@property (nonatomic, weak) IBOutlet DACircularProgressView *downloadProgressView;
 
 /**
  * Returns the download status of the episode.
@@ -80,7 +87,7 @@
  *
  * The delegate must adopt the IGEpisodeTableViewCellDelegate protocol. The delegate is not retained.
  */
-@property (weak, nonatomic) id <IGEpisodeTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id <IGEpisodeTableViewCellDelegate> delegate;
 
 @end
 

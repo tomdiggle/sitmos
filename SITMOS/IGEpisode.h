@@ -91,11 +91,6 @@
 - (NSURL *)fileURL;
 
 /**
- * Returns the downloaded file size of the episode.
- */
-- (NSUInteger)downloadedFileSize;
-
-/**
  * Returns a human readable file size.
  */
 - (NSString *)readableFileSize;

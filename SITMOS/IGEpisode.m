@@ -20,6 +20,7 @@
  */
 
 #import "IGEpisode.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface IGEpisode ()
 
@@ -43,6 +44,35 @@
 @dynamic progress;
 @dynamic played;
 
+#pragma mark Class Methods
+
++ (NSString *)cacheFolder
+{
+    static NSString *cacheFolder;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *cacheDir = NSTemporaryDirectory();
+        cacheFolder = [cacheDir stringByAppendingPathComponent:@"Incomplete"]; // This is the temp file defined by AFDownloadRequestOperation
+        
+        // ensure all cache directories are there (needed only once)
+        NSError *error = nil;
+        if(![[NSFileManager new] createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create cache directory at %@", cacheFolder);
+        }
+    });
+    return cacheFolder;
+}
+
+// calculates the MD5 hash of a key
++ (NSString *)md5StringForString:(NSString *)string
+{
+    const char *str = [string UTF8String];
+    unsigned char r[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, strlen(str), r);
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+}
+
 #pragma mark - File Management
 
 - (NSString *)filePath
@@ -61,10 +91,12 @@
     return [storeURL URLByAppendingPathComponent:[self fileName]];
 }
 
-- (NSUInteger)downloadedFileSize
+- (NSString *)tempPath
 {
-    return [[[NSFileManager defaultManager] attributesOfItemAtPath:[self filePath]
-                                                             error:nil] fileSize];
+    NSString *md5URLString = [[self class] md5StringForString:[self filePath]];
+    NSString *tempPath = [[[self class] cacheFolder] stringByAppendingPathComponent:md5URLString];
+    
+    return tempPath;
 }
 
 - (NSString *)readableFileSize
@@ -97,28 +129,12 @@
 
 - (BOOL)isCompletelyDownloaded
 {
-    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[self filePath]
-                                                                            error:nil] fileSize];
-    //    TFLog(@"%@ - Saved: %i Actual: %i", [self title], [[self fileSize] unsignedIntegerValue], fileSize);
-    if (fileSize != 0 && fileSize > [[self fileSize] unsignedIntegerValue])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self filePath]];
 }
 
 - (BOOL)isPartiallyDownloaded
 {
-    NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:[self filePath]
-                                                                            error:nil] fileSize];
-    //TFLog(@"%@ - %i == %i", [self title], [[self fileSize] unsignedIntegerValue], fileSize);
-    if (fileSize > 0 && fileSize < [[self fileSize] unsignedIntegerValue])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self tempPath]];
 }
 
 #pragma mark - File Media Type
@@ -191,7 +207,7 @@
     }
     else
     {
-        return IGEpisodeDownloadStatusNotDownloaded;
+        return IGEpisodeDownloadStatusNotDownloading;
     }
 }
 

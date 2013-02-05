@@ -20,6 +20,8 @@
  */
 
 #import "IGEpisodeTableViewCell.h"
+#import "IGHTTPClient.h"
+#import "AFDownloadRequestOperation.h"
 #import "DACircularProgressView.h"
 
 @implementation IGEpisodeTableViewCell
@@ -39,28 +41,50 @@
     
     switch (downloadStatus)
     {
-        case IGEpisodeDownloadStatusDownloaded:
-            [_downloadProgressView setAlpha:0.0f];
-            [_downloadEpisodeButton setAlpha:0.0f];
-            break;
-         
-        case IGEpisodeDownloadStatusDownloading:
-            [_downloadProgressView setAlpha:1.0f];
-            [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"] forState:UIControlStateNormal];
-            break;
-            
-        case IGEpisodeDownloadStatusNotDownloaded:
+        case IGEpisodeDownloadStatusNotDownloading:
+            [_downloadProgressView setProgress:0.0f];
             [_downloadProgressView setAlpha:0.0f];
             [_downloadEpisodeButton setAlpha:1.0f];
             [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-start-button"] forState:UIControlStateNormal];
             break;
             
-            case IGEpisodeDownloadStatusDownloadingPaused:
+        case IGEpisodeDownloadStatusDownloading:
+        {
             [_downloadProgressView setAlpha:1.0f];
             [_downloadEpisodeButton setAlpha:1.0f];
-            [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-resume-button"] forState:UIControlStateNormal];
+            
+            IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+            AFDownloadRequestOperation *operation = (AFDownloadRequestOperation *)[httpClient requestOperationForURL:_downloadURL];
+            if (operation)
+            {
+                [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
+                    [_downloadProgressView setProgress:totalBytesReadForFile / (float)totalBytesExpectedToReadForFile
+                                              animated:YES];
+                }];
+                
+                if ([operation isPaused])
+                {
+                    [self setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+                }
+                else
+                {
+                    [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-pause-button"] forState:UIControlStateNormal];
+                }
+            }
+            else
+            {
+                [self setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+            }
+             
             break;
+        }
+            
+        case IGEpisodeDownloadStatusDownloaded:
+            [_downloadProgressView setProgress:0.0f];
+            [_downloadProgressView setAlpha:0.0f];
+            [_downloadEpisodeButton setAlpha:0.0f];
+            break;
+        
         default:
             break;
     }
@@ -75,19 +99,19 @@
         case IGEpisodePlayedStatusPlayed:
             NSLog(@"Episode %@ played", self.episodeTitleLabel.text);
             [_playedStatusIconImageView setImage:nil];
-//            [_episodeDateAndDurationLabel setFrame:CGRectMake(11.0f, 25.0f, 144.0f, 21.0f)];
+            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(11.0f, 25.0f, 144.0f, 21.0f)];
             break;
             
         case IGEpisodePlayedStatusHalfPlayed:
             NSLog(@"Episode %@ half played", self.episodeTitleLabel.text);
             [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
-//            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
+            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
             break;
             
         case IGEpisodePlayedStatusUnplayed:
             NSLog(@"Episode %@ unplayed", self.episodeTitleLabel.text);
             [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
-//            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
+            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
             break;
             
         default:
@@ -102,7 +126,7 @@
     if (![sender isKindOfClass:[UIButton class]]) return;
     
     [_delegate igEpisodeTableViewCell:self
-             downloadEpisodeButtonTapped:sender];
+          downloadEpisodeButtonTapped:sender];
 }
 
 - (IBAction)moreInfoButtonTapped:(id)sender
