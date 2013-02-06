@@ -356,16 +356,13 @@
 {
     if ([episode isAudio])
     {
-        if (![episode isCompletelyDownloaded])
+        if ([episode isCompletelyDownloaded])
         {
-            dispatch_queue_t canStreamEpisodeQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.canStreamEpisodeQueue", NULL);
-            dispatch_async(canStreamEpisodeQueue, ^{
-                [self canStreamEpisode:episode];
-            });
+            [self playAudioEpisode:episode];
         }
         else
         {
-            [self playAudioEpisode:episode];
+            [self canStreamEpisode:episode];
         }
     }
 }
@@ -429,40 +426,33 @@
  */
 - (void)canStreamEpisode:(IGEpisode *)episode
 {
-    NSURL *url = [NSURL URLWithString:[episode downloadURL]];
-    NSString *hostname = [NSString stringWithFormat:@"%@", [url host]];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    Reachability *reach = [Reachability reachabilityWithHostname:hostname];
-    reach.reachableOnWWAN = [userDefaults boolForKey:IGSettingCellularDataStreaming];
-    
-    if (reach.isReachable)
+    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    AFNetworkReachabilityStatus networkReachabilityStatus = [httpClient networkReachabilityStatus];
+    if (!allowCellularDataStreaming && networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", "text label for cancel")];
+        cancelItem.action = ^{
+            if ([_tableView indexPathForSelectedRow])
+            {
+                [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
+                                  withRowAnimation:UITableViewRowAnimationFade];
+            }
+        };
+        RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", @"text label for stream")];
+        streamItem.action = ^{
             [self playAudioEpisode:episode];
-        });
+        };
+        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataTitle", @"text label for streaming with cellular data title")
+                                                            message:NSLocalizedString(@"StreamingWithCellularDataMessage", @"text label for streaming with cellular data message")
+                                                   cancelButtonItem:cancelItem
+                                                   otherButtonItems:streamItem, nil];
+        [alertView show];
     }
     else
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", "text label for cancel")];
-            cancelItem.action = ^{
-                if ([_tableView indexPathForSelectedRow])
-                {
-                    [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
-                                      withRowAnimation:UITableViewRowAnimationFade];
-                }
-            };
-            RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", @"text label for stream")];
-            streamItem.action = ^{
-                [self playAudioEpisode:episode];
-            };
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataTitle", @"text label for streaming with cellular data title")
-                                                                message:NSLocalizedString(@"StreamingWithCellularDataMessage", @"text label for streaming with cellular data message")
-                                                       cancelButtonItem:cancelItem
-                                                       otherButtonItems:streamItem, nil];
-            [alertView show];
-        });
+        [self playAudioEpisode:episode];
     }
 }
 
