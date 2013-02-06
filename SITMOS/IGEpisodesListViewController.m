@@ -32,6 +32,7 @@
 #import "UIAlertView+Blocks.h"
 #import "DACircularProgressView.h"
 #import "IGHTTPClient.h"
+#import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
