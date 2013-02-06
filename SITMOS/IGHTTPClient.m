@@ -29,6 +29,8 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 
 @interface IGHTTPClient ()
 
+@property (nonatomic, strong) NSURL *audioFeedURL;
+
 @property (nonatomic, strong) dispatch_queue_t callbackQueue;
 
 @end
@@ -51,7 +53,14 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 
 - (id)init
 {
-    NSURL *baseURL = [NSURL URLWithString:@"http://www.dereksweet.com/"];
+    NSURL *baseURL = nil;
+#ifdef DEVELOPMENT
+    baseURL = [NSURL URLWithString:@"http://www.tomdiggle.com/"];
+    _audioFeedURL = [NSURL URLWithString:@"http://www.tomdiggle.com/sitmos-test-feed/sitmos-audio-feed.xml"];
+#else
+    baseURL = [NSURL URLWithString:@"http://www.dereksweet.com/"];
+    _audioFeedURL = [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
+#endif
     
     if ((self = [super initWithBaseURL:baseURL]))
     {
@@ -60,17 +69,6 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
     }
     
     return self;
-}
-
-#pragma mark - Feed URLs
-
-- (NSURL *)audioFeedURL
-{
-#ifdef DEVELOPMENT
-    return [NSURL URLWithString:@"http://www.tomdiggle.com/sitmos-test-feed/sitmos-audio-feed.xml"];
-#else
-    return [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
-#endif
 }
 
 #pragma mark - AFHTTPClient
