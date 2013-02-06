@@ -1,6 +1,3 @@
-[submodule "Vendor/Reachability"]
-	path = Vendor/Reachability
-	url = https://github.com/tonymillion/Reachability.git
 [submodule "Vendor/TDSlider"]
 	path = Vendor/TDSlider
 	url = https://github.com/tomdiggle/TDSlider.git
