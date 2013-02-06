@@ -55,7 +55,6 @@
 		32282D6515CDEB6A0005E3B6 /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6315CDEB680005E3B6 /* icon-29.png */; };
 		32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6415CDEB690005E3B6 /* icon-58.png */; };
 		322AD78D153613BA00988B31 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322AD78C153613BA00988B31 /* MediaPlayer.framework */; };
-		322D96F9162B138A00D7D5D6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D96E1162B138900D7D5D6 /* Reachability.m */; };
 		3235957515755737007D5D90 /* audio-player-lower-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */; };
 		3235957615755737007D5D90 /* audio-player-lower-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */; };
 		32392331167F59CE00301439 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392330167F59CE00301439 /* DACircularProgressView.m */; };
@@ -267,8 +266,6 @@
 		32282D6315CDEB680005E3B6 /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		32282D6415CDEB690005E3B6 /* icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-58.png"; sourceTree = "<group>"; };
 		322AD78C153613BA00988B31 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		322D96E0162B138900D7D5D6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		322D96E1162B138900D7D5D6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg.png"; sourceTree = "<group>"; };
 		3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg@2x.png"; sourceTree = "<group>"; };
 		3239232F167F59CE00301439 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
@@ -596,22 +593,12 @@
 				3239238C167F5BE100301439 /* MBProgressHUD */,
 				32392390167F5C3200301439 /* MJPopupViewController */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
-				322D96BE162B138900D7D5D6 /* Reachability */,
 				324D0391164071D200D0143C /* TDSlider */,
 				3239239F167F5CF900301439 /* TestFlight */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
 				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		322D96BE162B138900D7D5D6 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				322D96E0162B138900D7D5D6 /* Reachability.h */,
-				322D96E1162B138900D7D5D6 /* Reachability.m */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		3239232E167F59CE00301439 /* DACircularProgress */ = {
@@ -1188,7 +1175,6 @@
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
-				322D96F9162B138A00D7D5D6 /* Reachability.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392331167F59CE00301439 /* DACircularProgressView.m in Sources */,
 				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
