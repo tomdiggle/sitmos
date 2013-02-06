@@ -279,11 +279,11 @@
             if ([episode isPlayed])
             {
                 // Mark episode as unplayed
-                [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
-                    IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                    IGEpisode *localEpisode = [episode MR_inContext:localContext];
                     [localEpisode markAsPlayed:NO];
-                    [localContext MR_saveNestedContexts];
-                } completion:^{
+                    [localContext MR_saveToPersistentStoreAndWait];
+                } completion:^(BOOL success, NSError *error) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                                           withRowAnimation:UITableViewRowAnimationNone];
@@ -293,11 +293,11 @@
             else
             {
                 // Mark episode as played
-                [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
-                    IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                    IGEpisode *localEpisode = [episode MR_inContext:localContext];
                     [localEpisode markAsPlayed:YES];
-                    [localContext MR_saveNestedContexts];
-                } completion:^{
+                    [localContext MR_saveToPersistentStoreAndWait];
+                } completion:^(BOOL success, NSError *error) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                                           withRowAnimation:UITableViewRowAnimationNone];
@@ -384,7 +384,7 @@
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                 IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
                 [localEpisode setProgress:@(currentTime)];
-                [localContext MR_saveNestedContexts];
+                [localContext MR_saveToPersistentStoreAndWait];
             }];
         }];
         
@@ -407,7 +407,7 @@
                 }
                 [localEpisode markAsPlayed:markAsPlayed];
                 [localEpisode setProgress:@(progress)];
-                [localContext MR_saveNestedContexts];
+                [localContext MR_saveToPersistentStoreAndWait];
             }];
         }];
     });

@@ -144,7 +144,7 @@ NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
     [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
     NSDate *latestEpisodePubDate = [dateFormatter dateFromString:[[_episodes lastObject] valueForKey:@"pubDate"]];
     
-    [MagicalRecord saveInBackgroundWithBlock:^(NSManagedObjectContext *localContext) {
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         [_episodes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSString *title = [obj objectForKey:@"title"];
             NSArray *anyDuplicates = [IGEpisode MR_findByAttribute:@"title"
@@ -175,8 +175,7 @@ NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
                 }
             }
         }];
-//            [localContext MR_saveNestedContexts];
-    } completion:^{
+    } completion:^(BOOL success, NSError *error) {
         _success();
     }];
 }
