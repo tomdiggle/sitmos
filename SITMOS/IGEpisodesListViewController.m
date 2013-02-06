@@ -31,7 +31,6 @@
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
 #import "DACircularProgressView.h"
-#import "Reachability.h"
 #import "IGHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
