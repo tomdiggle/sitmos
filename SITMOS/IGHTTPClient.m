@@ -93,6 +93,7 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
                            failure:(void (^)(NSError *error))failure
 {
     NSMutableURLRequest *request = [self requestWithURL:[self audioFeedURL]];
+    [request setTimeoutInterval:10];
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
