@@ -42,7 +42,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
 @property (strong, nonatomic) IGEpisodeMoreInfoViewController *episodeMoreInfoViewController;
-@property (strong, nonatomic) NSOperationQueue *downloadEpisodeQueue;
 @property (strong, nonatomic) NSMutableArray *filteredEpisodeArray;
 @property BOOL reloading;
 
