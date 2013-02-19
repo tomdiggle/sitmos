@@ -25,6 +25,7 @@
 #import "IGAudioPlayerViewController.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGSettingsViewController.h"
+#import "IGInitialSetup.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "RIButtonItem.h"
@@ -34,6 +35,7 @@
 #import "IGHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
+#import "TDNotificationPanel.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
@@ -89,6 +91,28 @@
                                                       delegate:self];
     
     [self refreshFeed];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [IGInitialSetup runInitialSetupWithCompletion:^(NSUInteger episodesImported, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (episodesImported > 0)
+                {
+                    [TDNotificationPanel showNotificationPanelInView:self.view
+                                                                type:TDNotificationTypeSuccess
+                                                               title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
+                                                      hideAfterDelay:5];
+                }
+                else if (error)
+                {
+                    [TDNotificationPanel showNotificationPanelInView:self.view
+                                                                type:TDNotificationTypeError
+                                                               title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
+                                                      hideAfterDelay:5];
+                }
+            });
+        }];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -462,9 +486,11 @@
     [httpClient syncPodcastFeedWithSuccess:^{
         [self doneLoadingTableViewData];
     } failure:^(NSError *error) {
-        // handle error
-        NSLog(@"Error refreshing feed %@", error);
         [self doneLoadingTableViewData];
+        [TDNotificationPanel showNotificationPanelInView:self.view
+                                                    type:TDNotificationTypeError
+                                                   title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
+                                          hideAfterDelay:5];
     }];
 }
 
@@ -508,7 +534,6 @@
         }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          dispatch_async(dispatch_get_main_queue(), ^{
-             NSLog(@"failed downloading with error %@", error);
              [self downloadOperation:operation
                      failedWithError:error];
          
@@ -543,6 +568,13 @@
                                                    cancelButtonItem:cancelItem
                                                    otherButtonItems:downloadItem, nil];
         [alertView show];
+    }
+    else
+    {
+        [TDNotificationPanel showNotificationPanelInView:self.view
+                                                    type:TDNotificationTypeError
+                                                   title:[NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]]
+                                          hideAfterDelay:5];
     }
  
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)

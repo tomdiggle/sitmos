@@ -148,8 +148,8 @@
 /* text label for completed */
 "Completed" = "Completed";
 
-/* text label for fetching feed */
-"FetchingFeed" = "Fetching Feed";
+/* text label for error fetching feed */
+"ErrorFetchingFeed" = "Error Fetching Feed";
 
 /* text label for buffering */
 "Buffering" = "Buffering...";
@@ -168,3 +168,9 @@
 
 /* text label for failed to download episode */
 "FailedToDownloadEpisode" = "Failed to download %@";
+
+/* text label for successfully imported episodes */
+"SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";
+
+/* text label for error importing episodes */
+"ErrorImportingEpisodes" = "Error while importing episodes";
