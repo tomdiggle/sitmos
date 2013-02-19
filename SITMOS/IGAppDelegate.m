@@ -23,7 +23,6 @@
 
 #import "IGAppDelegate.h"
 #import "IGTestFlight.h"
-#import "IGInitialSetup.h"
 
 @implementation IGAppDelegate
 
@@ -38,8 +37,6 @@
     [self applyStylesheet];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [IGInitialSetup runInitialSetup];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playbackStateChanged:)
                                                      name:IGMediaPlayerPlaybackStatusChangedNotification
