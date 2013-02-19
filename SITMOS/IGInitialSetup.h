@@ -31,7 +31,7 @@
  *
  * @return the initialized object.
  */
-+ (IGInitialSetup *)runInitialSetup;
++ (void)runInitialSetupWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion;
 
 /**
  * Creates the episodes directory in <APP>/Library/Caches

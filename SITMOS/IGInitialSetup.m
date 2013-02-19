@@ -23,19 +23,15 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "IGInitialSetup.h"
-#import "IGAppDelegate.h"
-#import "IGHTTPClient.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
-#import "MBProgressHUD.h"
 #import "TSLibraryImport.h"
 
-@interface IGInitialSetup () <MBProgressHUDDelegate>
+@interface IGInitialSetup ()
 
-@property (strong, nonatomic) IGAppDelegate *appDelegate;
-@property (strong, nonatomic) MBProgressHUD *HUD;
-@property NSUInteger numberOfEpisodesToImport;
-@property NSUInteger numberOfEpisodesImported;
+@property (nonatomic, assign) NSUInteger numberOfEpisodesToImport;
+@property (nonatomic, assign) NSUInteger numberOfEpisodesImported;
+@property (nonatomic, copy) void (^completion)(NSUInteger episodesImported, NSError *error);
 
 @end
 
@@ -43,9 +39,10 @@
 
 #pragma mark - Class Methods
 
-+ (IGInitialSetup *)runInitialSetup
++ (void)runInitialSetupWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion;
 {
-    return [[self alloc] init];
+    IGInitialSetup *setup = [[self alloc] initWithCompletion:completion];
+    [setup start];
 }
 
 + (BOOL)createEpisodesDirectory
@@ -76,30 +73,19 @@
 
 #pragma mark - Initializers
 
-- (id)init
+- (id)initWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion
 {
-    self = [super init];
+    if (!(self = [super init]))
+    {
+        return nil;
+    }
+    
+    _completion = completion;
     
     _numberOfEpisodesToImport = 0;
     _numberOfEpisodesImported = 0;
     
-    _appDelegate = (IGAppDelegate *)[[UIApplication sharedApplication] delegate];
-    _HUD = [[MBProgressHUD alloc] initWithWindow:[_appDelegate window]];
-    [_HUD setDelegate:self];
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelFont = [UIFont fontWithName:IGFontNameMedium size:16.0f];
-    _HUD.detailsLabelFont = [UIFont fontWithName:IGFontNameRegular size:12.0f];
-    _HUD.dimBackground = YES;
-    
-    [self start];
-    
     return self;
-}
-
-- (void)dealloc
-{
-    _appDelegate = nil;
-    _HUD = nil;
 }
 
 - (void)start
@@ -111,13 +97,9 @@
         // No need to continue if the episodes directory already exists
         return;
     }
-    
-    // Add the HUD view to the appDelegate
-    [[_appDelegate window] addSubview:_HUD];
 
 #if TARGET_IPHONE_SIMULATOR
     // Searching for media while targeting the simulator causes a bunch of errors to be displayed in the console, so just skip it.
-    [self fetchPodcastFeed];
     return;
 #endif
     
@@ -131,21 +113,17 @@
     
     if ([itemsFromAlbumTitleQuery count] == 0)
     {
-        // No episodes found on iPod, go directly to fetching the podcast feed, do not pass go, do not collect $200 
-        [self fetchPodcastFeed];
+        _completion(0, nil);
         return;
     }
     
     // Ask user if they want to import the episodes
     RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
     cancelItem.action = ^{
-        [self fetchPodcastFeed];
+        _completion(0, nil);
     };
     RIButtonItem *importItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", "text label for yes")];
     importItem.action = ^{
-        _HUD.labelText = NSLocalizedString(@"ImportingEpisodes", @"text label for importing episodes");
-        _HUD.detailsLabelText = NSLocalizedString(@"ThisMayTakeAWhile", @"text label for this may take a while");
-        [_HUD show:YES];
         [self importEpisodesAlreadyOnDevice:itemsFromAlbumTitleQuery];
     };
     
@@ -196,33 +174,6 @@
     }
 }
 
-#pragma mark - Fetch Podcast Feed
-
-- (void)fetchPodcastFeed
-{
-    if ([_HUD alpha] == 0)
-    {
-        [_HUD show:YES];
-    }
-    
-    _HUD.labelText = NSLocalizedString(@"FetchingFeed", @"text label for fetching feed");
-    _HUD.detailsLabelText = nil;
-    
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedWithSuccess:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Must be called on main thread so the HUD gets hidden
-            _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
-            _HUD.mode = MBProgressHUDModeCustomView;
-            _HUD.labelText = NSLocalizedString(@"Completed", @"text label for Completed");
-            [_HUD hide:YES afterDelay:1];
-        });
-    } failure:^(NSError *error) {
-        // handle error
-        NSLog(@"error %@", error);
-    }];
-}
-
 #pragma mark - Import Episodes
 
 - (void)importEpisodesAlreadyOnDevice:(NSArray *)episodes
@@ -256,38 +207,17 @@
         
         if (_numberOfEpisodesToImport == _numberOfEpisodesImported)
         {
-            // All episodes imported, no fetch the podcast feed
-            [self fetchPodcastFeed];
+            // All episodes imported
+            _completion(_numberOfEpisodesToImport, nil);
         }
         
         if (import.status != AVAssetExportSessionStatusCompleted)
         {
             // Something went wrong with the import
-            [self presentError:import.error];
+            _completion(_numberOfEpisodesToImport, [import error]);
             import = nil;
-            return;
         }
     }];
-}
-
-#pragma mark - MBProgressHUDDelegate methods
-
-- (void)hudWasHidden:(MBProgressHUD *)hud
-{
-	[_HUD removeFromSuperview];
-	_HUD = nil;
-}
-
-#pragma mark - Preset Error
-
-- (void)presentError:(NSError *)error
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[error localizedDescription]
-														message:[error localizedFailureReason]
-													   delegate:nil
-											  cancelButtonTitle:NSLocalizedString(@"OK", "text label for ok")
-											  otherButtonTitles:nil];
-	[alertView show];
 }
 
 @end
