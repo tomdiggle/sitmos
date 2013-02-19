@@ -93,6 +93,8 @@
                                                                 type:TDNotificationTypeSuccess
                                                                title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
                                                       hideAfterDelay:5];
+                    
+                    [_tableView reloadData];
                 }
                 else if (error)
                 {
