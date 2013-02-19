@@ -42,6 +42,15 @@
                                                                   target:self
                                                                   action:@selector(doneButtonTapped:)];
     [[self navigationItem] setRightBarButtonItem:doneButton];
+    
+#ifdef TESTING
+    // During testing mode a feedback button will be displayed at the top left of the nav bar
+    UIBarButtonItem *feedbackButton = [[UIBarButtonItem alloc] initWithTitle:@"Feedback"
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:self
+                                                                      action:@selector(launchFeedback)];
+    [[self navigationItem] setLeftBarButtonItem:feedbackButton];
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -301,5 +310,13 @@
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
 }
+
+#pragma mark - Feedback
+#ifdef TESTING
+- (IBAction)launchFeedback
+{
+    [TestFlight openFeedbackView];
+}
+#endif
 
 @end
