@@ -16,3 +16,6 @@
 [submodule "Vendor/AFDownloadRequestOperation"]
 	path = Vendor/AFDownloadRequestOperation
 	url = https://github.com/steipete/AFDownloadRequestOperation.git
+[submodule "Vendor/TDNotificationPanel"]
+	path = Vendor/TDNotificationPanel
+	url = https://github.com/tomdiggle/TDNotificationPanel.git
