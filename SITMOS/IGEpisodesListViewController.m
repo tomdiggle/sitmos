@@ -90,7 +90,7 @@
                                                        groupBy:nil
                                                       delegate:self];
     
-    [self refreshFeed];
+    [self reloadTableViewDataSource];
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -482,6 +482,8 @@
 
 - (void)refreshFeed
 {
+    if (_reloading) return;
+    
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
     [httpClient syncPodcastFeedWithSuccess:^{
         [self doneLoadingTableViewData];
