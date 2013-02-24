@@ -28,7 +28,7 @@
     
     [self setTitle:NSLocalizedString(@"SkippingBackward", @"text label for skipping backward")];
     
-    _skippingBackwardTimes = @[@10, @20, @30, @45];
+    _skippingBackwardTimes = @[@10, @15, @30, @45];
 }
 
 #pragma mark - UITableViewDataSource
