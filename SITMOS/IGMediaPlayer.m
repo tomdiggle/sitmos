@@ -127,11 +127,11 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
  */
 - (void)cleanUp
 {
+    _player = nil;
     _startFromTime = 0.0f;
     _currentTime = 0.0f;
     _duration = 0.0f;
     _contentURL = nil;
-    _player = nil;
 }
 
 #pragma mark - KVO
@@ -207,8 +207,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     
     _contentURL = url;
     
-    // Stop any existing tracks playing before starting a new track
-    [self stop];
+    // Reset the current time & duration
+    _currentTime = 0.f;
+    _duration = 0.f;
     
     _asset = [[AVURLAsset alloc] initWithURL:url
                                      options:nil];
