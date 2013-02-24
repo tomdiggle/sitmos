@@ -22,6 +22,7 @@
 #import "IGSettingsViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
 #import "IGSettingsSkippingBackwardViewController.h"
+#import "IGSettingsSkippingForwardViewController.h"
 #import "IGEpisode.h"
 
 @implementation IGSettingsViewController
@@ -286,6 +287,12 @@
         {
             IGSettingsSkippingBackwardViewController *skippingBackwardViewController = [[IGSettingsSkippingBackwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:skippingBackwardViewController
+                                                   animated:YES];
+        }
+        else if (indexPath.row == 1)
+        {
+            IGSettingsSkippingForwardViewController *skippingForwardViewController = [[IGSettingsSkippingForwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            [[self navigationController] pushViewController:skippingForwardViewController
                                                    animated:YES];
         }
     }

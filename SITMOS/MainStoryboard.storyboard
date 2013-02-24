@@ -452,7 +452,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="nextTrackButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="Lr1-NS-Zls"/>
+                                            <action selector="skipForwardButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="NI4-BM-Swd"/>
                                             <outletCollection property="gestureRecognizers" destination="BrA-NH-ES8" appends="YES" id="SXP-c4-hev"/>
                                         </connections>
                                     </button>
@@ -566,7 +566,6 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
-                <relationship kind="action" name="nextTrackButtonTapped:"/>
                 <relationship kind="action" name="playButtonTapped:"/>
                 <relationship kind="action" name="playbackSpeedButtonTapped:"/>
                 <relationship kind="action" name="seekBackward:"/>
@@ -576,6 +575,7 @@
                 <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
                 <relationship kind="action" name="shareEpisodeButtonTapped:"/>
                 <relationship kind="action" name="skipBackwardButtonTapped:"/>
+                <relationship kind="action" name="skipForwardButtonTapped:"/>
                 <relationship kind="action" name="skippingBackButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
@@ -605,6 +605,8 @@
         <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
             <relationships>
+                <relationship kind="action" name="downloadButtonTapped:"/>
+                <relationship kind="action" name="moreInfoButtonTapped:"/>
                 <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
                 <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="UILabel"/>
@@ -616,6 +618,8 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
+                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>

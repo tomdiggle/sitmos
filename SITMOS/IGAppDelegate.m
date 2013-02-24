@@ -30,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [TestFlight takeOff:IGTestFlightTeamToken];
+    [TestFlight takeOff:IGTestFlightTeamToken];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     
@@ -152,8 +152,12 @@
             [mediaPlayer isPaused] ? [mediaPlayer play] : [mediaPlayer pause];
 			break;
 		case UIEventSubtypeRemoteControlNextTrack:
+        {
+            NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
+            [mediaPlayer seekToTime:[mediaPlayer currentTime] + (float)skipForwardTime];
             
             break;
+        }
         case UIEventSubtypeRemoteControlPreviousTrack:
         {
             NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];

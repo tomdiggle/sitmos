@@ -230,9 +230,10 @@
     }
 }
 
-- (IBAction)nextTrackButtonTapped:(id)sender
+- (IBAction)skipForwardButtonTapped:(id)sender
 {
-    
+    NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
+    [_mediaPlayer seekToTime:[_mediaPlayer currentTime] + (float)skipForwardTime];
 }
 
 /**

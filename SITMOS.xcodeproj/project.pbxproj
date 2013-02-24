@@ -196,6 +196,7 @@
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
 		32A3C5CB15C9B7690083D165 /* audio-player-upper-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */; };
 		32A3C5CC15C9B7690083D165 /* audio-player-upper-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */; };
+		32BF7B1C16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */; };
 		32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27AE16D406D000BB528E /* TDNotificationPanel.m */; };
@@ -433,6 +434,8 @@
 		32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg@2x.png"; sourceTree = "<group>"; };
 		32A3C5C915C9B7670083D165 /* audio-player-upper-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg.png"; sourceTree = "<group>"; };
 		32A3C5CA15C9B7680083D165 /* audio-player-upper-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-upper-controls-bg@2x.png"; sourceTree = "<group>"; };
+		32BF7B1A16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingForwardViewController.h; sourceTree = "<group>"; };
+		32BF7B1B16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingForwardViewController.m; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		32EA273816C0074E00BB528E /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFDownloadRequestOperation.h; path = AFDownloadRequestOperation/AFDownloadRequestOperation.h; sourceTree = "<group>"; };
 		32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = "<group>"; };
@@ -1019,6 +1022,8 @@
 				32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */,
 				32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */,
 				32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */,
+				32BF7B1A16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.h */,
+				32BF7B1B16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1255,6 +1260,7 @@
 				32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */,
 				32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */,
 				32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */,
+				32BF7B1C16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
