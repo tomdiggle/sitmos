@@ -394,9 +394,8 @@
         [mediaPlayer setPausedBlock:^(Float64 currentTime) {
             // Save current time so playback can resume where left off
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                IGEpisode *localEpisode = [episode MR_inContext:localContext];
                 [localEpisode setProgress:@(currentTime)];
-                [localContext MR_saveToPersistentStoreAndWait];
             }];
         }];
         
@@ -409,7 +408,7 @@
             }
             
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                IGEpisode *localEpisode = (IGEpisode *)[[NSManagedObjectContext MR_defaultContext] objectWithID:[episode objectID]];
+                IGEpisode *localEpisode = [episode MR_inContext:localContext];
                 BOOL markAsPlayed = [localEpisode isPlayed];
                 Float64 progress = currentTime;
                 if (playbackEnded)
@@ -419,7 +418,6 @@
                 }
                 [localEpisode markAsPlayed:markAsPlayed];
                 [localEpisode setProgress:@(progress)];
-                [localContext MR_saveToPersistentStoreAndWait];
             }];
         }];
     });
