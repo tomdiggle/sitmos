@@ -466,7 +466,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="previousTrackButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="VXw-oa-qvR"/>
+                                            <action selector="skipBackwardButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="9ya-bs-yB0"/>
                                             <outletCollection property="gestureRecognizers" destination="PMf-Za-T0r" appends="YES" id="NNO-af-bVL"/>
                                         </connections>
                                     </button>
@@ -566,6 +566,17 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="nextTrackButtonTapped:"/>
+                <relationship kind="action" name="playButtonTapped:"/>
+                <relationship kind="action" name="playbackSpeedButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
+                <relationship kind="action" name="seekForward:"/>
+                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
+                <relationship kind="action" name="shareEpisodeButtonTapped:"/>
+                <relationship kind="action" name="skipBackwardButtonTapped:"/>
+                <relationship kind="action" name="skippingBackButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>

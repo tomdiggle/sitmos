@@ -174,3 +174,15 @@
 
 /* text label for error importing episodes */
 "ErrorImportingEpisodes" = "Error while importing episodes";
+
+/* text label for seconds */
+"Seconds" = "%i seconds";
+
+/* text label for playback */
+"Playback" = "Playback";
+
+/* text label for skipping backward */
+"SkippingBackward" = "Skipping Backward";
+
+/* text label for skipping forward */
+"SkippingForward" = "Skipping Forward";

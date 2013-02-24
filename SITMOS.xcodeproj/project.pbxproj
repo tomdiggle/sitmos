@@ -199,6 +199,7 @@
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */; };
 		32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27AE16D406D000BB528E /* TDNotificationPanel.m */; };
+		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
@@ -437,6 +438,8 @@
 		32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = "<group>"; };
 		32EA27AD16D406D000BB528E /* TDNotificationPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDNotificationPanel.h; sourceTree = "<group>"; };
 		32EA27AE16D406D000BB528E /* TDNotificationPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDNotificationPanel.m; sourceTree = "<group>"; };
+		32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingBackwardViewController.h; sourceTree = "<group>"; };
+		32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingBackwardViewController.m; sourceTree = "<group>"; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
 		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
@@ -983,10 +986,7 @@
 				321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */,
 				329272A514A75F0800119D48 /* IGAudioPlayerViewController.h */,
 				329272A614A75F0800119D48 /* IGAudioPlayerViewController.m */,
-				327766DC160F631C00D7DEF4 /* IGSettingsViewController.h */,
-				327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */,
-				32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */,
-				32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */,
+				32EA27B016DA712B00BB528E /* Settings */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1008,6 +1008,19 @@
 			);
 			name = TDNotificationPanel;
 			path = TDNotificationPanel/TDNotificationPanel;
+			sourceTree = "<group>";
+		};
+		32EA27B016DA712B00BB528E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				327766DC160F631C00D7DEF4 /* IGSettingsViewController.h */,
+				327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */,
+				32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */,
+				32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */,
+				32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */,
+				32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1241,6 +1254,7 @@
 				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
 				32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */,
 				32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */,
+				32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

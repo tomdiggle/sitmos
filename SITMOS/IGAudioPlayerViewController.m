@@ -253,9 +253,10 @@
     }
 }
 
-- (IBAction)previousTrackButtonTapped:(id)sender
+- (IBAction)skipBackwardButtonTapped:(id)sender
 {
-    
+    NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];
+    [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - (float)skipBackwardTime];
 }
 
 /**
