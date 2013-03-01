@@ -112,9 +112,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, AudioRouteChangeListenerCallback, (__bridge void *)self);
     
     _player = nil;
-    _startFromTime = 0.0f;
-    _duration = 0.0f;
-    _currentTime = 0.0f;
+    _startFromTime = 0.f;
+    _duration = 0.f;
+    _currentTime = 0.f;
     _playbackRate = 1.0f;
     
     return self;
@@ -128,9 +128,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)cleanUp
 {
     _player = nil;
-    _startFromTime = 0.0f;
-    _currentTime = 0.0f;
-    _duration = 0.0f;
+    _currentTime = 0.f;
+    _duration = 0.f;
     _contentURL = nil;
 }
 
@@ -149,6 +148,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
                 if (_startFromTime > 0)
                 {
                     [self seekToTime:_startFromTime];
+                    _startFromTime = 0.f;
                 }
                 [self play];
                 
@@ -157,6 +157,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
                 [self postNotification:IGMediaPlayerPlaybackFailedNotification];
                 
                 break;
+                
             default:
                 break;
         }
@@ -205,11 +206,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         return;
     }
     
-    _contentURL = url;
+    [self stop];
     
-    // Reset the current time & duration
-    _currentTime = 0.f;
-    _duration = 0.f;
+    _contentURL = url;
     
     _asset = [[AVURLAsset alloc] initWithURL:url
                                      options:nil];
@@ -453,13 +452,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (void)postNotification:(NSString *)notificationName
 {
-    NSDictionary *userInfo = @{
-                                @"isPlaying" :[NSNumber numberWithBool:[self isPlaying]],
-                                @"isPaused" : [NSNumber numberWithBool:[self isPaused]]
-                            };
     NSNotification *notification = [NSNotification notificationWithName:notificationName
-                                                                 object:nil
-                                                               userInfo:userInfo];
+                                                                 object:self
+                                                               userInfo:nil];
     // Notifications are posted on the main thread.
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotification:notification];
