@@ -206,6 +206,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         return;
     }
     
+    // Calling stop, stops any existing audio playing. Useful when switching from a downloaded episode to streaming one.
     [self stop];
     
     _contentURL = url;
