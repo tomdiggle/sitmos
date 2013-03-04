@@ -99,8 +99,7 @@
         }
         [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
         [[cell textLabel] setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
-        [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                                  size:17.0f]];
+        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
         if (indexPath.row == 0)
@@ -128,10 +127,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:rightDetailCellIdentifier];
         }
         [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                                  size:17.0f]];
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:IGFontNameRegular
-                                                        size:17.0f]];
+        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
+        [[cell detailTextLabel] setFont:[UIFont systemFontOfSize:17.f]];
         [[cell detailTextLabel] setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         
@@ -158,10 +155,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:rightDetailCellIdentifier];
         }
         [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                                  size:17.0f]];
-        [[cell detailTextLabel] setFont:[UIFont fontWithName:IGFontNameRegular
-                                                        size:17.0f]];
+        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
+        [[cell detailTextLabel] setFont:[UIFont systemFontOfSize:17.0f]];
         [[cell detailTextLabel] setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
        
         if (indexPath.row == 0)
@@ -190,8 +185,7 @@
         [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
         [[cell textLabel] setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
         [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                                  size:17.0f]];
+        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
         if (indexPath.row == 0)
         {
             [[cell textLabel] setText:NSLocalizedString(@"ReviewOnAppStore", @"text label for review on the app store")];
@@ -220,8 +214,7 @@
     
     UIView *viewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.0f)];
     UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0, viewHeader.frame.size.width, viewHeader.frame.size.height)];
-    [labelHeader setFont:[UIFont fontWithName:IGFontNameMedium
-                                   size:17.0f]];
+    [labelHeader setFont:[UIFont boldSystemFontOfSize:16.f]];
     [labelHeader setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
     [labelHeader setBackgroundColor:[UIColor clearColor]];
     if (section == 0)
@@ -257,8 +250,7 @@
     
     UIView *viewFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 60.0f)];
     UILabel *labelFooter = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0, viewFooter.frame.size.width - 40.0f, viewFooter.frame.size.height)];
-    [labelFooter setFont:[UIFont fontWithName:IGFontNameRegular
-                                         size:14.0f]];
+    [labelFooter setFont:[UIFont systemFontOfSize:14.0f]];
     [labelFooter setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
     [labelFooter setBackgroundColor:[UIColor clearColor]];
     [labelFooter setTextAlignment:NSTextAlignmentCenter];

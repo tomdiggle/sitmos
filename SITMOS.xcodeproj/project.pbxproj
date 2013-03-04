@@ -19,8 +19,6 @@
 		32056E3315E286D700235783 /* nav-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E3115E286D700235783 /* nav-button@2x.png */; };
 		3208439816061D470082F5B0 /* download-progress-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439616061D470082F5B0 /* download-progress-bg.png */; };
 		3208439916061D470082F5B0 /* download-progress-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439716061D470082F5B0 /* download-progress-bg@2x.png */; };
-		320843C8160657F50082F5B0 /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 320843C5160657F50082F5B0 /* Ubuntu-M.ttf */; };
-		320843C9160657F50082F5B0 /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 320843C6160657F50082F5B0 /* Ubuntu-R.ttf */; };
 		321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */; };
 		321579C315FE7F700074518D /* more-info-play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 321579C115FE7F700074518D /* more-info-play-button.png */; };
 		321579C415FE7F700074518D /* more-info-play-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321579C215FE7F700074518D /* more-info-play-button@2x.png */; };
@@ -216,8 +214,6 @@
 		32056E3115E286D700235783 /* nav-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-button@2x.png"; sourceTree = "<group>"; };
 		3208439616061D470082F5B0 /* download-progress-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-progress-bg.png"; sourceTree = "<group>"; };
 		3208439716061D470082F5B0 /* download-progress-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-progress-bg@2x.png"; sourceTree = "<group>"; };
-		320843C5160657F50082F5B0 /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ubuntu-M.ttf"; path = "Assets/Ubuntu-M.ttf"; sourceTree = "<group>"; };
-		320843C6160657F50082F5B0 /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ubuntu-R.ttf"; path = "Assets/Ubuntu-R.ttf"; sourceTree = "<group>"; };
 		321579BD15FCFA760074518D /* IGEpisodeMoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeMoreInfoViewController.h; sourceTree = "<group>"; };
 		321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeMoreInfoViewController.m; sourceTree = "<group>"; };
 		321579C115FE7F700074518D /* more-info-play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-play-button.png"; sourceTree = "<group>"; };
@@ -479,20 +475,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		320843C3160657E30082F5B0 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				320843C5160657F50082F5B0 /* Ubuntu-M.ttf */,
-				320843C6160657F50082F5B0 /* Ubuntu-R.ttf */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
 		321D8C32145F1D8B008698DC = {
 			isa = PBXGroup;
 			children = (
 				321D8C47145F1D8B008698DC /* SITMOS */,
-				320843C3160657E30082F5B0 /* Assets */,
 				322D96BD162B138900D7D5D6 /* Vendor */,
 				32523EC316ADB53B006E9FFB /* SITMOSTests */,
 				321D8C40145F1D8B008698DC /* Frameworks */,
@@ -1107,8 +1093,6 @@
 				32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */,
 				3208439816061D470082F5B0 /* download-progress-bg.png in Resources */,
 				3208439916061D470082F5B0 /* download-progress-bg@2x.png in Resources */,
-				320843C8160657F50082F5B0 /* Ubuntu-M.ttf in Resources */,
-				320843C9160657F50082F5B0 /* Ubuntu-R.ttf in Resources */,
 				32A2E124160792BF005377FF /* Default-568h@2x.png in Resources */,
 				327766DA160D161B00D7DEF4 /* nav-settings-icon.png in Resources */,
 				327766DB160D161B00D7DEF4 /* nav-settings-icon@2x.png in Resources */,

@@ -58,8 +58,7 @@
     }
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                              size:17.0f]];
+    [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
     [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
     
     if (indexPath.row == 0)

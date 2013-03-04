@@ -55,10 +55,6 @@ extern NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification;
 /* */
 extern NSString * const IGSITMOSErrorDomain;
 
-/* Fonts */
-extern NSString * const IGFontNameRegular;
-extern NSString * const IGFontNameMedium;
-
 /* Settings */
 extern NSString * const IGSettingCellularDataStreaming;
 extern NSString * const IGSettingCellularDataDownloading;

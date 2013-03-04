@@ -53,8 +53,7 @@
     }
     
     [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-    [[cell textLabel] setFont:[UIFont fontWithName:IGFontNameMedium
-                                              size:17.0f]];
+    [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
     [[cell textLabel] setText:[NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [[_skippingForwardTimes objectAtIndex:indexPath.row] integerValue]]];
     
     if ([[self currentSkippingForwardTime] isEqualToNumber:[_skippingForwardTimes objectAtIndex:indexPath.row]])

@@ -35,10 +35,6 @@ NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"IGMediaPlay
 /* */
 NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
 
-/* Fonts */
-NSString * const IGFontNameRegular = @"Ubuntu";
-NSString * const IGFontNameMedium = @"Ubuntu-Medium";
-
 /* Settings */
 NSString * const IGSettingCellularDataStreaming = @"IGSettingCellularDataStreaming";
 NSString * const IGSettingCellularDataDownloading = @"IGSettingCellularDataDownloading";
