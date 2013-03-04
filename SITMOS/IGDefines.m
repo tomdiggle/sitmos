@@ -25,6 +25,7 @@
 NSString * const IGDownloadProgressNotification = @"IGDownloadProgressNotification";
 
 /* */
+NSString * const IGMediaPlayerPlaybackLoading = @"IGMediaPlayerPlaybackLoading";
 NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
 NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
 NSString * const IGMediaPlayerPlaybackEndedNotification = @"IGMediaPlayerPlaybackEndedNotification";

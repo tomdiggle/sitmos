@@ -45,6 +45,7 @@ typedef enum {
 extern NSString * const IGDownloadProgressNotification;
 
 /* */
+extern NSString * const IGMediaPlayerPlaybackLoading;
 extern NSString * const IGMediaPlayerPlaybackStatusChangedNotification;
 extern NSString * const IGMediaPlayerPlaybackFailedNotification;
 extern NSString * const IGMediaPlayerPlaybackEndedNotification;

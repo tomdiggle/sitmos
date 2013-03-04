@@ -51,7 +51,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (strong, nonatomic) AVPlayer *player;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVURLAsset *asset;
-@property (strong, nonatomic) NSURL *contentURL;
+@property (nonatomic, strong, readwrite) NSURL *contentURL;
 @property (readwrite, nonatomic) Float64 currentTime;
 @property (readwrite, nonatomic) Float64 duration;
 @property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
@@ -210,6 +210,8 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [self stop];
     
     _contentURL = url;
+    
+    [self postNotification:IGMediaPlayerPlaybackLoading];
     
     _asset = [[AVURLAsset alloc] initWithURL:url
                                      options:nil];

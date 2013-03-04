@@ -43,6 +43,11 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 @interface IGMediaPlayer : NSObject
 
 /**
+ * The url of the content currently playing. (read-only)
+ */
+@property (nonatomic, strong, readonly) NSURL *contentURL;
+
+/**
  * The time the media player will begin playback from.
  */
 @property (assign, nonatomic) Float64 startFromTime;
