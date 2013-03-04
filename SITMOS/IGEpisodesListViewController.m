@@ -384,6 +384,17 @@
 
 - (void)playAudioEpisode:(IGEpisode *)episode
 {
+    IGAudioPlayerViewController *audioPlayer = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
+    [audioPlayer setTitle:[episode title]];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav-back-arrow"]
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:nil
+                                                                            action:nil];
+    
+    [[self navigationController] pushViewController:audioPlayer
+                                           animated:YES];
+    
     dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
 	dispatch_async(startPlaybackQueue, ^{
         IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
@@ -421,17 +432,6 @@
             }];
         }];
     });
-    
-    IGAudioPlayerViewController *audioPlayer = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
-    [audioPlayer setTitle:[episode title]];
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav-back-arrow"]
-                                                                             style:UIBarButtonItemStyleBordered
-                                                                            target:nil
-                                                                            action:nil];
-    
-    [[self navigationController] pushViewController:audioPlayer
-                                           animated:YES];
 }
 
 /**
