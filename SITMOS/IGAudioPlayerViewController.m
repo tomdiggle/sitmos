@@ -23,26 +23,20 @@
 
 #import "IGAudioPlayerViewController.h"
 #import "TDSlider.h"
+#import "TDNotificationPanel.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
-#import "UIActionSheet+Blocks.h"
-#import "MBProgressHUD.h"
 
 @interface IGAudioPlayerViewController ()
 
-@property (strong, nonatomic) IBOutlet UIView *upperPlayerControls;
-@property (strong, nonatomic) IBOutlet UILabel *currentTimeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *durationLabel;
-@property (strong, nonatomic) IBOutlet TDSlider *progressSlider;
-@property (strong, nonatomic) IBOutlet UIButton *playbackSpeedButton;
-@property (strong, nonatomic) IBOutlet UILabel *skippingBackLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
-@property (strong, nonatomic) IBOutlet UIView *lowerPlayerControls;
-@property (strong, nonatomic) IBOutlet UIButton *playButton;
-@property (strong, nonatomic) IBOutlet MPVolumeView *volumeSlider;
-@property (strong, nonatomic) IGMediaPlayer *mediaPlayer;
-@property (strong, nonatomic) NSTimer *playbackProgressUpdateTimer;
-@property (strong, nonatomic) MBProgressHUD *bufferingHUD;
+@property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
+@property (nonatomic, weak) IBOutlet UIView *lowerPlayerControls;
+@property (nonatomic, weak) IBOutlet UIButton *playButton;
+@property (nonatomic, weak) IBOutlet UILabel *currentTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *durationLabel;
+@property (nonatomic, weak) IBOutlet TDSlider *progressSlider;
+@property (nonatomic, strong) IGMediaPlayer *mediaPlayer;
+@property (nonatomic, strong) NSTimer *playbackProgressUpdateTimer;
 
 @end
 
@@ -56,9 +50,14 @@
     
     _mediaPlayer = [IGMediaPlayer sharedInstance];
     
-    [self applyStylesheet]; 
+    [self applyStylesheet];
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(showBufferingHUD:)
+                                                     name:IGMediaPlayerPlaybackLoading
+                                                   object:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(playbackEnded:)
                                                      name:IGMediaPlayerPlaybackEndedNotification
@@ -75,12 +74,12 @@
                                                    object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showBufferingHUD)
+                                                 selector:@selector(showBufferingHUD:)
                                                      name:IGMediaPlayerPlaybackBufferEmptyNotification
                                                    object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(hideBufferingHUD)
+                                                 selector:@selector(hideBufferingHUD:)
                                                      name:IGMediaPlayerPlaybackLikelyToKeepUpNotification
                                                    object:nil];
         
@@ -94,12 +93,6 @@
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
     });
-    
-    UISwipeGestureRecognizer *rightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                          action:@selector(swipeRight:)];
-    [rightRecognizer setNumberOfTouchesRequired:1];
-    [rightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
-    [_backgroundImageView addGestureRecognizer:rightRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,33 +113,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackEndedNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackFailedNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackBufferEmptyNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackLikelyToKeepUpNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidEnterBackgroundNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Stylesheet
@@ -154,13 +121,9 @@
 - (void)applyStylesheet
 {
     [_backgroundImageView setImage:[UIImage imageNamed:@"audio-player-bg"]];
-    [_upperPlayerControls setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"audio-player-upper-controls-bg"]]];
     [_lowerPlayerControls setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"audio-player-lower-controls-bg"]]];
     [_progressSlider setProgressColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"progress-slider-fill"]]];
     [_progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
-    [_currentTimeLabel setFont:[UIFont fontWithName:IGFontNameMedium size:12.0f]];
-    [_durationLabel setFont:[UIFont fontWithName:IGFontNameMedium size:12.0f]];
-    [_skippingBackLabel setFont:[UIFont fontWithName:IGFontNameRegular size:10.0f]];
 }
 
 - (void)updatePlayButtonImage
@@ -180,23 +143,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)skippingBackButtonTapped:(id)sender
-{
-    /*CABasicAnimation *rotationAnimation;
-    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.toValue = [NSNumber numberWithFloat:-M_PI * 2.0];
-    rotationAnimation.duration = 0.4f;
-    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    [[sender layer] addAnimation:rotationAnimation
-                          forKey:@"rotationAnimation"];
-    [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - 30.0f];
-    
-    if ([_mediaPlayer isPaused])
-    {
-        [self updatePlaybackProgress];
-    }*/
-}
 
 - (IBAction)playButtonTapped:(id)sender
 {
@@ -295,38 +241,6 @@
     [self play];
 }
 
-- (IBAction)shareEpisodeButtonTapped:(id)sender
-{
-    NSString *shareText = [NSString stringWithFormat:@"%@ %@ %@ Stuck in the Middle of Somewhere http://sitmos.net/audio.php", NSLocalizedString(@"CheckOut", "text label for check out"), [self title], NSLocalizedString(@"Of", "text label for of")];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[shareText]
-                                                                                         applicationActivities:nil];
-    activityViewController.excludedActivityTypes = @[UIActivityTypePostToWeibo, UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll];
-    [self presentViewController:activityViewController
-                       animated:YES
-                     completion:nil];
-}
-
-- (IBAction)playbackSpeedButtonTapped:(id)sender
-{
-    if ([sender class] != [UIButton class]) return;
-    
-    if ([[sender imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"playback-speed-2x"]])
-    {
-        [sender setImage:[UIImage imageNamed:@"playback-speed-1x"] forState:UIControlStateNormal];
-        [_mediaPlayer setPlaybackRate:1.0f];
-    }
-    else if ([[sender imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"playback-speed-1-5x"]])
-    {
-        [sender setImage:[UIImage imageNamed:@"playback-speed-2x"] forState:UIControlStateNormal];
-        [_mediaPlayer setPlaybackRate:2.0f];
-    }
-    else
-    {
-        [sender setImage:[UIImage imageNamed:@"playback-speed-1-5x"] forState:UIControlStateNormal];
-        [_mediaPlayer setPlaybackRate:1.5f];
-    }
-}
-
 #pragma mark - Playback Methods
 
 /**
@@ -387,30 +301,25 @@
 #pragma mark - Buffering HUD
 
 /**
- * Shows the buffering hud on the main thread if it's not already being displayed.
+ * Displays a buffering notification panel only if the audio is not a file url.
  */
-- (void)showBufferingHUD
+- (void)showBufferingHUD:(NSNotification *)notification
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (!_bufferingHUD)
-        {
-            _bufferingHUD = [[MBProgressHUD alloc] initWithView:[self view]];
-            _bufferingHUD.labelText = NSLocalizedString(@"Buffering", @"text label for buffering");
-            [[self view] addSubview:_bufferingHUD];
-        }
-    });
+    if ([[_mediaPlayer contentURL] isFileURL] || [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
+    
+    TDNotificationPanel *panel = [TDNotificationPanel showNotificationPanelInView:self.view
+                                                                         animated:YES];
+    [panel setNotificationType:TDNotificationTypeInfo];
+    [panel setTitleText:@"Buffering..."];
 }
 
 /**
- * Hides the buffering hud if it's being displayed.
+ * Hides the buffering notification panel.
  */
-- (void)hideBufferingHUD
+- (void)hideBufferingHUD:(NSNotification *)notification
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([_bufferingHUD isHidden]) return;
-        
-        [_bufferingHUD hide:YES];
-    });
+    [TDNotificationPanel hideNotificationPanelInView:self.view
+                                            animated:YES];
 }
 
 #pragma mark - Playback Progress Update
@@ -447,13 +356,6 @@
     [_progressSlider setValue:[_mediaPlayer currentTime]];
 }
 
-#pragma mark - Swipe Gesture Recognizer 
-
-- (void)swipeRight:(UISwipeGestureRecognizer *)swipeGestureRecognizer
-{
-    [[self navigationController] popViewControllerAnimated:YES];
-}
-
 #pragma mark - Media Player Notification Observer Methods
 
 /**
@@ -486,12 +388,6 @@
  */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
-    NSDictionary *userInfo = [notification userInfo];
-    if ([[userInfo valueForKey:@"isPlaying"] boolValue])
-    {
-        [self hideBufferingHUD];
-    }
-    
     [self updatePlayButtonImage];
 }
 

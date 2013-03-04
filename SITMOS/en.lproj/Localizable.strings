@@ -35,7 +35,7 @@
 "Sorry" = "Sorry";
 
 /* text label for episode playback failed */
-"EpisodePlaybackFailed" = "Episode Playback Failed, please try again.";
+"EpisodePlaybackFailed" = "Episode playback failed";
 
 /* text label for check out */
 "CheckOut" = "Check out";
