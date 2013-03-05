@@ -135,7 +135,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SITMOS" id="K60-j5-uMV">
-                        <barButtonItem key="rightBarButtonItem" image="nav-settings-icon.png" id="cRT-De-kKP">
+                        <barButtonItem key="leftBarButtonItem" image="nav-settings-icon.png" id="cRT-De-kKP">
                             <connections>
                                 <action selector="settingsButtonTapped:" destination="azn-Zd-amG" id="PxJ-tw-Plv"/>
                             </connections>
@@ -515,8 +515,6 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
