@@ -48,7 +48,7 @@
                                                     <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKo-8d-EBW" userLabel="Played Status Icon">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKo-8d-EBW" userLabel="Played Status Icon">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="14" id="HFQ-ay-gkp"/>
                                                         <constraint firstAttribute="width" constant="10" id="xgW-rb-5qj"/>
@@ -471,6 +471,63 @@
         <image name="skipping-backward-button.png" width="32" height="32"/>
         <image name="skipping-forward-button.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="DACircularProgressView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DACircularProgressView.h"/>
+        </class>
+        <class className="IGAudioPlayerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lowerPlayerControls" candidateClass="UIView"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="progressSlider" candidateClass="TDSlider"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="episodeDurationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodePublishedLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeSizeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playedStatusImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="summaryTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
+            <relationships>
+                <relationship kind="action" name="downloadButtonTapped:"/>
+                <relationship kind="action" name="moreInfoButtonTapped:"/>
+                <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
+                <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="moreInfoButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playedStatusIconImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodesListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
+                <relationship kind="action" name="settingsButtonTapped:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="TDSlider" superclassName="UISlider">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDSlider.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

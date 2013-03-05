@@ -33,6 +33,15 @@
     _delegate = nil;
 }
 
+#pragma mark - Laying out Subviews
+
+- (void)layoutSubviews
+{
+    [self displayPlayedStatusIcon];
+    
+    [super layoutSubviews];
+}
+
 #pragma mark - Setters
 
 - (void)setDownloadStatus:(IGEpisodeDownloadStatus)downloadStatus
@@ -90,32 +99,24 @@
     }
 }
 
-- (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
+#pragma mark - Played Status Icon
+
+- (void)displayPlayedStatusIcon
 {
-    _playedStatus = playedStatus;
-    
-    switch (playedStatus)
+    if (_playedStatus == IGEpisodePlayedStatusUnplayed)
     {
-        case IGEpisodePlayedStatusPlayed:
-            NSLog(@"Episode %@ played", self.episodeTitleLabel.text);
-            [_playedStatusIconImageView setImage:nil];
-            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(11.0f, 25.0f, 144.0f, 21.0f)];
-            break;
-            
-        case IGEpisodePlayedStatusHalfPlayed:
-            NSLog(@"Episode %@ half played", self.episodeTitleLabel.text);
-            [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
-            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
-            break;
-            
-        case IGEpisodePlayedStatusUnplayed:
-            NSLog(@"Episode %@ unplayed", self.episodeTitleLabel.text);
-            [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
-            //            [_episodeDateAndDurationLabel setFrame:CGRectMake(27.0f, 25.0f, 144.0f, 21.0f)];
-            break;
-            
-        default:
-            break;
+        [_episodeDateAndDurationLabel setFrame:CGRectMake(29.f, 25.f, 160.f, 21.f)];
+        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
+    }
+    else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
+    {
+        [_episodeDateAndDurationLabel setFrame:CGRectMake(29.f, 25.f, 160.f, 21.f)];
+        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
+    }
+    else
+    {
+        [_episodeDateAndDurationLabel setFrame:CGRectMake(11.f, 25.f, 160.f, 21.f)];
+        [_playedStatusIconImageView setImage:nil];
     }
 }
 
@@ -123,8 +124,6 @@
 
 - (IBAction)downloadButtonTapped:(id)sender
 {
-    if (![sender isKindOfClass:[UIButton class]]) return;
-    
     [_delegate igEpisodeTableViewCell:self
           downloadEpisodeButtonTapped:sender];
 }
