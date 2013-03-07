@@ -35,7 +35,9 @@
 #import "IGHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
+#import "UIViewController+NowPlayingButton.h"
 #import "TDNotificationPanel.h"
+#import "IGMediaPlayerAsset.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
@@ -106,6 +108,12 @@
             });
         }];
     });
+    
+    // Notifications below are used to check if the now playing button should still be displayed
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(displayNowPlayingButton)
+                                                 name:IGMediaPlayerPlaybackEndedNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,6 +125,13 @@
         [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
                           withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self displayNowPlayingButton];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -365,6 +380,17 @@
     [_tableView setBounds:newBounds];
 }
 
+#pragma mark - Display Now Playing Button
+
+/**
+ *
+ */
+- (void)displayNowPlayingButton
+{
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    [self showNowPlayingButon:([mediaPlayer asset] != nil)];
+}
+
 #pragma mark - Play Episode
 
 - (void)playEpisode:(IGEpisode *)episode
@@ -397,10 +423,14 @@
     
     dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
 	dispatch_async(startPlaybackQueue, ^{
+        NSURL *contentURL = [episode isCompletelyDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+        IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
+        [asset setContentURL:contentURL];
+        [asset setTitle:[episode title]];
+        
         IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
         [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
-        NSURL *contentURL = [episode isCompletelyDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-        [mediaPlayer startWithContentURL:contentURL];
+        [mediaPlayer startWithAsset:asset];
         
         [mediaPlayer setPausedBlock:^(Float64 currentTime) {
             // Save current time so playback can resume where left off

@@ -22,6 +22,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "IGAudioPlayerViewController.h"
+#import "IGMediaPlayerAsset.h"
 #import "TDSlider.h"
 #import "TDNotificationPanel.h"
 #import "RIButtonItem.h"
@@ -49,6 +50,8 @@
     [super viewDidLoad];
     
     _mediaPlayer = [IGMediaPlayer sharedInstance];
+    
+    [self play];
     
     [self applyStylesheet];
     
@@ -305,7 +308,7 @@
  */
 - (void)showBufferingHUD:(NSNotification *)notification
 {
-    if ([[_mediaPlayer contentURL] isFileURL] || [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
+    if ([[[_mediaPlayer asset] contentURL] isFileURL] || [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
     
     TDNotificationPanel *panel = [TDNotificationPanel showNotificationPanelInView:self.view
                                                                          animated:YES];

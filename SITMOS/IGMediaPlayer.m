@@ -24,6 +24,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "IGMediaPlayer.h"
+#import "IGMediaPlayerAsset.h"
 
 static IGMediaPlayer *__sharedInstance = nil;
 
@@ -50,11 +51,10 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 @property (strong, nonatomic) AVPlayer *player;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
-@property (strong, nonatomic) AVURLAsset *asset;
-@property (nonatomic, strong, readwrite) NSURL *contentURL;
 @property (readwrite, nonatomic) Float64 currentTime;
 @property (readwrite, nonatomic) Float64 duration;
 @property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
+@property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
 
 - (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
 - (void)handleAudioRouteChange:(const void *)inPropertyValue;
@@ -115,7 +115,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     _startFromTime = 0.f;
     _duration = 0.f;
     _currentTime = 0.f;
-    _playbackRate = 1.0f;
+    _playbackRate = 1.f;
     
     return self;
 }
@@ -128,9 +128,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)cleanUp
 {
     _player = nil;
+    _asset = nil;
     _currentTime = 0.f;
     _duration = 0.f;
-    _contentURL = nil;
 }
 
 #pragma mark - KVO
@@ -154,7 +154,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
                 
                 break;
             case AVPlayerStatusFailed:
-                [self postNotification:IGMediaPlayerPlaybackFailedNotification];
+                [self playbackFailed];
                 
                 break;
                 
@@ -196,33 +196,31 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 #pragma mark - Managing Playback
 
-- (void)startWithContentURL:(NSURL *)url
+- (void)startWithAsset:(IGMediaPlayerAsset *)asset
 {
-    NSParameterAssert(url != nil);
+    NSParameterAssert(asset != nil);
     
-    if ([url isEqual:_contentURL])
+    if ([_asset.contentURL isEqual:asset.contentURL])
     {
-        [self play];
         return;
     }
     
-    // Calling stop, stops any existing audio playing. Useful when switching from a downloaded episode to streaming one.
-    [self stop];
-    
-    _contentURL = url;
-    
+    _asset = asset;
+
+    // Calling pause, pauses any existing audio playing. Useful when switching from a downloaded episode to streaming one.
+    [self pause];
+
     [self postNotification:IGMediaPlayerPlaybackLoading];
-    
-    _asset = [[AVURLAsset alloc] initWithURL:url
-                                     options:nil];
-    
+
+    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
+
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
-    
+
     // Tells the asset to load the values of any of the specified keys that are not already loaded.
-    [_asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
+    [urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             // IMPORTANT: Must dispatch to main queue in order to operate on the AVPlayer and AVPlayerItem.
-            [self prepareToPlayAsset:_asset
+            [self prepareToPlayAsset:urlAsset
                             withKeys:requestedKeys];
         });
     }];
@@ -243,7 +241,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
                                                           error:&error];
 		if (keyStatus == AVKeyValueStatusFailed)
 		{
-            [self postNotification:IGMediaPlayerPlaybackFailedNotification];
+            [self playbackFailed];
 			return;
 		}
 	}
@@ -251,7 +249,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     // Use the AVAsset playable property to detect whether the asset can be played.
     if (!asset.playable) 
     {
-        [self postNotification:IGMediaPlayerPlaybackFailedNotification];
+        [self playbackFailed];
         return;
     }
     
@@ -435,8 +433,15 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         _stoppedBlock([self currentTime], YES);
     }
     [self removeNowPlayingInfo];
-    [self postNotification:IGMediaPlayerPlaybackEndedNotification];
+    _asset = nil;
     [self cleanUp];
+    [self postNotification:IGMediaPlayerPlaybackEndedNotification];
+}
+
+- (void)playbackFailed
+{
+    [self cleanUp];
+    [self postNotification:IGMediaPlayerPlaybackFailedNotification];
 }
 
 #pragma mark - Managing Time

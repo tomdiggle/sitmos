@@ -32,6 +32,8 @@ typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);
 
 typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnded);
 
+@class IGMediaPlayerAsset;
+
 /**
  * The IGMediaPlayer class provides a centralized point of control for media playing in SITMOS.
  *
@@ -41,11 +43,6 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
  */
 
 @interface IGMediaPlayer : NSObject
-
-/**
- * The url of the content currently playing. (read-only)
- */
-@property (nonatomic, strong, readonly) NSURL *contentURL;
 
 /**
  * The time the media player will begin playback from.
@@ -84,6 +81,11 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
  */
 @property (copy, nonatomic) IGMediaPlayerStoppedBlock stoppedBlock;
 
+/**
+ * The asset of which the media was initialized. (read-only)
+ */
+@property (nonatomic, strong, readonly) IGMediaPlayerAsset *asset;
+
 #pragma mark - Getting the Media Player Instance
 
 /**
@@ -103,11 +105,11 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
  * @name Managing Playback
  */
 
-/** 
- * Starts playback by creating an asset for inspection of a resource referenced by a given URL.
+/**
+ * Starts playback.
  * @warning *Important:* This method must be called first when wanting to play new content.
  */
-- (void)startWithContentURL:(NSURL *)url;
+- (void)startWithAsset:(IGMediaPlayerAsset *)asset;
 
 /**
  * Begins playback of current episode.
