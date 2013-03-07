@@ -22,9 +22,6 @@
 #import "IGDefines.h"
 
 /* */
-NSString * const IGDownloadProgressNotification = @"IGDownloadProgressNotification";
-
-/* */
 NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
 
 /* Settings */
