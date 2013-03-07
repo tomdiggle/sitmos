@@ -38,6 +38,7 @@
 #import "UIViewController+NowPlayingButton.h"
 #import "TDNotificationPanel.h"
 #import "IGMediaPlayerAsset.h"
+#import "IGEpisodeDateAndDurationLabel.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 

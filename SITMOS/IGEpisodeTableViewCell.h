@@ -21,6 +21,8 @@
 
 @class DACircularProgressView;
 
+@class IGEpisodeDateAndDurationLabel;
+
 @protocol IGEpisodeTableViewCellDelegate;
 
 /**
@@ -37,7 +39,7 @@
 /**
  * Returns the label used for the episode's published date and duration.
  */
-@property (nonatomic, weak) IBOutlet UILabel *episodeDateAndDurationLabel;
+@property (nonatomic, weak) IBOutlet IGEpisodeDateAndDurationLabel *episodeDateAndDurationLabel;
 
 /**
  * Returns the download episode button (UIButton object) of the table cell. The image is set by setting the downloadStatus object.

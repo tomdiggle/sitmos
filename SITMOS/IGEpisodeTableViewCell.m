@@ -23,6 +23,7 @@
 #import "IGHTTPClient.h"
 #import "AFDownloadRequestOperation.h"
 #import "DACircularProgressView.h"
+#import "IGEpisodeDateAndDurationLabel.h"
 
 @implementation IGEpisodeTableViewCell
 
@@ -33,7 +34,7 @@
     _delegate = nil;
 }
 
-#pragma mark - Laying out Subviews
+#pragma mark -
 
 - (void)layoutSubviews
 {
@@ -105,17 +106,17 @@
 {
     if (_playedStatus == IGEpisodePlayedStatusUnplayed)
     {
-        [_episodeDateAndDurationLabel setFrame:CGRectMake(29.f, 25.f, 160.f, 21.f)];
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
         [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
     }
     else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
     {
-        [_episodeDateAndDurationLabel setFrame:CGRectMake(29.f, 25.f, 160.f, 21.f)];
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
         [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
     }
-    else
+    else if (_playedStatus == IGEpisodePlayedStatusPlayed)
     {
-        [_episodeDateAndDurationLabel setFrame:CGRectMake(11.f, 25.f, 160.f, 21.f)];
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:NO];
         [_playedStatusIconImageView setImage:nil];
     }
 }
