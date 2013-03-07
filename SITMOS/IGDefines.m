@@ -21,9 +21,6 @@
 
 #import "IGDefines.h"
 
-/* */
-NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
-
 /* Settings */
 NSString * const IGSettingCellularDataStreaming = @"IGSettingCellularDataStreaming";
 NSString * const IGSettingCellularDataDownloading = @"IGSettingCellularDataDownloading";

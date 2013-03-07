@@ -41,9 +41,6 @@ typedef enum {
     IGEpisodeDownloadStatusDownloaded
 } IGEpisodeDownloadStatus;
 
-/* */
-extern NSString * const IGSITMOSErrorDomain;
-
 /* Settings */
 extern NSString * const IGSettingCellularDataStreaming;
 extern NSString * const IGSettingCellularDataDownloading;
