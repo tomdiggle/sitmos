@@ -25,14 +25,6 @@
 NSString * const IGDownloadProgressNotification = @"IGDownloadProgressNotification";
 
 /* */
-NSString * const IGMediaPlayerPlaybackLoading = @"IGMediaPlayerPlaybackLoading";
-NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
-NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
-NSString * const IGMediaPlayerPlaybackEndedNotification = @"IGMediaPlayerPlaybackEndedNotification";
-NSString * const IGMediaPlayerPlaybackBufferEmptyNotification = @"IGMediaPlayerPlaybackBufferEmptyNotification";
-NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"IGMediaPlayerPlaybackLikelyToKeepUpNotification";
-
-/* */
 NSString * const IGSITMOSErrorDomain = @"com.IdleGeniusSoftware.SITMOS";
 
 /* Settings */

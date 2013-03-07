@@ -28,6 +28,14 @@
 
 static IGMediaPlayer *__sharedInstance = nil;
 
+/* Media Player Notifications */
+NSString * const IGMediaPlayerPlaybackLoading = @"IGMediaPlayerPlaybackLoading";
+NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
+NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
+NSString * const IGMediaPlayerPlaybackEndedNotification = @"IGMediaPlayerPlaybackEndedNotification";
+NSString * const IGMediaPlayerPlaybackBufferEmptyNotification = @"IGMediaPlayerPlaybackBufferEmptyNotification";
+NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"IGMediaPlayerPlaybackLikelyToKeepUpNotification";
+
 /* Asset Keys */
 NSString * const kTracksKey = @"tracks";
 NSString * const kPlayableKey = @"playable";

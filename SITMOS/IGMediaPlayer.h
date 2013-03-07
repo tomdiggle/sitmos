@@ -19,6 +19,14 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/* Media Player Notifications */
+extern NSString * const IGMediaPlayerPlaybackLoading;
+extern NSString * const IGMediaPlayerPlaybackStatusChangedNotification;
+extern NSString * const IGMediaPlayerPlaybackFailedNotification;
+extern NSString * const IGMediaPlayerPlaybackEndedNotification;
+extern NSString * const IGMediaPlayerPlaybackBufferEmptyNotification;
+extern NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification;
+
 typedef enum {
     IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStatePlaying,
