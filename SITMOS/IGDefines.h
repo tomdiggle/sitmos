@@ -20,11 +20,6 @@
  */
 
 /* */
-#define KVO_SET(_key_, _value_) [self willChangeValueForKey:@#_key_]; \
-self._key_ = (_value_); \
-[self didChangeValueForKey:@#_key_];
-
-/* */
 #define kRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 /* */
