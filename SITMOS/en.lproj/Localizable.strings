@@ -19,12 +19,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/* text label for error creating file title */
-"ErrorCreatingFileTitle" = "Error Creating File";
-
-/* text label for error creating file desc */
-"ErrorCreatingFileDesc" = "If error persists try reinstalling the app.";
-
 /* text label for ok */
 "OK" = "OK";
 
