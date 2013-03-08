@@ -184,10 +184,10 @@
 		32BF7B2316DBEE3B006B2459 /* skipping-forward-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BF7B1F16DBEE3B006B2459 /* skipping-forward-button.png */; };
 		32BF7B2416DBEE3B006B2459 /* skipping-forward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BF7B2016DBEE3B006B2459 /* skipping-forward-button@2x.png */; };
 		32D0091716E6197500EAEA81 /* UIViewController+NowPlayingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0091616E6197500EAEA81 /* UIViewController+NowPlayingButton.m */; };
-		32D0092516E630D500EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092416E630D500EAEA81 /* IGMediaPlayerAsset.m */; };
 		32D0092816E6310100EAEA81 /* IGMediaPlayerAssetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092716E6310100EAEA81 /* IGMediaPlayerAssetTests.m */; };
-		32D0092916E6349A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092416E630D500EAEA81 /* IGMediaPlayerAsset.m */; };
 		32D0092C16E9445700EAEA81 /* IGEpisodeDateAndDurationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092B16E9445600EAEA81 /* IGEpisodeDateAndDurationLabel.m */; };
+		32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
+		32D0093016EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EA273A16C0074E00BB528E /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */; };
 		32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27AE16D406D000BB528E /* TDNotificationPanel.m */; };
@@ -415,11 +415,11 @@
 		32BF7B2016DBEE3B006B2459 /* skipping-forward-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skipping-forward-button@2x.png"; sourceTree = "<group>"; };
 		32D0091516E6197500EAEA81 /* UIViewController+NowPlayingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NowPlayingButton.h"; sourceTree = "<group>"; };
 		32D0091616E6197500EAEA81 /* UIViewController+NowPlayingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NowPlayingButton.m"; sourceTree = "<group>"; };
-		32D0092316E630D500EAEA81 /* IGMediaPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMediaPlayerAsset.h; sourceTree = "<group>"; };
-		32D0092416E630D500EAEA81 /* IGMediaPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMediaPlayerAsset.m; sourceTree = "<group>"; };
 		32D0092716E6310100EAEA81 /* IGMediaPlayerAssetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMediaPlayerAssetTests.m; sourceTree = "<group>"; };
 		32D0092A16E9445600EAEA81 /* IGEpisodeDateAndDurationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeDateAndDurationLabel.h; sourceTree = "<group>"; };
 		32D0092B16E9445600EAEA81 /* IGEpisodeDateAndDurationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeDateAndDurationLabel.m; sourceTree = "<group>"; };
+		32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaPlayerAsset.h; path = SITMOS/IGMediaPlayerAsset.h; sourceTree = "<group>"; };
+		32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaPlayerAsset.m; path = SITMOS/IGMediaPlayerAsset.m; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		32EA273816C0074E00BB528E /* AFDownloadRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFDownloadRequestOperation.h; path = AFDownloadRequestOperation/AFDownloadRequestOperation.h; sourceTree = "<group>"; };
 		32EA273916C0074E00BB528E /* AFDownloadRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFDownloadRequestOperation.m; path = AFDownloadRequestOperation/AFDownloadRequestOperation.m; sourceTree = "<group>"; };
@@ -924,8 +924,8 @@
 			children = (
 				328E2769153DDFB0005AE70B /* IGMediaPlayer.h */,
 				328E276A153DDFB0005AE70B /* IGMediaPlayer.m */,
-				32D0092316E630D500EAEA81 /* IGMediaPlayerAsset.h */,
-				32D0092416E630D500EAEA81 /* IGMediaPlayerAsset.m */,
+				32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */,
+				32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */,
 			);
 			name = MediaPlayer;
 			path = ..;
@@ -1217,8 +1217,8 @@
 				32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */,
 				32BF7B1C16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m in Sources */,
 				32D0091716E6197500EAEA81 /* UIViewController+NowPlayingButton.m in Sources */,
-				32D0092516E630D500EAEA81 /* IGMediaPlayerAsset.m in Sources */,
 				32D0092C16E9445700EAEA81 /* IGEpisodeDateAndDurationLabel.m in Sources */,
+				32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1261,7 +1261,7 @@
 				32523F7E16ADD1BD006E9FFB /* MagicalRecord.m in Sources */,
 				32523F7F16ADD565006E9FFB /* SITMOS.xcdatamodeld in Sources */,
 				32D0092816E6310100EAEA81 /* IGMediaPlayerAssetTests.m in Sources */,
-				32D0092916E6349A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
+				32D0093016EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
