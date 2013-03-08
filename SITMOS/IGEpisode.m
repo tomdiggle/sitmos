@@ -185,7 +185,7 @@
     {
         return IGEpisodePlayedStatusPlayed;
     }
-    else if (![self isPlayed] && [[self progress] isEqualToNumber:@0])
+    else if (![self isPlayed] && ![[self progress] isEqualToNumber:@0])
     {
         return IGEpisodePlayedStatusHalfPlayed;
     }
