@@ -19,6 +19,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/* Episode Played Statuses */
+typedef enum {
+    IGEpisodePlayedStatusPlayed,
+    IGEpisodePlayedStatusUnplayed,
+    IGEpisodePlayedStatusHalfPlayed
+} IGEpisodePlayedStatus;
+
 /**
  * The IGEpisode class provides access to a episode entity.
  */

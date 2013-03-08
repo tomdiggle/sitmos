@@ -29,13 +29,6 @@ self._key_ = (_value_); \
 
 /* */
 typedef enum {
-    IGEpisodePlayedStatusPlayed,
-    IGEpisodePlayedStatusUnplayed,
-    IGEpisodePlayedStatusHalfPlayed
-} IGEpisodePlayedStatus;
-
-/* */
-typedef enum {
     IGEpisodeDownloadStatusNotDownloading,
     IGEpisodeDownloadStatusDownloading,
     IGEpisodeDownloadStatusDownloaded

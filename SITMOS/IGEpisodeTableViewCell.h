@@ -19,9 +19,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@class DACircularProgressView;
+#import "IGEpisode.h"
 
 @class IGEpisodeDateAndDurationLabel;
+@class DACircularProgressView;
 
 @protocol IGEpisodeTableViewCellDelegate;
 
