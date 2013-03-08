@@ -1,4 +1,4 @@
-/**
+/* *
  * Copyright (c) 2012, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -105,7 +105,7 @@
 
 /* text label for streaming with cellular data title */
 "StreamingWithCellularDataTitle" = "Streaming with Cellular Data?";
- 
+
 /* text label for streaming with cellular data message */
 "StreamingWithCellularDataMessage" = "There is currently no WiFi available. Do you really want to use cellular data for streaming this episode?";
 
@@ -183,3 +183,9 @@
 
 /* text label for skipping forward */
 "SkippingForward" = "Skipping Forward";
+
+/* Pull down to refresh status */
+"Pull down to refresh..." = "Pull down to refresh...";
+
+/* Release to refresh status */
+"Release to refresh..." = "Release to refresh...";
