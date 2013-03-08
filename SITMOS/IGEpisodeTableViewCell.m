@@ -38,6 +38,8 @@
 
 - (void)layoutSubviews
 {
+    [_downloadProgressView setBackgroundColor:[UIColor clearColor]];
+    
     [self displayPlayedStatusIcon];
     
     [super layoutSubviews];

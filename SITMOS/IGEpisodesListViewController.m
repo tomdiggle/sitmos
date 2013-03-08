@@ -31,7 +31,6 @@
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
-#import "DACircularProgressView.h"
 #import "IGHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
@@ -184,7 +183,6 @@
     
     color = [indexPath row] % 2 ? kRGBA(245, 245, 245, 1) : kRGBA(240, 240, 240, 1);
     [[episodeCell contentView] setBackgroundColor:color];
-    [[episodeCell downloadProgressView] setBackgroundColor:color];
     
     UIView *selectedBackgroundView = [[UIView alloc] init];
     [selectedBackgroundView setBackgroundColor:kRGBA(217, 236, 245, 1)];
