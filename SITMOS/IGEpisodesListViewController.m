@@ -302,7 +302,7 @@
             }
         };
         
-        NSString *playedLabel = [episode isPlayed] ? NSLocalizedString(@"Mark as unplayed", "text label for mark as unplayed") : NSLocalizedString(@"Mark as played", "text label for mark as played");
+        NSString *playedLabel = [episode isPlayed] ? NSLocalizedString(@"MarkAsUnplayed", "text label for mark as unplayed") : NSLocalizedString(@"MarkAsPlayed", "text label for mark as played");
         RIButtonItem *playedItem = [RIButtonItem itemWithLabel:playedLabel];
         playedItem.action = ^{
             if ([episode isPlayed])
