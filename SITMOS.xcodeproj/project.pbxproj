@@ -48,7 +48,6 @@
 		3235957615755737007D5D90 /* audio-player-lower-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */; };
 		32392331167F59CE00301439 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392330167F59CE00301439 /* DACircularProgressView.m */; };
 		32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */; };
-		3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3239238E167F5BF300301439 /* MBProgressHUD.m */; };
 		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
 		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
@@ -255,8 +254,6 @@
 		32392330167F59CE00301439 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		3239238D167F5BF300301439 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
-		3239238E167F5BF300301439 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		32392391167F5C3200301439 /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
 		32392392167F5C3200301439 /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
 		32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
@@ -575,7 +572,6 @@
 				3239232E167F59CE00301439 /* DACircularProgress */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32523F0F16ADD1BD006E9FFB /* MagicalRecord */,
-				3239238C167F5BE100301439 /* MBProgressHUD */,
 				32392390167F5C3200301439 /* MJPopupViewController */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
 				32EA27AC16D406D000BB528E /* TDNotificationPanel */,
@@ -603,15 +599,6 @@
 				32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */,
 			);
 			path = EGORefreshTableHeaderView;
-			sourceTree = "<group>";
-		};
-		3239238C167F5BE100301439 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				3239238D167F5BF300301439 /* MBProgressHUD.h */,
-				3239238E167F5BF300301439 /* MBProgressHUD.m */,
-			);
-			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		32392390167F5C3200301439 /* MJPopupViewController */ = {
@@ -1165,7 +1152,6 @@
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392331167F59CE00301439 /* DACircularProgressView.m in Sources */,
 				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
-				3239238F167F5BF300301439 /* MBProgressHUD.m in Sources */,
 				32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */,
 				32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
