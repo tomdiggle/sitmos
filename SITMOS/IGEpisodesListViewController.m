@@ -205,6 +205,13 @@
             [self updateEpisodeCell:(IGEpisodeTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath]
                             episode:[_fetchedResultsController objectAtIndexPath:indexPath]];
 			break;
+            
+        case NSFetchedResultsChangeMove:
+            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                              withRowAnimation:UITableViewRowAnimationFade];
+            break;
 	}
 }
 

@@ -174,6 +174,15 @@ NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
                     [episode markAsPlayed:NO];
                 }
             }
+            else
+            {
+                IGEpisode *episode = [[anyDuplicates objectAtIndex:0] MR_inContext:localContext];
+                NSDate *episodePubDate = [dateFormatter dateFromString:[obj objectForKey:@"pubDate"]];
+                if (![episodePubDate isEqualToDate:[episode pubDate]])
+                {
+                    [episode setPubDate:episodePubDate];
+                }
+            }
         }];
     } completion:^(BOOL success, NSError *error) {
         _success();
