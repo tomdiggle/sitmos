@@ -23,6 +23,8 @@
 
 #import "IGAppDelegate.h"
 #import "IGTestFlight.h"
+#import "IGInitialSetup.h"
+#import "TDNotificationPanel.h"
 
 @implementation IGAppDelegate
 
@@ -35,6 +37,8 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     
     [self applyStylesheet];
+    
+    [self initialSetup];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -105,6 +109,33 @@
                                    forState:UIControlStateHighlighted
                                  barMetrics:UIBarMetricsDefault];
 
+}
+
+#pragma mark - Initial Setup
+
+- (void)initialSetup
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [IGInitialSetup runInitialSetupWithCompletion:^(NSUInteger episodesImported, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (episodesImported > 0)
+                {
+                    [TDNotificationPanel showNotificationPanelInView:self.window
+                                                                type:TDNotificationTypeSuccess
+                                                               title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
+                                                      hideAfterDelay:5];
+                }
+                else if (error)
+                {
+                    [TDNotificationPanel showNotificationPanelInView:self.window
+                                                                type:TDNotificationTypeError
+                                                               title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
+                                                      hideAfterDelay:5];
+                }
+            });
+        }];
+    });
 }
 
 #pragma mark - Managing the Responder Chain

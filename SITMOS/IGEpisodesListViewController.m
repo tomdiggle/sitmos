@@ -25,7 +25,6 @@
 #import "IGAudioPlayerViewController.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGSettingsViewController.h"
-#import "IGInitialSetup.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "RIButtonItem.h"
@@ -84,30 +83,6 @@
                                                       delegate:self];
     
     [self reloadTableViewDataSource];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [IGInitialSetup runInitialSetupWithCompletion:^(NSUInteger episodesImported, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (episodesImported > 0)
-                {
-                    [TDNotificationPanel showNotificationPanelInView:self.view
-                                                                type:TDNotificationTypeSuccess
-                                                               title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
-                                                      hideAfterDelay:5];
-                    
-                    [_tableView reloadData];
-                }
-                else if (error)
-                {
-                    [TDNotificationPanel showNotificationPanelInView:self.view
-                                                                type:TDNotificationTypeError
-                                                               title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
-                                                      hideAfterDelay:5];
-                }
-            });
-        }];
-    });
     
     // Notifications below are used to check if the now playing button should still be displayed
     [[NSNotificationCenter defaultCenter] addObserver:self
