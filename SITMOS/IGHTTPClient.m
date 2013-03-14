@@ -170,6 +170,8 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
     [self enqueueHTTPRequestOperation:operation];
 }
 
+#pragma mark - Download Operations
+
 - (NSArray *)downloadOperations
 {
     return [[self operationQueue] operations];

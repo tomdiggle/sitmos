@@ -363,9 +363,6 @@
 
 #pragma mark - Display Now Playing Button
 
-/**
- *
- */
 - (void)displayNowPlayingButton
 {
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
