@@ -135,7 +135,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SITMOS" id="K60-j5-uMV">
-                        <barButtonItem key="leftBarButtonItem" image="nav-settings-icon.png" id="cRT-De-kKP">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="cRT-De-kKP">
                             <connections>
                                 <action selector="settingsButtonTapped:" destination="azn-Zd-amG" id="PxJ-tw-Plv"/>
                             </connections>
@@ -466,7 +466,6 @@
     </scenes>
     <resources>
         <image name="more-info-icon.png" width="25" height="25"/>
-        <image name="nav-settings-icon.png" width="20" height="20"/>
         <image name="play-button.png" width="32" height="32"/>
         <image name="skipping-backward-button.png" width="32" height="32"/>
         <image name="skipping-forward-button.png" width="32" height="32"/>
@@ -478,6 +477,14 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="playButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
+                <relationship kind="action" name="seekForward:"/>
+                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
+                <relationship kind="action" name="skipBackwardButtonTapped:"/>
+                <relationship kind="action" name="skipForwardButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
@@ -485,6 +492,9 @@
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="progressSlider" candidateClass="TDSlider"/>
             </relationships>
+        </class>
+        <class className="IGEpisodeDateAndDurationLabel" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeDateAndDurationLabel.h"/>
         </class>
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
@@ -506,7 +516,7 @@
                 <relationship kind="action" name="moreInfoButtonTapped:"/>
                 <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
-                <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="IGLabel"/>
+                <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="IGEpisodeDateAndDurationLabel"/>
                 <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="moreInfoButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="playedStatusIconImageView" candidateClass="UIImageView"/>
@@ -520,9 +530,6 @@
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
-        </class>
-        <class className="IGLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGLabel.h"/>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
