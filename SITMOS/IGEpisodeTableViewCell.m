@@ -76,7 +76,7 @@
                 
                 if ([operation isPaused])
                 {
-                    [self setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+                    [_downloadEpisodeButton setImage:[UIImage imageNamed:@"download-episode-resume-button"] forState:UIControlStateNormal];
                 }
                 else
                 {
