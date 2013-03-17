@@ -23,12 +23,16 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "IGInitialSetup.h"
+#import "IGEpisode.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
 #import "TSLibraryImport.h"
 
+NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";
+
 @interface IGInitialSetup ()
 
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 @property (nonatomic, assign) NSUInteger numberOfEpisodesToImport;
 @property (nonatomic, assign) NSUInteger numberOfEpisodesImported;
 @property (nonatomic, copy) void (^completion)(NSUInteger episodesImported, NSError *error);
@@ -45,32 +49,6 @@
     [setup start];
 }
 
-+ (BOOL)createEpisodesDirectory
-{
-    NSError *error = nil;
-    NSURL *episodesDirectory = [[IGInitialSetup cachesDirectory] URLByAppendingPathComponent:@"Episodes"];
-    [[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:NO attributes:nil error:&error];
-    
-    if (error)
-    {
-        return NO;
-    }
-    else
-    {
-        return YES;
-    }
-}
-
-+ (NSURL *)cachesDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];;
-}
-
-+ (NSURL *)episodesDirectory
-{
-    return [[IGInitialSetup cachesDirectory] URLByAppendingPathComponent:@"Episodes" isDirectory:YES];
-}
-
 #pragma mark - Initializers
 
 - (id)initWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion
@@ -79,6 +57,8 @@
     {
         return nil;
     }
+    
+    _userDefaults = [NSUserDefaults standardUserDefaults];
     
     _completion = completion;
     
@@ -92,9 +72,9 @@
 {
     [self setUpUserDefaults];
     
-    if (![IGInitialSetup createEpisodesDirectory])
+    // Only continue if episodes havn't already been searched for
+    if ([_userDefaults boolForKey:IGInitialSetupImportEpisodes])
     {
-        // No need to continue if the episodes directory already exists
         return;
     }
 
@@ -132,6 +112,10 @@
                                                cancelButtonItem:cancelItem
                                                otherButtonItems:importItem, nil];
     [alertView show];
+    
+    // Import has happened set IGInitialSetupImportEpisodes to YES so the user isn't asked to import any episodes in the future
+    [_userDefaults setBool:YES forKey:IGInitialSetupImportEpisodes];
+    [_userDefaults synchronize];
 }
 
 #pragma mark - Set Up User Defaults
@@ -141,36 +125,34 @@
  */
 - (void)setUpUserDefaults
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    if (![userDefaults objectForKey:IGSettingCellularDataStreaming])
+    if (![_userDefaults objectForKey:IGSettingCellularDataStreaming])
     {
-        [userDefaults setBool:YES forKey:IGSettingCellularDataStreaming];
+        [_userDefaults setBool:YES forKey:IGSettingCellularDataStreaming];
     }
     
-    if (![userDefaults objectForKey:IGSettingCellularDataDownloading])
+    if (![_userDefaults objectForKey:IGSettingCellularDataDownloading])
     {
-        [userDefaults setBool:NO forKey:IGSettingCellularDataDownloading];
+        [_userDefaults setBool:NO forKey:IGSettingCellularDataDownloading];
     }
     
-    if (![userDefaults objectForKey:IGSettingEpisodesDelete])
+    if (![_userDefaults objectForKey:IGSettingEpisodesDelete])
     {
-        [userDefaults setBool:NO forKey:IGSettingEpisodesDelete];
+        [_userDefaults setBool:NO forKey:IGSettingEpisodesDelete];
     }
     
-    if (![userDefaults objectForKey:IGSettingUnseenBadge])
+    if (![_userDefaults objectForKey:IGSettingUnseenBadge])
     {
-        [userDefaults setBool:NO forKey:IGSettingUnseenBadge];
+        [_userDefaults setBool:NO forKey:IGSettingUnseenBadge];
     }
     
-    if (![userDefaults objectForKey:IGSettingSkippingForwardTime])
+    if (![_userDefaults objectForKey:IGSettingSkippingForwardTime])
     {
-        [userDefaults setInteger:30 forKey:IGSettingSkippingForwardTime];
+        [_userDefaults setInteger:30 forKey:IGSettingSkippingForwardTime];
     }
     
-    if (![userDefaults objectForKey:IGSettingSkippingBackwardTime])
+    if (![_userDefaults objectForKey:IGSettingSkippingBackwardTime])
     {
-        [userDefaults setInteger:30 forKey:IGSettingSkippingBackwardTime];
+        [_userDefaults setInteger:30 forKey:IGSettingSkippingBackwardTime];
     }
 }
 
@@ -195,7 +177,7 @@
     
     // Create destination URL
     NSString *ext = [TSLibraryImport extensionForAssetURL:assetURL];
-    NSURL *outURL = [[[IGInitialSetup episodesDirectory] URLByAppendingPathComponent:title] URLByAppendingPathExtension:ext];
+    NSURL *outURL = [[[IGEpisode episodesDirectory] URLByAppendingPathComponent:title] URLByAppendingPathExtension:ext];
     
     // We're responsible for making sure the destination url doesn't already exist
     [[NSFileManager defaultManager] removeItemAtURL:outURL error:nil];

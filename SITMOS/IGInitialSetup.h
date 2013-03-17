@@ -33,21 +33,4 @@
  */
 + (void)runInitialSetupWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion;
 
-/**
- * Creates the episodes directory in <APP>/Library/Caches
- *
- * @return BOOL YES if created the directory with out any errors NO otherwise.
- */
-+ (BOOL)createEpisodesDirectory;
-
-/**
- * @return the app's caches directory <APP>/Library/Caches
- */
-+ (NSURL *)cachesDirectory;
-
-/**
- * @return the directory where all downloaded episodes are stored <APP>/Library/Caches/Episodes
- */
-+ (NSURL *)episodesDirectory;
-
 @end
