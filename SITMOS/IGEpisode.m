@@ -20,7 +20,7 @@
  */
 
 #import "IGEpisode.h"
-#import <CommonCrypto/CommonDigest.h>
+#import "IGHTTPClient.h"
 
 @interface IGEpisode ()
 
@@ -46,57 +46,30 @@
 
 #pragma mark Class Methods
 
-+ (NSString *)cacheFolder
++ (NSURL *)episodesDirectory
 {
-    static NSString *cacheFolder;
+    static NSURL *episodesDirectory = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *cacheDir = NSTemporaryDirectory();
-        cacheFolder = [cacheDir stringByAppendingPathComponent:@"Incomplete"]; // This is the temp file defined by AFDownloadRequestOperation
+        NSURL *cacheDir = [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory
+                                                                  inDomains:NSUserDomainMask] lastObject];
+        episodesDirectory = [cacheDir URLByAppendingPathComponent:@"Episodes"];
         
-        // ensure all cache directories are there (needed only once)
         NSError *error = nil;
-        if(![[NSFileManager new] createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
-            NSLog(@"Failed to create cache directory at %@", cacheFolder);
+        if (![[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:YES attributes:nil error:&error])
+        {
+            NSLog(@"Failed to create episodes dir at %@, reason %@", episodesDirectory, [error localizedDescription]);
         }
     });
-    return cacheFolder;
-}
-
-// calculates the MD5 hash of a key
-+ (NSString *)md5StringForString:(NSString *)string
-{
-    const char *str = [string UTF8String];
-    unsigned char r[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(str, strlen(str), r);
-    return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
+    
+    return episodesDirectory;
 }
 
 #pragma mark - File Management
 
-- (NSString *)filePath
-{
-    NSArray *cachesDirectory = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *episodesDirectory = [[cachesDirectory objectAtIndex:0] stringByAppendingString:@"/Episodes/"];
-    return [episodesDirectory stringByAppendingString:[self fileName]];
-}
-
 - (NSURL *)fileURL
 {
-    NSURL *cachesDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory 
-                                                                     inDomains:NSUserDomainMask] lastObject];
-    NSURL *storeURL = [cachesDirectory URLByAppendingPathComponent:@"Episodes"
-                                                       isDirectory:YES];
-    return [storeURL URLByAppendingPathComponent:[self fileName]];
-}
-
-- (NSString *)tempPath
-{
-    NSString *md5URLString = [[self class] md5StringForString:[self filePath]];
-    NSString *tempPath = [[[self class] cacheFolder] stringByAppendingPathComponent:md5URLString];
-    
-    return tempPath;
+    return [[IGEpisode episodesDirectory] URLByAppendingPathComponent:[self fileName]];
 }
 
 - (NSString *)readableFileSize
@@ -121,55 +94,48 @@
 
 - (void)deleteDownloadedEpisode
 {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[self filePath]]) return;
-    
-    [[NSFileManager defaultManager] removeItemAtPath:[self filePath]
-                                               error:nil];
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] removeItemAtPath:[[self fileURL] path] error:&error])
+    {
+        NSLog(@"Failed to delete episode at %@, reason %@", [[self fileURL] path], [error localizedDescription]);
+    }
 }
 
-- (BOOL)isCompletelyDownloaded
+- (BOOL)isDownloaded
 {
-    return [[NSFileManager defaultManager] fileExistsAtPath:[self filePath]];
+    return [[NSFileManager defaultManager] fileExistsAtPath:[[self fileURL] path]];
 }
 
-- (BOOL)isPartiallyDownloaded
+- (BOOL)isDownloading
 {
-    return [[NSFileManager defaultManager] fileExistsAtPath:[self tempPath]];
+    NSArray *request = @[[NSURL URLWithString:[self downloadURL]], [self fileURL]];
+    NSArray *currentDownloadRequests = [[IGHTTPClient sharedClient] currentDownloadRequests];
+    return [currentDownloadRequests containsObject:request];
 }
 
 #pragma mark - File Media Type
 
 - (BOOL)isAudio
 {
-    if ([[self type] isEqualToString:@"audio/mpeg"])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return ([[self type] isEqualToString:@"audio/mpeg"]);
 }
 
 - (BOOL)isVideo
 {
-    if ([[self type] isEqualToString:@"video/mp4"])
-    {
-        return YES;
-    }
-    
-    return NO;
+    return ([[self type] isEqualToString:@"video/mp4"]);
 }
 
 #pragma mark - Played/Unplayed Management
 
-- (void)markAsPlayed:(BOOL)isPlayed
+- (void)markAsPlayed:(BOOL)played
 {
-    [self setPlayed:[NSNumber numberWithBool:isPlayed]];
+    [self setPlayed:[NSNumber numberWithBool:played]];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL unseenBage = [userDefaults boolForKey:IGSettingUnseenBadge];
     if (unseenBage)
     {
-        NSInteger iconBadgeNumber = isPlayed ? [[UIApplication sharedApplication] applicationIconBadgeNumber] - 1 : [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+        NSInteger iconBadgeNumber = played ? [[UIApplication sharedApplication] applicationIconBadgeNumber] - 1 : [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:iconBadgeNumber];
     }
 }
@@ -197,11 +163,11 @@
 
 - (IGEpisodeDownloadStatus)downloadStatus
 {
-    if ([self isCompletelyDownloaded])
+    if ([self isDownloaded])
     {
         return IGEpisodeDownloadStatusDownloaded;
     }
-    else if ([self isPartiallyDownloaded])
+    else if ([self isDownloading])
     {
         return IGEpisodeDownloadStatusDownloading;
     }
@@ -209,22 +175,6 @@
     {
         return IGEpisodeDownloadStatusNotDownloading;
     }
-}
-
-- (IGEpisode *)nextEpisode
-{
-    NSPredicate *nextEpisodePredicate = [NSPredicate predicateWithFormat:@"pubDate > %@", [self pubDate]];
-    return [IGEpisode MR_findFirstWithPredicate:nextEpisodePredicate
-                                       sortedBy:@"pubDate"
-                                      ascending:YES];
-}
-
-- (IGEpisode *)previousEpisode
-{
-    NSPredicate *nextEpisodePredicate = [NSPredicate predicateWithFormat:@"pubDate < %@", [self pubDate]];
-    return [IGEpisode MR_findFirstWithPredicate:nextEpisodePredicate
-                                       sortedBy:@"pubDate"
-                                      ascending:NO];
 }
 
 @end

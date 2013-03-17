@@ -22,13 +22,6 @@
 /* */
 #define kRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
-/* */
-typedef enum {
-    IGEpisodeDownloadStatusNotDownloading,
-    IGEpisodeDownloadStatusDownloading,
-    IGEpisodeDownloadStatusDownloaded
-} IGEpisodeDownloadStatus;
-
 /* Settings */
 extern NSString * const IGSettingCellularDataStreaming;
 extern NSString * const IGSettingCellularDataDownloading;

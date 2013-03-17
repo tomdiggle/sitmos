@@ -19,6 +19,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/* Episode Download Statuses */
+typedef enum {
+    IGEpisodeDownloadStatusNotDownloading,
+    IGEpisodeDownloadStatusDownloading,
+    IGEpisodeDownloadStatusDownloaded
+} IGEpisodeDownloadStatus;
+
 /* Episode Played Statuses */
 typedef enum {
     IGEpisodePlayedStatusPlayed,
@@ -86,9 +93,11 @@ typedef enum {
  */
 
 /**
- * Returns the full file path of the episode. Episodes are stored in "<APP>/Library/Caches/Episodes".
+ * Returns the directory the downloaded episodes are stored in.
+ *
+ * @return The directory the downloaded episodes are stored in.
  */
-- (NSString *)filePath;
++ (NSURL *)episodesDirectory;
 
 /**
  * Returns the full file path of the episode.
@@ -112,12 +121,12 @@ typedef enum {
 /**
  * @return YES if the episode is audio has been completely downloaded, NO otherwise.
  */
-- (BOOL)isCompletelyDownloaded;
+- (BOOL)isDownloaded;
 
 /**
  * @return YES if the episode is audio is partially downloaded, NO otherwise.
  */
-- (BOOL)isPartiallyDownloaded;
+- (BOOL)isDownloading;
 
 #pragma mark - File Media Type
 
@@ -148,7 +157,7 @@ typedef enum {
  *
  * @param BOOL YES will mark episode as played, NO will mark episode as unplayed.
  */
-- (void)markAsPlayed:(BOOL)isPlayed;
+- (void)markAsPlayed:(BOOL)played;
 
 /**
  * @return YES if the episode has been played, NO otherwise.
@@ -164,21 +173,5 @@ typedef enum {
  * Returns the download status of the episode.
  */
 - (IGEpisodeDownloadStatus)downloadStatus;
-
-#pragma mark - Next/Previous Episode
-
-/**
- * @name Next/Previous Episode
- */
-
-/**
- * Returns the next episode object or nil if one is not available.
- */
-- (IGEpisode *)nextEpisode;
-
-/**
- * Returns the previous episode object or nil if one is not available.
- */
-- (IGEpisode *)previousEpisode;
 
 @end
