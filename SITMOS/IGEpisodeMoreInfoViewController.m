@@ -30,7 +30,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *episodeDurationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *episodeTypeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *episodeSizeLabel;
-@property (strong, nonatomic) IBOutlet UIButton *playButton;
 @property (strong, nonatomic) IBOutlet UITextView *summaryTextView;
 @property (strong, nonatomic) IBOutlet UIImageView *playedStatusImageView;
 
@@ -52,25 +51,6 @@
     [_episode isAudio] ? [_episodeTypeLabel setText:NSLocalizedString(@"Audio", @"text label for audio")] : [_episodeTypeLabel setText:NSLocalizedString(@"Video", @"text label for video")];
     [_episodeSizeLabel setText:[_episode readableFileSize]];
     [_summaryTextView setText:[_episode summary]];
-    
-    [_playButton setBackgroundImage:[[UIImage imageNamed:@"more-info-play-button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10.0f, 0, 10.0f)]
-                           forState:UIControlStateNormal];
-    
-    if (![_episode isCompletelyDownloaded])
-    {
-        [_playButton setTitle:NSLocalizedString(@"Stream", @"text label for stream")
-                     forState:UIControlStateNormal];
-    }
-    else if (![_episode isPlayed] || [[_episode progress] integerValue] > 0)
-    {
-        [_playButton setTitle:NSLocalizedString(@"Continue", @"text label for continue")
-                     forState:UIControlStateNormal];
-    }
-    else
-    {
-        [_playButton setTitle:NSLocalizedString(@"Play", @"text label for play")
-                     forState:UIControlStateNormal];
-    }
     
     UIView *dividierView = [[UIView alloc] initWithFrame:CGRectMake(6.0f, 72.0f, 288.0f, 2.0f)];
     [dividierView setBackgroundColor:kRGBA(77, 150, 227, 1)];
