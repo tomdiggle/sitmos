@@ -243,8 +243,8 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yYp-dp-2qc" userLabel="Playback Status Image View">
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="13" id="Qrr-UW-24E"/>
                                     <constraint firstAttribute="width" constant="10" id="lt8-d0-cUg"/>
-                                    <constraint firstAttribute="height" constant="17" id="tUL-Q0-034"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="1uW-2r-fEB" userLabel="Episode Title Label">
@@ -260,7 +260,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="nyJ-3q-FEA" firstAttribute="top" secondItem="RAr-0w-hMD" secondAttribute="top" constant="47" id="1Ln-42-mb1"/>
-                            <constraint firstItem="1uW-2r-fEB" firstAttribute="centerY" secondItem="yYp-dp-2qc" secondAttribute="centerY" type="default" id="1Zp-CM-g0S"/>
                             <constraint firstItem="nyJ-3q-FEA" firstAttribute="leading" secondItem="RAr-0w-hMD" secondAttribute="leading" constant="4" id="4Kg-Gj-h1b"/>
                             <constraint firstItem="bqi-kL-pgq" firstAttribute="leading" secondItem="RAr-0w-hMD" secondAttribute="leading" type="default" id="6xH-88-oGP"/>
                             <constraint firstItem="bqi-kL-pgq" firstAttribute="top" secondItem="RAr-0w-hMD" secondAttribute="top" constant="73" id="84V-5v-iqc"/>
@@ -271,6 +270,7 @@
                             <constraint firstItem="nyJ-3q-FEA" firstAttribute="leading" secondItem="5Sx-LX-rET" secondAttribute="leading" type="default" id="IYt-zM-eum"/>
                             <constraint firstItem="bMk-Qk-Zv3" firstAttribute="leading" secondItem="Iq5-Q5-lev" secondAttribute="leading" type="default" id="JWP-yW-meW"/>
                             <constraint firstItem="Vc5-6Q-6GW" firstAttribute="top" secondItem="5Sx-LX-rET" secondAttribute="top" type="default" id="MDD-SZ-87w"/>
+                            <constraint firstItem="yYp-dp-2qc" firstAttribute="centerY" secondItem="1uW-2r-fEB" secondAttribute="centerY" type="default" id="PXy-Fd-gqM"/>
                             <constraint firstItem="yYp-dp-2qc" firstAttribute="leading" secondItem="RAr-0w-hMD" secondAttribute="leading" constant="6" id="UqP-Uf-iM4"/>
                             <constraint firstItem="Vc5-6Q-6GW" firstAttribute="top" secondItem="HpV-cB-NhX" secondAttribute="top" type="default" id="YP3-yL-iqt"/>
                             <constraint firstItem="eHX-kF-4O7" firstAttribute="leading" secondItem="HpV-cB-NhX" secondAttribute="leading" type="default" id="Yxf-KW-Af1"/>
@@ -470,6 +470,73 @@
         <image name="skipping-backward-button.png" width="32" height="32"/>
         <image name="skipping-forward-button.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="DACircularProgressView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DACircularProgressView.h"/>
+        </class>
+        <class className="IGAudioPlayerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="playButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
+                <relationship kind="action" name="seekForward:"/>
+                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
+                <relationship kind="action" name="skipBackwardButtonTapped:"/>
+                <relationship kind="action" name="skipForwardButtonTapped:"/>
+                <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lowerPlayerControls" candidateClass="UIView"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="progressSlider" candidateClass="TDSlider"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodeDateAndDurationLabel" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeDateAndDurationLabel.h"/>
+        </class>
+        <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="episodeDurationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodePublishedLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeSizeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="episodeTypeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="playedStatusImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="summaryTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
+            <relationships>
+                <relationship kind="action" name="downloadButtonTapped:"/>
+                <relationship kind="action" name="moreInfoButtonTapped:"/>
+                <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
+                <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="IGEpisodeDateAndDurationLabel"/>
+                <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="moreInfoButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="playedStatusIconImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="IGEpisodesListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
+                <relationship kind="action" name="settingsButtonTapped:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="TDSlider" superclassName="UISlider">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDSlider.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
