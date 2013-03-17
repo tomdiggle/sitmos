@@ -84,6 +84,8 @@
     
     [self reloadTableViewDataSource];
     
+    [self invokeAllDownloadRequests];
+    
     // Notifications below are used to check if the now playing button should still be displayed
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(displayNowPlayingButton)
@@ -265,10 +267,10 @@
         
         RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", @"text label for cancel")];
         
-        NSString *downloadLabel = [episode isCompletelyDownloaded] ? NSLocalizedString(@"DeleteDownload", @"text label for delete download") : NSLocalizedString(@"Download", @"text label for download");
+        NSString *downloadLabel = [episode isDownloaded] ? NSLocalizedString(@"DeleteDownload", @"text label for delete download") : NSLocalizedString(@"Download", @"text label for download");
         RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:downloadLabel];
         downloadItem.action = ^{
-            if ([episode isCompletelyDownloaded])
+            if ([episode isDownloaded])
             {
                 [episode deleteDownloadedEpisode];
                 
@@ -375,7 +377,7 @@
 {
     if ([episode isAudio])
     {
-        if ([episode isCompletelyDownloaded])
+        if ([episode isDownloaded])
         {
             [self playAudioEpisode:episode];
         }
@@ -401,7 +403,7 @@
     
     dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
 	dispatch_async(startPlaybackQueue, ^{
-        NSURL *contentURL = [episode isCompletelyDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+        NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
         IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
         [asset setContentURL:contentURL];
         [asset setTitle:[episode title]];
@@ -517,7 +519,7 @@
  * @param targetPath The path to save the episode to.
  */
 - (void)startDownloadFromURL:(NSURL *)downloadFromURL
-                  targetPath:(NSString *)targetPath
+                  targetPath:(NSURL *)targetPath
 {
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
     [sharedClient downloadEpisodeWithURL:downloadFromURL targetPath:targetPath success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -561,7 +563,7 @@
                                                     forKey:IGSettingCellularDataDownloading];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self startDownloadFromURL:[NSURL URLWithString:[episode downloadURL]]
-                            targetPath:[episode filePath]];
+                            targetPath:[episode fileURL]];
         };
 
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
@@ -583,6 +585,15 @@
         NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
         [UIApplication scheduleLocalNotificationWithParameters:parameters];
     }
+}
+
+- (void)invokeAllDownloadRequests
+{
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    NSArray *currentDownloadRequests = [httpClient currentDownloadRequests];
+    [currentDownloadRequests enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self startDownloadFromURL:[obj objectAtIndex:0] targetPath:[obj objectAtIndex:1]];
+    }];
 }
 
 #pragma mark - IGEpisodeTableViewCellDelegate Methods
@@ -618,7 +629,7 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
     if (!requestOperation)
     {
         [self startDownloadFromURL:downloadFromURL
-                        targetPath:[episode filePath]];
+                        targetPath:[episode fileURL]];
     }
     else if ([requestOperation isPaused])
     {

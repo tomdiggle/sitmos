@@ -26,12 +26,13 @@
 #import "AFDownloadRequestOperation.h"
 
 NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDomain";
+NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDownloadRequests";
 
 @interface IGHTTPClient ()
 
 @property (nonatomic, strong) NSURL *audioFeedURL;
-
 @property (nonatomic, strong) dispatch_queue_t callbackQueue;
+@property (nonatomic, strong, readwrite) NSMutableArray *currentDownloadRequests;
 
 @end
 
@@ -66,6 +67,8 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
     {
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
+        
+        _currentDownloadRequests = [NSMutableArray arrayWithArray:[self currentDownloadRequests]];
     }
     
     return self;
@@ -142,7 +145,7 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
 #pragma mark - Downloading Episode
 
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
-                    targetPath:(NSString *)targetPath
+                    targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -157,13 +160,20 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
         failure(nil, error);
     }
     
+    [self addDownloadRequest:downloadURL
+                  targetPath:targetPath];
+    
     NSMutableURLRequest *request = [self requestWithURL:downloadURL];
     AFDownloadRequestOperation *operation = [[AFDownloadRequestOperation alloc] initWithRequest:request
-                                                                                     targetPath:targetPath
+                                                                                     targetPath:[targetPath path]
                                                                                    shouldResume:YES];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self removeDownloadRequest:downloadURL
+                         targetPath:targetPath];
         success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self removeDownloadRequest:downloadURL
+                         targetPath:targetPath];
         failure(operation, error);
     }];
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
@@ -190,6 +200,51 @@ NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDoma
     }];
     
     return requestOperation;
+}
+
+#pragma mark - Current Download Requests
+
+- (NSArray *)currentDownloadRequests
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![userDefaults objectForKey:IGHTTPClientCurrentDownloadRequests])
+    {
+        [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:[NSArray array]]
+                         forKey:IGHTTPClientCurrentDownloadRequests];
+        [userDefaults synchronize];
+    }
+    
+    NSData *data = [userDefaults objectForKey:IGHTTPClientCurrentDownloadRequests];
+    NSArray *requests = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return requests;
+}
+
+- (void)saveCurrentDownloadRequests
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:_currentDownloadRequests]
+                     forKey:IGHTTPClientCurrentDownloadRequests];
+    [userDefaults synchronize];
+}
+
+- (void)addDownloadRequest:(NSURL *)downloadURL targetPath:(NSURL *)targetPath
+{
+    NSArray *request = @[downloadURL, targetPath];
+    if (![_currentDownloadRequests containsObject:request])
+    {
+        [_currentDownloadRequests addObject:request];
+        [self saveCurrentDownloadRequests];
+    }
+}
+
+- (void)removeDownloadRequest:(NSURL *)downloadURL targetPath:(NSURL *)targetPath
+{
+    NSArray *request = @[downloadURL, targetPath];
+    if ([_currentDownloadRequests containsObject:request])
+    {
+        [_currentDownloadRequests removeObject:request];
+        [self saveCurrentDownloadRequests];
+    }
 }
 
 @end

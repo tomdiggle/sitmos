@@ -39,6 +39,11 @@ typedef enum {
 
 @interface IGHTTPClient : AFHTTPClient
 
+/**
+ * Returns an array of all the current download requests.
+ */
+@property (nonatomic, strong, readonly) NSMutableArray *currentDownloadRequests;
+
 #pragma mark - Getting the HTTP Client Instance
 
 /**
@@ -82,7 +87,7 @@ typedef enum {
  * @param The failure handler block to execute.
  */
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
-                    targetPath:(NSString *)targetPath
+                    targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
