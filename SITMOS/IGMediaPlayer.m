@@ -484,41 +484,11 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
  */
 - (void)addNowPlayingInfo
 {
-    AVAsset *asset = [[_player currentItem] asset];
-    [asset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:@"commonMetadata"] completionHandler: ^{
-        NSString *title = nil;
-        NSArray *titles = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
-                                                         withKey:AVMetadataCommonKeyTitle
-                                                        keySpace:AVMetadataKeySpaceCommon];
-        if (titles > 0)
-        {
-            title = [[titles objectAtIndex:0] stringValue];
-        }
-        
-        NSString *artist = nil;
-        NSArray *artists = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
-                                                          withKey:AVMetadataCommonKeyArtist
-                                                         keySpace:AVMetadataKeySpaceCommon];
-        if (artists > 0)
-        {
-            artist = [[artists objectAtIndex:0] stringValue];
-        }
-        
-        NSString *albumTitle = nil;
-        NSArray *albumTitles = [AVMetadataItem metadataItemsFromArray:[asset commonMetadata]
-                                                              withKey:AVMetadataCommonKeyAlbumName
-                                                             keySpace:AVMetadataKeySpaceCommon];
-        if (albumTitles > 0)
-        {
-            albumTitle = [[albumTitles objectAtIndex:0] stringValue];
-        }
-        
-        MPMediaItemArtwork *propertyArtwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"audio-player-bg"]];
-        NSDictionary *nowPlayingInfo = @{MPMediaItemPropertyTitle: title, MPMediaItemPropertyAlbumTitle: albumTitle, MPMediaItemPropertyArtist: artist, MPMediaItemPropertyArtwork: propertyArtwork};
-        
-        MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
-        [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
-    }];
+    MPMediaItemArtwork *propertyArtwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"audio-player-bg"]];
+    NSDictionary *nowPlayingInfo = @{MPMediaItemPropertyTitle : [_asset title], MPMediaItemPropertyAlbumTitle : @"Stuck in the Middle of Somewhere", MPMediaItemPropertyArtist : @"Joel Gardiner and Derek Sweet", MPMediaItemPropertyArtwork : propertyArtwork};
+    
+    MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+    [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
 }
 
 /**
