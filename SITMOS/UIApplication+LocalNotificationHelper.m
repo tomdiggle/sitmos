@@ -23,17 +23,15 @@
 
 @implementation UIApplication (LocalNotificationHelper)
 
-+ (void)scheduleLocalNotificationWithParameters:(NSDictionary *)parameters
++ (void)presentLocalNotificationNowWithParameters:(NSDictionary *)parameters
 {
     NSParameterAssert(parameters != nil);
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    [localNotification setFireDate:[parameters valueForKey:@"fireDate"]];
-    [localNotification setTimeZone:[parameters valueForKey:@"timeZone"]];
     [localNotification setAlertAction:[parameters valueForKey:@"alertAction"]];
     [localNotification setAlertBody:[parameters valueForKey:@"alertBody"]];
     [localNotification setSoundName:[parameters valueForKey:@"soundName"]];
-    [[self sharedApplication] scheduleLocalNotification:localNotification];
+    [[self sharedApplication] presentLocalNotificationNow:localNotification];
 }
 
 @end

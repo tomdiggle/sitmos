@@ -532,8 +532,8 @@
             IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL"
                                                           withValue:[[operation request] URL]];
             // If app is in background state display a local notification alerting the user that the download has finished.
-            NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"SuccessfullyDownloadedEpisode", @"text label for successfully downloaded episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
-            [UIApplication scheduleLocalNotificationWithParameters:parameters];
+            NSDictionary *parameters = @{@"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"SuccessfullyDownloadedEpisode", @"text label for successfully downloaded episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
+            [UIApplication presentLocalNotificationNowWithParameters:parameters];
         }
      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          dispatch_async(dispatch_get_main_queue(), ^{
@@ -582,8 +582,8 @@
  
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
     {
-        NSDictionary *parameters = @{@"fireDate" : [NSDate distantPast], @"timeZone" : [NSTimeZone localTimeZone], @"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
-        [UIApplication scheduleLocalNotificationWithParameters:parameters];
+        NSDictionary *parameters = @{@"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
+        [UIApplication presentLocalNotificationNowWithParameters:parameters];
     }
 }
 

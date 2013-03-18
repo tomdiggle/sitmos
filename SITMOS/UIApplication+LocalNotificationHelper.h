@@ -23,6 +23,6 @@
 
 @interface UIApplication (LocalNotificationHelper)
 
-+ (void)scheduleLocalNotificationWithParameters:(NSDictionary *)parameters;
++ (void)presentLocalNotificationNowWithParameters:(NSDictionary *)parameters;
 
 @end
