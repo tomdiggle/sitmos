@@ -24,6 +24,7 @@
 #import "IGSettingsSkippingBackwardViewController.h"
 #import "IGSettingsSkippingForwardViewController.h"
 #import "IGEpisode.h"
+#import "TestFlight.h"
 
 @implementation IGSettingsViewController
 
