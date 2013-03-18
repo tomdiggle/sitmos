@@ -20,7 +20,6 @@
 		3208439816061D470082F5B0 /* download-progress-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439616061D470082F5B0 /* download-progress-bg.png */; };
 		3208439916061D470082F5B0 /* download-progress-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3208439716061D470082F5B0 /* download-progress-bg@2x.png */; };
 		321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */; };
-		3216588715D4600200DA8920 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3216588615D4600200DA8920 /* MessageUI.framework */; };
 		321891D315F111A200063177 /* search-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 321891D115F111A200063177 /* search-bar-bg.png */; };
 		321891D415F111A200063177 /* search-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321891D215F111A200063177 /* search-bar-bg@2x.png */; };
 		321CB21715DD899B00E0E35A /* nav-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 321CB21515DD899B00E0E35A /* nav-bar-bg.png */; };
@@ -56,7 +55,6 @@
 		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
 		323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
-		323D5A3A16B842F30074E91F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
@@ -187,6 +185,7 @@
 		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
+		32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
 		32FBC4E81618AFC3005078EC /* nav-button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E61618AFC3005078EC /* nav-button-highlighted.png */; };
 		32FBC4E91618AFC3005078EC /* nav-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FBC4E71618AFC3005078EC /* nav-button-highlighted@2x.png */; };
@@ -212,7 +211,6 @@
 		3208439716061D470082F5B0 /* download-progress-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-progress-bg@2x.png"; sourceTree = "<group>"; };
 		321579BD15FCFA760074518D /* IGEpisodeMoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeMoreInfoViewController.h; sourceTree = "<group>"; };
 		321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeMoreInfoViewController.m; sourceTree = "<group>"; };
-		3216588615D4600200DA8920 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		321891D115F111A200063177 /* search-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-bar-bg.png"; sourceTree = "<group>"; };
 		321891D215F111A200063177 /* search-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-bar-bg@2x.png"; sourceTree = "<group>"; };
 		321CB21515DD899B00E0E35A /* nav-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bar-bg.png"; sourceTree = "<group>"; };
@@ -432,10 +430,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				323D5A3A16B842F30074E91F /* MobileCoreServices.framework in Frameworks */,
 				323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */,
 				32523E69169B2748006E9FFB /* libz.dylib in Frameworks */,
-				3216588715D4600200DA8920 /* MessageUI.framework in Frameworks */,
 				327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */,
 				327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */,
 				322AD78D153613BA00988B31 /* MediaPlayer.framework in Frameworks */,
@@ -446,6 +442,7 @@
 				321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */,
 				321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */,
 				323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */,
+				32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,7 +498,6 @@
 				32523EDE16ADB986006E9FFB /* GHUnitIOS.framework */,
 				32523E68169B2747006E9FFB /* libz.dylib */,
 				322AD78C153613BA00988B31 /* MediaPlayer.framework */,
-				3216588615D4600200DA8920 /* MessageUI.framework */,
 				323D5A3916B842F30074E91F /* MobileCoreServices.framework */,
 				32934D10149E66C400E939C0 /* QuartzCore.framework */,
 				323D5A3716B842770074E91F /* SystemConfiguration.framework */,
