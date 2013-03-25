@@ -191,6 +191,7 @@
         {
             [[cell textLabel] setText:NSLocalizedString(@"ReviewOnAppStore", @"text label for review on the app store")];
             [cell setAccessibilityTraits:UIAccessibilityTraitLink];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
         
         return cell;
