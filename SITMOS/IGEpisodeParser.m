@@ -135,14 +135,19 @@ NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 #pragma mark - Build Episodes
 
-/*
- Builds the episodes from parsed xml data and saves them into the Core Data stack.
+/**
+ * Builds the episodes from parsed xml data and saves them into the Core Data stack.
  */
 - (void)buildEpisodes
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
-    NSDate *latestEpisodePubDate = [dateFormatter dateFromString:[[_episodes lastObject] valueForKey:@"pubDate"]];
+    NSDate *latestEpisodePubDate = nil;
+    NSUInteger episodes = [IGEpisode MR_countOfEntities];
+    if (episodes == 0)
+    {
+        latestEpisodePubDate = [dateFormatter dateFromString:[[_episodes lastObject] valueForKey:@"pubDate"]];
+    }
     
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         [_episodes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -168,9 +173,9 @@ NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
                 NSString *episodeFileName = [NSString stringWithFormat:@"%@.mp3", title];
                 [episode setFileName:episodeFileName];
                 
-                // Only mark the latest episode as unplayed
-                if ([episodePubDate isEqualToDate:latestEpisodePubDate])
+                if (!latestEpisodePubDate || [episodePubDate isEqualToDate:latestEpisodePubDate])
                 {
+                    // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed.
                     [episode markAsPlayed:NO];
                 }
             }
