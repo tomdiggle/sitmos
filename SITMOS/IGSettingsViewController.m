@@ -24,6 +24,7 @@
 #import "IGSettingsSkippingBackwardViewController.h"
 #import "IGSettingsSkippingForwardViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
+#import "TestFlight.h"
 
 typedef enum {
     IGSettingsTableViewSectionCellularData = 0,
