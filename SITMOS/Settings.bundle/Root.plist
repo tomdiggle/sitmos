@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>CellularData</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>IGSettingCellularDataStreaming</string>
+			<key>Title</key>
+			<string>Streaming</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>IGSettingCellularDataDownloading</string>
+			<key>Title</key>
+			<string>Downloading</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Playback</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<integer>30</integer>
+			<key>Key</key>
+			<string>IGSettingSkippingBackwardTime</string>
+			<key>Title</key>
+			<string>SkippingBackward</string>
+			<key>Titles</key>
+			<array>
+				<string>10 seconds</string>
+				<string>15 seconds</string>
+				<string>30 seconds</string>
+				<string>45 seconds</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>10</integer>
+				<integer>15</integer>
+				<integer>30</integer>
+				<integer>45</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<integer>30</integer>
+			<key>Key</key>
+			<string>IGSettingSkippingForwardTime</string>
+			<key>Title</key>
+			<string>SkippingForward</string>
+			<key>Titles</key>
+			<array>
+				<string>10 seconds</string>
+				<string>15 seconds</string>
+				<string>30 seconds</string>
+				<string>45 seconds</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<integer>10</integer>
+				<integer>15</integer>
+				<integer>30</integer>
+				<integer>45</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Episodes</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>FooterText</key>
+			<string>SettingsEpisodesSectionFooter</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<false/>
+			<key>Key</key>
+			<string>IGSettingUnseenBadge</string>
+			<key>Title</key>
+			<string>UnplayedBadge</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<true/>
+			<key>Key</key>
+			<string>IGSettingEpisodesDelete</string>
+			<key>Title</key>
+			<string>Delete</string>
+			<key>Titles</key>
+			<array>
+				<string>Never</string>
+				<string>Automatically</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<false/>
+				<true/>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>

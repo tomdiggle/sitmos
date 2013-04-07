@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,31 +20,38 @@
  */
 
 #import "IGSettingsViewController.h"
-#import "IGSettingsEpisodesDeleteViewController.h"
+#import "IGEpisode.h"
 #import "IGSettingsSkippingBackwardViewController.h"
 #import "IGSettingsSkippingForwardViewController.h"
-#import "IGEpisode.h"
-#import "TestFlight.h"
+#import "IGSettingsEpisodesDeleteViewController.h"
+
+typedef enum {
+    IGSettingsTableViewSectionCellularData = 0,
+    IGSettingsTableViewSectionPlayback = 1,
+    IGSettingsTableViewSectionEpisodes = 2,
+    IGSettingsTableViewSectionMisc = 3
+} IGSettingsTableViewSection;
+
+@interface IGSettingsViewController ()
+
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+
+@end
 
 @implementation IGSettingsViewController
-
-- (void)viewDidLayoutSubviews
-{
-    self.view.backgroundColor = kRGBA(245.0f, 245.0f, 245.0f, 1);
-    self.tableView.backgroundView = nil;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self setTitle:NSLocalizedString(@"Settings", @"text label for settings")];
+    _userDefaults = [NSUserDefaults standardUserDefaults];
+
+    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setColor:kRGBA(41.f, 41.f, 41.f, 1)];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"text label for done")
-                                                                   style:UIBarButtonItemStyleBordered
-                                                                  target:self
-                                                                  action:@selector(doneButtonTapped:)];
-    [[self navigationItem] setRightBarButtonItem:doneButton];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDefaultsChanged:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:nil];
     
 #ifdef TESTING
     // During testing mode a feedback button will be displayed at the top left of the nav bar
@@ -56,256 +63,123 @@
 #endif
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)dealloc
 {
-    [super viewWillAppear:animated];
-    
-    [self.tableView reloadData];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - UITableViewSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 4;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0 || section == 1 || section == 2)
-    {
-        return 2;
-    }
-    else if (section == 3)
-    {
-        return 1;
-    }
-    
-    return 0;
-}
+#pragma mark - UITableViewDataSource Methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * const basicCellIdentifier = @"basicCellIdentifier";
-    static NSString * const rightDetailCellIdentifier = @"rightDetailCellIdentifier";
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-    if (indexPath.section == 0)
+    UISwitch *accessoryViewSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    if ([indexPath section] == IGSettingsTableViewSectionCellularData)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:basicCellIdentifier];
-        if (!cell)
+        if ([indexPath row] == 0)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:basicCellIdentifier];
+            [cell setAccessoryView:accessoryViewSwitch];
+            [accessoryViewSwitch setOn:[_userDefaults boolForKey:IGSettingCellularDataStreaming]];
+            [accessoryViewSwitch addTarget:self
+                                    action:@selector(updateSettingCellularDataStreaming:)
+                          forControlEvents:UIControlEventTouchUpInside];
         }
-        [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
-        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
-        if (indexPath.row == 0)
+        else if ([indexPath row] == 1)
         {
-            [[cell textLabel] setText:NSLocalizedString(@"Streaming", @"text label for streaming")];
-            [cell setAccessoryView:switchView];
-            [switchView setOn:[userDefaults boolForKey:IGSettingCellularDataStreaming]];
-            [switchView addTarget:self action:@selector(updateSettingCellularDataStreaming:) forControlEvents:UIControlEventTouchUpInside];
+            [cell setAccessoryView:accessoryViewSwitch];
+            [accessoryViewSwitch setOn:[_userDefaults boolForKey:IGSettingCellularDataDownloading]];
+            [accessoryViewSwitch addTarget:self
+                                    action:@selector(updateSettingCellularDataDownloading:)
+                          forControlEvents:UIControlEventTouchUpInside];
         }
-        else
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"Downloading", @"text label for downloading")];
-            [switchView setOn:[userDefaults boolForKey:IGSettingCellularDataDownloading]];
-            [switchView addTarget:self action:@selector(updateSettingCellularDataDownloading:) forControlEvents:UIControlEventTouchUpInside];
-            [cell setAccessoryView:switchView];
-        }
-        
-        return cell;
     }
-    else if (indexPath.section == 1)
+    else if ([indexPath section] == IGSettingsTableViewSectionPlayback)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rightDetailCellIdentifier];
-        if (!cell)
+        if ([indexPath row] == 0)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:rightDetailCellIdentifier];
-        }
-        [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-        [[cell detailTextLabel] setFont:[UIFont systemFontOfSize:17.f]];
-        [[cell detailTextLabel] setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        
-        if (indexPath.row == 0)
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"SkippingBackward", @"text label for skipping backward")];
-            NSString *skippingBackwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [userDefaults integerForKey:IGSettingSkippingBackwardTime]];
+            NSString *skippingBackwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [_userDefaults integerForKey:IGSettingSkippingBackwardTime]];
             [[cell detailTextLabel] setText:skippingBackwardTime];
         }
-        else
+        else if ([indexPath row] == 1)
         {
-            [[cell textLabel] setText:NSLocalizedString(@"SkippingForward", @"text label for skipping forward")];
-            NSString *skippingForwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [userDefaults integerForKey:IGSettingSkippingForwardTime]];
+            NSString *skippingForwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [_userDefaults integerForKey:IGSettingSkippingForwardTime]];
             [[cell detailTextLabel] setText:skippingForwardTime];
         }
-        
-        return cell;
     }
-    else if (indexPath.section == 2)
+    else if ([indexPath section] == IGSettingsTableViewSectionEpisodes)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:rightDetailCellIdentifier];
-        if (!cell)
+        if ([indexPath row] == 0)
         {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:rightDetailCellIdentifier];
+            [cell setAccessoryView:accessoryViewSwitch];
+            [accessoryViewSwitch setOn:[_userDefaults boolForKey:IGSettingUnseenBadge]];
+            [accessoryViewSwitch addTarget:self
+                                    action:@selector(updateSettingCellularDataStreaming:)
+                          forControlEvents:UIControlEventTouchUpInside];
         }
-        [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-        [[cell detailTextLabel] setFont:[UIFont systemFontOfSize:17.0f]];
-        [[cell detailTextLabel] setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
-       
-        if (indexPath.row == 0)
+        else if ([indexPath row] == 1)
         {
-            [[cell textLabel] setText:NSLocalizedString(@"UnplayedBadge", @"text label for unplayed episode badge")];
-            [switchView setOn:[userDefaults boolForKey:IGSettingUnseenBadge]];
-            [switchView addTarget:self action:@selector(updateSettingUnseenBadge:) forControlEvents:UIControlEventTouchUpInside];
-            [cell setAccessoryView:switchView];
+            [[cell detailTextLabel] setText:[_userDefaults boolForKey:IGSettingEpisodesDelete] ? NSLocalizedString(@"Automatically", @"text label for automatically") : NSLocalizedString(@"Never", @"text label for never")];
         }
-        else
-        {
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-            [[cell textLabel] setText:NSLocalizedString(@"Delete", @"text label for delete")];
-            [[cell detailTextLabel] setText:[userDefaults boolForKey:IGSettingEpisodesDelete] ? NSLocalizedString(@"Automatically", @"text label for automatically") : NSLocalizedString(@"Never", @"text label for never")];
-        }
-        
-        return cell;
-    }
-    else if (indexPath.section == 3)
-    {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:basicCellIdentifier];
-        if (!cell)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:basicCellIdentifier];
-        }
-        [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
-        [[cell textLabel] setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
-        [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-        if (indexPath.row == 0)
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"ReviewOnAppStore", @"text label for review on the app store")];
-            [cell setAccessibilityTraits:UIAccessibilityTraitLink];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-        }
-        
-        return cell;
     }
 
-    return nil;
+    return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    if (section == 0 || section == 1 || section == 2)
+    NSString *footerTitle = nil;
+    if (section == IGSettingsTableViewSectionEpisodes)
     {
-        return 44.0f;
+        footerTitle = NSLocalizedString(@"SettingsEpisodesSectionFooter", @"text label for settings episodes section footer");
+    }
+    else if (section == IGSettingsTableViewSectionMisc)
+    {
+        footerTitle = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
     }
     
-    return 0.0f;
+    return footerTitle;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section == 3) return nil;
-    
-    UIView *viewHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44.0f)];
-    UILabel *labelHeader = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0, viewHeader.frame.size.width, viewHeader.frame.size.height)];
-    [labelHeader setFont:[UIFont boldSystemFontOfSize:16.f]];
-    [labelHeader setTextColor:kRGBA(41.0f, 41.0f, 41.0f, 1)];
-    [labelHeader setBackgroundColor:[UIColor clearColor]];
-    if (section == 0)
-    {
-        [labelHeader setText:NSLocalizedString(@"CellularData", @"text label for cellular data")];
-    }
-    else if (section == 1)
-    {
-        [labelHeader setText:NSLocalizedString(@"Playback", @"text label for playback")];
-    }
-    else if (section == 2)
-    {
-        [labelHeader setText:NSLocalizedString(@"Episodes", @"text label for episodes")];
-    }
-    [viewHeader addSubview:labelHeader];
-    
-    return viewHeader;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    if (section == 2 || section == 3)
-    {
-        return 60.0f;
-    }
-    
-    return 0.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    if (section == 0 || section == 1) return nil;
-    
-    UIView *viewFooter = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 60.0f)];
-    UILabel *labelFooter = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, 0, viewFooter.frame.size.width - 40.0f, viewFooter.frame.size.height)];
-    [labelFooter setFont:[UIFont systemFontOfSize:14.0f]];
-    [labelFooter setTextColor:kRGBA(153.0f, 153.0f, 153.0f, 1)];
-    [labelFooter setBackgroundColor:[UIColor clearColor]];
-    [labelFooter setTextAlignment:NSTextAlignmentCenter];
-    [labelFooter setLineBreakMode:NSLineBreakByWordWrapping];
-    [labelFooter setNumberOfLines:2];
-    if (section == 2)
-    {
-        [labelFooter setText:NSLocalizedString(@"SettingsEpisodesSectionFooter", @"text label for settings episodes section footer")];
-    }
-    else if (section == 3)
-    {
-        [labelFooter setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]];
-    }
-    [viewFooter addSubview:labelFooter];
-    
-    return viewFooter;
-}
-
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1)
+    if ([indexPath section] == IGSettingsTableViewSectionPlayback)
     {
-        if (indexPath.row == 0)
+        if ([indexPath row] == 0)
         {
             IGSettingsSkippingBackwardViewController *skippingBackwardViewController = [[IGSettingsSkippingBackwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:skippingBackwardViewController
                                                    animated:YES];
         }
-        else if (indexPath.row == 1)
+        else if ([indexPath row] == 1)
         {
             IGSettingsSkippingForwardViewController *skippingForwardViewController = [[IGSettingsSkippingForwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:skippingForwardViewController
                                                    animated:YES];
         }
     }
-    else if (indexPath.section == 2)
+    else if ([indexPath section] == IGSettingsTableViewSectionEpisodes)
     {
-        if (indexPath.row == 1)
+        if ([indexPath row] == 1)
         {
             IGSettingsEpisodesDeleteViewController *episodesDeleteViewController = [[IGSettingsEpisodesDeleteViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:episodesDeleteViewController
                                                    animated:YES];
         }
     }
-    else if (indexPath.section == 3)
+    else if ([indexPath section] == IGSettingsTableViewSectionMisc)
     {
-        if (indexPath.row == 0)
+        if ([indexPath row] == 0)
         {
             // Review on the App Store
             NSString *appStoreLink = @"itms://itunes.apple.com/app/id567269025";
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreLink]];
+        }
+        else if ([indexPath row] == 1)
+        {
+            [self followSitmosOnTwitter];
         }
     }
     
@@ -313,32 +187,29 @@
                              animated:YES];
 }
 
-#pragma mark - IBAction
+#pragma mark - Update Setting Methods
 
-- (IBAction)doneButtonTapped:(id)sender
+- (void)userDefaultsChanged:(id)sender
 {
-    [self dismissViewControllerAnimated:YES
-                             completion:nil];
+    [[self tableView] reloadData];
 }
 
-#pragma mark - Update Setting Method
-
-- (void)updateSettingCellularDataStreaming:(id)sender
+- (void)updateSettingCellularDataStreaming:(UISwitch *)sender
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataStreaming];
+    [_userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataStreaming];
+    [_userDefaults synchronize];
 }
 
-- (void)updateSettingCellularDataDownloading:(id)sender
+- (void)updateSettingCellularDataDownloading:(UISwitch *)sender
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataDownloading];
+    [_userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataDownloading];
+    [_userDefaults synchronize];
 }
 
-- (void)updateSettingUnseenBadge:(id)sender
+- (void)updateSettingUnseenBadge:(UISwitch *)sender
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:[sender isOn] forKey:IGSettingUnseenBadge];
+    [_userDefaults setBool:[sender isOn] forKey:IGSettingUnseenBadge];
+    [_userDefaults synchronize];
     
     if ([sender isOn])
     {
@@ -350,6 +221,32 @@
     {
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
+}
+
+#pragma mark - Follow SITMOS on Twitter
+
+- (void)followSitmosOnTwitter
+{
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot:///user_profile/sitmos"]])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tweetbot:///user_profile/sitmos"]];
+    }
+    else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=sitmos"]])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://user?screen_name=sitmos"]];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/sitmos"]];
+    }
+}
+
+#pragma mark - Done Button
+
+- (IBAction)doneButtonTapped:(id)sender
+{
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 #pragma mark - Feedback

@@ -32,6 +32,8 @@
 		321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
 		321F218C15B9FD8D00610DC0 /* more-info-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218A15B9FD8C00610DC0 /* more-info-icon.png */; };
 		321F218D15B9FD8D00610DC0 /* more-info-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* more-info-icon@2x.png */; };
+		3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
+		3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222F7C6170F6B4000E8E76E /* Settings.bundle */; };
 		32282D5515CDA3C80005E3B6 /* download-episode-start-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D5315CDA3C80005E3B6 /* download-episode-start-button.png */; };
 		32282D5615CDA3C80005E3B6 /* download-episode-start-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D5415CDA3C80005E3B6 /* download-episode-start-button@2x.png */; };
 		32282D5915CDE8C70005E3B6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D5715CDE8C50005E3B6 /* Default.png */; };
@@ -152,7 +154,6 @@
 		326345A815C1D6BB00B30163 /* unplayed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 326345A615C1D6BB00B30163 /* unplayed-icon.png */; };
 		326345A915C1D6BB00B30163 /* unplayed-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 326345A715C1D6BB00B30163 /* unplayed-icon@2x.png */; };
 		32678CEF147EDE7C007BD110 /* IGEpisodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeTableViewCell.m */; };
-		327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
@@ -227,6 +228,9 @@
 		321D8C51145F1D8B008698DC /* IGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGAppDelegate.m; sourceTree = "<group>"; };
 		321F218A15B9FD8C00610DC0 /* more-info-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-icon.png"; sourceTree = "<group>"; };
 		321F218B15B9FD8D00610DC0 /* more-info-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-icon@2x.png"; sourceTree = "<group>"; };
+		3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
+		3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsViewController.m; sourceTree = "<group>"; };
+		3222F7C6170F6B4000E8E76E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		32282D5315CDA3C80005E3B6 /* download-episode-start-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-start-button.png"; sourceTree = "<group>"; };
 		32282D5415CDA3C80005E3B6 /* download-episode-start-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-start-button@2x.png"; sourceTree = "<group>"; };
 		32282D5715CDE8C50005E3B6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -366,8 +370,6 @@
 		32678CED147EDE7C007BD110 /* IGEpisodeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeTableViewCell.h; sourceTree = "<group>"; };
 		32678CEE147EDE7C007BD110 /* IGEpisodeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeTableViewCell.m; sourceTree = "<group>"; };
 		327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.0b1.xcdatamodel"; sourceTree = "<group>"; };
-		327766DC160F631C00D7DEF4 /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
-		327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsViewController.m; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3285E113156C43A0009E128A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				3290193D15D18A4A00104FD8 /* IGDefines.m */,
 				32FBC4EE1618DE66005078EC /* IGTestFlight.h */,
 				32FBC4EF1618DE66005078EC /* IGTestFlight.m */,
+				3222F7C6170F6B4000E8E76E /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -945,8 +948,8 @@
 		32EA27B016DA712B00BB528E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				327766DC160F631C00D7DEF4 /* IGSettingsViewController.h */,
-				327766DD160F631C00D7DEF4 /* IGSettingsViewController.m */,
+				3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */,
+				3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */,
 				32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */,
 				32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */,
 				32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */,
@@ -1079,6 +1082,7 @@
 				32BF7B2216DBEE3B006B2459 /* skipping-backward-button@2x.png in Resources */,
 				32BF7B2316DBEE3B006B2459 /* skipping-forward-button.png in Resources */,
 				32BF7B2416DBEE3B006B2459 /* skipping-forward-button@2x.png in Resources */,
+				3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,7 +1114,6 @@
 				32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */,
-				327766DE160F631C00D7DEF4 /* IGSettingsViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
@@ -1170,6 +1173,7 @@
 				32D0091716E6197500EAEA81 /* UIViewController+NowPlayingButton.m in Sources */,
 				32D0092C16E9445700EAEA81 /* IGEpisodeDateAndDurationLabel.m in Sources */,
 				32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
+				3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
