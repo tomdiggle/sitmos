@@ -1,6 +1,14 @@
+### Version 1.1.1
+
+*Released on April 15, 2013*
+
+Settings now accessible in Settings.app
+
+Minor bug fixes
+
 ### Version 1.1
 
-*Released on March ##, 2013*
+*Released on April 01, 2013*
 
 When audio is playing a now playing button will appear in the top right of the episode's list
 

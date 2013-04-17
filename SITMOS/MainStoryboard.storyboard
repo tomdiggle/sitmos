@@ -260,7 +260,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="CAT-qP-hfd">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="960" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -759,8 +759,6 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
-                <relationship kind="action" name="settingsButtonTapped:"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
