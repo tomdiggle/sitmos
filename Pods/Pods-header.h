@@ -4,3 +4,4 @@
 #define __POD_AFDownloadRequestOperation
 #define __POD_AFNetworking
 #define __POD_MagicalRecord
+#define __POD_TestFlightSDK

@@ -50,7 +50,6 @@
 		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
 		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
-		323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 323923A0167F5CF900301439 /* libTestFlight.a */; };
 		323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A5167F5DD800301439 /* TSLibraryImport.m */; };
 		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
 		323923AF167F5E0500301439 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */; };
@@ -191,8 +190,6 @@
 		32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		32392398167F5C9100301439 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		32392399167F5C9100301439 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
-		323923A0167F5CF900301439 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		323923A1167F5CF900301439 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		323923A4167F5DD800301439 /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
 		323923A5167F5DD800301439 /* TSLibraryImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLibraryImport.m; sourceTree = "<group>"; };
 		323923A8167F5E0500301439 /* RIButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIButtonItem.h; sourceTree = "<group>"; };
@@ -309,7 +306,6 @@
 				321D8C42145F1D8B008698DC /* UIKit.framework in Frameworks */,
 				321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */,
 				321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */,
-				323923A2167F5CF900301439 /* libTestFlight.a in Frameworks */,
 				32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */,
 				FE00210AA649423E8B08DC04 /* libPods.a in Frameworks */,
 			);
@@ -426,7 +422,6 @@
 				32392397167F5C9100301439 /* NSDate-Helper */,
 				32EA27AC16D406D000BB528E /* TDNotificationPanel */,
 				324D0391164071D200D0143C /* TDSlider */,
-				3239239F167F5CF900301439 /* TestFlight */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
 				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
 			);
@@ -469,15 +464,6 @@
 				32392399167F5C9100301439 /* NSDate+Helper.m */,
 			);
 			path = "NSDate-Helper";
-			sourceTree = "<group>";
-		};
-		3239239F167F5CF900301439 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				323923A0167F5CF900301439 /* libTestFlight.a */,
-				323923A1167F5CF900301439 /* TestFlight.h */,
-			);
-			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		323923A3167F5DD800301439 /* TSLibraryImport */ = {
@@ -1023,10 +1009,7 @@
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Vendor/TestFlight\"",
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "-DEVELOPMENT";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1048,10 +1031,7 @@
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Vendor/TestFlight\"",
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1201,10 +1181,7 @@
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/Vendor/TestFlight\"",
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

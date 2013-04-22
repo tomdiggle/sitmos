@@ -3,15 +3,18 @@ PODS:
     - AFNetworking (>= 1.1)
   - AFNetworking (1.2.1)
   - MagicalRecord (2.1)
+  - TestFlightSDK (1.3.0.beta2)
 
 DEPENDENCIES:
   - AFDownloadRequestOperation (~> 0.0.2)
   - AFNetworking (~> 1.2.1)
   - MagicalRecord (~> 2.1)
+  - TestFlightSDK (~> 1.3.0.beta2)
 
 SPEC CHECKSUMS:
   AFDownloadRequestOperation: f8ec82ee8a6273defa5e3a74fdd0be9b0d937fde
   AFNetworking: 616da0028916ce296f5c3cef74e5552eb4e10e13
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
+  TestFlightSDK: 185b9bfd710bfb85ce5f57bcb89651330081090f
 
 COCOAPODS: 0.18.1
