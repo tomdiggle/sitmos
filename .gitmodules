@@ -1,18 +1,9 @@
 [submodule "Vendor/TDSlider"]
 	path = Vendor/TDSlider
 	url = https://github.com/tomdiggle/TDSlider.git
-[submodule "Vendor/MagicalRecord"]
-	path = Vendor/MagicalRecord
-	url = https://github.com/magicalpanda/MagicalRecord.git
-[submodule "Vendor/AFNetworking"]
-	path = Vendor/AFNetworking
-	url = https://github.com/AFNetworking/AFNetworking.git
 [submodule "Vendor/gh-unit"]
 	path = Vendor/gh-unit
 	url = https://github.com/gabriel/gh-unit.git
-[submodule "Vendor/AFDownloadRequestOperation"]
-	path = Vendor/AFDownloadRequestOperation
-	url = https://github.com/steipete/AFDownloadRequestOperation.git
 [submodule "Vendor/TDNotificationPanel"]
 	path = Vendor/TDNotificationPanel
 	url = https://github.com/tomdiggle/TDNotificationPanel.git

@@ -19,12 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "TestFlight.h"
-
 #import "IGAppDelegate.h"
+
 #import "IGTestFlight.h"
 #import "IGInitialSetup.h"
 #import "TDNotificationPanel.h"
+#import "TestFlight.h"
 
 @implementation IGAppDelegate
 

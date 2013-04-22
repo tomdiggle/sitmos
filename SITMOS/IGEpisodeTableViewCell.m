@@ -69,7 +69,7 @@
             AFDownloadRequestOperation *operation = (AFDownloadRequestOperation *)[httpClient requestOperationForURL:_downloadURL];
             if (operation)
             {
-                [operation setProgressiveDownloadProgressBlock:^(NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
+                [operation setProgressiveDownloadProgressBlock:^(AFDownloadRequestOperation *operation, NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
                     [_downloadProgressView setProgress:totalBytesReadForFile / (float)totalBytesExpectedToReadForFile
                                               animated:YES];
                 }];
