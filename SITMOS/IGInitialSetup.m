@@ -19,14 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
-
 #import "IGInitialSetup.h"
+
 #import "IGEpisode.h"
+#import "IGDefines.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
 #import "TSLibraryImport.h"
+
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 
 NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";
 

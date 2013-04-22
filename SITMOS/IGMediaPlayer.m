@@ -19,12 +19,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#import "IGMediaPlayer.h"
+
+#import "IGMediaPlayerAsset.h"
+
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
-
-#import "IGMediaPlayer.h"
-#import "IGMediaPlayerAsset.h"
 
 static IGMediaPlayer *__sharedInstance = nil;
 

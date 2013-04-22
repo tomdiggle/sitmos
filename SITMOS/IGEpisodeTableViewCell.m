@@ -20,6 +20,7 @@
  */
 
 #import "IGEpisodeTableViewCell.h"
+
 #import "IGHTTPClient.h"
 #import "AFDownloadRequestOperation.h"
 #import "DACircularProgressView.h"

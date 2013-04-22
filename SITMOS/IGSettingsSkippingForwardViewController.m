@@ -8,6 +8,8 @@
 
 #import "IGSettingsSkippingForwardViewController.h"
 
+#import "IGDefines.h"
+
 @interface IGSettingsSkippingForwardViewController ()
 
 @property (nonatomic, strong) NSArray *skippingForwardTimes;

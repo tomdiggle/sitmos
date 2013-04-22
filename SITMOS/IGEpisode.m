@@ -20,7 +20,9 @@
  */
 
 #import "IGEpisode.h"
+
 #import "IGHTTPClient.h"
+#import "IGDefines.h"
 
 @interface IGEpisode ()
 

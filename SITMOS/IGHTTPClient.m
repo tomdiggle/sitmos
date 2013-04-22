@@ -20,8 +20,10 @@
  */
 
 #import "IGHTTPClient.h"
+
 #import "IGRSSXMLRequestOperation.h"
 #import "IGEpisodeParser.h"
+#import "IGDefines.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFDownloadRequestOperation.h"
 

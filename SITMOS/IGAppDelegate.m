@@ -21,8 +21,10 @@
 
 #import "IGAppDelegate.h"
 
+#import "IGMediaPlayer.h"
 #import "IGTestFlight.h"
 #import "IGInitialSetup.h"
+#import "IGDefines.h"
 #import "TDNotificationPanel.h"
 #import "TestFlight.h"
 

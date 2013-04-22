@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
+
 /* Media Player Notifications */
 extern NSString * const IGMediaPlayerPlaybackLoading;
 extern NSString * const IGMediaPlayerPlaybackStatusChangedNotification;

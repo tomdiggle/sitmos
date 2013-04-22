@@ -21,6 +21,8 @@
 
 #import "IGEpisode.h"
 
+#import <UIKit/UIKit.h>
+
 @class IGEpisodeDateAndDurationLabel;
 @class DACircularProgressView;
 

@@ -19,6 +19,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#import <CoreData/CoreData.h>
+
 /* Episode Download Statuses */
 typedef enum {
     IGEpisodeDownloadStatusNotDownloading,

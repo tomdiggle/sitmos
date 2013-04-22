@@ -20,10 +20,12 @@
  */
 
 #import "IGSettingsViewController.h"
+
 #import "IGEpisode.h"
 #import "IGSettingsSkippingBackwardViewController.h"
 #import "IGSettingsSkippingForwardViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
+#import "IGDefines.h"
 #import "TestFlight.h"
 
 typedef enum {

@@ -19,14 +19,17 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <MediaPlayer/MediaPlayer.h>
-
 #import "IGAudioPlayerViewController.h"
+
+#import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
+#import "IGDefines.h"
 #import "TDSlider.h"
 #import "TDNotificationPanel.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
+
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface IGAudioPlayerViewController ()
 

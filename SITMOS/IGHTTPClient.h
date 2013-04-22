@@ -21,6 +21,8 @@
 
 #import "AFHTTPClient.h"
 
+#import <Foundation/Foundation.h>
+
 @class IGRSSXMLRequestOperation;
 
 extern NSString * const IGHTTPClientNetworkErrorDomain;

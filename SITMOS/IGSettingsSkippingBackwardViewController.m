@@ -8,6 +8,8 @@
 
 #import "IGSettingsSkippingBackwardViewController.h"
 
+#import "IGDefines.h"
+
 @interface IGSettingsSkippingBackwardViewController ()
 
 @property (nonatomic, strong) NSArray *skippingBackwardTimes;

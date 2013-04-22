@@ -21,6 +21,8 @@
 
 #import "IGSettingsEpisodesDeleteViewController.h"
 
+#import "IGDefines.h"
+
 @implementation IGSettingsEpisodesDeleteViewController
 
 - (void)viewDidLayoutSubviews

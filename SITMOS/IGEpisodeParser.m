@@ -20,6 +20,7 @@
  */
 
 #import "IGEpisodeParser.h"
+
 #import "IGEpisode.h"
 
 NSString * const IGEpisodeParserDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";

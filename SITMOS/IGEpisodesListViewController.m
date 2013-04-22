@@ -20,11 +20,16 @@
  */
 
 #import "IGEpisodesListViewController.h"
+
 #import "IGEpisodeTableViewCell.h"
 #import "IGEpisode.h"
 #import "IGAudioPlayerViewController.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGSettingsViewController.h"
+#import "IGDefines.h"
+#import "IGMediaPlayerAsset.h"
+#import "IGEpisodeDateAndDurationLabel.h"
+#import "IGMediaPlayer.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "RIButtonItem.h"
@@ -35,8 +40,7 @@
 #import "UIApplication+LocalNotificationHelper.h"
 #import "UIViewController+NowPlayingButton.h"
 #import "TDNotificationPanel.h"
-#import "IGMediaPlayerAsset.h"
-#import "IGEpisodeDateAndDurationLabel.h"
+#import "NSDate+Helper.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
