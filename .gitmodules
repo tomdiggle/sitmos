@@ -1,9 +1,6 @@
 [submodule "Vendor/TDSlider"]
 	path = Vendor/TDSlider
 	url = https://github.com/tomdiggle/TDSlider.git
-[submodule "Vendor/gh-unit"]
-	path = Vendor/gh-unit
-	url = https://github.com/gabriel/gh-unit.git
 [submodule "Vendor/TDNotificationPanel"]
 	path = Vendor/TDNotificationPanel
 	url = https://github.com/tomdiggle/TDNotificationPanel.git
