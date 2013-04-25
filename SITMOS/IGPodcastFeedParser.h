@@ -21,10 +21,9 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const IGEpisodeParserDateFormat;
+@interface IGPodcastFeedParser : NSObject
 
-@interface IGEpisodeParser : NSObject
-
-+ (IGEpisodeParser *)EpisodeParserWithXMLParser:(NSXMLParser *)XMLParser success:(void (^)(void))success failure:(void (^)(NSError *error))failure;
++ (IGPodcastFeedParser *)PodcastFeedParserWithXMLParser:(NSXMLParser *)XMLParser
+                                             completion:(void (^) (NSArray *feedItems, NSError *error))completion;
 
 @end

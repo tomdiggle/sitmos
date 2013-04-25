@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32054A82172887BB00F2562D /* SITMOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */; };
 		32056E1615E0137E00235783 /* nav-back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1415E0137E00235783 /* nav-back-arrow.png */; };
 		32056E1715E0137E00235783 /* nav-back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1515E0137E00235783 /* nav-back-arrow@2x.png */; };
 		32056E1E15E1042300235783 /* nav-back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1C15E1042300235783 /* nav-back-button.png */; };
@@ -47,7 +48,8 @@
 		322D32BD17257568004856E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
 		322D32BE17257568004856E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C43145F1D8B008698DC /* Foundation.framework */; };
 		322D32D217257637004856E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 322D32CE17257637004856E9 /* InfoPlist.strings */; };
-		322D32D317257637004856E9 /* SITMOSTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 322D32D017257637004856E9 /* SITMOSTests-Info.plist */; };
+		322D32DC17257A1F004856E9 /* IGPodcastFeedParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */; };
+		322D32E11725923E004856E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3293D63D148BBC090052B427 /* CoreData.framework */; };
 		3235957515755737007D5D90 /* audio-player-lower-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */; };
 		3235957615755737007D5D90 /* audio-player-lower-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */; };
 		32392331167F59CE00301439 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392330167F59CE00301439 /* DACircularProgressView.m */; };
@@ -66,7 +68,7 @@
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
 		32523DEE1688BFF0006E9FFB /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
 		32523DF1168B5410006E9FFB /* IGRSSXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF0168B540F006E9FFB /* IGRSSXMLRequestOperation.m */; };
-		32523DF4168E4277006E9FFB /* IGEpisodeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGEpisodeParser.m */; };
+		32523DF4168E4277006E9FFB /* IGPodcastFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */; };
 		32523E69169B2748006E9FFB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32523E68169B2747006E9FFB /* libz.dylib */; };
 		325920A615DC1B5700345666 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A415DC1B5700345666 /* play-button.png */; };
 		325920A715DC1B5700345666 /* play-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A515DC1B5700345666 /* play-button@2x.png */; };
@@ -117,6 +119,16 @@
 		FE00210AA649423E8B08DC04 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6101FC8C011D44EA8100635E /* libPods.a */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		322D32DD17257E3A004856E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 321D8C34145F1D8B008698DC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 321D8C3C145F1D8B008698DC;
+			remoteInfo = SITMOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		32056E1415E0137E00235783 /* nav-back-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-arrow.png"; sourceTree = "<group>"; };
 		32056E1515E0137E00235783 /* nav-back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-arrow@2x.png"; sourceTree = "<group>"; };
@@ -165,6 +177,8 @@
 		322D32CF17257637004856E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		322D32D017257637004856E9 /* SITMOSTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SITMOSTests-Info.plist"; sourceTree = "<group>"; };
 		322D32D117257637004856E9 /* SITMOSTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SITMOSTests-Prefix.pch"; sourceTree = "<group>"; };
+		322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGPodcastFeedParserTests.m; sourceTree = "<group>"; };
+		322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.2.xcdatamodel"; sourceTree = "<group>"; };
 		3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg.png"; sourceTree = "<group>"; };
 		3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg@2x.png"; sourceTree = "<group>"; };
 		3239232F167F59CE00301439 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
@@ -197,8 +211,8 @@
 		32523DED1688BFF0006E9FFB /* IGHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGHTTPClient.m; sourceTree = "<group>"; };
 		32523DEF168B540F006E9FFB /* IGRSSXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGRSSXMLRequestOperation.h; sourceTree = "<group>"; };
 		32523DF0168B540F006E9FFB /* IGRSSXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGRSSXMLRequestOperation.m; sourceTree = "<group>"; };
-		32523DF2168E4277006E9FFB /* IGEpisodeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeParser.h; sourceTree = "<group>"; };
-		32523DF3168E4277006E9FFB /* IGEpisodeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeParser.m; sourceTree = "<group>"; };
+		32523DF2168E4277006E9FFB /* IGPodcastFeedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGPodcastFeedParser.h; sourceTree = "<group>"; };
+		32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGPodcastFeedParser.m; sourceTree = "<group>"; };
 		32523E68169B2747006E9FFB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		325920A415DC1B5700345666 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
 		325920A515DC1B5700345666 /* play-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button@2x.png"; sourceTree = "<group>"; };
@@ -296,6 +310,7 @@
 				322D32BD17257568004856E9 /* UIKit.framework in Frameworks */,
 				322D32BE17257568004856E9 /* Foundation.framework in Frameworks */,
 				7B96C2E08C3F4D3C8C09BACB /* libPods-SITMOSTests.a in Frameworks */,
+				322D32E11725923E004856E9 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +404,7 @@
 		322D32BF17257568004856E9 /* SITMOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */,
 				322D32D41725763D004856E9 /* Supporting Files */,
 			);
 			path = SITMOSTests;
@@ -504,8 +520,8 @@
 				32523DED1688BFF0006E9FFB /* IGHTTPClient.m */,
 				32523DEF168B540F006E9FFB /* IGRSSXMLRequestOperation.h */,
 				32523DF0168B540F006E9FFB /* IGRSSXMLRequestOperation.m */,
-				32523DF2168E4277006E9FFB /* IGEpisodeParser.h */,
-				32523DF3168E4277006E9FFB /* IGEpisodeParser.m */,
+				32523DF2168E4277006E9FFB /* IGPodcastFeedParser.h */,
+				32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -684,6 +700,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				322D32DE17257E3A004856E9 /* PBXTargetDependency */,
 			);
 			name = SITMOSTests;
 			productName = SITMOSTests;
@@ -784,7 +801,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				322D32D217257637004856E9 /* InfoPlist.strings in Resources */,
-				322D32D317257637004856E9 /* SITMOSTests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,7 +908,7 @@
 				323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */,
 				32523DEE1688BFF0006E9FFB /* IGHTTPClient.m in Sources */,
 				32523DF1168B5410006E9FFB /* IGRSSXMLRequestOperation.m in Sources */,
-				32523DF4168E4277006E9FFB /* IGEpisodeParser.m in Sources */,
+				32523DF4168E4277006E9FFB /* IGPodcastFeedParser.m in Sources */,
 				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
 				32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */,
 				32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */,
@@ -908,10 +924,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				322D32DC17257A1F004856E9 /* IGPodcastFeedParserTests.m in Sources */,
+				32054A82172887BB00F2562D /* SITMOS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		322D32DE17257E3A004856E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 321D8C3C145F1D8B008698DC /* SITMOS */;
+			targetProxy = 322D32DD17257E3A004856E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		321D8C4A145F1D8B008698DC /* InfoPlist.strings */ = {
@@ -1049,6 +1075,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C9F936B0D6EB4FA0ADA3FC95 /* Pods-SITMOSTests.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SITMOS.app/SITMOS";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1066,6 +1093,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1075,6 +1103,7 @@
 			baseConfigurationReference = C9F936B0D6EB4FA0ADA3FC95 /* Pods-SITMOSTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SITMOS.app/SITMOS";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1098,6 +1127,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1108,6 +1138,7 @@
 			baseConfigurationReference = C9F936B0D6EB4FA0ADA3FC95 /* Pods-SITMOSTests.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SITMOS.app/SITMOS";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1131,6 +1162,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1226,11 +1258,12 @@
 		3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */,
 				329E458316EE542D00663CE0 /* SITMOS-v1.1.xcdatamodel */,
 				327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */,
 				3293D646148BBCF20052B427 /* SITMOS.xcdatamodel */,
 			);
-			currentVersion = 329E458316EE542D00663CE0 /* SITMOS-v1.1.xcdatamodel */;
+			currentVersion = 322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */;
 			path = SITMOS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

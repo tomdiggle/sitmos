@@ -23,6 +23,9 @@
 
 #import "IGHTTPClient.h"
 #import "IGDefines.h"
+#import "NSDate+Helper.h"
+
+NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 @interface IGEpisode ()
 
@@ -36,17 +39,58 @@
 @implementation IGEpisode
 
 @dynamic duration;
-@dynamic fileName;
 @dynamic fileSize;
 @dynamic pubDate;
 @dynamic summary;
 @dynamic title;
-@dynamic type;
+@dynamic mediaType;
 @dynamic downloadURL;
 @dynamic progress;
 @dynamic played;
 
-#pragma mark Class Methods
+#pragma mark - Import Podcast Feed Items
+
++ (void)importPodcastFeedItems:(NSArray *)feed
+{
+    NSDate *latestEpisodePubDate = nil;
+    NSUInteger episodes = [IGEpisode MR_countOfEntities];
+    if (episodes == 0)
+    {
+        latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
+                                           withFormat:IGEpisodeDateFormat];
+    }
+    
+    __block IGEpisode *episode = nil;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        [feed enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *title = [obj valueForKey:@"title"];
+            episode = [IGEpisode episodeWithTitle:title
+                                        inContext:localContext];
+            [episode MR_importValuesForKeysWithObject:obj];
+            
+            if (!latestEpisodePubDate || [[episode pubDate] isEqualToDate:latestEpisodePubDate])
+            {
+                // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed.
+                [episode markAsPlayed:NO];
+            }
+        }];
+    }];
+}
+
++ (IGEpisode *)episodeWithTitle:(NSString *)title inContext:(NSManagedObjectContext *)context
+{
+    IGEpisode *episode = [self MR_findFirstByAttribute:@"title"
+                                             withValue:title];
+    if (!episode)
+    {
+        episode = [self MR_createInContext:context];
+        [episode setTitle:title];
+    }
+    
+    return episode;
+}
+
+#pragma mark - File Management
 
 + (NSURL *)episodesDirectory
 {
@@ -67,7 +111,10 @@
     return episodesDirectory;
 }
 
-#pragma mark - File Management
+- (NSString *)fileName
+{
+    return [NSString stringWithFormat:@"%@.mp3", [self title]];
+}
 
 - (NSURL *)fileURL
 {
@@ -119,12 +166,12 @@
 
 - (BOOL)isAudio
 {
-    return ([[self type] isEqualToString:@"audio/mpeg"]);
+    return ([[self mediaType] isEqualToString:@"audio/mpeg"]);
 }
 
 - (BOOL)isVideo
 {
-    return ([[self type] isEqualToString:@"video/mp4"]);
+    return ([[self mediaType] isEqualToString:@"video/mp4"]);
 }
 
 #pragma mark - Played/Unplayed Management

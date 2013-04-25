@@ -22,7 +22,8 @@
 #import "IGHTTPClient.h"
 
 #import "IGRSSXMLRequestOperation.h"
-#import "IGEpisodeParser.h"
+#import "IGPodcastFeedParser.h"
+#import "IGEpisode.h"
 #import "IGDefines.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFDownloadRequestOperation.h"
@@ -101,14 +102,22 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     [request setTimeoutInterval:10];
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
+        [dateFormatter setDateFormat:IGEpisodeDateFormat];
+        
         if ([self podcastFeedModified:[dateFormatter dateFromString:[[response allHeaderFields] valueForKey:@"Last-Modified"]]])
         {
-            [IGEpisodeParser EpisodeParserWithXMLParser:XMLParser success:^{
-                success();
-            } failure:^(NSError *error) {
-                failure(error);
+            [IGPodcastFeedParser PodcastFeedParserWithXMLParser:XMLParser completion:^(NSArray *feedItems, NSError *error) {
+                if (error)
+                {
+                    failure(error);
+                }
+                else
+                {
+                    [IGEpisode importPodcastFeedItems:feedItems];
+                    success();
+                }
             }];
         }
         else
@@ -129,7 +138,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 - (BOOL)podcastFeedModified:(NSDate *)lastModifiedDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:IGEpisodeParserDateFormat];
+    [dateFormatter setDateFormat:IGEpisodeDateFormat];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDate *feedLastRefreshed = [dateFormatter dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]];
     

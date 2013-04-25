@@ -35,6 +35,8 @@ typedef enum {
     IGEpisodePlayedStatusHalfPlayed
 } IGEpisodePlayedStatus;
 
+extern NSString * const IGEpisodeDateFormat;
+
 /**
  * The IGEpisode class provides access to a episode entity.
  */
@@ -45,11 +47,6 @@ typedef enum {
  * Indicates how long the episode is in time.
  */
 @property (nonatomic, strong) NSString *duration;
-
-/**
- * Indicates the name of the file the episode will be saved as when downloaded.
- */
-@property (nonatomic, strong) NSString *fileName;
 
 /**
  * Indicates the file size of the episode.
@@ -74,7 +71,7 @@ typedef enum {
 /**
  * Indicates what media type the episode is eg. Audio.
  */
-@property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) NSString *mediaType;
 
 /**
  * Indicates the download URL of the episode.
@@ -88,6 +85,17 @@ typedef enum {
  */
 @property (nonatomic, strong) NSNumber *progress;
 
+#pragma mark - Import Podcast Feed Items
+
+/**
+ * @name Import Podcast Feed Items
+ */
+
+/**
+ * 
+ */
++ (void)importPodcastFeedItems:(NSArray *)feed;
+
 #pragma mark - File Management
 
 /**
@@ -100,6 +108,13 @@ typedef enum {
  * @return The directory the downloaded episodes are stored in.
  */
 + (NSURL *)episodesDirectory;
+
+/**
+ * Returns the name of the file the episode will be saved as when downloaded.
+ *
+ * @return The name of the file the episode will be saved as when downloaded.
+ */
+- (NSString *)fileName;
 
 /**
  * Returns the full file path of the episode.
