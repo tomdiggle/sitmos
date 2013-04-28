@@ -25,6 +25,7 @@
 #import "IGPodcastFeedParser.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
+#import "NSDate+Helper.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFDownloadRequestOperation.h"
 
@@ -43,8 +44,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - Class Methods
 
-+ (IGHTTPClient *)sharedClient
-{
++ (IGHTTPClient *)sharedClient {
     static IGHTTPClient *sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -55,8 +55,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - Initializers
 
-- (id)init
-{
+- (id)init {
     NSURL *baseURL = nil;
 #ifdef DEVELOPMENT
     baseURL = [NSURL URLWithString:@"http://www.tomdiggle.com/"];
@@ -66,8 +65,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     _audioFeedURL = [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
 #endif
     
-    if ((self = [super initWithBaseURL:baseURL]))
-    {
+    if ((self = [super initWithBaseURL:baseURL])) {
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
         
@@ -79,15 +77,13 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - AFHTTPClient
 
-- (NSMutableURLRequest *)requestWithURL:(NSURL *)url
-{
+- (NSMutableURLRequest *)requestWithURL:(NSURL *)url {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
 	return request;
 }
 
-- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation
-{
+- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation {
 	operation.successCallbackQueue = _callbackQueue;
 	operation.failureCallbackQueue = _callbackQueue;
 	[super enqueueHTTPRequestOperation:operation];
@@ -96,36 +92,34 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 #pragma mark - Syncing Podcast Feed
 
 - (void)syncPodcastFeedWithSuccess:(void (^)(void))success
-                           failure:(void (^)(NSError *error))failure
-{
+                           failure:(void (^)(NSError *error))failure {
     NSMutableURLRequest *request = [self requestWithURL:[self audioFeedURL]];
     [request setTimeoutInterval:10];
     
-    IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:IGEpisodeDateFormat];
-        
-        if ([self podcastFeedModified:[dateFormatter dateFromString:[[response allHeaderFields] valueForKey:@"Last-Modified"]]])
-        {
+    IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request completion:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser, NSError *error) {
+        if (error) {
+            if (failure) {
+                failure(error);
+            }
+        } else if ([self podcastFeedModified:[[response allHeaderFields] valueForKey:@"Last-Modified"]]) {
             [IGPodcastFeedParser PodcastFeedParserWithXMLParser:XMLParser completion:^(NSArray *feedItems, NSError *error) {
-                if (error)
-                {
-                    failure(error);
+                if (error) {
+                    if (failure) {
+                        failure(error);
+                    }
                 }
-                else
-                {
-                    [IGEpisode importPodcastFeedItems:feedItems];
-                    success();
+                else {
+                    [IGEpisode importPodcastFeedItems:feedItems completion:nil];
+                    if (success) {
+                        success();
+                    }
                 }
             }];
+        } else {
+            if (success) {
+                success();
+            }
         }
-        else
-        {
-            success();
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        failure(error);
     }];
     [operation start];
 }
@@ -135,16 +129,15 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
  *
  * @return YES if feed has been modified since last update, NO otherwise.
  */
-- (BOOL)podcastFeedModified:(NSDate *)lastModifiedDate
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:IGEpisodeDateFormat];
+- (BOOL)podcastFeedModified:(NSString *)modifiedDate {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDate *feedLastRefreshed = [dateFormatter dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]];
+    NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]
+                                            withFormat:IGEpisodeDateFormat];
+    NSDate *feedLastModified = [NSDate dateFromString:modifiedDate
+                                           withFormat:IGEpisodeDateFormat];
     
-    if (!feedLastRefreshed || ([feedLastRefreshed compare:lastModifiedDate] == NSOrderedAscending))
-    {
-        [userDefaults setObject:[dateFormatter stringFromDate:[NSDate date]]
+    if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending)) {
+        [userDefaults setObject:[NSDate stringFromDate:[NSDate date]]
                          forKey:@"IGFeedLastRefreshed"];
         [userDefaults synchronize];
         return YES;
