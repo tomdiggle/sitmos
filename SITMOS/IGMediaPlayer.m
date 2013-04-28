@@ -442,15 +442,14 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         _stoppedBlock([self currentTime], YES);
     }
     [self removeNowPlayingInfo];
-    _asset = nil;
-    [self cleanUp];
     [self postNotification:IGMediaPlayerPlaybackEndedNotification];
+    [self cleanUp];
 }
 
 - (void)playbackFailed
 {
-    [self cleanUp];
     [self postNotification:IGMediaPlayerPlaybackFailedNotification];
+    [self cleanUp];
 }
 
 #pragma mark - Managing Time
