@@ -41,6 +41,7 @@
 #import "UIViewController+NowPlayingButton.h"
 #import "TDNotificationPanel.h"
 #import "NSDate+Helper.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
 
