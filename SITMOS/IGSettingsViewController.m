@@ -27,6 +27,7 @@
 #import "IGSettingsEpisodesDeleteViewController.h"
 #import "IGDefines.h"
 #import "TestFlight.h"
+#import "CoreData+MagicalRecord.h"
 
 typedef enum {
     IGSettingsTableViewSectionCellularData = 0,

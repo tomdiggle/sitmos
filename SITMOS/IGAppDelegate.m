@@ -27,6 +27,7 @@
 #import "IGDefines.h"
 #import "TDNotificationPanel.h"
 #import "TestFlight.h"
+#import "CoreData+MagicalRecord.h"
 
 @implementation IGAppDelegate
 
