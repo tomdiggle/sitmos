@@ -35,8 +35,7 @@
 @implementation IGPodcastFeedParser
 
 + (IGPodcastFeedParser *)PodcastFeedParserWithXMLParser:(NSXMLParser *)XMLParser
-                                             completion:(void (^) (NSArray *feedItems, NSError *error))completion
-{
+                                             completion:(void (^) (NSArray *feedItems, NSError *error))completion {
     IGPodcastFeedParser *feedParser = [[IGPodcastFeedParser alloc] initWithXMLParser:XMLParser
                                                                           completion:completion];
     [feedParser start];
@@ -45,10 +44,8 @@
 }
 
 - (id)initWithXMLParser:(NSXMLParser *)XMLParser
-             completion:(void (^) (NSArray *feedItems, NSError *error))completion
-{
-    if (!(self = [super init]))
-    {
+             completion:(void (^) (NSArray *feedItems, NSError *error))completion {
+    if (!(self = [super init])) {
         return nil;
     }
     
@@ -61,28 +58,25 @@
     return self;
 }
 
-- (void)start
-{
+- (void)start {
     BOOL parseSuccess = [_XMLParser parse];
-    if (!parseSuccess)
-    {
-        _completion(nil, [_XMLParser parserError]);
+    if (!parseSuccess) {
+        if (_completion) {
+            _completion(nil, [_XMLParser parserError]);
+        }
     }
 }
 
 #pragma mark - NSXMLParserDelegate
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
-{
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
     _tmpString = [[NSMutableString alloc] init];
     
-    if ([elementName isEqualToString:@"item"])
-    {
+    if ([elementName isEqualToString:@"item"]) {
         _currentFeedItem = [[NSMutableDictionary alloc] init];
     }
     
-    if ([elementName isEqualToString:@"enclosure"])
-    {
+    if ([elementName isEqualToString:@"enclosure"]) {
         [_currentFeedItem setObject:[attributeDict valueForKey:@"url"] forKey:@"downloadURL"];
         
         NSNumber *fileSize = [_numberFormatter numberFromString:[attributeDict valueForKey:@"length"]];
@@ -92,47 +86,40 @@
     }
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
-    if ([elementName isEqualToString:@"item"])
-    {
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
+    if ([elementName isEqualToString:@"item"]) {
         [_feedItems addObject:_currentFeedItem];
         _currentFeedItem = nil;
     }
     
-    if (_currentFeedItem && _tmpString)
-    {
-        if ([elementName isEqualToString:@"title"])
-        {
+    if (_currentFeedItem && _tmpString) {
+        if ([elementName isEqualToString:@"title"]) {
             [_currentFeedItem setObject:_tmpString forKey:@"title"];
         }
         
-        if ([elementName isEqualToString:@"pubDate"])
-        {
+        if ([elementName isEqualToString:@"pubDate"]) {
             [_currentFeedItem setObject:_tmpString forKey:@"pubDate"];
         }
         
-        if ([elementName isEqualToString:@"itunes:summary"])
-        {
+        if ([elementName isEqualToString:@"itunes:summary"]) {
             [_currentFeedItem setObject:_tmpString forKey:@"summary"];
         }
         
-        if ([elementName isEqualToString:@"itunes:duration"])
-        {
+        if ([elementName isEqualToString:@"itunes:duration"]) {
             [_currentFeedItem setObject:_tmpString forKey:@"duration"];
         }
     
         _tmpString = nil;
     }
     
-    if ([elementName isEqualToString:@"rss"])
-    {
-        _completion(_feedItems, nil);
+    if ([elementName isEqualToString:@"rss"]) {
+        if (_completion) {
+            _completion(_feedItems, nil);
+        }
     }
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     [_tmpString appendString:string];
 }
 
