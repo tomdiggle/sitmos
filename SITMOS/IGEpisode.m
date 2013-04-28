@@ -24,6 +24,7 @@
 #import "IGHTTPClient.h"
 #import "IGDefines.h"
 #import "NSDate+Helper.h"
+#import "CoreData+MagicalRecord.h"
 
 NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
@@ -51,6 +52,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 #pragma mark - Import Podcast Feed Items
 
 + (void)importPodcastFeedItems:(NSArray *)feed
+                    completion:(void (^) (BOOL success, NSError *error))completion
 {
     NSDate *latestEpisodePubDate = nil;
     NSUInteger episodes = [IGEpisode MR_countOfEntities];
@@ -74,6 +76,11 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
                 [episode markAsPlayed:NO];
             }
         }];
+    } completion:^(BOOL success, NSError *error) {
+        if (completion)
+        {
+            completion(success, error);
+        }
     }];
 }
 
@@ -102,8 +109,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
         episodesDirectory = [cacheDir URLByAppendingPathComponent:@"Episodes"];
         
         NSError *error = nil;
-        if (![[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:YES attributes:nil error:&error])
-        {
+        if (![[NSFileManager defaultManager] createDirectoryAtURL:episodesDirectory withIntermediateDirectories:YES attributes:nil error:&error]) {
             NSLog(@"Failed to create episodes dir at %@, reason %@", episodesDirectory, [error localizedDescription]);
         }
     });

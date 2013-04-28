@@ -94,7 +94,8 @@ extern NSString * const IGEpisodeDateFormat;
 /**
  * 
  */
-+ (void)importPodcastFeedItems:(NSArray *)feed;
++ (void)importPodcastFeedItems:(NSArray *)feed
+                    completion:(void (^) (BOOL success, NSError *error))completion;
 
 #pragma mark - File Management
 

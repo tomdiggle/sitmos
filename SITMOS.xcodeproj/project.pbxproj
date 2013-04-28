@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32054A82172887BB00F2562D /* SITMOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */; };
+		32054A861729D19B00F2562D /* IGEpisodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32054A851729D19B00F2562D /* IGEpisodeTests.m */; };
+		32054B0E172C6B2D00F2562D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6101FC8C011D44EA8100635E /* libPods.a */; };
+		32054B0F172C6B3C00F2562D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
+		32054B10172C6B3F00F2562D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
+		32054B11172C6B6F00F2562D /* IGEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEA285153DF03400F17ABE /* IGEpisode.m */; };
+		32054B12172C6B7500F2562D /* IGPodcastFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */; };
+		32054B13172C6B7C00F2562D /* SITMOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */; };
 		32056E1615E0137E00235783 /* nav-back-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1415E0137E00235783 /* nav-back-arrow.png */; };
 		32056E1715E0137E00235783 /* nav-back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1515E0137E00235783 /* nav-back-arrow@2x.png */; };
 		32056E1E15E1042300235783 /* nav-back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E1C15E1042300235783 /* nav-back-button.png */; };
@@ -120,7 +126,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		322D32DD17257E3A004856E9 /* PBXContainerItemProxy */ = {
+		32054B0B172C5C3100F2562D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 321D8C34145F1D8B008698DC /* Project object */;
 			proxyType = 1;
@@ -130,6 +136,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32054A851729D19B00F2562D /* IGEpisodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeTests.m; sourceTree = "<group>"; };
 		32056E1415E0137E00235783 /* nav-back-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-arrow.png"; sourceTree = "<group>"; };
 		32056E1515E0137E00235783 /* nav-back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-arrow@2x.png"; sourceTree = "<group>"; };
 		32056E1C15E1042300235783 /* nav-back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button.png"; sourceTree = "<group>"; };
@@ -311,6 +318,9 @@
 				322D32BE17257568004856E9 /* Foundation.framework in Frameworks */,
 				7B96C2E08C3F4D3C8C09BACB /* libPods-SITMOSTests.a in Frameworks */,
 				322D32E11725923E004856E9 /* CoreData.framework in Frameworks */,
+				32054B0E172C6B2D00F2562D /* libPods.a in Frameworks */,
+				32054B0F172C6B3C00F2562D /* SystemConfiguration.framework in Frameworks */,
+				32054B10172C6B3F00F2562D /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */,
+				32054A851729D19B00F2562D /* IGEpisodeTests.m */,
 				322D32D41725763D004856E9 /* Supporting Files */,
 			);
 			path = SITMOSTests;
@@ -700,7 +711,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				322D32DE17257E3A004856E9 /* PBXTargetDependency */,
+				32054B0C172C5C3100F2562D /* PBXTargetDependency */,
 			);
 			name = SITMOSTests;
 			productName = SITMOSTests;
@@ -925,17 +936,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				322D32DC17257A1F004856E9 /* IGPodcastFeedParserTests.m in Sources */,
-				32054A82172887BB00F2562D /* SITMOS.xcdatamodeld in Sources */,
+				32054A861729D19B00F2562D /* IGEpisodeTests.m in Sources */,
+				32054B11172C6B6F00F2562D /* IGEpisode.m in Sources */,
+				32054B12172C6B7500F2562D /* IGPodcastFeedParser.m in Sources */,
+				32054B13172C6B7C00F2562D /* SITMOS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		322D32DE17257E3A004856E9 /* PBXTargetDependency */ = {
+		32054B0C172C5C3100F2562D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 321D8C3C145F1D8B008698DC /* SITMOS */;
-			targetProxy = 322D32DD17257E3A004856E9 /* PBXContainerItemProxy */;
+			targetProxy = 32054B0B172C5C3100F2562D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
