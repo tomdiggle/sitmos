@@ -152,7 +152,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
                     targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
-    if ([self allowCellularDataDownloading])
+    if ([self allowCellularDataDownloading] && failure)
     {
         // If data downloading is not allowed on cellular return an error
         NSError *error = [NSError errorWithDomain:IGHTTPClientNetworkErrorDomain
@@ -171,11 +171,15 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
-        success(operation, responseObject);
+        if (success) {
+            success(operation, responseObject);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
-        failure(operation, error);
+        if (failure) {
+            failure(operation, error);
+        }
     }];
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
     [self enqueueHTTPRequestOperation:operation];
