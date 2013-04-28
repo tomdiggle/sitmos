@@ -25,6 +25,11 @@
 
 @interface IGRSSXMLRequestOperation : AFXMLRequestOperation <NSXMLParserDelegate>
 
-+ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
++ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request
+                                                        success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser))success
+                                                        failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser))failure;
+
++ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request
+                                                     completion:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSXMLParser *, NSError *))completion;
 
 @end

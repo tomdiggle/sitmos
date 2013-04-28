@@ -28,17 +28,33 @@
     return [NSSet setWithObjects:@"application/xml", @"text/xml", @"application/rss+xml", nil];
 }
 
-+ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSXMLParser *))success failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *, NSXMLParser *))failure
++ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request
+                                                        success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSXMLParser *))success
+                                                        failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *, NSXMLParser *))failure
 {
     AFXMLRequestOperation *operation = [IGRSSXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-        if (success)
-        {
+        if (success) {
             success(request, response, XMLParser);
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        if (failure)
-        {
+        if (failure) {
             failure(request, response, error, XMLParser);
+        }
+    }];
+    
+    return (IGRSSXMLRequestOperation *)operation;
+}
+
++ (IGRSSXMLRequestOperation *)RSSXMLRequestOperationWithRequest:(NSURLRequest *)request
+                                                     completion:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSXMLParser *, NSError *))completion
+{
+    AFXMLRequestOperation *operation = [IGRSSXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+        if (completion) {
+            completion(request, response, XMLParser, nil);
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+        if (completion) {
+            completion(request, response, XMLParser, error);
         }
     }];
     
