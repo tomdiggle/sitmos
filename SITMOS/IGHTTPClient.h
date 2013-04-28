@@ -66,13 +66,11 @@ typedef enum {
  */
 
 /**
- * Syncs the podcast feed and executes a handler block when the request successful or fails.
+ * Syncs the podcast feed and executes a handler block when complete.
  *
- * @param The success handler block to execute.
- * @param The failure handler block to execute.
+ * @param The completion handler block to execute.
  */
-- (void)syncPodcastFeedWithSuccess:(void (^)(void))success
-                           failure:(void (^)(NSError *error))failure;
+- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
 #pragma mark - Downloading Episode
 

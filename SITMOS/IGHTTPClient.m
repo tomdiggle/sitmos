@@ -91,34 +91,27 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - Syncing Podcast Feed
 
-- (void)syncPodcastFeedWithSuccess:(void (^)(void))success
-                           failure:(void (^)(NSError *error))failure {
+- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSError *error))completion {
     NSMutableURLRequest *request = [self requestWithURL:[self audioFeedURL]];
     [request setTimeoutInterval:10];
     
     IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request completion:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser, NSError *error) {
-        if (error) {
-            if (failure) {
-                failure(error);
-            }
+        if (error && completion) {
+            completion(NO, error);
         } else if ([self podcastFeedModified:[[response allHeaderFields] valueForKey:@"Last-Modified"]]) {
             [IGPodcastFeedParser PodcastFeedParserWithXMLParser:XMLParser completion:^(NSArray *feedItems, NSError *error) {
-                if (error) {
-                    if (failure) {
-                        failure(error);
-                    }
+                if (error && completion) {
+                        completion(NO, error);
                 }
                 else {
                     [IGEpisode importPodcastFeedItems:feedItems completion:nil];
-                    if (success) {
-                        success();
+                    if (completion) {
+                        completion(YES, nil);
                     }
                 }
             }];
-        } else {
-            if (success) {
-                success();
-            }
+        } else if (completion) {
+            completion(YES, nil);
         }
     }];
     [operation start];

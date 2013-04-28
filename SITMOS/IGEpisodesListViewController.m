@@ -486,30 +486,27 @@
 
 #pragma mark - Refresh Feed
 
-- (void)refreshFeed
-{
+- (void)refreshFeed {
     if (_reloading) return;
     
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedWithSuccess:^{
+    [httpClient syncPodcastFeedWithCompletion:^(BOOL success, NSError *error) {
         [self doneLoadingTableViewData];
-    } failure:^(NSError *error) {
-        [self doneLoadingTableViewData];
-        [TDNotificationPanel showNotificationPanelInView:self.view
-                                                    type:TDNotificationTypeError
-                                                   title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
-                                          hideAfterDelay:5];
+        if (!success && error) {
+            [TDNotificationPanel showNotificationPanelInView:self.view
+                                                        type:TDNotificationTypeError
+                                                       title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
+                                              hideAfterDelay:5];
+        }
     }];
 }
 
-- (void)reloadTableViewDataSource
-{
+- (void)reloadTableViewDataSource {
     [self refreshFeed];
 	_reloading = YES;
 }
 
-- (void)doneLoadingTableViewData
-{
+- (void)doneLoadingTableViewData {
 	_reloading = NO;
 	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
     [self hideSearchBar];
