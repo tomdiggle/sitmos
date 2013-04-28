@@ -179,7 +179,7 @@ static NSString *audioPodcastTestFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8
     
     [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_xmlParser completion:^(NSArray *episodes, NSError *error) {
         
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"fileSize"], equalTo(@"28900000"));
+        assertThat([[episodes objectAtIndex:0] valueForKey:@"fileSize"], equalTo(@(28900000)));
         
         dispatch_semaphore_signal(semaphore);
     }];

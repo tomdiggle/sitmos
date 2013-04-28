@@ -24,10 +24,11 @@
 @interface IGPodcastFeedParser () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSXMLParser *XMLParser;
-@property (nonatomic, copy) void (^completion)(NSArray *feedItems, NSError *error);
-@property (nonatomic, strong) NSMutableDictionary *currentFeedItem;
+@property (nonatomic, strong) NSNumberFormatter *numberFormatter;
 @property (nonatomic, strong) NSMutableArray *feedItems;
+@property (nonatomic, strong) NSMutableDictionary *currentFeedItem;
 @property (nonatomic, strong) NSMutableString *tmpString;
+@property (nonatomic, copy) void (^completion)(NSArray *feedItems, NSError *error);
 
 @end
 
@@ -43,7 +44,8 @@
     return feedParser;
 }
 
-- (id)initWithXMLParser:(NSXMLParser *)XMLParser completion:(void (^) (NSArray *feedItems, NSError *error))completion
+- (id)initWithXMLParser:(NSXMLParser *)XMLParser
+             completion:(void (^) (NSArray *feedItems, NSError *error))completion
 {
     if (!(self = [super init]))
     {
@@ -52,8 +54,9 @@
     
     _XMLParser = XMLParser;
     [_XMLParser setDelegate:self];
-    _completion = completion;
+    _numberFormatter = [[NSNumberFormatter alloc] init];
     _feedItems = [[NSMutableArray alloc] init];
+    _completion = completion;
     
     return self;
 }
@@ -81,7 +84,10 @@
     if ([elementName isEqualToString:@"enclosure"])
     {
         [_currentFeedItem setObject:[attributeDict valueForKey:@"url"] forKey:@"downloadURL"];
-        [_currentFeedItem setObject:[attributeDict valueForKey:@"length"] forKey:@"fileSize"];
+        
+        NSNumber *fileSize = [_numberFormatter numberFromString:[attributeDict valueForKey:@"length"]];
+        [_currentFeedItem setObject:fileSize forKey:@"fileSize"];
+         
         [_currentFeedItem setObject:[attributeDict valueForKey:@"type"] forKey:@"mediaType"];
     }
 }
