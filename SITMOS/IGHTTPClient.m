@@ -151,11 +151,8 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
                     targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
-    AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
-    if (!allowCellularDataDownloading && networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN)
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    if ([self allowCellularDataDownloading])
     {
         // If data downloading is not allowed on cellular return an error
         NSError *error = [NSError errorWithDomain:IGHTTPClientNetworkErrorDomain
@@ -182,6 +179,16 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     }];
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
     [self enqueueHTTPRequestOperation:operation];
+}
+
+- (BOOL)allowCellularDataDownloading {
+    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
+    AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
+    if (!allowCellularDataDownloading && networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - Download Operations
