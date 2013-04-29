@@ -117,11 +117,6 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     [operation start];
 }
 
-/**
- * Checks to see if the feed has been modifed since last update.
- *
- * @return YES if feed has been modified since last update, NO otherwise.
- */
 - (BOOL)podcastFeedModified:(NSString *)modifiedDate {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]
@@ -130,7 +125,7 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
                                            withFormat:IGEpisodeDateFormat];
     
     if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending)) {
-        [userDefaults setObject:[NSDate stringFromDate:[NSDate date]]
+        [userDefaults setObject:[NSDate stringFromDate:[NSDate date] withFormat:IGEpisodeDateFormat]
                          forKey:@"IGFeedLastRefreshed"];
         [userDefaults synchronize];
         return YES;
