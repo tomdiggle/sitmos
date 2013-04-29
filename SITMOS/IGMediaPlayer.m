@@ -64,6 +64,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (readwrite, nonatomic) Float64 duration;
 @property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
 @property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
+@property (nonatomic, strong) AVURLAsset *urlAsset;
 
 - (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
 - (void)handleAudioRouteChange:(const void *)inPropertyValue;
@@ -120,7 +121,6 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(sessionCategory), &sessionCategory);
     AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, AudioRouteChangeListenerCallback, (__bridge void *)self);
     
-    _player = nil;
     _startFromTime = 0.f;
     _duration = 0.f;
     _currentTime = 0.f;
@@ -138,6 +138,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 {
     _player = nil;
     _asset = nil;
+    _urlAsset = nil;
+    _pausedBlock = nil;
+    _stoppedBlock = nil;
     _currentTime = 0.f;
     _duration = 0.f;
 }
@@ -214,22 +217,22 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         return;
     }
     
+    // Stops any existing audio playing. Useful when switching from a downloaded episode to streaming one because streaming an episode can sometimes take a while to begin depending on the users connection.
+    [self stop];
+    
     _asset = asset;
-
-    // Calling pause, pauses any existing audio playing. Useful when switching from a downloaded episode to streaming one.
-    [self pause];
 
     [self postNotification:IGMediaPlayerPlaybackLoading];
 
-    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
+    _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
 
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
 
     // Tells the asset to load the values of any of the specified keys that are not already loaded.
-    [urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
+    [_urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             // IMPORTANT: Must dispatch to main queue in order to operate on the AVPlayer and AVPlayerItem.
-            [self prepareToPlayAsset:urlAsset
+            [self prepareToPlayAsset:_urlAsset
                             withKeys:requestedKeys];
         });
     }];
@@ -349,8 +352,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 - (void)pause
 {
     [_player pause];
-    if (_pausedBlock)
-    {
+    if (_pausedBlock) {
         _pausedBlock([self currentTime]);
     }
     [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
@@ -456,7 +458,9 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
 
 - (Float64)currentTime
 {
-    return CMTimeGetSeconds([_player currentTime]);
+    Float64 currentTime = isnan(CMTimeGetSeconds([_player currentTime])) ? 0.f : CMTimeGetSeconds([_player currentTime]);
+    
+    return currentTime;
 }
 
 - (void)seekToTime:(Float64)time
