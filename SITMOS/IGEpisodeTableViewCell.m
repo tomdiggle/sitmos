@@ -22,6 +22,7 @@
 #import "IGEpisodeTableViewCell.h"
 
 #import "IGHTTPClient.h"
+#import "IGDefines.h"
 #import "AFDownloadRequestOperation.h"
 #import "DACircularProgressView.h"
 #import "IGEpisodeDateAndDurationLabel.h"
@@ -41,7 +42,25 @@
 {
     [_downloadProgressView setBackgroundColor:[UIColor clearColor]];
     
-    [self displayPlayedStatusIcon];
+    UIColor *color = _playedStatus == IGEpisodePlayedStatusPlayed ? kRGBA(179, 179, 179, 1) : kRGBA(41, 41, 41, 1);
+    [_episodeTitleLabel setTextColor:color];
+    [_episodeTitleLabel setHighlightedTextColor:color];
+    
+    if (_playedStatus == IGEpisodePlayedStatusUnplayed)
+    {
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
+        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
+    }
+    else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
+    {
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
+        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
+    }
+    else if (_playedStatus == IGEpisodePlayedStatusPlayed)
+    {
+        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:NO];
+        [_playedStatusIconImageView setImage:nil];
+    }
     
     [super layoutSubviews];
 }
@@ -103,25 +122,13 @@
     }
 }
 
-#pragma mark - Played Status Icon
-
-- (void)displayPlayedStatusIcon
+- (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
 {
-    if (_playedStatus == IGEpisodePlayedStatusUnplayed)
-    {
-        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
-        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"unplayed-icon"]];
-    }
-    else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
-    {
-        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:YES];
-        [_playedStatusIconImageView setImage:[UIImage imageNamed:@"half-played-icon"]];
-    }
-    else if (_playedStatus == IGEpisodePlayedStatusPlayed)
-    {
-        [_episodeDateAndDurationLabel setDisplayPlayedStatusIcon:NO];
-        [_playedStatusIconImageView setImage:nil];
-    }
+    if (playedStatus == _playedStatus) return;
+    
+    _playedStatus = playedStatus;
+    
+    [self setNeedsLayout];
 }
 
 #pragma mark - IBAction Methods

@@ -190,11 +190,7 @@
     [self updateEpisodeCell:episodeCell
                     episode:episode];
     
-    UIColor *color = [episode isPlayed] ? kRGBA(179, 179, 179, 1) : kRGBA(41, 41, 41, 1);
-    [[episodeCell episodeTitleLabel] setTextColor:color];
-    [[episodeCell episodeTitleLabel] setHighlightedTextColor:color];
-    
-    color = [indexPath row] % 2 ? kRGBA(245, 245, 245, 1) : kRGBA(240, 240, 240, 1);
+    UIColor *color = [indexPath row] % 2 ? kRGBA(245, 245, 245, 1) : kRGBA(240, 240, 240, 1);
     [[episodeCell contentView] setBackgroundColor:color];
     
     UIView *selectedBackgroundView = [[UIView alloc] init];

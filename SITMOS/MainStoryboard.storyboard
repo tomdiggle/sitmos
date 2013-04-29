@@ -260,7 +260,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="CAT-qP-hfd">
-                                    <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -770,15 +770,6 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
-                <relationship kind="action" name="hideAudioPlayer:"/>
-                <relationship kind="action" name="playButtonTapped:"/>
-                <relationship kind="action" name="seekBackward:"/>
-                <relationship kind="action" name="seekForward:"/>
-                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
-                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
-                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
-                <relationship kind="action" name="skipBackwardButtonTapped:"/>
-                <relationship kind="action" name="skipForwardButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
@@ -816,6 +807,7 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
