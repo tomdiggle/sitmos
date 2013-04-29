@@ -26,7 +26,6 @@
 #import "IGSettingsSkippingForwardViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
 #import "IGDefines.h"
-#import "TestFlight.h"
 #import "CoreData+MagicalRecord.h"
 
 typedef enum {
@@ -56,15 +55,6 @@ typedef enum {
                                              selector:@selector(userDefaultsChanged:)
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:nil];
-    
-#ifdef TESTING
-    // During testing mode a feedback button will be displayed at the top left of the nav bar
-    UIBarButtonItem *feedbackButton = [[UIBarButtonItem alloc] initWithTitle:@"Feedback"
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:self
-                                                                      action:@selector(launchFeedback)];
-    [[self navigationItem] setLeftBarButtonItem:feedbackButton];
-#endif
 }
 
 - (void)dealloc
@@ -252,13 +242,5 @@ typedef enum {
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
-
-#pragma mark - Feedback
-#ifdef TESTING
-- (IBAction)launchFeedback
-{
-    [TestFlight openFeedbackView];
-}
-#endif
 
 @end

@@ -217,7 +217,7 @@
                         </sections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="SHB-cO-lcY">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="OFP-GK-jyI">
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="OFP-GK-jyI">
                             <connections>
                                 <action selector="doneButtonTapped:" destination="RdQ-YE-WvT" id="Q6m-rW-es0"/>
                             </connections>
@@ -807,7 +807,6 @@
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodesListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="displayMoreOptions:" candidateClass="UILongPressGestureRecognizer"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
@@ -817,6 +816,9 @@
         </class>
         <class className="IGSettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonTapped:"/>
+            </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
