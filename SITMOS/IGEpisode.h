@@ -171,7 +171,7 @@ extern NSString * const IGEpisodeDateFormat;
 /**
  * Marks the episode has played or unplayed.
  *
- * If the setting for unseen badge is set to YES it will increase/decrease the icon badge number by 1.
+ * If the setting for unseen badge is set to YES it will increase/decrease the icon badge number by 1, will also delete the episode file if the IGSettingEpisodesDelete setting is set to YES.
  *
  * @param BOOL YES will mark episode as played, NO will mark episode as unplayed.
  */

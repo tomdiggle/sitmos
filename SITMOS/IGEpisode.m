@@ -187,11 +187,15 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
     [self setPlayed:[NSNumber numberWithBool:played]];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL unseenBage = [userDefaults boolForKey:IGSettingUnseenBadge];
-    if (unseenBage)
+    if ([userDefaults boolForKey:IGSettingUnseenBadge])
     {
         NSInteger iconBadgeNumber = played ? [[UIApplication sharedApplication] applicationIconBadgeNumber] - 1 : [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:iconBadgeNumber];
+    }
+    
+    if (played && [userDefaults boolForKey:IGSettingEpisodesDelete])
+    {
+        [self deleteDownloadedEpisode];
     }
 }
 
