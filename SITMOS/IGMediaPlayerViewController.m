@@ -41,13 +41,6 @@
     [super viewDidLoad];
     
     [self showAudioPlayer];
-    
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    if (![httpClient allowCellularDataStreaming] && ![[_mediaPlayerAsset contentURL] isFileURL]) {
-        [self showCellularDataStreamingAlert];
-    } else {
-        [self playAudio];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,6 +59,18 @@
 - (void)showAudioPlayer {
     [self performSegueWithIdentifier:@"showAudioPlayer"
                               sender:self];
+    
+    // If the media player is already playing this podcast don't need to continue
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    if ([[_mediaPlayerAsset contentURL] isEqual:[[mediaPlayer asset] contentURL]]) return;
+    
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    if (![httpClient allowCellularDataStreaming] && ![[_mediaPlayerAsset contentURL] isFileURL]) {
+        [mediaPlayer stop];
+        [self showCellularDataStreamingAlert];
+    } else {
+        [self playAudio];
+    }
 }
 
 - (void)playAudio {
