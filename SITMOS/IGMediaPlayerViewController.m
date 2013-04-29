@@ -97,10 +97,6 @@
             if (playbackEnded) {
                 progress = @(0);
                 [localEpisode markAsPlayed:playbackEnded];
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                if ([userDefaults boolForKey:IGSettingEpisodesDelete]) {
-                    [episode deleteDownloadedEpisode];
-                }
             }
             [localEpisode setProgress:progress];
         }];
