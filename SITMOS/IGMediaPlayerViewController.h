@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -21,9 +21,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (NowPlayingButton)
+@class IGMediaPlayerAsset;
 
-- (void)showNowPlayingButon;
-- (void)hideNowPlayingButton:(BOOL)animated;
+@interface IGMediaPlayerViewController : UIViewController
+
+@property (nonatomic, strong) IGMediaPlayerAsset *mediaPlayerAsset;
 
 @end

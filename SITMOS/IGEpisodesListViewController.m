@@ -23,9 +23,8 @@
 
 #import "IGEpisodeTableViewCell.h"
 #import "IGEpisode.h"
-#import "IGAudioPlayerViewController.h"
+#import "IGMediaPlayerViewController.h"
 #import "IGEpisodeMoreInfoViewController.h"
-#import "IGSettingsViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGEpisodeDateAndDurationLabel.h"
@@ -61,8 +60,7 @@
 
 - (void)viewWillLayoutSubviews
 {
-    if (!_refreshHeaderView)
-    {
+    if (!_refreshHeaderView) {
         EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, self.view.frame.size.width, _tableView.bounds.size.height)];
         [refreshView setDelegate:self];
         [_tableView addSubview:refreshView];
@@ -90,20 +88,13 @@
     [self reloadTableViewDataSource];
     
     [self invokeAllDownloadRequests];
-    
-    // Notifications below are used to check if the now playing button should still be displayed
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(displayNowPlayingButton)
-                                                 name:IGMediaPlayerPlaybackEndedNotification
-                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if ([_tableView indexPathForSelectedRow])
-    {
+    if ([_tableView indexPathForSelectedRow]) {
         [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
                           withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -113,7 +104,12 @@
 {
     [super viewWillAppear:animated];
     
-    [self displayNowPlayingButton];
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    if ([mediaPlayer asset]) {
+        [self showNowPlayingButon];
+    } else {
+        [self hideNowPlayingButton:YES];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -121,15 +117,50 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - IBAction
-
-- (IBAction)settingsButtonTapped:(id)sender
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    IGSettingsViewController *settingsViewController = [[IGSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *settingsNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
-    [[self navigationController] presentViewController:settingsNavigationController
-                                              animated:YES
-                                            completion:nil];
+    // Currently only support for audio episode's exists
+    if ([identifier isEqualToString:@"showMediaPlayer"])
+    {
+        if ([sender isKindOfClass:[IGEpisodeTableViewCell class]])
+        {
+            IGEpisodeTableViewCell *cell = (IGEpisodeTableViewCell *)sender;
+            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
+                                                          withValue:[[cell episodeTitleLabel] text]];
+            
+            if ([episode isVideo])
+            {
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showMediaPlayer"])
+    {
+        IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
+        if ([sender isKindOfClass:[IGEpisodeTableViewCell class]])
+        {
+            IGEpisodeTableViewCell *cell = (IGEpisodeTableViewCell *)sender;
+            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
+                                                          withValue:[[cell episodeTitleLabel] text]];
+            [asset setTitle:[episode title]];
+            NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+            [asset setContentURL:contentURL];
+        }
+        else
+        {
+            IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+            asset = [mediaPlayer asset];
+        }
+        
+        IGMediaPlayerViewController *mediaPlayerViewController = (IGMediaPlayerViewController *)[[segue destinationViewController] visibleViewController];
+        [mediaPlayerViewController setMediaPlayerAsset:asset];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -173,15 +204,6 @@
     [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
     
     return episodeCell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    IGEpisode *episode = tableView == self.searchDisplayController.searchResultsTableView ? [_filteredEpisodeArray objectAtIndex:indexPath.row] : [_fetchedResultsController objectAtIndexPath:indexPath];
-    
-    [self playEpisode:episode];
 }
 
 #pragma mark - NSFetchResultsControllerDelegate
@@ -257,7 +279,7 @@
 }
 
 #pragma mark - UILongPressGestureRecognizer Selector Method
-// TODO Refactor
+
 - (IBAction)displayMoreOptions:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     CGPoint p = [gestureRecognizer locationInView:_tableView];
@@ -368,122 +390,6 @@
     [_tableView setBounds:newBounds];
 }
 
-#pragma mark - Display Now Playing Button
-
-- (void)displayNowPlayingButton
-{
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    [self showNowPlayingButon:([mediaPlayer asset] != nil)];
-}
-
-#pragma mark - Play Episode
-
-- (void)playEpisode:(IGEpisode *)episode
-{
-    if ([episode isAudio])
-    {
-        if ([episode isDownloaded])
-        {
-            [self playAudioEpisode:episode];
-        }
-        else
-        {
-            [self canStreamEpisode:episode];
-        }
-    }
-}
-
-- (void)playAudioEpisode:(IGEpisode *)episode
-{
-    IGAudioPlayerViewController *audioPlayer = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
-    [audioPlayer setTitle:[episode title]];
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav-back-arrow"]
-                                                                             style:UIBarButtonItemStyleBordered
-                                                                            target:nil
-                                                                            action:nil];
-    
-    [[self navigationController] pushViewController:audioPlayer
-                                           animated:YES];
-    
-    dispatch_queue_t startPlaybackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.startPlaybackQueue", NULL);
-	dispatch_async(startPlaybackQueue, ^{
-        NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-        IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
-        [asset setContentURL:contentURL];
-        [asset setTitle:[episode title]];
-        
-        IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-        [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
-        [mediaPlayer startWithAsset:asset];
-        
-        [mediaPlayer setPausedBlock:^(Float64 currentTime) {
-            // Save current time so playback can resume where left off
-            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                IGEpisode *localEpisode = [episode MR_inContext:localContext];
-                [localEpisode setProgress:@(currentTime)];
-            }];
-        }];
-        
-        [mediaPlayer setStoppedBlock:^(Float64 currentTime, BOOL playbackEnded) {
-            // Delete episode?
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            if ([userDefaults boolForKey:IGSettingEpisodesDelete])
-            {
-                [episode deleteDownloadedEpisode];
-            }
-            
-            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                IGEpisode *localEpisode = [episode MR_inContext:localContext];
-                BOOL markAsPlayed = [localEpisode isPlayed];
-                Float64 progress = currentTime;
-                if (playbackEnded)
-                {
-                    markAsPlayed = YES;
-                    progress = 0;
-                }
-                [localEpisode markAsPlayed:markAsPlayed];
-                [localEpisode setProgress:@(progress)];
-            }];
-        }];
-    });
-}
-
-/**
- * Checks to see if streaming is available with cellular data.
- */
-- (void)canStreamEpisode:(IGEpisode *)episode
-{
-    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    AFNetworkReachabilityStatus networkReachabilityStatus = [httpClient networkReachabilityStatus];
-    if (!allowCellularDataStreaming && networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN)
-    {
-        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", "text label for cancel")];
-        cancelItem.action = ^{
-            if ([_tableView indexPathForSelectedRow])
-            {
-                [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
-                                  withRowAnimation:UITableViewRowAnimationFade];
-            }
-        };
-        RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", @"text label for stream")];
-        streamItem.action = ^{
-            [self playAudioEpisode:episode];
-        };
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataTitle", @"text label for streaming with cellular data title")
-                                                            message:NSLocalizedString(@"StreamingWithCellularDataMessage", @"text label for streaming with cellular data message")
-                                                   cancelButtonItem:cancelItem
-                                                   otherButtonItems:streamItem, nil];
-        [alertView show];
-    }
-    else
-    {
-        [self playAudioEpisode:episode];
-    }
-}
-
 #pragma mark - Refresh Feed
 
 - (void)refreshFeed {
@@ -547,9 +453,7 @@
          });
      }];
 }
- 
-// TODO handle other types of errors
-// More than likely will need refactoring
+
 - (void)downloadOperation:(AFHTTPRequestOperation *)operation
           failedWithError:(NSError *)error
 {

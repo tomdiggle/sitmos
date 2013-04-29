@@ -260,7 +260,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="CAT-qP-hfd">
-                                    <rect key="frame" x="0.0" y="0.0" width="1280" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -361,6 +361,7 @@
                                             <outlet property="episodeTitleLabel" destination="Gja-eO-WLS" id="umG-D9-8z2"/>
                                             <outlet property="moreInfoButton" destination="m0Z-5z-vuV" id="TSp-yB-Yrv"/>
                                             <outlet property="playedStatusIconImageView" destination="tKo-8d-EBW" id="dk7-IW-ses"/>
+                                            <segue destination="thq-fK-KsQ" kind="modal" identifier="showMediaPlayer" id="UQZ-5S-qYe"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -557,6 +558,42 @@
             </objects>
             <point key="canvasLocation" x="1269" y="880"/>
         </scene>
+        <!--Media Player-->
+        <scene sceneID="TCj-m5-dnw">
+            <objects>
+                <navigationController storyboardIdentifier="IGMediaPlayerNavigationController" definesPresentationContext="YES" id="thq-fK-KsQ" userLabel="Media Player" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="LF0-Cv-BcE">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="5nu-dN-2LU" kind="relationship" relationship="rootViewController" id="1wu-5t-bIS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sME-Me-cfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1718" y="318"/>
+        </scene>
+        <!--Media Player View Controller-->
+        <scene sceneID="fWJ-UB-ORN">
+            <objects>
+                <viewController storyboardIdentifier="IGMediaPlayerViewController" id="5nu-dN-2LU" customClass="IGMediaPlayerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wp8-qE-FOt">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="b3t-iw-bJz"/>
+                    <connections>
+                        <segue destination="U3O-W2-aEf" kind="push" identifier="showAudioPlayer" id="shf-Z7-Op0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rbs-nn-Pdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2101" y="318"/>
+        </scene>
         <!--Audio Player View Controller-->
         <scene sceneID="kwx-v7-YPw">
             <objects>
@@ -565,7 +602,9 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-TV-RFA" userLabel="Background Image"/>
+                            <imageView contentMode="scaleToFill" image="audio-player-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-TV-RFA" userLabel="Background Image">
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U53-Ux-UHX" userLabel="Lower Player Controls View">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-qD-9IU" userLabel="Play/Pause Button">
@@ -635,6 +674,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="hUD-d0-zhz" secondAttribute="bottom" constant="13" id="0z3-QT-OGO"/>
                                     <constraint firstItem="77O-6D-tGj" firstAttribute="baseline" secondItem="rPI-Eh-kSX" secondAttribute="baseline" type="default" id="1vc-xD-vDf"/>
@@ -653,17 +693,23 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="WlM-TV-RFA" secondAttribute="bottom" constant="89" type="user" id="BCS-1g-XaL"/>
                             <constraint firstItem="WlM-TV-RFA" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" type="default" id="IZi-6i-llQ"/>
                             <constraint firstItem="U53-Ux-UHX" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" type="default" id="XDi-cK-6bb"/>
-                            <constraint firstItem="WlM-TV-RFA" firstAttribute="trailing" secondItem="CrI-Jn-xth" secondAttribute="trailing" type="default" id="aV4-kP-xuR"/>
                             <constraint firstItem="U53-Ux-UHX" firstAttribute="bottom" secondItem="CrI-Jn-xth" secondAttribute="bottom" type="user" id="oyJ-cg-Wsv"/>
                             <constraint firstItem="WlM-TV-RFA" firstAttribute="top" secondItem="CrI-Jn-xth" secondAttribute="top" type="default" id="qdn-cS-62d"/>
                             <constraint firstItem="U53-Ux-UHX" firstAttribute="trailing" secondItem="CrI-Jn-xth" secondAttribute="trailing" type="default" id="zsY-pl-oZ3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Rxh-I5-Oqi"/>
+                    <navigationItem key="navigationItem" id="Rxh-I5-Oqi">
+                        <barButtonItem key="leftBarButtonItem" image="hide-audio-player-icon.png" id="QdR-G8-3SI">
+                            <connections>
+                                <action selector="hideAudioPlayer:" destination="U3O-W2-aEf" id="Szg-MD-uPd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
                     <connections>
@@ -687,7 +733,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1718" y="318"/>
+            <point key="canvasLocation" x="2487" y="318"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ijq-dU-R91">
@@ -710,6 +756,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="audio-player-bg.png" width="320" height="329"/>
+        <image name="hide-audio-player-icon.png" width="20" height="20"/>
         <image name="more-info-icon.png" width="25" height="25"/>
         <image name="play-button.png" width="32" height="32"/>
         <image name="skipping-backward-button.png" width="32" height="32"/>
@@ -722,6 +770,15 @@
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
+                <relationship kind="action" name="hideAudioPlayer:"/>
+                <relationship kind="action" name="playButtonTapped:"/>
+                <relationship kind="action" name="seekBackward:"/>
+                <relationship kind="action" name="seekForward:"/>
+                <relationship kind="action" name="seekToTime:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStart:" candidateClass="UISlider"/>
+                <relationship kind="action" name="seekToTimeStop:" candidateClass="UISlider"/>
+                <relationship kind="action" name="skipBackwardButtonTapped:"/>
+                <relationship kind="action" name="skipForwardButtonTapped:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="currentTimeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="durationLabel" candidateClass="UILabel"/>
@@ -762,6 +819,9 @@
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
+        </class>
+        <class className="IGMediaPlayerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGMediaPlayerViewController.h"/>
         </class>
         <class className="IGSettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGSettingsViewController.h"/>

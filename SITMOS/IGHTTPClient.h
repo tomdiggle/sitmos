@@ -92,6 +92,11 @@ typedef enum {
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
+ *
+ */
+- (BOOL)allowCellularDataStreaming;
+
+/**
  * Returns an array of the current download operations.
  *
  * @return The current download operations. Returns nil if there are none.

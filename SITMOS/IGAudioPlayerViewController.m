@@ -58,47 +58,45 @@
     
     [self applyStylesheet];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showBufferingHUD:)
-                                                     name:IGMediaPlayerPlaybackLoading
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackEnded:)
-                                                     name:IGMediaPlayerPlaybackEndedNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackFailed:)
-                                                     name:IGMediaPlayerPlaybackFailedNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackStateChanged:)
-                                                     name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showBufferingHUD:)
-                                                     name:IGMediaPlayerPlaybackBufferEmptyNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(hideBufferingHUD:)
-                                                     name:IGMediaPlayerPlaybackLikelyToKeepUpNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationDidEnterBackground:)
-                                                     name:UIApplicationDidEnterBackgroundNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(applicationDidEnterForeground:)
-                                                     name:UIApplicationWillEnterForegroundNotification
-                                                   object:nil];
-    });
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showBufferingHUD:)
+                                                 name:IGMediaPlayerPlaybackLoading
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackEnded:)
+                                                 name:IGMediaPlayerPlaybackEndedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackFailed:)
+                                                 name:IGMediaPlayerPlaybackFailedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:IGMediaPlayerPlaybackStatusChangedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showBufferingHUD:)
+                                                 name:IGMediaPlayerPlaybackBufferEmptyNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideBufferingHUD:)
+                                                 name:IGMediaPlayerPlaybackLikelyToKeepUpNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -126,7 +124,6 @@
 
 - (void)applyStylesheet
 {
-    [_backgroundImageView setImage:[UIImage imageNamed:@"audio-player-bg"]];
     [_lowerPlayerControls setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"audio-player-lower-controls-bg"]]];
     [_progressSlider setProgressColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"progress-slider-fill"]]];
     [_progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
@@ -149,6 +146,11 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)hideAudioPlayer:(id)sender {
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
 
 - (IBAction)playButtonTapped:(id)sender
 {
@@ -311,7 +313,7 @@
  */
 - (void)showBufferingHUD:(NSNotification *)notification
 {
-    if ([[[_mediaPlayer asset] contentURL] isFileURL] || [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
+    if ([[[_mediaPlayer asset] contentURL] isFileURL]|| [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
     
     TDNotificationPanel *panel = [TDNotificationPanel showNotificationPanelInView:self.view
                                                                          animated:YES];
@@ -367,9 +369,9 @@
 /**
  * When playback has finsihed pop the view back to the episode lists view controller.
  */
-- (void)playbackEnded:(NSNotification *)notification
-{
-    [[self navigationController] popViewControllerAnimated:YES];
+- (void)playbackEnded:(NSNotification *)notification {
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 /**
@@ -380,7 +382,8 @@
     RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"OK", "text label for ok")];
     cancelItem.action = ^{
         [_mediaPlayer stop];
-        [[self navigationController] popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES
+                                 completion:nil];
     };
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", "text label for sorry") 
                                                         message:NSLocalizedString(@"EpisodePlaybackFailed", "text label for episode playback failed") 
