@@ -1,3 +1,12 @@
+### Version 1.1.2
+
+*Released on May 4, 2013*
+
+Fixes possible streaming bug
+
+Minor improvements to the audio player
+
+
 ### Version 1.1.1
 
 *Released on April 15, 2013*
