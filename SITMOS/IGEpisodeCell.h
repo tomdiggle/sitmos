@@ -23,38 +23,43 @@
 
 #import <UIKit/UIKit.h>
 
-@class IGEpisodeDateAndDurationLabel;
-@class DACircularProgressView;
-
-@protocol IGEpisodeTableViewCellDelegate;
+@protocol IGEpisodeCellDelegate;
 
 /**
- * The IGEpisodeTableViewCell class defines the attributes and behaviour of the cells that appear in IGEpisodesListViewController's UITableView.
+ * The IGEpisodeCell class defines the attributes and behaviour of the cells that appear in IGEpisodesListViewController's UITableView.
  */
 
-@interface IGEpisodeTableViewCell : UITableViewCell
+@interface IGEpisodeCell : UITableViewCell
 
 /**
- * Returns the label used for the episode's title.
+ * Returns the title of the episode.
  */
-@property (nonatomic, weak) IBOutlet UILabel *episodeTitleLabel;
+@property (nonatomic, strong) NSString *title;
 
 /**
- * Returns the label used for the episode's published date and duration.
- */
-@property (nonatomic, weak) IBOutlet IGEpisodeDateAndDurationLabel *episodeDateAndDurationLabel;
-
-/**
- * Returns the download episode button (UIButton object) of the table cell. The image is set by setting the downloadStatus object.
+ * Returns the summary of the episode.
  *
- * @see downloadStatus
+ * @discussion Only two lines of the summary is shown and it is truncated by NSLineBreakByTruncatingTail. 
  */
-@property (nonatomic, weak) IBOutlet UIButton *downloadEpisodeButton;
+@property (nonatomic, strong) NSString *summary;
 
 /**
- * Returns the more info button of the table cell.
+ * Returns the date the episode was published.
+ *
+ * @discussion The pub date is formatted with the timeLeft variable like 03 Jan 2011 - 03:33.
+ *
+ * @see timeLeft
  */
-@property (nonatomic, weak) IBOutlet UIButton *moreInfoButton;
+@property (nonatomic, strong) NSDate *pubDate;
+
+/**
+ * Returns the amount of time left remaining in the episode.
+ *
+ * @discussion The amount of time left is formatted with the pub date like 03 Jan 2011 - 03:33.
+ *
+ * @see pubDate
+ */
+@property (nonatomic, strong) NSString *timeLeft;
 
 /**
  * Returns the download url of the episode.
@@ -64,43 +69,29 @@
 @property (nonatomic, strong) NSURL *downloadURL;
 
 /**
- * Returns the helper icon image view of the table cell.
- *
- * @see playedStatus
- */
-@property (nonatomic, weak) IBOutlet UIImageView *playedStatusIconImageView;
-
-/**
- * Returns the download progress view of the table cell.
- *
- * Returns the download progress view (DACircularProgressView object) of the table cell. The download progress view is only visible when the episode is downloading.
- */
-@property (nonatomic, weak) IBOutlet DACircularProgressView *downloadProgressView;
-
-/**
  * Returns the download status of the episode.
  */
-@property (nonatomic) IGEpisodeDownloadStatus downloadStatus;
+@property (nonatomic, assign) IGEpisodeDownloadStatus downloadStatus;
 
 /**
  * Returns the played status of the episode.
  */
-@property (nonatomic) IGEpisodePlayedStatus playedStatus;
+@property (nonatomic, assign) IGEpisodePlayedStatus playedStatus;
 
 /**
  * The object that acts as the delegate of the receiving episode table view cell.
  *
  * The delegate must adopt the IGEpisodeTableViewCellDelegate protocol. The delegate is not retained.
  */
-@property (nonatomic, weak) id <IGEpisodeTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id <IGEpisodeCellDelegate> delegate;
 
 @end
 
 /**
- * The delegate of IGEpisodeTableViewCell object must adopt the IGEpisodeTableViewCellDelegate protocol.
+ * The delegate of IGEpisodeCell object must adopt the IGEpisodeCellDelegate protocol.
  */
 
-@protocol IGEpisodeTableViewCellDelegate <NSObject>
+@protocol IGEpisodeCellDelegate <NSObject>
 
 /**
  * Tells the delegate that the user tapped the more info button.
@@ -108,7 +99,7 @@
  * @param episodeTableViewCell The episode table view cell object requesting the information.
  * @param title The title of the episode.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title;
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title;
 
 /**
  * Tells the delegate that the user tapped the download button.
@@ -116,6 +107,6 @@
  * @param episodeTableViewCell The episode table view cell object requesting the information.
  * @param button The button that has been tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button;
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button;
 
 @end

@@ -258,7 +258,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
                                 <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="CAT-qP-hfd">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -268,99 +268,15 @@
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="episodeCellIdentifier" rowHeight="50" id="Itm-hO-l8f" customClass="IGEpisodeTableViewCell">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="50"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="episodeCell" rowHeight="76" id="Itm-hO-l8f" customClass="IGEpisodeCell">
+                                        <rect key="frame" x="0.0" y="66" width="320" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Gja-eO-WLS" userLabel="Episode Title Label">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="1M5-uU-4CU"/>
-                                                        <constraint firstAttribute="width" constant="117" id="7aw-DD-ule"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Episode Date - Length" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BS9-Zv-AAN" userLabel="Episode Published Date &amp; Time Label" customClass="IGEpisodeDateAndDurationLabel">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="160" id="1QD-6P-NA9"/>
-                                                        <constraint firstAttribute="height" constant="21" id="6lp-2L-jUl"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="0.70196080207824707" green="0.70196080207824707" blue="0.70196080207824707" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tKo-8d-EBW" userLabel="Played Status Icon">
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="14" id="HFQ-ay-gkp"/>
-                                                        <constraint firstAttribute="width" constant="10" id="VxU-t0-8iT"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0Z-5z-vuV" userLabel="More Info Button">
-                                                    <accessibility key="accessibilityConfiguration" hint="Displays more information about episode." label="More Info"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="Rcw-8I-BGo"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal" image="more-info-icon.png">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="moreInfoButtonTapped:" destination="Itm-hO-l8f" eventType="touchUpInside" id="9aH-IP-9dU"/>
-                                                    </connections>
-                                                </button>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sjp-Hz-nmv" userLabel="Download Progress View" customClass="DACircularProgressView"/>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qty-Bq-yU4" userLabel="Download Button">
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="Ec6-zg-fUi"/>
-                                                        <constraint firstAttribute="height" constant="49" id="dbZ-aT-bDw"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal">
-                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="highlighted">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="downloadButtonTapped:" destination="Itm-hO-l8f" eventType="touchUpInside" id="dtf-kv-hlB"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <constraints>
-                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" constant="6" id="1Lp-ZD-b9d"/>
-                                            <constraint firstItem="Qty-Bq-yU4" firstAttribute="bottom" secondItem="m0Z-5z-vuV" secondAttribute="bottom" type="default" id="3fG-Dw-5GX"/>
-                                            <constraint firstItem="m0Z-5z-vuV" firstAttribute="leading" secondItem="Sjp-Hz-nmv" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="71H-Em-XYQ"/>
-                                            <constraint firstItem="BS9-Zv-AAN" firstAttribute="centerY" secondItem="tKo-8d-EBW" secondAttribute="centerY" type="default" id="I31-ya-v0G"/>
-                                            <constraint firstItem="m0Z-5z-vuV" firstAttribute="leading" secondItem="Qty-Bq-yU4" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="Jvl-3d-RgG"/>
-                                            <constraint firstItem="Sjp-Hz-nmv" firstAttribute="centerY" secondItem="Itm-hO-l8f" secondAttribute="centerY" type="default" id="Q3a-3j-FcG"/>
-                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="Itm-hO-l8f" secondAttribute="leading" constant="11" id="S31-Ea-NBm"/>
-                                            <constraint firstItem="Sjp-Hz-nmv" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" constant="10" id="V7g-4b-5mR"/>
-                                            <constraint firstItem="m0Z-5z-vuV" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" type="default" id="XaR-TZ-Uod"/>
-                                            <constraint firstItem="Qty-Bq-yU4" firstAttribute="top" secondItem="Itm-hO-l8f" secondAttribute="top" type="default" id="YAU-t6-a9y"/>
-                                            <constraint firstItem="m0Z-5z-vuV" firstAttribute="trailing" secondItem="Itm-hO-l8f" secondAttribute="trailing" type="default" id="aR5-aJ-VkY"/>
-                                            <constraint firstAttribute="bottom" secondItem="BS9-Zv-AAN" secondAttribute="bottom" constant="4" id="aiM-th-vyV"/>
-                                            <constraint firstItem="Qty-Bq-yU4" firstAttribute="leading" secondItem="Sjp-Hz-nmv" secondAttribute="leading" type="default" id="xoh-yj-cEi"/>
-                                            <constraint firstItem="Gja-eO-WLS" firstAttribute="leading" secondItem="tKo-8d-EBW" secondAttribute="leading" type="default" id="xqp-42-qUC"/>
-                                            <constraint firstItem="tKo-8d-EBW" firstAttribute="leading" secondItem="BS9-Zv-AAN" secondAttribute="leading" type="default" id="yva-m4-TSt"/>
-                                        </constraints>
                                         <connections>
-                                            <outlet property="downloadEpisodeButton" destination="Qty-Bq-yU4" id="Cd4-4M-HXv"/>
-                                            <outlet property="downloadProgressView" destination="Sjp-Hz-nmv" id="Tmn-4b-dRD"/>
-                                            <outlet property="episodeDateAndDurationLabel" destination="BS9-Zv-AAN" id="qbn-rt-8Ae"/>
-                                            <outlet property="episodeTitleLabel" destination="Gja-eO-WLS" id="umG-D9-8z2"/>
-                                            <outlet property="moreInfoButton" destination="m0Z-5z-vuV" id="TSp-yB-Yrv"/>
-                                            <outlet property="playedStatusIconImageView" destination="tKo-8d-EBW" id="dk7-IW-ses"/>
                                             <segue destination="thq-fK-KsQ" kind="modal" identifier="showMediaPlayer" id="UQZ-5S-qYe"/>
                                         </connections>
                                     </tableViewCell>
@@ -758,15 +674,11 @@
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="hide-audio-player-icon.png" width="20" height="20"/>
-        <image name="more-info-icon.png" width="25" height="25"/>
         <image name="play-button.png" width="32" height="32"/>
         <image name="skipping-backward-button.png" width="32" height="32"/>
         <image name="skipping-forward-button.png" width="32" height="32"/>
     </resources>
     <classes>
-        <class className="DACircularProgressView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DACircularProgressView.h"/>
-        </class>
         <class className="IGAudioPlayerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGAudioPlayerViewController.h"/>
             <relationships>
@@ -778,8 +690,12 @@
                 <relationship kind="outlet" name="progressSlider" candidateClass="TDSlider"/>
             </relationships>
         </class>
-        <class className="IGEpisodeDateAndDurationLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeDateAndDurationLabel.h"/>
+        <class className="IGEpisodeCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeCell.h"/>
+            <relationships>
+                <relationship kind="action" name="downloadButtonTapped:"/>
+                <relationship kind="action" name="moreInfoButtonTapped:"/>
+            </relationships>
         </class>
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
@@ -791,17 +707,6 @@
                 <relationship kind="outlet" name="episodeTypeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="playedStatusImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="summaryTextView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="IGEpisodeTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="downloadEpisodeButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="downloadProgressView" candidateClass="DACircularProgressView"/>
-                <relationship kind="outlet" name="episodeDateAndDurationLabel" candidateClass="IGEpisodeDateAndDurationLabel"/>
-                <relationship kind="outlet" name="episodeTitleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="moreInfoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="playedStatusIconImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="IGEpisodesListViewController" superclassName="UIViewController">
@@ -816,9 +721,6 @@
         </class>
         <class className="IGSettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButtonTapped:"/>
-            </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>

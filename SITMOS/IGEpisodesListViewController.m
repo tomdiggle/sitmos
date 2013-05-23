@@ -21,13 +21,12 @@
 
 #import "IGEpisodesListViewController.h"
 
-#import "IGEpisodeTableViewCell.h"
+#import "IGEpisodeCell.h"
 #import "IGEpisode.h"
 #import "IGMediaPlayerViewController.h"
 #import "IGEpisodeMoreInfoViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayerAsset.h"
-#import "IGEpisodeDateAndDurationLabel.h"
 #import "IGMediaPlayer.h"
 #import "EGORefreshTableHeaderView.h"
 #import "UIViewController+MJPopupViewController.h"
@@ -39,10 +38,9 @@
 #import "UIApplication+LocalNotificationHelper.h"
 #import "UIViewController+NowPlayingButton.h"
 #import "TDNotificationPanel.h"
-#import "NSDate+Helper.h"
 #import "CoreData+MagicalRecord.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeTableViewCellDelegate, EGORefreshTableHeaderDelegate>
+@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeCellDelegate, EGORefreshTableHeaderDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -86,8 +84,6 @@
                                                       delegate:self];
     
     [self reloadTableViewDataSource];
-    
-    [self invokeAllDownloadRequests];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -122,11 +118,11 @@
     // Currently only support for audio episode's exists
     if ([identifier isEqualToString:@"showMediaPlayer"])
     {
-        if ([sender isKindOfClass:[IGEpisodeTableViewCell class]])
+        if ([sender isKindOfClass:[IGEpisodeCell class]])
         {
-            IGEpisodeTableViewCell *cell = (IGEpisodeTableViewCell *)sender;
+            IGEpisodeCell *cell = (IGEpisodeCell *)sender;
             IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                          withValue:[[cell episodeTitleLabel] text]];
+                                                          withValue:[cell title]];
             
             if ([episode isVideo])
             {
@@ -143,11 +139,11 @@
     if ([[segue identifier] isEqualToString:@"showMediaPlayer"])
     {
         IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
-        if ([sender isKindOfClass:[IGEpisodeTableViewCell class]])
+        if ([sender isKindOfClass:[IGEpisodeCell class]])
         {
-            IGEpisodeTableViewCell *cell = (IGEpisodeTableViewCell *)sender;
+            IGEpisodeCell *cell = (IGEpisodeCell *)sender;
             IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                          withValue:[[cell episodeTitleLabel] text]];
+                                                          withValue:[cell title]];
             [asset setTitle:[episode title]];
             NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
             [asset setContentURL:contentURL];
@@ -184,9 +180,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IGEpisodeTableViewCell *episodeCell = (IGEpisodeTableViewCell *)[_tableView dequeueReusableCellWithIdentifier:@"episodeCellIdentifier"];
     IGEpisode *episode = tableView == self.searchDisplayController.searchResultsTableView ? [_filteredEpisodeArray objectAtIndex:indexPath.row] : [_fetchedResultsController objectAtIndexPath:indexPath];
     
+    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[_tableView dequeueReusableCellWithIdentifier:@"episodeCell"];
     [self updateEpisodeCell:episodeCell
                     episode:episode];
     
@@ -227,7 +223,7 @@
 			break;
             
 		case NSFetchedResultsChangeUpdate:
-            [self updateEpisodeCell:(IGEpisodeTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath]
+            [self updateEpisodeCell:(IGEpisodeCell *)[_tableView cellForRowAtIndexPath:indexPath]
                             episode:[_fetchedResultsController objectAtIndexPath:indexPath]];
 			break;
             
@@ -284,9 +280,9 @@
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan && indexPath)
     {
         // Get the episode the user wants to delete
-        IGEpisodeTableViewCell *episodeCell = (IGEpisodeTableViewCell*)[_tableView cellForRowAtIndexPath:indexPath];
+        IGEpisodeCell *episodeCell = (IGEpisodeCell*)[_tableView cellForRowAtIndexPath:indexPath];
         IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                      withValue:[[episodeCell episodeTitleLabel] text]];
+                                                      withValue:[episodeCell title]];
         
         RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", @"text label for cancel")];
         
@@ -350,17 +346,18 @@
     }
 }
 
-#pragma mark - Update Episode Table View Cell
+#pragma mark - Update Episode Cell
 
-- (void)updateEpisodeCell:(IGEpisodeTableViewCell *)episodeCell episode:(IGEpisode *)episode
+- (void)updateEpisodeCell:(IGEpisodeCell *)episodeCell episode:(IGEpisode *)episode
 {
     [episodeCell setDelegate:self];
-    [[episodeCell episodeTitleLabel] setText:[episode title]];
-    NSString *episodeDateDuration = [NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:[episode pubDate] withFormat:@"dd MMM yyyy"], [episode duration]];
-    [[episodeCell episodeDateAndDurationLabel] setText:episodeDateDuration];
-    [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
+    [episodeCell setTitle:[episode title]];
+    [episodeCell setSummary:[episode summary]];
+    [episodeCell setPubDate:[episode pubDate]];
+    [episodeCell setTimeLeft:[episode duration]];
     [episodeCell setPlayedStatus:[episode playedStatus]];
     [episodeCell setDownloadStatus:[episode downloadStatus]];
+    [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
 }
 
 #pragma mark - Content Filtering
@@ -489,21 +486,12 @@
     }
 }
 
-- (void)invokeAllDownloadRequests
-{
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    NSArray *currentDownloadRequests = [httpClient currentDownloadRequests];
-    [currentDownloadRequests enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self startDownloadFromURL:[obj objectAtIndex:0] targetPath:[obj objectAtIndex:1]];
-    }];
-}
-
 #pragma mark - IGEpisodeTableViewCellDelegate Methods
 
 /**
  * Invoked when the more info icon is tapped. A popup view is displayed with more information about the episode.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell
 displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
 {
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
@@ -518,11 +506,11 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
 /**
  * Invoked when the download button in the table view cell is tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeTableViewCell *)episodeTableViewCell
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell
    downloadEpisodeButtonTapped:(UIButton *)button
 {    
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[[episodeTableViewCell episodeTitleLabel] text]];
+                                                  withValue:[episodeTableViewCell title]];
     NSURL *downloadFromURL = [NSURL URLWithString:[episode downloadURL]];
     
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];

@@ -178,8 +178,26 @@
 /* text label for skipping forward */
 "SkippingForward" = "Skipping Forward";
 
+/* text label for loading */
+"Loading" = "Loading...";
+
 /* Pull down to refresh status */
 "Pull down to refresh..." = "Pull down to refresh...";
 
 /* Release to refresh status */
 "Release to refresh..." = "Release to refresh...";
+
+/* text label for episode download progress */
+"EpisodeDownloadProgress" = "%@ of %@";
+
+/* accessibility label for resume download */
+"ResumeDownload" = "Resume download";
+
+/* accessibility label for pause download */
+"PauseDownload" = "Pause download";
+
+/* accessibility label for more info */
+"MoreInfo" = "More information";
+
+/* accessibility hint for view more info */
+"ViewMoreInfo" = "View more information about episode";
