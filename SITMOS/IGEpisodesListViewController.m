@@ -272,75 +272,66 @@
 
 #pragma mark - UILongPressGestureRecognizer Selector Method
 
-- (IBAction)displayMoreOptions:(UILongPressGestureRecognizer *)gestureRecognizer
+- (IBAction)showMoreOptionsActionSheet:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     CGPoint p = [gestureRecognizer locationInView:_tableView];
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan && indexPath)
-    {
-        // Get the episode the user wants to delete
-        IGEpisodeCell *episodeCell = (IGEpisodeCell*)[_tableView cellForRowAtIndexPath:indexPath];
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan && indexPath) {
+        IGEpisodeCell *episodeCell = (IGEpisodeCell *)[_tableView cellForRowAtIndexPath:indexPath];
         IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                       withValue:[episodeCell title]];
         
-        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", @"text label for cancel")];
+        NSString *playedItemLabel = [episode isPlayed] ? NSLocalizedString(@"MarkAsUnplayed", "text label for mark as unplayed") : NSLocalizedString(@"MarkAsPlayed", "text label for mark as played");
+        BOOL isPlayed = [episode isPlayed] ? NO : YES;
+        RIButtonItem *playedItem = [RIButtonItem itemWithLabel:playedItemLabel];
+        playedItem.action = ^{
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                IGEpisode *localEpisode = [episode MR_inContext:localContext];
+                [localEpisode markAsPlayed:isPlayed];
+                [localContext MR_saveToPersistentStoreAndWait];
+            } completion:^(BOOL success, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath]
+                                      withRowAnimation:UITableViewRowAnimationNone];
+                });
+            }];
+        };
         
-        NSString *downloadLabel = [episode isDownloaded] ? NSLocalizedString(@"DeleteDownload", @"text label for delete download") : NSLocalizedString(@"Download", @"text label for download");
-        RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:downloadLabel];
-        downloadItem.action = ^{
-            if ([episode isDownloaded])
-            {
+        RIButtonItem *deleteDownloadItem = nil;
+        RIButtonItem *downloadItem = nil;
+        if ([episode isDownloaded]) {
+            deleteDownloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"DeleteDownload", @"text label for delete download")];
+            deleteDownloadItem.action = ^{
                 [episode deleteDownloadedEpisode];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath]
                                       withRowAnimation:UITableViewRowAnimationNone];
                 });
-            }
-            else
-            {
-                [self igEpisodeTableViewCell:episodeCell
-                 downloadEpisodeButtonTapped:nil];
-            }
-        };
+            };
+        } else {
+            downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", @"text label for download")];
+            downloadItem.action = ^{
+                if ([episode isDownloaded]) {
+                    [episode deleteDownloadedEpisode];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [_tableView reloadRowsAtIndexPaths:@[indexPath]
+                                          withRowAnimation:UITableViewRowAnimationNone];
+                    });
+                } else {
+                    [self igEpisodeTableViewCell:episodeCell
+                     downloadEpisodeButtonTapped:nil];
+                }
+            };
+        }
         
-        NSString *playedLabel = [episode isPlayed] ? NSLocalizedString(@"MarkAsUnplayed", "text label for mark as unplayed") : NSLocalizedString(@"MarkAsPlayed", "text label for mark as played");
-        RIButtonItem *playedItem = [RIButtonItem itemWithLabel:playedLabel];
-        playedItem.action = ^{
-            if ([episode isPlayed])
-            {
-                // Mark episode as unplayed
-                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                    IGEpisode *localEpisode = [episode MR_inContext:localContext];
-                    [localEpisode markAsPlayed:NO];
-                    [localContext MR_saveToPersistentStoreAndWait];
-                } completion:^(BOOL success, NSError *error) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                                          withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                }];
-            }
-            else
-            {
-                // Mark episode as played
-                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                    IGEpisode *localEpisode = [episode MR_inContext:localContext];
-                    [localEpisode markAsPlayed:YES];
-                    [localContext MR_saveToPersistentStoreAndWait];
-                } completion:^(BOOL success, NSError *error) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                                          withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                }];
-            }
-        };
+        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", @"text label for cancel")];
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                          cancelButtonItem:cancelItem
-                                                    destructiveButtonItem:nil
+                                                    destructiveButtonItem:deleteDownloadItem
                                                          otherButtonItems:playedItem, downloadItem, nil];
         [actionSheet showInView:[self view]];
     }
@@ -385,7 +376,8 @@
 
 #pragma mark - Refresh Feed
 
-- (void)refreshFeed {
+- (void)refreshFeed
+{
     if (_reloading) return;
     
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
@@ -400,12 +392,14 @@
     }];
 }
 
-- (void)reloadTableViewDataSource {
+- (void)reloadTableViewDataSource
+{
     [self refreshFeed];
 	_reloading = YES;
 }
 
-- (void)doneLoadingTableViewData {
+- (void)doneLoadingTableViewData
+{
 	_reloading = NO;
 	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
     [self hideSearchBar];

@@ -312,7 +312,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5rM-m7-1KS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.99999999999999989" id="use-01-Nna" userLabel="DIsplay More Options">
                     <connections>
-                        <action selector="displayMoreOptions:" destination="azn-Zd-amG" id="hXa-kA-gv0"/>
+                        <action selector="showMoreOptionsActionSheet:" destination="azn-Zd-amG" id="Gvg-BH-dzV"/>
                     </connections>
                 </pongPressGestureRecognizer>
                 <searchDisplayController id="fWW-ug-PSa">
