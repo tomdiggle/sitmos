@@ -38,6 +38,13 @@
     [self setTitle:NSLocalizedString(@"Delete", @"text label for delete")];
 }
 
+#pragma mark - Orientation Support
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

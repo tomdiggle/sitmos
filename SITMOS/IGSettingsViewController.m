@@ -62,6 +62,13 @@ typedef enum {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Orientation Support
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
