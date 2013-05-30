@@ -113,6 +113,13 @@
     [self stopPlaybackProgressUpdateTimer];
 }
 
+#pragma mark - Orientation Support
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Memory Management
 
 - (void)dealloc
@@ -147,7 +154,8 @@
 
 #pragma mark - IBActions
 
-- (IBAction)hideAudioPlayer:(id)sender {
+- (IBAction)hideAudioPlayer:(id)sender
+{
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }

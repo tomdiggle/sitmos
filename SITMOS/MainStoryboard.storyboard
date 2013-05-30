@@ -276,9 +276,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="thq-fK-KsQ" kind="modal" identifier="showMediaPlayer" id="UQZ-5S-qYe"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -474,42 +471,6 @@
             </objects>
             <point key="canvasLocation" x="1269" y="880"/>
         </scene>
-        <!--Media Player-->
-        <scene sceneID="TCj-m5-dnw">
-            <objects>
-                <navigationController storyboardIdentifier="IGMediaPlayerNavigationController" definesPresentationContext="YES" id="thq-fK-KsQ" userLabel="Media Player" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="LF0-Cv-BcE">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="5nu-dN-2LU" kind="relationship" relationship="rootViewController" id="1wu-5t-bIS"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sME-Me-cfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1718" y="318"/>
-        </scene>
-        <!--Media Player View Controller-->
-        <scene sceneID="fWJ-UB-ORN">
-            <objects>
-                <viewController storyboardIdentifier="IGMediaPlayerViewController" id="5nu-dN-2LU" customClass="IGMediaPlayerViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wp8-qE-FOt">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="b3t-iw-bJz"/>
-                    <connections>
-                        <segue destination="U3O-W2-aEf" kind="push" identifier="showAudioPlayer" id="shf-Z7-Op0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rbs-nn-Pdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2101" y="318"/>
-        </scene>
         <!--Audio Player View Controller-->
         <scene sceneID="kwx-v7-YPw">
             <objects>
@@ -620,7 +581,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Rxh-I5-Oqi">
-                        <barButtonItem key="leftBarButtonItem" image="hide-audio-player-icon.png" id="QdR-G8-3SI">
+                        <barButtonItem key="leftBarButtonItem" image="hide-media-player-icon.png" id="QdR-G8-3SI">
                             <connections>
                                 <action selector="hideAudioPlayer:" destination="U3O-W2-aEf" id="Szg-MD-uPd"/>
                             </connections>
@@ -649,7 +610,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2487" y="318"/>
+            <point key="canvasLocation" x="1718" y="318"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ijq-dU-R91">
@@ -673,7 +634,7 @@
     </scenes>
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
-        <image name="hide-audio-player-icon.png" width="20" height="20"/>
+        <image name="hide-media-player-icon.png" width="20" height="20"/>
         <image name="play-button.png" width="32" height="32"/>
         <image name="skipping-backward-button.png" width="32" height="32"/>
         <image name="skipping-forward-button.png" width="32" height="32"/>
@@ -692,10 +653,6 @@
         </class>
         <class className="IGEpisodeCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeCell.h"/>
-            <relationships>
-                <relationship kind="action" name="downloadButtonTapped:"/>
-                <relationship kind="action" name="moreInfoButtonTapped:"/>
-            </relationships>
         </class>
         <class className="IGEpisodeMoreInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGEpisodeMoreInfoViewController.h"/>
@@ -715,9 +672,6 @@
                 <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
-        </class>
-        <class className="IGMediaPlayerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IGMediaPlayerViewController.h"/>
         </class>
         <class className="IGSettingsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IGSettingsViewController.h"/>

@@ -36,7 +36,7 @@
 #import "IGHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "UIApplication+LocalNotificationHelper.h"
-#import "UIViewController+NowPlayingButton.h"
+#import "UIViewController+MediaPlayer.h"
 #import "TDNotificationPanel.h"
 #import "CoreData+MagicalRecord.h"
 
@@ -58,7 +58,8 @@
 
 - (void)viewWillLayoutSubviews
 {
-    if (!_refreshHeaderView) {
+    if (!_refreshHeaderView)
+    {
         EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, self.view.frame.size.width, _tableView.bounds.size.height)];
         [refreshView setDelegate:self];
         [_tableView addSubview:refreshView];
@@ -90,8 +91,9 @@
 {
     [super viewDidAppear:animated];
     
-    if ([_tableView indexPathForSelectedRow]) {
-        [_tableView reloadRowsAtIndexPaths:@[ [_tableView indexPathForSelectedRow] ]
+    if ([_tableView indexPathForSelectedRow])
+    {
+        [_tableView reloadRowsAtIndexPaths:@[[_tableView indexPathForSelectedRow]]
                           withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -101,62 +103,21 @@
     [super viewWillAppear:animated];
     
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([mediaPlayer asset]) {
-        [self showNowPlayingButon];
-    } else {
+    if ([mediaPlayer asset])
+    {
+        [self displayNowPlayingButon];
+    }
+    else
+    {
         [self hideNowPlayingButton:YES];
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
+#pragma mark - Orientation Support
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+- (NSUInteger)supportedInterfaceOrientations
 {
-    // Currently only support for audio episode's exists
-    if ([identifier isEqualToString:@"showMediaPlayer"])
-    {
-        if ([sender isKindOfClass:[IGEpisodeCell class]])
-        {
-            IGEpisodeCell *cell = (IGEpisodeCell *)sender;
-            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                          withValue:[cell title]];
-            
-            if ([episode isVideo])
-            {
-                return NO;
-            }
-        }
-    }
-    
-    return YES;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showMediaPlayer"])
-    {
-        IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
-        if ([sender isKindOfClass:[IGEpisodeCell class]])
-        {
-            IGEpisodeCell *cell = (IGEpisodeCell *)sender;
-            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                          withValue:[cell title]];
-            [asset setTitle:[episode title]];
-            NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-            [asset setContentURL:contentURL];
-        }
-        else
-        {
-            IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-            asset = [mediaPlayer asset];
-        }
-        
-        IGMediaPlayerViewController *mediaPlayerViewController = (IGMediaPlayerViewController *)[[segue destinationViewController] visibleViewController];
-        [mediaPlayerViewController setMediaPlayerAsset:asset];
-    }
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 #pragma mark - UITableViewDataSource
@@ -196,6 +157,26 @@
     [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
     
     return episodeCell;
+}
+
+#pragma mark - UITableViewDelegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Build media player asset
+    IGEpisodeCell *cell = (IGEpisodeCell *)[tableView cellForRowAtIndexPath:indexPath];
+    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
+                                                  withValue:[cell title]];
+    IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
+    [asset setTitle:[episode title]];
+    NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+    [asset setContentURL:contentURL];
+    [asset setAudio:[episode isAudio]];
+    
+    [self showMediaPlayerWithAsset:asset];
+    
+    [tableView deselectRowAtIndexPath:indexPath
+                             animated:YES];
 }
 
 #pragma mark - NSFetchResultsControllerDelegate
@@ -300,7 +281,8 @@
         
         RIButtonItem *deleteDownloadItem = nil;
         RIButtonItem *downloadItem = nil;
-        if ([episode isDownloaded]) {
+        if ([episode isDownloaded])
+        {
             deleteDownloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"DeleteDownload", @"text label for delete download")];
             deleteDownloadItem.action = ^{
                 [episode deleteDownloadedEpisode];
@@ -310,7 +292,10 @@
                                       withRowAnimation:UITableViewRowAnimationNone];
                 });
             };
-        } else {
+        }
+        else if ([episode isAudio])
+        {
+            // Only Audio episodes are downloadable
             downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", @"text label for download")];
             downloadItem.action = ^{
                 if ([episode isDownloaded]) {
@@ -381,8 +366,8 @@
     if (_reloading) return;
     
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedWithCompletion:^(BOOL success, NSError *error) {
-        [self doneLoadingTableViewData];
+    [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSError *error) {
+       [self doneLoadingTableViewData];
         if (!success && error) {
             [TDNotificationPanel showNotificationPanelInView:self.view
                                                         type:TDNotificationTypeError

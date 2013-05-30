@@ -21,9 +21,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIViewController (NowPlayingButton)
+@interface IGVideoPlayerViewController : UIViewController
 
-- (void)showNowPlayingButon;
-- (void)hideNowPlayingButton:(BOOL)animated;
+- (id)initWithContentURL:(NSURL *)contentURL;
 
 @end

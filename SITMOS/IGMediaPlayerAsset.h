@@ -24,13 +24,18 @@
 @interface IGMediaPlayerAsset : NSObject
 
 /**
+ * The title of the media currently playing.
+ */
+@property (nonatomic, strong) NSString *title;
+
+/**
  * The url of the content currently playing.
  */
 @property (nonatomic, strong) NSURL *contentURL;
 
 /**
- * The title of the media currently playing.
+ *
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, assign, getter = isAudio) BOOL audio;
 
 @end

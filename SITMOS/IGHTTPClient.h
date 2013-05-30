@@ -23,9 +23,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class IGRSSXMLRequestOperation;
-
 extern NSString * const IGHTTPClientNetworkErrorDomain;
+extern NSString * const IGDevelopmentBaseURL;
+extern NSString * const IGDevelopmentAudioPodcastFeedURL;
+extern NSString * const IGDevelopmentVideoPodcastFeedURL;
+extern NSString * const IGBaseURL;
+extern NSString * const IGAudioPodcastFeedURL;
+extern NSString * const IGVideoPodcastFeedURL;
+
 
 typedef enum {
     IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed
@@ -59,18 +64,44 @@ typedef enum {
  */
 + (IGHTTPClient *)sharedClient;
 
-#pragma mark - Syncing Podcast Feed
+#pragma mark - Cellular Streaming
 
 /**
- * @name Syncing Podcast Feed
+ * @name Cellular Streaming
  */
 
 /**
- * Syncs the podcast feed and executes a handler block when complete.
+ * @return YES if cellular data streaming is on, NO otherwise.
+ */
++ (BOOL)allowCellularDataStreaming;
+
+#pragma mark - Development Mode
+
+/**
+ * @name Development Mode
+ */
+
+/**
+ * When enabling development mode the development podcast feeds will be used. 
+ *
+ * @see IGDevelopmentBaseURL
+ * @see IGDevelopmentAudioPodcastFeedURL
+ * @see IGDevelopmentVideoPodcastFeedURL
+ */
++ (void)setDevelopmentModeEnabled:(BOOL)enabled;
+
+#pragma mark - Syncing Podcast Feeds
+
+/**
+ * @name Syncing Podcast Feeds
+ */
+
+/**
+ * Syncs the audio and video podcast feeds and executes a handler block when complete.
  *
  * @param The completion handler block to execute.
  */
-- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSError *error))completion;
 
 #pragma mark - Downloading Episode
 
@@ -90,11 +121,6 @@ typedef enum {
                     targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
-/**
- *
- */
-- (BOOL)allowCellularDataStreaming;
 
 /**
  * Returns an array of the current download operations.

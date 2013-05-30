@@ -30,11 +30,26 @@
 #import "AFDownloadRequestOperation.h"
 
 NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDomain";
+
+NSString * const IGDevelopmentBaseURL = @"http://www.tomdiggle.com/";
+NSString * const IGDevelopmentAudioPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml";
+NSString * const IGDevelopmentVideoPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-video-feed.xml";
+
+NSString * const IGBaseURL = @"http://www.dereksweet.com/";
+NSString * const IGAudioPodcastFeedURL = @"http://www.dereksweet.com/sitmos/sitmos.xml";
+NSString * const IGVideoPodcastFeedURL = @"http://www.dereksweet.com/sitmos/sitmos-video-feed.xml";
+
 NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDownloadRequests";
+
+NSString * const IGAudioPodcastFeedLastModifiedKey = @"IGAudioPodcastFeedLastModifiedKey";
+NSString * const IGVideoPodcastFeedLastModifiedKey = @"IGVideoPodcastFeedLastModifiedKey";
+
+static BOOL __developmentMode = NO;
 
 @interface IGHTTPClient ()
 
-@property (nonatomic, strong) NSURL *audioFeedURL;
+@property (nonatomic, strong) NSURL *audioPodcastFeedURL;
+@property (nonatomic, strong) NSURL *videoPodcastFeedURL;
 @property (nonatomic, strong) dispatch_queue_t callbackQueue;
 @property (nonatomic, strong, readwrite) NSMutableArray *currentDownloadRequests;
 
@@ -44,7 +59,8 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - Class Methods
 
-+ (IGHTTPClient *)sharedClient {
++ (IGHTTPClient *)sharedClient
+{
     static IGHTTPClient *sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -53,19 +69,47 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     return sharedClient;
 }
 
+#pragma mark - Cellular Streaming
+
++ (BOOL)allowCellularDataStreaming
+{
+    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
+    AFNetworkReachabilityStatus networkReachabilityStatus = [[IGHTTPClient sharedClient] networkReachabilityStatus];
+    if (!allowCellularDataStreaming && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - Development Mode
+
++ (void)setDevelopmentModeEnabled:(BOOL)enabled
+{
+    __developmentMode = enabled;
+}
+
 #pragma mark - Initializers
 
-- (id)init {
+- (id)init
+{
     NSURL *baseURL = nil;
-#ifdef DEVELOPMENT
-    baseURL = [NSURL URLWithString:@"http://www.tomdiggle.com/"];
-    _audioFeedURL = [NSURL URLWithString:@"http://www.tomdiggle.com/sitmos-test-feed/sitmos-audio-feed.xml"];
-#else
-    baseURL = [NSURL URLWithString:@"http://www.dereksweet.com/"];
-    _audioFeedURL = [NSURL URLWithString:@"http://www.dereksweet.com/sitmos/sitmos.xml"];
-#endif
+    if (__developmentMode)
+    {
+        baseURL = [NSURL URLWithString:IGDevelopmentBaseURL];
+        _audioPodcastFeedURL = [NSURL URLWithString:IGDevelopmentAudioPodcastFeedURL];
+        _videoPodcastFeedURL = [NSURL URLWithString:IGDevelopmentVideoPodcastFeedURL];
+    }
+    else
+    {
+        baseURL = [NSURL URLWithString:IGBaseURL];
+        _audioPodcastFeedURL = [NSURL URLWithString:IGAudioPodcastFeedURL];
+        _videoPodcastFeedURL = [NSURL URLWithString:IGDevelopmentVideoPodcastFeedURL];
+    }
     
-    if ((self = [super initWithBaseURL:baseURL])) {
+    if ((self = [super initWithBaseURL:baseURL]))
+    {
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
         
@@ -77,56 +121,98 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 #pragma mark - AFHTTPClient
 
-- (NSMutableURLRequest *)requestWithURL:(NSURL *)url {
+- (NSMutableURLRequest *)requestWithURL:(NSURL *)url
+{
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setTimeoutInterval:10];
 	return request;
 }
 
-- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation {
+- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation
+{
 	operation.successCallbackQueue = _callbackQueue;
 	operation.failureCallbackQueue = _callbackQueue;
 	[super enqueueHTTPRequestOperation:operation];
 }
 
-#pragma mark - Syncing Podcast Feed
+#pragma mark - Syncing Podcast Feeds
 
-- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSError *error))completion {
-    NSMutableURLRequest *request = [self requestWithURL:[self audioFeedURL]];
-    [request setTimeoutInterval:10];
-    
-    IGRSSXMLRequestOperation *operation = [IGRSSXMLRequestOperation RSSXMLRequestOperationWithRequest:request completion:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser, NSError *error) {
-        if (error && completion) {
-            completion(NO, error);
-        } else if ([self podcastFeedModified:[[response allHeaderFields] valueForKey:@"Last-Modified"]]) {
-            [IGPodcastFeedParser PodcastFeedParserWithXMLParser:XMLParser completion:^(NSArray *feedItems, NSError *error) {
-                if (error && completion) {
-                        completion(NO, error);
-                }
-                else {
-                    [IGEpisode importPodcastFeedItems:feedItems completion:nil];
-                    if (completion) {
-                        completion(YES, nil);
+- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSError *error))completion
+{
+    [self enqueueBatchOfHTTPRequestOperations:[self podcastFeedRequestOperations] progressBlock:nil completionBlock:^(NSArray *operations) {
+        NSMutableArray *podcastFeedItems = [[NSMutableArray alloc] init];
+        [operations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            IGRSSXMLRequestOperation *operation = (IGRSSXMLRequestOperation *)obj;
+            if ([operation error])
+            {
+               if (completion)
+               {
+                   completion(NO, [operation error]);
+                   *stop = YES;
+               }
+            }
+            else
+            {
+                [IGPodcastFeedParser PodcastFeedParserWithXMLParser:[operation responseXMLParser] completion:^(NSArray *feedItems, NSError *error) {
+                    if (error)
+                    {
+                        if (completion)
+                        {
+                            completion(NO, error);
+                            *stop = YES;
+                        }
                     }
-                }
-            }];
-        } else if (completion) {
-            completion(YES, nil);
-        }
+                    else
+                    {
+                        NSHTTPURLResponse *response = (NSHTTPURLResponse *)[obj response];
+                        if ([self isPodcastFeed:[[operation request] URL] modifiedSince:[[response allHeaderFields] valueForKey:@"Last-Modified"]])
+                        {
+                            [podcastFeedItems addObjectsFromArray:feedItems];
+                        }
+                    }
+                }];
+            }
+        }];
+        
+        [IGEpisode importPodcastFeedItems:podcastFeedItems completion:^(BOOL success, NSError *error) {
+            if (!success && error)
+            {
+                completion(NO, error);
+            }
+            else if (completion)
+            {
+                completion(YES, nil);
+            }
+        }];
     }];
-    [operation start];
 }
 
-- (BOOL)podcastFeedModified:(NSString *)modifiedDate {
+- (NSArray *)podcastFeedRequestOperations
+{
+    NSURLRequest *audioFeedRequest = [self requestWithURL:_audioPodcastFeedURL];
+    IGRSSXMLRequestOperation *audioFeedOperation = [[IGRSSXMLRequestOperation alloc] initWithRequest:audioFeedRequest];
+    
+    NSURLRequest *videoFeedRequest = [self requestWithURL:_videoPodcastFeedURL];
+    IGRSSXMLRequestOperation *videoFeedOperation = [[IGRSSXMLRequestOperation alloc] initWithRequest:videoFeedRequest];
+    
+    return @[audioFeedOperation, videoFeedOperation];
+}
+
+- (BOOL)isPodcastFeed:(NSURL *)feedURL modifiedSince:(NSString *)modifiedDate
+{
+    NSString *key = ([feedURL isEqual:_audioPodcastFeedURL]) ? IGAudioPodcastFeedLastModifiedKey : IGVideoPodcastFeedLastModifiedKey;
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:@"IGFeedLastRefreshed"]
+    NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:key]
                                             withFormat:IGEpisodeDateFormat];
     NSDate *feedLastModified = [NSDate dateFromString:modifiedDate
                                            withFormat:IGEpisodeDateFormat];
     
-    if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending)) {
+    if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending))
+    {
         [userDefaults setObject:[NSDate stringFromDate:[NSDate date] withFormat:IGEpisodeDateFormat]
-                         forKey:@"IGFeedLastRefreshed"];
+                         forKey:key];
         [userDefaults synchronize];
         return YES;
     }
@@ -139,7 +225,8 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
                     targetPath:(NSURL *)targetPath
                        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
     if (![self allowCellularDataDownloading] && failure)
     {
         // If data downloading is not allowed on cellular return an error
@@ -177,16 +264,6 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
     BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
     AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
     if (!allowCellularDataDownloading && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (BOOL)allowCellularDataStreaming {
-    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
-    AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
-    if (!allowCellularDataStreaming && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
         return NO;
     }
     

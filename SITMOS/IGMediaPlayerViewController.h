@@ -25,6 +25,6 @@
 
 @interface IGMediaPlayerViewController : UIViewController
 
-@property (nonatomic, strong) IGMediaPlayerAsset *mediaPlayerAsset;
+- (id)initWithMediaPlayerAsset:(IGMediaPlayerAsset *)asset;
 
 @end

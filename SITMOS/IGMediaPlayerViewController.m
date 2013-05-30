@@ -24,60 +24,65 @@
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGEpisode.h"
-#import "IGDefines.h"
-#import "IGHTTPClient.h"
-#import "IGAudioPlayerViewController.h"
+#import "IGVideoPlayerViewController.h"
 #import "CoreData+MagicalRecord.h"
-#import "UIAlertView+Blocks.h"
-#import "RIButtonItem.h"
 
 @interface IGMediaPlayerViewController ()
+
+@property (nonatomic, strong) IGMediaPlayerAsset *mediaPlayerAsset;
 
 @end
 
 @implementation IGMediaPlayerViewController
 
-- (void)viewDidLoad {
+- (id)initWithMediaPlayerAsset:(IGMediaPlayerAsset *)asset
+{
+    if (!(self = [super init]))
+    {
+        return nil;
+    }
+    
+    _mediaPlayerAsset = asset;
+    
+    return self;
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    [self showAudioPlayer];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Segue Methods
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    IGAudioPlayerViewController *audioPlayerViewController = [segue destinationViewController];
-    [audioPlayerViewController setTitle:[_mediaPlayerAsset title]];
+    if ([_mediaPlayerAsset isAudio])
+    {
+        [self showAudioPlayer];
+    }
+    else
+    {
+        [self showVideoPlayer];
+    }
 }
 
 #pragma mark - Audio Playing Methods
 
-- (void)showAudioPlayer {
-    [self performSegueWithIdentifier:@"showAudioPlayer"
-                              sender:self];
+- (void)showAudioPlayer
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                         bundle:[NSBundle mainBundle]];
+    UIViewController *audioPlayer = [storyboard instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
+    [audioPlayer setTitle:[_mediaPlayerAsset title]];
+    [[self navigationController] pushViewController:audioPlayer
+                                           animated:NO];
     
-    // If the media player is already playing this podcast don't need to continue
+    [self playAudio];
+}
+
+- (void)playAudio
+{
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
     if ([[_mediaPlayerAsset contentURL] isEqual:[[mediaPlayer asset] contentURL]]) return;
     
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    if (![httpClient allowCellularDataStreaming] && ![[_mediaPlayerAsset contentURL] isFileURL]) {
-        [mediaPlayer stop];
-        [self showCellularDataStreamingAlert];
-    } else {
-        [self playAudio];
-    }
-}
-
-- (void)playAudio {
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:[_mediaPlayerAsset title]];
     
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
     [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
     [mediaPlayer startWithAsset:_mediaPlayerAsset];
     
@@ -99,7 +104,8 @@
                                                                inContext:localContext];
             
             NSNumber *progress = @(currentTime);
-            if (playbackEnded) {
+            if (playbackEnded)
+            {
                 progress = @(0);
                 [localEpisode markAsPlayed:playbackEnded];
             }
@@ -108,24 +114,18 @@
     }];
 }
 
-#pragma mark - Cellular Data Streaming Alert
+#pragma mark - Video Playing Methods
 
-- (void)showCellularDataStreamingAlert {
-    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", "text label for cancel")];
-    cancelItem.action = ^{
-        [self dismissViewControllerAnimated:YES
-                                 completion:nil];
-    };
-    RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", @"text label for stream")];
-    streamItem.action = ^{
-        [self playAudio];
-    };
+- (void)showVideoPlayer
+{
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    [mediaPlayer stop];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataTitle", @"text label for streaming with cellular data title")
-                                                        message:NSLocalizedString(@"StreamingWithCellularDataMessage", @"text label for streaming with cellular data message")
-                                               cancelButtonItem:cancelItem
-                                               otherButtonItems:streamItem, nil];
-    [alertView show];
+    [[self navigationItem] setHidesBackButton:YES];
+    
+    IGVideoPlayerViewController *videoPlayer = [[IGVideoPlayerViewController alloc] initWithContentURL:[_mediaPlayerAsset contentURL]];
+    [[self navigationController] pushViewController:videoPlayer
+                                           animated:NO];
 }
 
 @end

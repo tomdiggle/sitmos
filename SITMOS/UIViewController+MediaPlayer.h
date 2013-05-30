@@ -19,28 +19,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "UIViewController+NowPlayingButton.h"
+#import <UIKit/UIKit.h>
 
-@implementation UIViewController (NowPlayingButton)
+@class IGMediaPlayerAsset;
 
-- (void)showNowPlayingButon
-{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"show-audio-player-icon"]
-                                                                              style:UIBarButtonItemStyleBordered
-                                                                             target:self
-                                                                             action:@selector(nowPlayingButtonTapped:)];
-}
+@interface UIViewController (MediaPlayer)
 
-- (void)hideNowPlayingButton:(BOOL)animated
-{
-    [[self navigationItem] setRightBarButtonItem:nil
-                                        animated:animated];
-}
+- (void)showMediaPlayerWithAsset:(IGMediaPlayerAsset *)asset;
 
-- (void)nowPlayingButtonTapped:(id)sender
-{
-    [self performSegueWithIdentifier:@"showMediaPlayer"
-                              sender:self];
-}
+- (void)displayNowPlayingButon;
+
+- (void)hideNowPlayingButton:(BOOL)animated;
 
 @end
