@@ -72,7 +72,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
             
             if (!latestEpisodePubDate || [[episode pubDate] isEqualToDate:latestEpisodePubDate])
             {
-                // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed.
+                // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed
                 [episode markAsPlayed:NO];
             }
         }];
@@ -173,11 +173,6 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 - (BOOL)isAudio
 {
     return ([[self mediaType] isEqualToString:@"audio/mpeg"]);
-}
-
-- (BOOL)isVideo
-{
-    return ([[self mediaType] isEqualToString:@"video/mp4"]);
 }
 
 #pragma mark - Played/Unplayed Management

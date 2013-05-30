@@ -115,10 +115,6 @@
     assertThatBool([_episodeOne isAudio], equalToBool(YES));
 }
 
-- (void)testEpisodeOneIsNotVideo {
-    assertThatBool([_episodeOne isVideo], equalToBool(NO));
-}
-
 - (void)testEpisodeOneIsMarkedAsPlayed {
     assertThatBool([_episodeOne isPlayed], equalTo([NSNumber numberWithBool:YES]));
 }

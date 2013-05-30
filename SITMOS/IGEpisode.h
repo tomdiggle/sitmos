@@ -157,11 +157,6 @@ extern NSString * const IGEpisodeDateFormat;
  */
 - (BOOL)isAudio;
 
-/**
- * @return YES if the episode is video, NO otherwise.
- */
-- (BOOL)isVideo;
-
 #pragma mark - Played/Unplayed Management
 
 /**
