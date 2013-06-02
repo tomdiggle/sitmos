@@ -154,11 +154,14 @@
 /* accessibility hint for pauses episdoe */
 "PausesEpisode" = "Pauses episode.";
 
-/* text label for all downloads successful */
-"DownloadsSuccessful" = "All downloads successful.";
+/* text label for all episodes finished downloading */
+"EpisodeDownloadFinished" = "All episodes have finsihed downloading.";
 
-/* text label for all downloads failed */
-"DownloadsFailed" = "All downloads failed.";
+/* text label for all episodes failed to download */
+"EpisodeDownloadFailed" = "All episodes have failed to download.";
+
+/* text label for all downloads paused */
+"AllDownloadsPaused" = "All downloads have been paused, because background time has expired. Please open SITMOS to continue downloading.";
 
 /* text label for successfully imported episodes */
 "SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";

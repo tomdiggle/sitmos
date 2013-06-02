@@ -251,7 +251,8 @@ static BOOL __developmentMode = NO;
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
         
-        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"DownloadsSuccessful", @"text label for successfully downloaded episode"), @"soundName" : UILocalNotificationDefaultSoundName };
+        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"EpisodeDownloadFinished", @"text label for all episodes finished downloading"),
+                                      @"soundName" : UILocalNotificationDefaultSoundName };
         [UIApplication presentLocalNotificationNowWithParameters:parameters];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion)
@@ -262,10 +263,16 @@ static BOOL __developmentMode = NO;
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
         
-        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"DownloadsFailed", @"text label for failed to download episode"), @"soundName" : UILocalNotificationDefaultSoundName };
+        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"EpisodeDownloadFailed", @"text label for all episodes failed to download"),
+                                      @"soundName" : UILocalNotificationDefaultSoundName };
         [UIApplication presentLocalNotificationNowWithParameters:parameters];
     }];
-    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
+    
+    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"AllDownloadsPaused", @"text label for all downloads paused"),
+                                      @"soundName" : UILocalNotificationDefaultSoundName };
+        [UIApplication presentLocalNotificationNowWithParameters:parameters];
+    }];
     
     [self enqueueHTTPRequestOperation:operation];
 }
