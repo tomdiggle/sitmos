@@ -122,15 +122,29 @@
     [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-port"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
                          forState:UIControlStateNormal
                        barMetrics:UIBarMetricsDefault];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted-port"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
+	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-port-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
                          forState:UIControlStateHighlighted
                        barMetrics:UIBarMetricsDefault];
     [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-land"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
                          forState:UIControlStateNormal
                        barMetrics:UIBarMetricsLandscapePhone];
-    [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-highlighted-land"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
+    [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-land-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
                          forState:UIControlStateNormal
                        barMetrics:UIBarMetricsLandscapePhone];
+    
+    // Nav back button
+	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-port"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
+                                   forState:UIControlStateNormal
+                                 barMetrics:UIBarMetricsDefault];
+    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-port-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
+                                   forState:UIControlStateHighlighted
+                                 barMetrics:UIBarMetricsDefault];
+    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-land"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
+                                   forState:UIControlStateNormal
+                                 barMetrics:UIBarMetricsLandscapePhone];
+    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-land-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
+                                   forState:UIControlStateHighlighted
+                                 barMetrics:UIBarMetricsLandscapePhone];
 }
 
 #pragma mark - Initial Setup
