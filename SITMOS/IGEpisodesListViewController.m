@@ -34,8 +34,7 @@
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
 #import "IGHTTPClient.h"
-#import "AFHTTPRequestOperation.h"
-#import "UIApplication+LocalNotificationHelper.h"
+#import "AFDownloadRequestOperation.h"
 #import "UIViewController+MediaPlayer.h"
 #import "TDNotificationPanel.h"
 #import "CoreData+MagicalRecord.h"
@@ -402,67 +401,21 @@
                   targetPath:(NSURL *)targetPath
 {
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
-    [sharedClient downloadEpisodeWithURL:downloadFromURL targetPath:targetPath success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [sharedClient downloadEpisodeWithURL:downloadFromURL targetPath:targetPath completion:^(BOOL success, NSError *error) {
+        if (!success && error)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [TDNotificationPanel showNotificationPanelInView:self.view
+                                                            type:TDNotificationTypeError
+                                                           title:[NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")]
+                                                  hideAfterDelay:5];
+            });
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            // Reload the table view's data if a download succeeds
             [_tableView reloadData];
         });
-        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
-        {
-            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL"
-                                                          withValue:[[operation request] URL]];
-            // If app is in background state display a local notification alerting the user that the download has finished.
-            NSDictionary *parameters = @{@"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"SuccessfullyDownloadedEpisode", @"text label for successfully downloaded episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
-            [UIApplication presentLocalNotificationNowWithParameters:parameters];
-        }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [self downloadOperation:operation
-                     failedWithError:error];
-         
-             // Reload the table view's data if a download fails
-             [_tableView reloadData];
-         });
-     }];
-}
-
-- (void)downloadOperation:(AFHTTPRequestOperation *)operation
-          failedWithError:(NSError *)error
-{
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL"
-                                                  withValue:[[operation request] URL]];
-
-    if ([error code] == IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed)
-    {
-        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
-        RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", @"text label for yes")];
-        downloadItem.action = ^{
-            [[NSUserDefaults standardUserDefaults] setBool:YES
-                                                    forKey:IGSettingCellularDataDownloading];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self startDownloadFromURL:[NSURL URLWithString:[episode downloadURL]]
-                            targetPath:[episode fileURL]];
-        };
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
-                                                            message:NSLocalizedString(@"DownloadingWithCellularDataMessage", @"text label for downloading with cellular data message")
-                                                   cancelButtonItem:cancelItem
-                                                   otherButtonItems:downloadItem, nil];
-        [alertView show];
-    }
-    else
-    {
-        [TDNotificationPanel showNotificationPanelInView:self.view
-                                                    type:TDNotificationTypeError
-                                                   title:[NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]]
-                                          hideAfterDelay:5];
-    }
- 
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
-    {
-        NSDictionary *parameters = @{@"alertBody" : [NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode"), [episode title]], @"soundName" : UILocalNotificationDefaultSoundName};
-        [UIApplication presentLocalNotificationNowWithParameters:parameters];
-    }
+    }];
 }
 
 #pragma mark - IGEpisodeTableViewCellDelegate Methods
@@ -470,8 +423,7 @@
 /**
  * Invoked when the more info icon is tapped. A popup view is displayed with more information about the episode.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell
-displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
 {
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:title];
@@ -485,20 +437,41 @@ displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
 /**
  * Invoked when the download button in the table view cell is tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell
-   downloadEpisodeButtonTapped:(UIButton *)button
+- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button
 {    
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:[episodeTableViewCell title]];
     NSURL *downloadFromURL = [NSURL URLWithString:[episode downloadURL]];
     
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
-    AFHTTPRequestOperation *requestOperation = [sharedClient requestOperationForURL:downloadFromURL];
-     
+    AFDownloadRequestOperation *requestOperation = [sharedClient requestOperationForURL:downloadFromURL];
     if (!requestOperation)
     {
-        [self startDownloadFromURL:downloadFromURL
-                        targetPath:[episode fileURL]];
+        if (![IGHTTPClient allowCellularDataDownloading])
+        {
+            RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
+            cancelItem.action = ^{
+                [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+            };
+            RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", @"text label for yes")];
+            downloadItem.action = ^{
+                [self startDownloadFromURL:downloadFromURL
+                                targetPath:[episode fileURL]];
+                
+                [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
+            };
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
+                                                                message:NSLocalizedString(@"DownloadingWithCellularDataMessage", @"text label for downloading with cellular data message")
+                                                       cancelButtonItem:cancelItem
+                                                       otherButtonItems:downloadItem, nil];
+            [alertView show];
+        }
+        else
+        {
+            [self startDownloadFromURL:downloadFromURL
+                            targetPath:[episode fileURL]];
+        }
     }
     else if ([requestOperation isPaused])
     {

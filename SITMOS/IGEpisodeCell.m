@@ -131,10 +131,12 @@
 {
     [super layoutSubviews];
     
-    if (_downloadStatus == IGEpisodeDownloadStatusDownloading) {
+    if (_downloadStatus == IGEpisodeDownloadStatusDownloading)
+    {
         IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-        AFDownloadRequestOperation *operation = (AFDownloadRequestOperation *)[httpClient requestOperationForURL:_downloadURL];
-        if (operation) {
+        AFDownloadRequestOperation *operation = [httpClient requestOperationForURL:_downloadURL];
+        if (operation)
+        {
             [_titleLabel setTextColor:kRGBA(41, 41, 41, 1)];
             [_titleLabel setHighlightedTextColor:kRGBA(41, 41, 41, 1)];
             
@@ -146,11 +148,14 @@
             [_pubDateAndTimeLeftLabel setHidden:YES];
             [_moreInfoButton setHidden:YES];
             
-            if ([operation isPaused]) {
+            if ([operation isPaused])
+            {
                 [_downloadButton setImage:[UIImage imageNamed:@"download-episode-resume-button"]
                                  forState:UIControlStateNormal];
                 [_downloadButton setAccessibilityLabel:NSLocalizedString(@"ResumeDownload", @"accessibility label for resume download")];
-            } else {
+            }
+            else
+            {
                 [_downloadButton setImage:[UIImage imageNamed:@"download-episode-pause-button"]
                                  forState:UIControlStateNormal];
                 [_downloadButton setAccessibilityLabel:NSLocalizedString(@"PauseDownload", @"accessibility label for pause download")];
@@ -166,10 +171,14 @@
                 [_downloadProgressView setProgress:totalBytesReadForFile / (float)totalBytesExpectedToReadForFile
                                           animated:YES];
             }];
-        } else {
+        }
+        else
+        {
             [self setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
         }
-    } else {
+    }
+    else
+    {
         UIColor *color = _playedStatus == IGEpisodePlayedStatusPlayed ? kRGBA(179, 179, 179, 1) : kRGBA(41, 41, 41, 1);
         [_titleLabel setTextColor:color];
         [_titleLabel setHighlightedTextColor:color];
@@ -184,9 +193,12 @@
         [_downloadSizeProgressLabel setHidden:YES];
         [_downloadButton setHidden:YES];
         
-        if (_downloadStatus == IGEpisodeDownloadStatusDownloaded) {
+        if (_downloadStatus == IGEpisodeDownloadStatusDownloaded)
+        {
             [_episodeDownloadedImageView setHidden:NO];
-        } else {
+        }
+        else
+        {
             [_episodeDownloadedImageView setHidden:YES];
         }
         

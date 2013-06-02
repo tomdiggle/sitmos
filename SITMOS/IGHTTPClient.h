@@ -23,18 +23,15 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const IGHTTPClientNetworkErrorDomain;
+@class AFDownloadRequestOperation;
+
 extern NSString * const IGDevelopmentBaseURL;
 extern NSString * const IGDevelopmentAudioPodcastFeedURL;
 extern NSString * const IGDevelopmentVideoPodcastFeedURL;
+
 extern NSString * const IGBaseURL;
 extern NSString * const IGAudioPodcastFeedURL;
 extern NSString * const IGVideoPodcastFeedURL;
-
-
-typedef enum {
-    IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed
-} IGHTTPClientNetworkError;
 
 /**
  * The IGHTTPClient class provides a centralized point of control for network connections.
@@ -75,6 +72,11 @@ typedef enum {
  */
 + (BOOL)allowCellularDataStreaming;
 
+/**
+ * @return YES if cellular data downloading is on, NO otherwise.
+ */
++ (BOOL)allowCellularDataDownloading;
+
 #pragma mark - Development Mode
 
 /**
@@ -110,30 +112,21 @@ typedef enum {
  */
 
 /**
- * Starts downloading the episode from the downloadURL parameter and saves to the saveToURL parameter. While download is in progress the downloadProgress handler block is executed, if download is successful the success handler block is executed or if download fails the failure handler block is executed. The download operation is added to the downloadRequestOperations array and removed if download is successful or fails.
+ * Starts downloading the episode from the downloadURL parameter and saves to the targetPath parameter. A completion block is fired and a local notification is posted when download succeeds or fails.
  *
  * @param The URL to download the episode from.
  * @param The URL to save the download to.
- * @param The success handler block to execute.
- * @param The failure handler block to execute.
+ * @param The completion handler block to execute.
  */
 - (void)downloadEpisodeWithURL:(NSURL *)downloadURL
                     targetPath:(NSURL *)targetPath
-                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+                    completion:(void (^)(BOOL success, NSError *error))completion;
 
 /**
- * Returns an array of the current download operations.
- *
- * @return The current download operations. Returns nil if there are none.
- */
-- (NSArray *)downloadOperations;
-
-/**
- * Returns the AFHTTPRequestOperation for the given URL.
+ * Returns the AFDownloadRequestOperation for the given URL.
  *
  * @return The request operation. Returns nil if a request operation is not found.
  */
-- (AFHTTPRequestOperation *)requestOperationForURL:(NSURL *)url;
+- (AFDownloadRequestOperation *)requestOperationForURL:(NSURL *)url;
 
 @end

@@ -154,11 +154,11 @@
 /* accessibility hint for pauses episdoe */
 "PausesEpisode" = "Pauses episode.";
 
-/* text label for successfully downloaded episode */
-"SuccessfullyDownloadedEpisode" = "Successfully downloaded %@";
+/* text label for all downloads successful */
+"DownloadsSuccessful" = "All downloads successful.";
 
-/* text label for failed to download episode */
-"FailedToDownloadEpisode" = "Failed to download %@";
+/* text label for all downloads failed */
+"DownloadsFailed" = "All downloads failed.";
 
 /* text label for successfully imported episodes */
 "SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";

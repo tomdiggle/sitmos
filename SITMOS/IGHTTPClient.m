@@ -25,11 +25,10 @@
 #import "IGPodcastFeedParser.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
+#import "UIApplication+LocalNotificationHelper.h"
 #import "NSDate+Helper.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFDownloadRequestOperation.h"
-
-NSString * const IGHTTPClientNetworkErrorDomain = @"IGHTTPClientNetworkErrorDomain";
 
 NSString * const IGDevelopmentBaseURL = @"http://www.tomdiggle.com/";
 NSString * const IGDevelopmentAudioPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml";
@@ -76,6 +75,18 @@ static BOOL __developmentMode = NO;
     BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
     AFNetworkReachabilityStatus networkReachabilityStatus = [[IGHTTPClient sharedClient] networkReachabilityStatus];
     if (!allowCellularDataStreaming && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL)allowCellularDataDownloading
+{
+    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
+    AFNetworkReachabilityStatus networkReachabilityStatus = [[IGHTTPClient sharedClient] networkReachabilityStatus];
+    if (!allowCellularDataDownloading && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi)
     {
         return NO;
     }
@@ -222,20 +233,8 @@ static BOOL __developmentMode = NO;
 
 #pragma mark - Downloading Episode
 
-- (void)downloadEpisodeWithURL:(NSURL *)downloadURL
-                    targetPath:(NSURL *)targetPath
-                       success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)downloadEpisodeWithURL:(NSURL *)downloadURL targetPath:(NSURL *)targetPath completion:(void (^)(BOOL success, NSError *error))completion
 {
-    if (![self allowCellularDataDownloading] && failure)
-    {
-        // If data downloading is not allowed on cellular return an error
-        NSError *error = [NSError errorWithDomain:IGHTTPClientNetworkErrorDomain
-                                             code:IGHTTPClientNetworkErrorCellularDataDownloadingNotAllowed
-                                         userInfo:nil];
-        failure(nil, error);
-    }
-    
     [self addDownloadRequest:downloadURL
                   targetPath:targetPath];
     
@@ -244,48 +243,47 @@ static BOOL __developmentMode = NO;
                                                                                      targetPath:[targetPath path]
                                                                                    shouldResume:YES];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completion)
+        {
+            completion(YES, nil);
+        }
+        
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
-        if (success) {
-            success(operation, responseObject);
-        }
+        
+        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"DownloadsSuccessful", @"text label for successfully downloaded episode"), @"soundName" : UILocalNotificationDefaultSoundName };
+        [UIApplication presentLocalNotificationNowWithParameters:parameters];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion)
+        {
+            completion(NO, error);
+        }
+        
         [self removeDownloadRequest:downloadURL
                          targetPath:targetPath];
-        if (failure) {
-            failure(operation, error);
-        }
+        
+        NSDictionary *parameters = @{ @"alertBody" : NSLocalizedString(@"DownloadsFailed", @"text label for failed to download episode"), @"soundName" : UILocalNotificationDefaultSoundName };
+        [UIApplication presentLocalNotificationNowWithParameters:parameters];
     }];
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
-    [self enqueueHTTPRequestOperation:operation];
-}
-
-- (BOOL)allowCellularDataDownloading {
-    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
-    AFNetworkReachabilityStatus networkReachabilityStatus = [self networkReachabilityStatus];
-    if (!allowCellularDataDownloading && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
-        return NO;
-    }
     
-    return YES;
+    [self enqueueHTTPRequestOperation:operation];
 }
 
 #pragma mark - Download Operations
 
-- (NSArray *)downloadOperations
+- (AFDownloadRequestOperation *)requestOperationForURL:(NSURL *)url
 {
-    return [[self operationQueue] operations];
-}
-
-- (AFHTTPRequestOperation *)requestOperationForURL:(NSURL *)url
-{
-    __block AFHTTPRequestOperation *requestOperation = nil;
-    NSArray *downloadOperations = [self downloadOperations];
+    __block AFDownloadRequestOperation *requestOperation = nil;
+    NSArray *downloadOperations = [[self operationQueue] operations];
     [downloadOperations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([[[obj request] URL] isEqual:url])
+        if ([[obj class] isSubclassOfClass:[AFDownloadRequestOperation class]])
         {
-            requestOperation = obj;
-            *stop = YES;
+            if ([[[obj request] URL] isEqual:url])
+            {
+                requestOperation = obj;
+                *stop = YES;
+            }
         }
     }];
     
@@ -306,6 +304,7 @@ static BOOL __developmentMode = NO;
     
     NSData *data = [userDefaults objectForKey:IGHTTPClientCurrentDownloadRequests];
     NSArray *requests = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
     return requests;
 }
 
