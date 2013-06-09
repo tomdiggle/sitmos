@@ -31,7 +31,7 @@
 		3213C60E174A4372003C0BC4 /* download-episode-track-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C60C174A4372003C0BC4 /* download-episode-track-image@2x.png */; };
 		3213C611174A5CF3003C0BC4 /* download-episode-progress-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C60F174A5CF3003C0BC4 /* download-episode-progress-image.png */; };
 		3213C612174A5CF3003C0BC4 /* download-episode-progress-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C610174A5CF3003C0BC4 /* download-episode-progress-image@2x.png */; };
-		321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */; };
+		321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */; };
 		321891D315F111A200063177 /* search-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 321891D115F111A200063177 /* search-bar-bg.png */; };
 		321891D415F111A200063177 /* search-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321891D215F111A200063177 /* search-bar-bg@2x.png */; };
 		321CB21715DD899B00E0E35A /* nav-bar-port-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 321CB21515DD899B00E0E35A /* nav-bar-port-bg.png */; };
@@ -67,11 +67,10 @@
 		322D4619175B5CFC00BFDC8F /* nav-back-button-land@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D4617175B5CFC00BFDC8F /* nav-back-button-land@2x.png */; };
 		322D461C175B5E0A00BFDC8F /* nav-back-button-land-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D461A175B5E0900BFDC8F /* nav-back-button-land-highlighted@2x.png */; };
 		322D461F175B5E3400BFDC8F /* nav-back-button-land-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 322D461E175B5E3400BFDC8F /* nav-back-button-land-highlighted.png */; };
+		322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D4621175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m */; };
 		3235957515755737007D5D90 /* audio-player-lower-controls-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */; };
 		3235957615755737007D5D90 /* audio-player-lower-controls-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */; };
 		32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */; };
-		32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392392167F5C3200301439 /* MJPopupBackgroundView.m */; };
-		32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
 		323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A5167F5DD800301439 /* TSLibraryImport.m */; };
 		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
@@ -116,6 +115,7 @@
 		32A2E124160792BF005377FF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A2E123160792BF005377FF /* Default-568h@2x.png */; };
 		32A3C5C715C99FF60083D165 /* audio-player-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C515C99FF50083D165 /* audio-player-bg.png */; };
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
+		32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B4360917627FD00015B90F /* IGEpisodeShowNotesHeader.m */; };
 		32BF7B1C16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m */; };
 		32BF7B2116DBEE3B006B2459 /* skipping-backward-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BF7B1D16DBEE3B006B2459 /* skipping-backward-button.png */; };
 		32BF7B2216DBEE3B006B2459 /* skipping-backward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BF7B1E16DBEE3B006B2459 /* skipping-backward-button@2x.png */; };
@@ -172,8 +172,8 @@
 		3213C60C174A4372003C0BC4 /* download-episode-track-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-track-image@2x.png"; sourceTree = "<group>"; };
 		3213C60F174A5CF3003C0BC4 /* download-episode-progress-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-progress-image.png"; sourceTree = "<group>"; };
 		3213C610174A5CF3003C0BC4 /* download-episode-progress-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-progress-image@2x.png"; sourceTree = "<group>"; };
-		321579BD15FCFA760074518D /* IGEpisodeMoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeMoreInfoViewController.h; sourceTree = "<group>"; };
-		321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeMoreInfoViewController.m; sourceTree = "<group>"; };
+		321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesViewController.h; sourceTree = "<group>"; };
+		321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesViewController.m; sourceTree = "<group>"; };
 		321891D115F111A200063177 /* search-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-bar-bg.png"; sourceTree = "<group>"; };
 		321891D215F111A200063177 /* search-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-bar-bg@2x.png"; sourceTree = "<group>"; };
 		321CB21515DD899B00E0E35A /* nav-bar-port-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-bar-port-bg.png"; sourceTree = "<group>"; };
@@ -215,14 +215,12 @@
 		322D4617175B5CFC00BFDC8F /* nav-back-button-land@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button-land@2x.png"; sourceTree = "<group>"; };
 		322D461A175B5E0900BFDC8F /* nav-back-button-land-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button-land-highlighted@2x.png"; sourceTree = "<group>"; };
 		322D461E175B5E3400BFDC8F /* nav-back-button-land-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-back-button-land-highlighted.png"; sourceTree = "<group>"; };
+		322D4620175CF95A00BFDC8F /* IGEpisodeShowNotesBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesBody.h; sourceTree = "<group>"; };
+		322D4621175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesBody.m; sourceTree = "<group>"; };
 		3235957315755737007D5D90 /* audio-player-lower-controls-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg.png"; sourceTree = "<group>"; };
 		3235957415755737007D5D90 /* audio-player-lower-controls-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-lower-controls-bg@2x.png"; sourceTree = "<group>"; };
 		32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
-		32392391167F5C3200301439 /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
-		32392392167F5C3200301439 /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
-		32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
-		32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		32392398167F5C9100301439 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		32392399167F5C9100301439 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		323923A4167F5DD800301439 /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
@@ -286,6 +284,8 @@
 		32A2E123160792BF005377FF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		32A3C5C515C99FF50083D165 /* audio-player-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg.png"; sourceTree = "<group>"; };
 		32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg@2x.png"; sourceTree = "<group>"; };
+		32B4360817627FD00015B90F /* IGEpisodeShowNotesHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesHeader.h; sourceTree = "<group>"; };
+		32B4360917627FD00015B90F /* IGEpisodeShowNotesHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesHeader.m; sourceTree = "<group>"; };
 		32BF7B1A16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingForwardViewController.h; sourceTree = "<group>"; };
 		32BF7B1B16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingForwardViewController.m; sourceTree = "<group>"; };
 		32BF7B1D16DBEE3B006B2459 /* skipping-backward-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skipping-backward-button.png"; sourceTree = "<group>"; };
@@ -488,7 +488,6 @@
 			isa = PBXGroup;
 			children = (
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
-				32392390167F5C3200301439 /* MJPopupViewController */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
 				32EA27AC16D406D000BB528E /* TDNotificationPanel */,
 				324D0391164071D200D0143C /* TDSlider */,
@@ -505,17 +504,6 @@
 				32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */,
 			);
 			path = EGORefreshTableHeaderView;
-			sourceTree = "<group>";
-		};
-		32392390167F5C3200301439 /* MJPopupViewController */ = {
-			isa = PBXGroup;
-			children = (
-				32392391167F5C3200301439 /* MJPopupBackgroundView.h */,
-				32392392167F5C3200301439 /* MJPopupBackgroundView.m */,
-				32392393167F5C3200301439 /* UIViewController+MJPopupViewController.h */,
-				32392394167F5C3200301439 /* UIViewController+MJPopupViewController.m */,
-			);
-			path = MJPopupViewController;
 			sourceTree = "<group>";
 		};
 		32392397167F5C9100301439 /* NSDate-Helper */ = {
@@ -722,8 +710,12 @@
 			children = (
 				3298868B1461DF85006B7BDE /* IGEpisodesListViewController.h */,
 				3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */,
-				321579BD15FCFA760074518D /* IGEpisodeMoreInfoViewController.h */,
-				321579BE15FCFA760074518D /* IGEpisodeMoreInfoViewController.m */,
+				321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */,
+				321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */,
+				32B4360817627FD00015B90F /* IGEpisodeShowNotesHeader.h */,
+				32B4360917627FD00015B90F /* IGEpisodeShowNotesHeader.m */,
+				322D4620175CF95A00BFDC8F /* IGEpisodeShowNotesBody.h */,
+				322D4621175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m */,
 			);
 			name = "Podcast Episodes";
 			sourceTree = "<group>";
@@ -995,14 +987,12 @@
 				328E276B153DDFB0005AE70B /* IGMediaPlayer.m in Sources */,
 				32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
-				321579BF15FCFA760074518D /* IGEpisodeMoreInfoViewController.m in Sources */,
+				321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
-				32392395167F5C3200301439 /* MJPopupBackgroundView.m in Sources */,
-				32392396167F5C3200301439 /* UIViewController+MJPopupViewController.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 				323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */,
 				323923AE167F5E0500301439 /* RIButtonItem.m in Sources */,
@@ -1020,6 +1010,8 @@
 				32C1876E172DA8A400921169 /* IGMediaPlayerViewController.m in Sources */,
 				32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */,
 				3263DEA31756A06A00D74A1F /* UIViewController+MediaPlayer.m in Sources */,
+				322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */,
+				32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

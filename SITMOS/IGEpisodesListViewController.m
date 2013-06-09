@@ -24,12 +24,11 @@
 #import "IGEpisodeCell.h"
 #import "IGEpisode.h"
 #import "IGMediaPlayerViewController.h"
-#import "IGEpisodeMoreInfoViewController.h"
+#import "IGEpisodeShowNotesViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGMediaPlayer.h"
 #import "EGORefreshTableHeaderView.h"
-#import "UIViewController+MJPopupViewController.h"
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
@@ -45,7 +44,6 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
-@property (strong, nonatomic) IGEpisodeMoreInfoViewController *episodeMoreInfoViewController;
 @property (strong, nonatomic) NSMutableArray *filteredEpisodeArray;
 @property BOOL reloading;
 
@@ -407,7 +405,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [TDNotificationPanel showNotificationPanelInView:self.view
                                                             type:TDNotificationTypeError
-                                                           title:[NSString stringWithFormat:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")]
+                                                           title:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")
                                                   hideAfterDelay:5];
             });
         }
@@ -427,11 +425,13 @@
 {
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:title];
-    
-    _episodeMoreInfoViewController = [[self storyboard] instantiateViewControllerWithIdentifier:@"IGEpisodeMoreInfoViewController"];
-    [_episodeMoreInfoViewController setEpisode:episode];
-    [self presentPopupViewController:_episodeMoreInfoViewController
-                       animationType:MJPopupViewAnimationFade];
+    IGEpisodeShowNotesViewController *moreInfoViewController = [[IGEpisodeShowNotesViewController alloc] initWithEpisode:episode];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Episodes", @"text label for episodes")
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:nil
+                                                                            action:nil];
+    [[self navigationController] pushViewController:moreInfoViewController
+                                           animated:YES];
 }
 
 /**

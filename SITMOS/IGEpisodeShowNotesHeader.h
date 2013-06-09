@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -21,11 +21,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class IGEpisode;
+#import "IGEpisode.h"
 
-@interface IGEpisodeMoreInfoViewController : UIViewController
+@interface IGEpisodeShowNotesHeader : UIView
 
-@property (strong, nonatomic) IBOutlet UILabel *episodeTitleLabel;
-@property (strong, nonatomic) IGEpisode *episode;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSDate *pubDate;
+@property (nonatomic, strong) NSString *duration;
+@property (nonatomic, assign) IGEpisodePlayedStatus playedStatus;
+@property (nonatomic, assign) IGEpisodeDownloadStatus downloadStatus;
 
 @end
