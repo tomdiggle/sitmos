@@ -129,22 +129,13 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 - (NSString *)readableFileSize
 {
-    NSString *readableFileSize = nil;
-    
-    // Megabytes
-    if (([[self fileSize] longLongValue]/1024/1024) >= 1)
+    if ([[self fileSize] isEqualToNumber:@0])
     {
-        readableFileSize = [NSString stringWithFormat:@"%lld MB", ([[self fileSize] longLongValue]/1024/1024)];
+        return @"N/A";
     }
     
-    // Gigabytes
-    if (([[self fileSize] longLongValue]/1024/1024/1024) >= 1)
-    {
-        readableFileSize = [NSString stringWithFormat:@"%lld GB", ([[self fileSize] longLongValue]/1024/1024/1024)];
-        
-    }
-    
-    return readableFileSize;
+    return [NSByteCountFormatter stringFromByteCount:[[self fileSize] longLongValue]
+                                          countStyle:NSByteCountFormatterCountStyleBinary];
 }
 
 - (void)deleteDownloadedEpisode
