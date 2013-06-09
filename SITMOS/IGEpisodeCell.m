@@ -53,7 +53,7 @@
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-    if (!([super initWithCoder:decoder])) return nil;
+    if (!(self = [super initWithCoder:decoder])) return nil;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.f, 4.f, 200.f, 22.f)];
     [label setBackgroundColor:[UIColor clearColor]];
