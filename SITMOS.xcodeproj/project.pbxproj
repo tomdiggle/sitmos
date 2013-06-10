@@ -44,6 +44,7 @@
 		321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
 		321F218C15B9FD8D00610DC0 /* more-info-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218A15B9FD8C00610DC0 /* more-info-button.png */; };
 		321F218D15B9FD8D00610DC0 /* more-info-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */; };
+		32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */; };
 		3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
 		3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222F7C6170F6B4000E8E76E /* Settings.bundle */; };
 		32282D5915CDE8C70005E3B6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D5715CDE8C50005E3B6 /* Default.png */; };
@@ -190,6 +191,8 @@
 		321D8C51145F1D8B008698DC /* IGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGAppDelegate.m; sourceTree = "<group>"; };
 		321F218A15B9FD8C00610DC0 /* more-info-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-button.png"; sourceTree = "<group>"; };
 		321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-button@2x.png"; sourceTree = "<group>"; };
+		32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsGeneralViewController.h; sourceTree = "<group>"; };
+		32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsGeneralViewController.m; sourceTree = "<group>"; };
 		3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
 		3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsViewController.m; sourceTree = "<group>"; };
 		3222F7C6170F6B4000E8E76E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -735,6 +738,8 @@
 			children = (
 				3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */,
 				3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */,
+				32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */,
+				32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */,
 				32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */,
 				32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */,
 				32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */,
@@ -1012,6 +1017,7 @@
 				3263DEA31756A06A00D74A1F /* UIViewController+MediaPlayer.m in Sources */,
 				322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */,
 				32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */,
+				32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

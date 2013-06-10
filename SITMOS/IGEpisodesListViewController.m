@@ -25,6 +25,7 @@
 #import "IGEpisode.h"
 #import "IGMediaPlayerViewController.h"
 #import "IGEpisodeShowNotesViewController.h"
+#import "IGSettingsViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGMediaPlayer.h"
@@ -108,6 +109,17 @@
     {
         [self hideNowPlayingButton:YES];
     }
+}
+
+#pragma mark - Show Settings
+
+- (IBAction)showSettings:(id)sender
+{
+    IGSettingsViewController *settingsViewController = [[IGSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *settingsNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
+    [[self navigationController] presentViewController:settingsNavigationController
+                                              animated:YES
+                                            completion:nil];
 }
 
 #pragma mark - Orientation Support

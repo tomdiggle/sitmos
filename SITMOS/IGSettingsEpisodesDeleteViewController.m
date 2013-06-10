@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -27,8 +27,8 @@
 
 - (void)viewDidLayoutSubviews
 {
-    self.view.backgroundColor = kRGBA(245.0f, 245.0f, 245.0f, 1);
-    self.tableView.backgroundView = nil;
+    [[self view] setBackgroundColor:kRGBA(240, 240, 240, 1)];
+    [[self tableView] setBackgroundView:nil];
 }
 
 - (void)viewDidLoad
@@ -59,7 +59,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * const cellIdentifier = @"cellIdentifier";
+    static NSString *cellIdentifier = @"cellIdentifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell)
     {
@@ -68,12 +68,11 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-    [cell setBackgroundColor:kRGBA(240.0f, 240.0f, 240.0f, 1)];
+    [cell setBackgroundColor:kRGBA(245, 245, 245, 1)];
     
     if (indexPath.row == 0)
     {
         [[cell textLabel] setText:NSLocalizedString(@"Never", @"text label for never")];
-        
         if (![userDefaults boolForKey:IGSettingEpisodesDelete])
         {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
