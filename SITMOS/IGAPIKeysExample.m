@@ -22,4 +22,4 @@
 #import "IGAPIKeys.h"
 
 NSString * const IGTestFlightAPIKey = @"";
-NSString * const IGMSAzureAPIKey = @"";
+NSString * const IGWindowsAzureAPIKey = @"";
