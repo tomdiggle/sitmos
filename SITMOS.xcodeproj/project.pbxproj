@@ -102,6 +102,7 @@
 		3263DEBC1757965B00D74A1F /* show-media-player-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3263DEBA1757965A00D74A1F /* show-media-player-icon.png */; };
 		3263DEBD1757965B00D74A1F /* show-media-player-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3263DEBB1757965B00D74A1F /* show-media-player-icon@2x.png */; };
 		32678CEF147EDE7C007BD110 /* IGEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */; };
+		326AAB1E176F26F100FA5613 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
@@ -267,6 +268,7 @@
 		3263DEBB1757965B00D74A1F /* show-media-player-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "show-media-player-icon@2x.png"; sourceTree = "<group>"; };
 		32678CED147EDE7C007BD110 /* IGEpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeCell.h; sourceTree = "<group>"; };
 		32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeCell.m; sourceTree = "<group>"; };
+		326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.0b1.xcdatamodel"; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -345,6 +347,7 @@
 				321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */,
 				32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */,
 				FE00210AA649423E8B08DC04 /* libPods.a in Frameworks */,
+				326AAB1E176F26F100FA5613 /* WindowsAzureMobileServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +493,7 @@
 		322D96BD162B138900D7D5D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
 				32EA27AC16D406D000BB528E /* TDNotificationPanel */,
@@ -1138,8 +1142,12 @@
 			baseConfigurationReference = D3F8EE7222394631B1848C25 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Diggle (T935CR8U9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Diggle (T935CR8U9Q)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1152,8 +1160,8 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "F9A0DC60-FD4D-416B-A4BE-82D729E6DAB0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9A0DC60-FD4D-416B-A4BE-82D729E6DAB0";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1166,6 +1174,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${PODS_HEADERS_SEARCH_PATHS}";
@@ -1312,6 +1324,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";

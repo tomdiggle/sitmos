@@ -21,8 +21,15 @@
 
 #import "IGSettingsViewController.h"
 
+#import "IGHTTPClient.h"
 #import "IGDefines.h"
 #import "IGSettingsGeneralViewController.h"
+
+@interface IGSettingsViewController ()
+
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+
+@end
 
 @implementation IGSettingsViewController
 
@@ -45,6 +52,8 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonTapped:)];
+
+    _userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
 #pragma mark - Orientation Support
@@ -58,19 +67,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return 2;
-    }
+    if (section == 2) return 2;
+    
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,15 +89,26 @@
     
     [cell setBackgroundColor:kRGBA(245, 245, 245, 1)];
     
+    UISwitch *accessoryViewSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     if ([indexPath section] == 0)
     {
-        if ([indexPath section] == 0)
+        if ([indexPath row] == 0)
         {
             [[cell textLabel] setText:NSLocalizedString(@"General", @"text label for general")];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         }
     }
     else if ([indexPath section] == 1)
+    {
+        [[cell textLabel] setText:NSLocalizedString(@"PushNotifications", @"text label for push notifications")];
+        [cell setAccessoryView:accessoryViewSwitch];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [accessoryViewSwitch setOn:[_userDefaults boolForKey:IGSettingPushNotifications]];
+        [accessoryViewSwitch addTarget:self
+                                action:@selector(updateSettingPushNotifications:)
+                      forControlEvents:UIControlEventTouchUpInside];
+    }
+    else if ([indexPath section] == 2)
     {
         if ([indexPath row] == 0)
         {
@@ -112,16 +127,9 @@
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section != 0) return nil;
-    
-    return NSLocalizedString(@"Settings", @"text label for settings");
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    if (section != 1) return nil;
+    if (section != 2) return nil;
     
     return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
 }
@@ -139,7 +147,7 @@
                                                    animated:YES];
         }
     }
-    else if ([indexPath section] == 1)
+    else if ([indexPath section] == 2)
     {
         if ([indexPath row] == 0)
         {
@@ -182,6 +190,37 @@
 {
     [self dismissViewControllerAnimated:YES
                              completion:nil];
+}
+
+#pragma mark - Update Settings
+
+- (void)updateSettingPushNotifications:(id)sender
+{
+    [_userDefaults setBool:[sender isOn] forKey:IGSettingPushNotifications];
+    [_userDefaults synchronize];
+    
+    if (![sender isOn])
+    {
+        IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+        [httpClient unregisterPushNotificationsWithCompletion:^(NSError *error) {
+            if (error)
+            {
+                NSLog(@"Error: %@", error);
+                // Reset the setting
+                [_userDefaults setBool:([sender isOn] ? NO : YES)
+                                forKey:IGSettingPushNotifications];
+                [_userDefaults synchronize];
+        
+                // Reset the switch
+                [sender setOn:([sender isOn] ? NO : YES)
+                     animated:YES];
+            }
+        }];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
 }
 
 @end

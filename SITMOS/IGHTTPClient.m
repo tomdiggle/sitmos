@@ -30,6 +30,8 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFDownloadRequestOperation.h"
 
+#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+
 NSString * const IGDevelopmentBaseURL = @"http://www.tomdiggle.com/";
 NSString * const IGDevelopmentAudioPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml";
 NSString * const IGDevelopmentVideoPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-video-feed.xml";
@@ -47,10 +49,12 @@ static BOOL __developmentMode = NO;
 
 @interface IGHTTPClient ()
 
+@property (nonatomic, strong) NSDictionary *deviceToken;
 @property (nonatomic, strong) NSURL *audioPodcastFeedURL;
 @property (nonatomic, strong) NSURL *videoPodcastFeedURL;
 @property (nonatomic, strong) dispatch_queue_t callbackQueue;
 @property (nonatomic, strong, readwrite) NSMutableArray *currentDownloadRequests;
+@property (nonatomic, strong) MSClient *azureClient;
 
 @end
 
@@ -123,8 +127,9 @@ static BOOL __developmentMode = NO;
     {
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
-        
         _currentDownloadRequests = [NSMutableArray arrayWithArray:[self currentDownloadRequests]];
+        _azureClient = [MSClient clientWithApplicationURLString:@"https://sitmos.azure-mobile.net/"
+                                                 applicationKey:@"EBMIVKOrRbnwolLihdzoxGLlespqZg23"];
     }
     
     return self;
@@ -145,6 +150,41 @@ static BOOL __developmentMode = NO;
 	operation.successCallbackQueue = _callbackQueue;
 	operation.failureCallbackQueue = _callbackQueue;
 	[super enqueueHTTPRequestOperation:operation];
+}
+
+#pragma mark - Push Notifications
+
+- (void)registerPushNotificationsForDevice:(NSData *)deviceToken completion:(void (^)(NSDictionary *result, NSError *error))completion
+{
+    NSCharacterSet *angleBrackets = [NSCharacterSet characterSetWithCharactersInString:@"<>"];
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:angleBrackets];
+    
+    MSTable *devicesTable = [_azureClient tableWithName:@"devices"];
+    NSDictionary *device = @{ @"deviceToken": token };
+    [devicesTable insert:device completion:^(NSDictionary *item, NSError *error) {
+        if (completion)
+        {
+            completion(item, error);
+        }
+        
+        // Keep a copy of the deviceToken around incase the user wants to unregister from push notifications
+        _deviceToken = item;
+    }];
+}
+
+- (void)unregisterPushNotificationsWithCompletion:(void (^)(NSError *error))completion
+{
+    if (!_deviceToken) return;
+    
+    MSTable *devicesTable = [_azureClient tableWithName:@"devices"];
+    [devicesTable delete:_deviceToken completion:^(NSNumber *itemId, NSError *error) {
+        if (completion)
+        {
+            completion(error);
+        }
+        
+        _deviceToken = nil;
+    }];
 }
 
 #pragma mark - Syncing Podcast Feeds

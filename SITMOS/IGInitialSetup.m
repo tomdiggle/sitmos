@@ -77,6 +77,10 @@ NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";
     // Only continue if episodes havn't already been searched for
     if ([_userDefaults boolForKey:IGInitialSetupImportEpisodes])
     {
+        if (_completion)
+        {
+            _completion(0, nil);
+        }
         return;
     }
 
@@ -155,6 +159,11 @@ NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";
     if (![_userDefaults objectForKey:IGSettingSkippingBackwardTime])
     {
         [_userDefaults setInteger:30 forKey:IGSettingSkippingBackwardTime];
+    }
+    
+    if (![_userDefaults objectForKey:IGSettingPushNotifications])
+    {
+        [_userDefaults setBool:YES forKey:IGSettingPushNotifications];
     }
 }
 

@@ -46,6 +46,9 @@
     
     [self applyStylesheet];
     
+//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
+    
     [self initialSetup];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -56,26 +59,6 @@
     });
     
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
- 
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -147,31 +130,60 @@
                                  barMetrics:UIBarMetricsLandscapePhone];
 }
 
+#pragma mark - Push Notifications
+
+- (void)registerForPushNotifications
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:IGSettingPushNotifications])
+    {
+        NSLog(@"Registering for remote notifications");
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken:");
+    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+    [httpClient registerPushNotificationsForDevice:deviceToken completion:nil];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    // handle error
+    NSLog(@"Registering device for push notifications failed: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)remoteNotification
+{
+    NSLog(@"Remote Notifications received: %@", remoteNotification);
+}
+
 #pragma mark - Initial Setup
 
 - (void)initialSetup
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [IGInitialSetup runInitialSetupWithCompletion:^(NSUInteger episodesImported, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (episodesImported > 0)
-                {
-                    [TDNotificationPanel showNotificationPanelInView:self.window
-                                                                type:TDNotificationTypeSuccess
-                                                               title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
-                                                      hideAfterDelay:5];
-                }
-                else if (error)
-                {
-                    [TDNotificationPanel showNotificationPanelInView:self.window
-                                                                type:TDNotificationTypeError
-                                                               title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
-                                                      hideAfterDelay:5];
-                }
-            });
-        }];
-    });
+    [IGInitialSetup runInitialSetupWithCompletion:^(NSUInteger episodesImported, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (episodesImported > 0)
+            {
+                [TDNotificationPanel showNotificationPanelInView:self.window
+                                                            type:TDNotificationTypeSuccess
+                                                           title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
+                                                  hideAfterDelay:5];
+            }
+            else if (error)
+            {
+                [TDNotificationPanel showNotificationPanelInView:self.window
+                                                            type:TDNotificationTypeError
+                                                           title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
+                                                  hideAfterDelay:5];
+            }
+            
+            // Register for push notifications after importing episodes. This is to avoid displaying two alert's when user first launches app.
+            [self registerForPushNotifications];
+        });
+    }];
 }
 
 #pragma mark - Managing the Responder Chain
@@ -184,9 +196,7 @@
 #pragma mark - Playback State Changed
 
 /**
- If the playback state changes to play and the app delegate is not already the 
- first responder begin receiving remote control events and become the first 
- responder.
+ * If the playback state changes to play and the app delegate is not already the first responder begin receiving remote control events and become the first responder.
  */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
@@ -199,7 +209,7 @@
 #pragma mark - Remote Control Events
 
 /**
- The iPod controls will send these events when the app is in the background
+ * The iPod controls will send these events when the app is in the background
  */
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event 
 {

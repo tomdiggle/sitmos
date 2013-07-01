@@ -28,3 +28,4 @@ NSString * const IGSettingEpisodesDelete = @"IGSettingEpisodesDelete"; // YES wi
 NSString * const IGSettingUnseenBadge = @"IGSettingUnseenBadge";
 NSString * const IGSettingSkippingForwardTime = @"IGSettingSkippingForwardTime";
 NSString * const IGSettingSkippingBackwardTime = @"IGSettingSkippingBackwardTime";
+NSString * const IGSettingPushNotifications = @"IGSettingPushNotifications";

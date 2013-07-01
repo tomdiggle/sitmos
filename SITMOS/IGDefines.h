@@ -29,3 +29,4 @@ extern NSString * const IGSettingEpisodesDelete;
 extern NSString * const IGSettingUnseenBadge;
 extern NSString * const IGSettingSkippingForwardTime;
 extern NSString * const IGSettingSkippingBackwardTime;
+extern NSString * const IGSettingPushNotifications;

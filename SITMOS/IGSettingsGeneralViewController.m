@@ -176,7 +176,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    if (section != 1) return nil;
+    if (section != 2) return nil;
     
     return NSLocalizedString(@"SettingsEpisodesSectionFooter", @"text label for settings episodes section footer");
 }

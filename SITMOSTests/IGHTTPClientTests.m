@@ -59,19 +59,4 @@
     assertThat(IGVideoPodcastFeedURL, equalTo(@"http://www.dereksweet.com/sitmos/sitmos-video-feed.xml"));
 }
 
-- (void)testBlahName {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    IGMockHTTPClient *mockHTTPClient = [IGMockHTTPClient sharedClient];
-    [mockHTTPClient syncPodcastFeedsWithCompletion:^(BOOL success, NSError *error) {
-        
-        assertThat(error, notNilValue());
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-}
-
 @end

@@ -68,12 +68,12 @@ extern NSString * const IGVideoPodcastFeedURL;
  */
 
 /**
- * @return YES if cellular data streaming is on, NO otherwise.
+ * @return YES if cellular data streaming is allowed, NO otherwise.
  */
 + (BOOL)allowCellularDataStreaming;
 
 /**
- * @return YES if cellular data downloading is on, NO otherwise.
+ * @return YES if cellular data downloading is allowed, NO otherwise.
  */
 + (BOOL)allowCellularDataDownloading;
 
@@ -91,6 +91,27 @@ extern NSString * const IGVideoPodcastFeedURL;
  * @see IGDevelopmentVideoPodcastFeedURL
  */
 + (void)setDevelopmentModeEnabled:(BOOL)enabled;
+
+#pragma mark - Push Notifications
+
+/**
+ * @name Push Notifications
+ */
+
+/**
+ * Registers device to receive push notifications.
+ *
+ * @param A token that identifies the device to Apple Push Notification Service (APNS).
+ * @param The completion handler block to execute.
+ */
+- (void)registerPushNotificationsForDevice:(NSData *)deviceToken completion:(void (^)(NSDictionary *result, NSError *error))completion;
+
+/**
+ * Unregisters a device from receiving push notifications.
+ *
+ * @param The completion handler block to execute.
+ */
+- (void)unregisterPushNotificationsWithCompletion:(void (^)(NSError *error))completion;
 
 #pragma mark - Syncing Podcast Feeds
 

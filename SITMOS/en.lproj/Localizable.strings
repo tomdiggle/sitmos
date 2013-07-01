@@ -225,3 +225,8 @@
 /* text label for general */
 "General" = "General";
 
+/* text label for push notifications */
+"PushNotifications" = "Push Notifications";
+
+/* text label for new episode */
+"NewEpisode" = "New Episode";

@@ -21,6 +21,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const IGInitialSetupImportEpisodes;
+
 /**
  * Runs the initial setup of the app by registering the default settings and if there are any episodes of SITMOS are already stored on the iPod it
  * will ask the user if they want to import them into the app.

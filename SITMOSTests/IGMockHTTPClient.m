@@ -21,8 +21,8 @@
 }
 
 - (void)enqueueBatchOfHTTPRequestOperations:(NSArray *)operations
-                              progressBlock:(void (^)( NSUInteger, NSUInteger))progressBlock
-                            completionBlock:(void (^)( NSArray *))completionBlock
+                              progressBlock:(void (^)(NSUInteger, NSUInteger))progressBlock
+                            completionBlock:(void (^)(NSArray *))completionBlock
 {
 //    NSLog(@"Here");
     
