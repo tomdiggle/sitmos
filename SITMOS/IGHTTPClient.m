@@ -25,6 +25,7 @@
 #import "IGPodcastFeedParser.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
+#import "IGAPIKeys.h"
 #import "UIApplication+LocalNotificationHelper.h"
 #import "NSDate+Helper.h"
 #import "AFNetworkActivityIndicatorManager.h"
@@ -44,6 +45,8 @@ NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDown
 
 NSString * const IGAudioPodcastFeedLastModifiedKey = @"IGAudioPodcastFeedLastModifiedKey";
 NSString * const IGVideoPodcastFeedLastModifiedKey = @"IGVideoPodcastFeedLastModifiedKey";
+
+NSString * const IGWindowsAzureMobileServicesURL = @"https://sitmos.azure-mobile.net/";
 
 static BOOL __developmentMode = NO;
 
@@ -128,8 +131,8 @@ static BOOL __developmentMode = NO;
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         _callbackQueue = dispatch_queue_create("com.IdleGeniusSoftware.SITMOS.network-callback-queue", NULL);
         _currentDownloadRequests = [NSMutableArray arrayWithArray:[self currentDownloadRequests]];
-        _azureClient = [MSClient clientWithApplicationURLString:@"https://sitmos.azure-mobile.net/"
-                                                 applicationKey:@"EBMIVKOrRbnwolLihdzoxGLlespqZg23"];
+        _azureClient = [MSClient clientWithApplicationURLString:IGWindowsAzureMobileServicesURL
+                                                 applicationKey:IGWindowsAzureAPIKey];
     }
     
     return self;

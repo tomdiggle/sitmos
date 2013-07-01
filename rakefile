@@ -1,12 +1,12 @@
 desc 'Setup with example files'
 task :setup do
-# Copy test flight files
-  puts 'Copying example IGTestFlight files into place'
-  `cp SITMOS/IGTestFlightExample.h SITMOS/IGTestFlight.h`
-  `cp SITMOS/IGTestFlightExample.m SITMOS/IGTestFlight.m`
+	# Copy and rename example API key files
+  	puts 'Copying example API key files into place'
+  	`cp SITMOS/IGAPIKeysExample.h SITMOS/IGAPIKeys.h`
+  	`cp SITMOS/IGAPIKeysExample.m SITMOS/IGAPIKeys.m`
 
-  # Done
-  puts 'Done! You\'re ready to get started!'
+  	# Done
+  	puts 'Done! You\'re ready to get started!'
 end
 
 # Run setup by default

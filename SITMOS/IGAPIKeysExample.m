@@ -1,13 +1,5 @@
-//
-//  IGTestFlightExample.h
-//  SITMOS
-//
-//  Created by Tom Diggle on 30/09/2012.
-//  http://tomdiggle.com
-//
-
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -27,4 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-extern NSString * const IGTestFlightTeamToken;
+#import "IGAPIKeys.h"
+
+NSString * const IGTestFlightAPIKey = @"";
+NSString * const IGMSAzureAPIKey = @"";

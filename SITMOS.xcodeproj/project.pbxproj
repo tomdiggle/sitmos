@@ -138,7 +138,7 @@
 		32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */; };
 		32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
-		32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGTestFlight.m */; };
+		32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGAPIKeys.m */; };
 		32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC54D1619AAA5005078EC /* IGInitialSetup.m */; };
 		32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEA285153DF03400F17ABE /* IGEpisode.m */; };
 		7B96C2E08C3F4D3C8C09BACB /* libPods-SITMOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73721471D14F4C539F2518FF /* libPods-SITMOSTests.a */; };
@@ -317,8 +317,8 @@
 		32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGVideoPlayerViewController.m; sourceTree = "<group>"; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
 		32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsEpisodesDeleteViewController.m; sourceTree = "<group>"; };
-		32FBC4EE1618DE66005078EC /* IGTestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGTestFlight.h; sourceTree = "<group>"; };
-		32FBC4EF1618DE66005078EC /* IGTestFlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGTestFlight.m; sourceTree = "<group>"; };
+		32FBC4EE1618DE66005078EC /* IGAPIKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGAPIKeys.h; sourceTree = "<group>"; };
+		32FBC4EF1618DE66005078EC /* IGAPIKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGAPIKeys.m; sourceTree = "<group>"; };
 		32FBC54C1619AAA5005078EC /* IGInitialSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGInitialSetup.h; sourceTree = "<group>"; };
 		32FBC54D1619AAA5005078EC /* IGInitialSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGInitialSetup.m; sourceTree = "<group>"; };
 		32FEA284153DF03400F17ABE /* IGEpisode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGEpisode.h; sourceTree = "<group>"; };
@@ -454,8 +454,8 @@
 				321D8C4F145F1D8B008698DC /* SITMOS-Prefix.pch */,
 				3290193C15D18A4A00104FD8 /* IGDefines.h */,
 				3290193D15D18A4A00104FD8 /* IGDefines.m */,
-				32FBC4EE1618DE66005078EC /* IGTestFlight.h */,
-				32FBC4EF1618DE66005078EC /* IGTestFlight.m */,
+				32FBC4EE1618DE66005078EC /* IGAPIKeys.h */,
+				32FBC4EF1618DE66005078EC /* IGAPIKeys.m */,
 				3222F7C6170F6B4000E8E76E /* Settings.bundle */,
 			);
 			name = "Supporting Files";
@@ -998,7 +998,7 @@
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
-				32FBC4F01618DE66005078EC /* IGTestFlight.m in Sources */,
+				32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */,
 				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
