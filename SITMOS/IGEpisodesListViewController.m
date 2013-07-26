@@ -383,10 +383,13 @@
     [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSError *error) {
        [self doneLoadingTableViewData];
         if (!success && error) {
-            [TDNotificationPanel showNotificationPanelInView:self.view
-                                                        type:TDNotificationTypeError
-                                                       title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
-                                              hideAfterDelay:5];
+            [TDNotificationPanel showNotificationInView:self.view
+                                                  title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
+                                               subtitle:nil
+                                                   type:TDNotificationTypeError
+                                                   mode:TDNotificationModeText
+                                            dismissable:YES
+                                         hideAfterDelay:4];
         }
     }];
 }
@@ -420,10 +423,13 @@
         if (!success && error)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [TDNotificationPanel showNotificationPanelInView:self.view
-                                                            type:TDNotificationTypeError
-                                                           title:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")
-                                                  hideAfterDelay:5];
+                [TDNotificationPanel showNotificationInView:self.view
+                                                      title:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")
+                                                   subtitle:nil
+                                                       type:TDNotificationTypeError
+                                                       mode:TDNotificationModeText
+                                                dismissable:YES
+                                             hideAfterDelay:4];
             });
         }
         

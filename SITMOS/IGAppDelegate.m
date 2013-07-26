@@ -23,7 +23,7 @@
 
 #import "IGHTTPClient.h"
 #import "IGMediaPlayer.h"
-#import "IGTestFlight.h"
+#import "IGAPIKeys.h"
 #import "IGInitialSetup.h"
 #import "IGDefines.h"
 #import "TDNotificationPanel.h"
@@ -36,7 +36,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [TestFlight takeOff:IGTestFlightTeamToken];
+    [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     
@@ -167,17 +167,23 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if (episodesImported > 0)
             {
-                [TDNotificationPanel showNotificationPanelInView:self.window
-                                                            type:TDNotificationTypeSuccess
-                                                           title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
-                                                  hideAfterDelay:5];
+                [TDNotificationPanel showNotificationInView:self.window
+                                                      title:[NSString stringWithFormat:NSLocalizedString(@"SuccessfullyImportedEpisodes", @"text label for successfully imported episodes"), episodesImported]
+                                                   subtitle:nil
+                                                       type:TDNotificationTypeSuccess
+                                                       mode:TDNotificationModeText
+                                                dismissable:YES
+                                             hideAfterDelay:4];
             }
             else if (error)
             {
-                [TDNotificationPanel showNotificationPanelInView:self.window
-                                                            type:TDNotificationTypeError
-                                                           title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
-                                                  hideAfterDelay:5];
+                [TDNotificationPanel showNotificationInView:self.window
+                                                      title:NSLocalizedString(@"ErrorImportingEpisodes", @"text label for error importing episodes")
+                                                   subtitle:nil
+                                                       type:TDNotificationTypeError
+                                                       mode:TDNotificationModeText
+                                                dismissable:YES
+                                             hideAfterDelay:4];
             }
             
             // Register for push notifications after importing episodes. This is to avoid displaying two alert's when user first launches app.

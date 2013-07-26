@@ -53,6 +53,11 @@
 		32282D5E15CDE9FF0005E3B6 /* icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D5C15CDE9FE0005E3B6 /* icon-114.png */; };
 		32282D6515CDEB6A0005E3B6 /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6315CDEB680005E3B6 /* icon-29.png */; };
 		32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6415CDEB690005E3B6 /* icon-58.png */; };
+		322921F317A3186800895986 /* errorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921ED17A3186800895986 /* errorIcon.png */; };
+		322921F417A3186800895986 /* errorIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921EE17A3186800895986 /* errorIcon@2x.png */; };
+		322921F517A3186800895986 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921EF17A3186800895986 /* successIcon.png */; };
+		322921F617A3186800895986 /* successIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921F017A3186800895986 /* successIcon@2x.png */; };
+		322921F717A3186800895986 /* TDNotificationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 322921F217A3186800895986 /* TDNotificationPanel.m */; };
 		322AD78D153613BA00988B31 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322AD78C153613BA00988B31 /* MediaPlayer.framework */; };
 		322D32BC17257568004856E9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322D32BB17257568004856E9 /* SenTestingKit.framework */; };
 		322D32BD17257568004856E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
@@ -130,7 +135,6 @@
 		32C1877B172E9E8500921169 /* hide-media-player-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C18779172E9E8500921169 /* hide-media-player-icon@2x.png */; };
 		32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
-		32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27AE16D406D000BB528E /* TDNotificationPanel.m */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
@@ -203,6 +207,12 @@
 		32282D5C15CDE9FE0005E3B6 /* icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-114.png"; sourceTree = "<group>"; };
 		32282D6315CDEB680005E3B6 /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		32282D6415CDEB690005E3B6 /* icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-58.png"; sourceTree = "<group>"; };
+		322921ED17A3186800895986 /* errorIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = errorIcon.png; sourceTree = "<group>"; };
+		322921EE17A3186800895986 /* errorIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "errorIcon@2x.png"; sourceTree = "<group>"; };
+		322921EF17A3186800895986 /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
+		322921F017A3186800895986 /* successIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "successIcon@2x.png"; sourceTree = "<group>"; };
+		322921F117A3186800895986 /* TDNotificationPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDNotificationPanel.h; sourceTree = "<group>"; };
+		322921F217A3186800895986 /* TDNotificationPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDNotificationPanel.m; sourceTree = "<group>"; };
 		322AD78C153613BA00988B31 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		322D32BA17257568004856E9 /* SITMOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SITMOSTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		322D32BB17257568004856E9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -305,8 +315,6 @@
 		32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaPlayerAsset.h; path = SITMOS/IGMediaPlayerAsset.h; sourceTree = "<group>"; };
 		32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaPlayerAsset.m; path = SITMOS/IGMediaPlayerAsset.m; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		32EA27AD16D406D000BB528E /* TDNotificationPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDNotificationPanel.h; sourceTree = "<group>"; };
-		32EA27AE16D406D000BB528E /* TDNotificationPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDNotificationPanel.m; sourceTree = "<group>"; };
 		32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingBackwardViewController.h; sourceTree = "<group>"; };
 		32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingBackwardViewController.m; sourceTree = "<group>"; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
@@ -461,6 +469,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		322921EC17A3186700895986 /* TDNotificationPanel */ = {
+			isa = PBXGroup;
+			children = (
+				322921ED17A3186800895986 /* errorIcon.png */,
+				322921EE17A3186800895986 /* errorIcon@2x.png */,
+				322921EF17A3186800895986 /* successIcon.png */,
+				322921F017A3186800895986 /* successIcon@2x.png */,
+				322921F117A3186800895986 /* TDNotificationPanel.h */,
+				322921F217A3186800895986 /* TDNotificationPanel.m */,
+			);
+			path = TDNotificationPanel;
+			sourceTree = "<group>";
+		};
 		322D32BF17257568004856E9 /* SITMOSTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,13 +514,13 @@
 		322D96BD162B138900D7D5D6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */,
 				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
-				32EA27AC16D406D000BB528E /* TDNotificationPanel */,
+				322921EC17A3186700895986 /* TDNotificationPanel */,
 				324D0391164071D200D0143C /* TDSlider */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
 				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
+				326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -727,16 +748,6 @@
 			name = "Podcast Episodes";
 			sourceTree = "<group>";
 		};
-		32EA27AC16D406D000BB528E /* TDNotificationPanel */ = {
-			isa = PBXGroup;
-			children = (
-				32EA27AD16D406D000BB528E /* TDNotificationPanel.h */,
-				32EA27AE16D406D000BB528E /* TDNotificationPanel.m */,
-			);
-			name = TDNotificationPanel;
-			path = TDNotificationPanel/TDNotificationPanel;
-			sourceTree = "<group>";
-		};
 		32EA27B016DA712B00BB528E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +908,10 @@
 				322D4619175B5CFC00BFDC8F /* nav-back-button-land@2x.png in Resources */,
 				322D461C175B5E0A00BFDC8F /* nav-back-button-land-highlighted@2x.png in Resources */,
 				322D461F175B5E3400BFDC8F /* nav-back-button-land-highlighted.png in Resources */,
+				322921F317A3186800895986 /* errorIcon.png in Resources */,
+				322921F417A3186800895986 /* errorIcon@2x.png in Resources */,
+				322921F517A3186800895986 /* successIcon.png in Resources */,
+				322921F617A3186800895986 /* successIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,7 +1026,6 @@
 				32523DF1168B5410006E9FFB /* IGRSSXMLRequestOperation.m in Sources */,
 				32523DF4168E4277006E9FFB /* IGPodcastFeedParser.m in Sources */,
 				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
-				32EA27AF16D406D000BB528E /* TDNotificationPanel.m in Sources */,
 				32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */,
 				32BF7B1C16DA9E9F006B2459 /* IGSettingsSkippingForwardViewController.m in Sources */,
 				32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
@@ -1022,6 +1036,7 @@
 				322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */,
 				32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */,
 				32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */,
+				322921F717A3186800895986 /* TDNotificationPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

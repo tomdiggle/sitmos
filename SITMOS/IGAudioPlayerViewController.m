@@ -321,12 +321,16 @@
  */
 - (void)showBufferingHUD:(NSNotification *)notification
 {
-    if ([[[_mediaPlayer asset] contentURL] isFileURL]|| [[TDNotificationPanel notificationPanelsForView:self.view] count] > 0) return;
+    if ([[[_mediaPlayer asset] contentURL] isFileURL]|| [[TDNotificationPanel notificationsInView:self.view] count] > 0) return;
     
-    TDNotificationPanel *panel = [TDNotificationPanel showNotificationPanelInView:self.view
-                                                                         animated:YES];
-    [panel setNotificationType:TDNotificationTypeInfo];
-    [panel setTitleText:@"Buffering..."];
+    TDNotificationPanel *panel = [[TDNotificationPanel alloc] initWithView:self.view
+                                                                     title:@"Buffering..."
+                                                                  subtitle:nil
+                                                                      type:TDNotificationTypeMessage
+                                                                      mode:TDNotificationModeText
+                                                               dismissable:NO];
+    [[self view] addSubview:panel];
+    [panel show];
 }
 
 /**
@@ -334,8 +338,7 @@
  */
 - (void)hideBufferingHUD:(NSNotification *)notification
 {
-    [TDNotificationPanel hideNotificationPanelInView:self.view
-                                            animated:YES];
+    [TDNotificationPanel hideNotificationInView:self.view];
 }
 
 #pragma mark - Playback Progress Update
