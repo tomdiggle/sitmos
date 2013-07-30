@@ -108,6 +108,7 @@
 		3263DEBD1757965B00D74A1F /* show-media-player-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3263DEBB1757965B00D74A1F /* show-media-player-icon@2x.png */; };
 		32678CEF147EDE7C007BD110 /* IGEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */; };
 		326AAB1E176F26F100FA5613 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */; };
+		3276373217A31E3200E233AD /* IGEpisodeImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3276373117A31E3200E233AD /* IGEpisodeImporter.m */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
@@ -143,7 +144,6 @@
 		32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
 		32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGAPIKeys.m */; };
-		32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC54D1619AAA5005078EC /* IGInitialSetup.m */; };
 		32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEA285153DF03400F17ABE /* IGEpisode.m */; };
 		7B96C2E08C3F4D3C8C09BACB /* libPods-SITMOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 73721471D14F4C539F2518FF /* libPods-SITMOSTests.a */; };
 		FE00210AA649423E8B08DC04 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6101FC8C011D44EA8100635E /* libPods.a */; };
@@ -279,6 +279,8 @@
 		32678CED147EDE7C007BD110 /* IGEpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeCell.h; sourceTree = "<group>"; };
 		32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeCell.m; sourceTree = "<group>"; };
 		326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
+		3276373017A31E3200E233AD /* IGEpisodeImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeImporter.h; sourceTree = "<group>"; };
+		3276373117A31E3200E233AD /* IGEpisodeImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeImporter.m; sourceTree = "<group>"; };
 		327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.0b1.xcdatamodel"; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -327,8 +329,6 @@
 		32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsEpisodesDeleteViewController.m; sourceTree = "<group>"; };
 		32FBC4EE1618DE66005078EC /* IGAPIKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGAPIKeys.h; sourceTree = "<group>"; };
 		32FBC4EF1618DE66005078EC /* IGAPIKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGAPIKeys.m; sourceTree = "<group>"; };
-		32FBC54C1619AAA5005078EC /* IGInitialSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGInitialSetup.h; sourceTree = "<group>"; };
-		32FBC54D1619AAA5005078EC /* IGInitialSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGInitialSetup.m; sourceTree = "<group>"; };
 		32FEA284153DF03400F17ABE /* IGEpisode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGEpisode.h; sourceTree = "<group>"; };
 		32FEA285153DF03400F17ABE /* IGEpisode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGEpisode.m; sourceTree = "<group>"; };
 		6101FC8C011D44EA8100635E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -437,8 +437,8 @@
 			children = (
 				321D8C50145F1D8B008698DC /* IGAppDelegate.h */,
 				321D8C51145F1D8B008698DC /* IGAppDelegate.m */,
-				32FBC54C1619AAA5005078EC /* IGInitialSetup.h */,
-				32FBC54D1619AAA5005078EC /* IGInitialSetup.m */,
+				3276373017A31E3200E233AD /* IGEpisodeImporter.h */,
+				3276373117A31E3200E233AD /* IGEpisodeImporter.m */,
 				329886871461DE9C006B7BDE /* View Controllers */,
 				32523DEB1688BF65006E9FFB /* Networking */,
 				32678CEC147EB939007BD110 /* Cells */,
@@ -1014,7 +1014,6 @@
 				321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */,
-				32FBC54E1619AAA6005078EC /* IGInitialSetup.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
@@ -1037,6 +1036,7 @@
 				32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */,
 				32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */,
 				322921F717A3186800895986 /* TDNotificationPanel.m in Sources */,
+				3276373217A31E3200E233AD /* IGEpisodeImporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,7 +1104,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Diggle (T935CR8U9Q)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1118,7 +1118,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "F9A0DC60-FD4D-416B-A4BE-82D729E6DAB0";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
@@ -1134,8 +1134,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1157,8 +1157,8 @@
 			baseConfigurationReference = D3F8EE7222394631B1848C25 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Diggle (T935CR8U9Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Diggle (T935CR8U9Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Vendor\"",
@@ -1175,8 +1175,8 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F9A0DC60-FD4D-416B-A4BE-82D729E6DAB0";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F9A0DC60-FD4D-416B-A4BE-82D729E6DAB0";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

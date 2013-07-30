@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -21,20 +21,31 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const IGInitialSetupImportEpisodes;
-
 /**
- * Runs the initial setup of the app by registering the default settings and if there are any episodes of SITMOS are already stored on the iPod it
- * will ask the user if they want to import them into the app.
+ * The IGEpisodeImporter class will import any episodes of Stuck in the Middle of Somewhere that are stored in the iPod library.
  */
 
-@interface IGInitialSetup : NSObject
+@interface IGEpisodeImporter : NSObject
 
 /**
- * Allocates a new instance of the class, sends it an init message, begins the initial setup and returns the initialized object.
+ * Returns an array of media items of Stuck in the Middle of Somewhere stored in the iPod library, or an empty array if none exist.
+ */
++ (NSArray *)episodesOnDevice;
+
+/**
+ * Creates and returns an IGEpisodeImporter object and sets the specified episodes to import, destination directory and completion block.
  *
- * @return the initialized object.
+ * @param episodes Use the method episodesOnDevice to get an array of episodes to import.
+ * @param destinationDirectory The directory the episodes will be located when imported.
+ * @param completion The completion handler block to execute. 
+ *
+ * @see episodesOnDevice
  */
-+ (void)runInitialSetupWithCompletion:(void (^)(NSUInteger episodesImported, NSError *error))completion;
++ (instancetype)importEpisodes:(NSArray *)episodes destinationDirectory:(NSURL *)destinationDirectory completion:(void (^)(NSUInteger episodesImported, BOOL success, NSError *error))completion;
+
+/**
+ * Will start import.
+ */
+- (void)importEpisodes;
 
 @end

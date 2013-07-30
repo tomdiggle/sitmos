@@ -29,3 +29,4 @@ NSString * const IGSettingUnseenBadge = @"IGSettingUnseenBadge";
 NSString * const IGSettingSkippingForwardTime = @"IGSettingSkippingForwardTime";
 NSString * const IGSettingSkippingBackwardTime = @"IGSettingSkippingBackwardTime";
 NSString * const IGSettingPushNotifications = @"IGSettingPushNotifications";
+NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";

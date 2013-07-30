@@ -230,3 +230,15 @@
 
 /* text label for new episode */
 "NewEpisode" = "New Episode";
+
+/* text label for Import */
+"Import" = "Import";
+
+/* text label for importing episodes */
+"ImportingEpisodes" = "Importing Episodes";
+
+/* text label for import failed */
+"ImportFailed" = "Import Failed";
+
+/* text label for imported # episodes */
+"ImportedEpisodes" = "Imported %i Episodes";
