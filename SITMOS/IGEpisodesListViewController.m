@@ -76,6 +76,8 @@
 {
     [super viewDidLoad];
     
+    [self setTitle:@"SITMOS"];
+    
     _fetchedResultsController = [IGEpisode MR_fetchAllSortedBy:@"pubDate"
                                                      ascending:NO
                                                  withPredicate:nil
