@@ -39,7 +39,6 @@ typedef enum {
 } IGMediaPlayerPlaybackState;
 
 typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);
-
 typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnded);
 
 @class IGMediaPlayerAsset;
@@ -57,17 +56,17 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 /**
  * The time the media player will begin playback from.
  */
-@property (assign, nonatomic) Float64 startFromTime;
+@property (nonatomic, assign) Float64 startFromTime;
 
 /**
  * The player’s current item. (read-only)
  */
-@property (readonly, nonatomic) Float64 currentTime;
+@property (nonatomic, readonly) Float64 currentTime;
 
 /**
  * The player’s duration. (read-only)
  */
-@property (readonly, nonatomic) Float64 duration;
+@property (nonatomic, readonly) Float64 duration;
 
 /**
  * The current rate of playback.
@@ -79,17 +78,17 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 /**
  * The current playback state of the media player.
  */
-@property (readonly, nonatomic) IGMediaPlayerPlaybackState playbackState;
+@property (nonatomic, readonly) IGMediaPlayerPlaybackState playbackState;
 
 /**
  * The block to execute when media playback has paused.
  */
-@property (copy, nonatomic) IGMediaPlayerPausedBlock pausedBlock;
+@property (nonatomic, copy) IGMediaPlayerPausedBlock pausedBlock;
 
 /**
  * The block to execute when media playback has stopped.
  */
-@property (copy, nonatomic) IGMediaPlayerStoppedBlock stoppedBlock;
+@property (nonatomic, copy) IGMediaPlayerStoppedBlock stoppedBlock;
 
 /**
  * The asset of which the media was initialized. (read-only)
@@ -107,7 +106,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
  *
  * @return The media player instance.
  */
-+ (IGMediaPlayer *)sharedInstance;
++ (instancetype)sharedInstance;
 
 #pragma mark - Managing Playback
 
@@ -117,6 +116,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 
 /**
  * Starts playback.
+ *
  * @warning *Important:* This method must be called first when wanting to play new content.
  */
 - (void)startWithAsset:(IGMediaPlayerAsset *)asset;

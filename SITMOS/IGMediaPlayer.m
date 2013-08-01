@@ -58,13 +58,13 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 @interface IGMediaPlayer ()
 
-@property (strong, nonatomic) AVPlayer *player;
-@property (strong, nonatomic) AVPlayerItem *playerItem;
-@property (readwrite, nonatomic) Float64 currentTime;
-@property (readwrite, nonatomic) Float64 duration;
-@property (readwrite, nonatomic) IGMediaPlayerPlaybackState playbackState;
-@property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) AVPlayerItem *playerItem;
 @property (nonatomic, strong) AVURLAsset *urlAsset;
+@property (nonatomic, readwrite) Float64 currentTime;
+@property (nonatomic, readwrite) Float64 duration;
+@property (nonatomic, readwrite) IGMediaPlayerPlaybackState playbackState;
+@property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
 
 @end
 
@@ -72,7 +72,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 #pragma mark - Getting the Media Player Instance
 
-+ (IGMediaPlayer *)sharedInstance
++ (instancetype)sharedInstance
 {
     static dispatch_once_t once = 0;
     dispatch_once(&once, ^{
@@ -86,10 +86,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 - (id)init
 {
-    if (!(self = [super init]))
-    {
-        return nil;
-    }
+    if (!(self = [super init])) return nil;
     
     _startFromTime = 0.f;
     _duration = 0.f;
@@ -133,7 +130,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 {
     if (context == IGMediaPlayerStatusObservationContext)
     {
-        // AVPlayerItem "status" property value observer.
         AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
         switch (status)
         {
@@ -162,10 +158,8 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     }
     else if (context == IGMediaPlayerCurrentItemObservationContext)
     {
-        // Replacement of player currentItem has occurred.
         AVPlayerItem *newPlayerItem = [change objectForKey:NSKeyValueChangeNewKey];
         
-        /* Is the new player item null? */
         if (newPlayerItem == (id)[NSNull null])
         {
             return;
@@ -209,11 +203,9 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
 
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
-
-    // Tells the asset to load the values of any of the specified keys that are not already loaded.
+    
     [_urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            // IMPORTANT: Must dispatch to main queue in order to operate on the AVPlayer and AVPlayerItem.
             [self prepareToPlayAsset:_urlAsset
                             withKeys:requestedKeys];
         });
@@ -227,7 +219,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
  */
 - (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys
 {
-    // Make sure that the value of each key has loaded successfully.
 	for (NSString *thisKey in requestedKeys)
 	{
 		NSError *error = nil;
@@ -240,17 +231,14 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 		}
 	}
     
-    // Use the AVAsset playable property to detect whether the asset can be played.
     if (!asset.playable) 
     {
         [self playbackFailed];
         return;
     }
     
-    // Stop observing our prior AVPlayerItem, if we have one.
     if (_playerItem)
     {
-        // Remove existing player item key value observers and notifications.
         [_playerItem removeObserver:self 
                          forKeyPath:kStatusKey];
         
@@ -268,44 +256,35 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
                                                       object:_playerItem];
     }
 	
-    // Create a new instance of AVPlayerItem from the now successfully loaded AVAsset.
     _playerItem = [AVPlayerItem playerItemWithAsset:asset];
     
-    // Observe the player item "status" key to determine when it is ready to play.
     [_playerItem addObserver:self 
                   forKeyPath:kStatusKey 
                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                      context:IGMediaPlayerStatusObservationContext];
     
-    // Observe the player item "duration" key to determine any duration changes.
     [_playerItem addObserver:self 
                   forKeyPath:kDurationKey 
                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                      context:IGMediaPlayerDurationObservationContext];
     
-    // Observe the player item "playbackBufferEmpty" key to determine if playback has consumed all buffered media and that playback will stall or end.
     [_playerItem addObserver:self
                   forKeyPath:kPlaybackBufferEmptyKey
                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                      context:IGMediaPlayerPlaybackBufferEmptyObservationContext];
     
-    // Observe the player item "playbackLikelyToKeepUp" key to detemine if the item will likely play through without stalling.
     [_playerItem addObserver:self
                   forKeyPath:kPlaybackLikelyToKeepUpKey
                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
                      context:IGMediaPlayerPlaybackLikelyToKeepUpObservationContext];
 	
-    // When the player item has played to its end time we'll reset the progress back to 0, remove the now playing info,
-    // set the episode to nil and post a playback ended notification.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playerItemDidReachEnd:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:_playerItem];
 	
-    // Create new player, if we don't already have one.
     if (!_player)
     {
-        // Get a new AVPlayer initialized to play the specified player item.
         [self setPlayer:[AVPlayer playerWithPlayerItem:_playerItem]];
         
         [_player addObserver:self 
@@ -314,13 +293,11 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
                      context:IGMediaPlayerCurrentItemObservationContext];
     }
     
-    // Make our new AVPlayerItem the AVPlayer's current item.
     if (_player.currentItem != _playerItem)
     {
         [_player replaceCurrentItemWithPlayerItem:_playerItem];
     }
     
-    // Set the audio session active
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
