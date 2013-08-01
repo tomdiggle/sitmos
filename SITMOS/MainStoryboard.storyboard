@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
     <dependencies>
-        <development version="4500" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <scenes>
-        <!--Episodes List View Controller - SITMOS-->
+        <!--Episodes List View Controller-->
         <scene sceneID="gmF-qp-5bT">
             <objects>
                 <viewController storyboardIdentifier="episodesListViewController" id="azn-Zd-amG" customClass="IGEpisodesListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="77h-gN-78g"/>
+                        <viewControllerLayoutGuide type="bottom" id="kdo-bU-xjP"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1jO-tK-ikB">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="23b-ov-d4R">
-                                <searchBar key="tableHeaderView" contentMode="redraw" barStyle="blackOpaque" id="CAT-qP-hfd">
-                                    <rect key="frame" x="0.0" y="0.0" width="640" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" barStyle="black" id="CAT-qP-hfd">
+                                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -24,13 +29,12 @@
                                 </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="episodeCell" rowHeight="76" id="Itm-hO-l8f" customClass="IGEpisodeCell">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="76"/>
+                                        <rect key="frame" x="0.0" y="130" width="320" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Itm-hO-l8f" id="30n-8H-It1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -42,14 +46,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="23b-ov-d4R" firstAttribute="leading" secondItem="1jO-tK-ikB" secondAttribute="leading" type="default" id="7Gp-52-oCq"/>
-                            <constraint firstItem="23b-ov-d4R" firstAttribute="trailing" secondItem="1jO-tK-ikB" secondAttribute="trailing" type="default" id="QPJ-va-pXF"/>
-                            <constraint firstItem="23b-ov-d4R" firstAttribute="bottom" secondItem="1jO-tK-ikB" secondAttribute="bottom" type="default" id="Umi-ek-uGs"/>
-                            <constraint firstItem="23b-ov-d4R" firstAttribute="top" secondItem="1jO-tK-ikB" secondAttribute="top" type="default" id="xtr-g2-BjQ"/>
+                            <constraint firstItem="23b-ov-d4R" firstAttribute="leading" secondItem="1jO-tK-ikB" secondAttribute="leading" id="7Gp-52-oCq"/>
+                            <constraint firstItem="23b-ov-d4R" firstAttribute="trailing" secondItem="1jO-tK-ikB" secondAttribute="trailing" id="QPJ-va-pXF"/>
+                            <constraint firstItem="23b-ov-d4R" firstAttribute="bottom" secondItem="1jO-tK-ikB" secondAttribute="bottom" id="Umi-ek-uGs"/>
+                            <constraint firstItem="23b-ov-d4R" firstAttribute="top" secondItem="1jO-tK-ikB" secondAttribute="top" id="xtr-g2-BjQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="SITMOS" id="K60-j5-uMV">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="cRT-De-kKP">
+                    <navigationItem key="navigationItem" id="K60-j5-uMV">
+                        <barButtonItem key="leftBarButtonItem" id="cRT-De-kKP">
                             <connections>
                                 <action selector="showSettings:" destination="azn-Zd-amG" id="IE0-Ff-FVt"/>
                             </connections>
@@ -83,16 +87,23 @@
         <scene sceneID="kwx-v7-YPw">
             <objects>
                 <viewController storyboardIdentifier="IGAudioPlayerViewController" id="U3O-W2-aEf" customClass="IGAudioPlayerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="owz-aV-3vI"/>
+                        <viewControllerLayoutGuide type="bottom" id="hLu-jc-cU5"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CrI-Jn-xth">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" image="audio-player-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-TV-RFA" userLabel="Background Image">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="391"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U53-Ux-UHX" userLabel="Lower Player Controls View">
+                                <rect key="frame" x="0.0" y="392" width="320" height="88"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-qD-9IU" userLabel="Play/Pause Button">
+                                        <rect key="frame" x="144" y="11" width="32" height="32"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="play-button.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,6 +116,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77O-6D-tGj" userLabel="Skip Forward Button">
+                                        <rect key="frame" x="230" y="11" width="32" height="32"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="skipping-forward-button.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -118,6 +130,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPI-Eh-kSX" userLabel="Skip Backward Button">
+                                        <rect key="frame" x="58" y="11" width="32" height="32"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="skipping-backward-button.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -131,7 +144,8 @@
                                             <outletCollection property="gestureRecognizers" destination="PMf-Za-T0r" appends="YES" id="NNO-af-bVL"/>
                                         </connections>
                                     </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="rXD-kk-NH2" userLabel="Progress Slider" customClass="TDSlider">
+                                    <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="rXD-kk-NH2" userLabel="Progress Slider" customClass="TDSlider">
+                                        <rect key="frame" x="60" y="78" width="200" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="196" id="m7I-YW-12Y"/>
                                         </constraints>
@@ -142,6 +156,7 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hUD-d0-zhz" userLabel="Current Time Label">
+                                        <rect key="frame" x="0.0" y="54" width="53" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="XRT-oG-wqq"/>
                                             <constraint firstAttribute="width" constant="53" id="ikv-RW-bYy"/>
@@ -151,6 +166,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="yKe-uu-64E" userLabel="Duration Label">
+                                        <rect key="frame" x="268" y="54" width="52" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="52" id="Hbm-K9-XZa"/>
                                         </constraints>
@@ -162,17 +178,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="hUD-d0-zhz" secondAttribute="bottom" constant="13" id="0z3-QT-OGO"/>
-                                    <constraint firstItem="77O-6D-tGj" firstAttribute="baseline" secondItem="rPI-Eh-kSX" secondAttribute="baseline" type="default" id="1vc-xD-vDf"/>
+                                    <constraint firstItem="77O-6D-tGj" firstAttribute="baseline" secondItem="rPI-Eh-kSX" secondAttribute="baseline" id="1vc-xD-vDf"/>
                                     <constraint firstAttribute="trailing" secondItem="77O-6D-tGj" secondAttribute="trailing" constant="58" id="3ja-bV-hOs"/>
                                     <constraint firstAttribute="bottom" secondItem="rXD-kk-NH2" secondAttribute="bottom" constant="10" id="5yk-zt-CnW"/>
-                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="U53-Ux-UHX" secondAttribute="centerX" type="default" id="7vz-7R-ePw"/>
-                                    <constraint firstAttribute="height" constant="88" type="user" id="EqX-F5-3d6"/>
-                                    <constraint firstItem="Di9-qD-9IU" firstAttribute="top" secondItem="rPI-Eh-kSX" secondAttribute="top" type="default" id="FH6-0x-axU"/>
-                                    <constraint firstItem="yKe-uu-64E" firstAttribute="baseline" secondItem="hUD-d0-zhz" secondAttribute="baseline" type="default" id="ZSP-yx-c8O"/>
-                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="leading" secondItem="U53-Ux-UHX" secondAttribute="leading" type="default" id="fDc-xl-igg"/>
-                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="Di9-qD-9IU" secondAttribute="centerX" type="default" id="jhr-Zq-En1"/>
-                                    <constraint firstItem="yKe-uu-64E" firstAttribute="trailing" secondItem="U53-Ux-UHX" secondAttribute="trailing" type="default" id="sTJ-YR-P4P"/>
-                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="top" secondItem="yKe-uu-64E" secondAttribute="top" type="default" id="tXq-dh-oIa"/>
+                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="U53-Ux-UHX" secondAttribute="centerX" id="7vz-7R-ePw"/>
+                                    <constraint firstAttribute="height" constant="88" id="EqX-F5-3d6"/>
+                                    <constraint firstItem="Di9-qD-9IU" firstAttribute="top" secondItem="rPI-Eh-kSX" secondAttribute="top" id="FH6-0x-axU"/>
+                                    <constraint firstItem="yKe-uu-64E" firstAttribute="baseline" secondItem="hUD-d0-zhz" secondAttribute="baseline" id="ZSP-yx-c8O"/>
+                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="leading" secondItem="U53-Ux-UHX" secondAttribute="leading" id="fDc-xl-igg"/>
+                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="Di9-qD-9IU" secondAttribute="centerX" id="jhr-Zq-En1"/>
+                                    <constraint firstItem="yKe-uu-64E" firstAttribute="trailing" secondItem="U53-Ux-UHX" secondAttribute="trailing" id="sTJ-YR-P4P"/>
+                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="top" secondItem="yKe-uu-64E" secondAttribute="top" id="tXq-dh-oIa"/>
                                     <constraint firstItem="rPI-Eh-kSX" firstAttribute="top" secondItem="U53-Ux-UHX" secondAttribute="top" constant="11" id="vei-8Y-qhO"/>
                                     <constraint firstItem="rPI-Eh-kSX" firstAttribute="leading" secondItem="U53-Ux-UHX" secondAttribute="leading" constant="58" id="wMc-w6-e8r"/>
                                 </constraints>
@@ -180,12 +196,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="WlM-TV-RFA" secondAttribute="bottom" constant="89" type="user" id="BCS-1g-XaL"/>
-                            <constraint firstItem="WlM-TV-RFA" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" type="default" id="IZi-6i-llQ"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" type="default" id="XDi-cK-6bb"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="bottom" secondItem="CrI-Jn-xth" secondAttribute="bottom" type="user" id="oyJ-cg-Wsv"/>
-                            <constraint firstItem="WlM-TV-RFA" firstAttribute="top" secondItem="CrI-Jn-xth" secondAttribute="top" type="default" id="qdn-cS-62d"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="trailing" secondItem="CrI-Jn-xth" secondAttribute="trailing" type="default" id="zsY-pl-oZ3"/>
+                            <constraint firstAttribute="bottom" secondItem="WlM-TV-RFA" secondAttribute="bottom" constant="89" id="BCS-1g-XaL"/>
+                            <constraint firstItem="WlM-TV-RFA" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" id="IZi-6i-llQ"/>
+                            <constraint firstItem="U53-Ux-UHX" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" id="XDi-cK-6bb"/>
+                            <constraint firstItem="U53-Ux-UHX" firstAttribute="bottom" secondItem="CrI-Jn-xth" secondAttribute="bottom" id="oyJ-cg-Wsv"/>
+                            <constraint firstItem="WlM-TV-RFA" firstAttribute="top" secondItem="CrI-Jn-xth" secondAttribute="top" id="qdn-cS-62d"/>
+                            <constraint firstItem="U53-Ux-UHX" firstAttribute="trailing" secondItem="CrI-Jn-xth" secondAttribute="trailing" id="zsY-pl-oZ3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Rxh-I5-Oqi">
@@ -195,8 +211,8 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackOpaque" prompted="NO"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="WlM-TV-RFA" id="91b-4O-1t1"/>
                         <outlet property="currentTimeLabel" destination="hUD-d0-zhz" id="SJt-zF-RpG"/>
@@ -225,8 +241,8 @@
             <objects>
                 <navigationController id="FWF-LQ-prz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="blackOpaque" id="jGm-At-hV6">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" barStyle="black" id="jGm-At-hV6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -248,7 +264,7 @@
         <image name="skipping-forward-button.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
