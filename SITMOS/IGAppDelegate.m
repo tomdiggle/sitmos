@@ -97,8 +97,7 @@
 - (void)applyStylesheet
 {
     UINavigationBar *navigationBar = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-    [navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-bg"]
-                        forBarMetrics:UIBarMetricsDefault];
+    [navigationBar setBarTintColor:[UIColor colorWithRed:0.333 green:0.643 blue:0.901 alpha:1]];
 }
 
 #pragma mark - Push Notifications
