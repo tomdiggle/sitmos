@@ -66,31 +66,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
 @property (nonatomic, strong) AVURLAsset *urlAsset;
 
-- (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
-- (void)handleAudioRouteChange:(const void *)inPropertyValue;
-
 @end
-
-void MyAudioSessionInterruptionListener(void *inClientData, UInt32 inInterruptionState);
-void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData);
-
-/**
- * Invoked if the audio session is interrupted (like when the phone rings).
- */
-void MyAudioSessionInterruptionListener(void *inClientData, UInt32 inInterruptionState)
-{
-    [__sharedInstance handleInterruptionChangeToState:inInterruptionState];
-}
-
-/**
- * Invoked if the audio route has changed. Used to detect when headphones are unplugged.
- */
-void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData)
-{
-    if (inID != kAudioSessionProperty_AudioRouteChange) return;
-    
-    [__sharedInstance handleAudioRouteChange:inData];
-}
 
 @implementation IGMediaPlayer
 
@@ -115,16 +91,22 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
         return nil;
     }
     
-    // Set the audio session category so that we continue to play if the iPhone/iPod auto-locks
-    AudioSessionInitialize(NULL, NULL, MyAudioSessionInterruptionListener, (__bridge void *)self);
-    UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
-    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(sessionCategory), &sessionCategory);
-    AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, AudioRouteChangeListenerCallback, (__bridge void *)self);
-    
     _startFromTime = 0.f;
     _duration = 0.f;
     _currentTime = 0.f;
     _playbackRate = 1.f;
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleInterruption:)
+                                                 name:AVAudioSessionInterruptionNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleAudioRouteChange:)
+                                                 name:AVAudioSessionRouteChangeNotification
+                                               object:nil];
     
     return self;
 }
@@ -339,7 +321,7 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     }
     
     // Set the audio session active
-    AudioSessionSetActive(true);
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 - (void)play
@@ -504,42 +486,38 @@ void AudioRouteChangeListenerCallback(void *inClientData, AudioSessionPropertyID
     [playingInfoCenter setNowPlayingInfo:nil];
 }
 
-#pragma mark - Audio Service Callback Method
+#pragma mark - Handle Interruptions
 
-- (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState
+- (void)handleInterruption:(NSNotification *)notification
 {
-	if (inInterruptionState == kAudioSessionBeginInterruption)
-	{
-		if ([self isPlaying]) 
+    NSDictionary *userInfo = [notification userInfo];
+    NSUInteger interruptionType = [[userInfo objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+    if (interruptionType == AVAudioSessionInterruptionTypeBegan)
+    {
+        if ([self isPlaying])
         {
 			[self pause];
             [self setPlaybackState:IGMediaPlayerPlaybackStatePausedByInterruption];
-		} 
-	}
-	else if (inInterruptionState == kAudioSessionEndInterruption) 
-	{
-        UInt32 shouldResume = 0;
-        UInt32 size = sizeof(shouldResume);
-        
-        if (_playbackState == IGMediaPlayerPlaybackStatePausedByInterruption)
+		}
+    }
+    else if (interruptionType == AVAudioSessionInterruptionTypeEnded)
+    {
+        NSUInteger interruptionOption = [[userInfo objectForKey:AVAudioSessionInterruptionOptionKey] unsignedIntegerValue];
+        if (interruptionOption == AVAudioSessionInterruptionOptionShouldResume)
         {
-            if (!AudioSessionGetProperty(kAudioSessionProperty_InterruptionType, &size, &shouldResume) && shouldResume == kAudioSessionInterruptionType_ShouldResume && [self isPaused])
-            {
-                AudioSessionSetActive(TRUE);
-                [self play];
-            }
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
+            [self play];
         }
-	}
+    }
 }
 
-- (void)handleAudioRouteChange:(const void *)inPropertyValue
+#pragma mark - Handle Audio Route Change
+
+- (void)handleAudioRouteChange:(NSNotification *)notification
 {
-    CFDictionaryRef routeChangeDictionary = inPropertyValue;
-    CFNumberRef routeChangeReasonRef = CFDictionaryGetValue(routeChangeDictionary, CFSTR(kAudioSession_AudioRouteChangeKey_Reason));
-    SInt32 routeChangeReason;
-    CFNumberGetValue(routeChangeReasonRef, kCFNumberSInt32Type, &routeChangeReason);
-    
-    if (routeChangeReason == kAudioSessionRouteChangeReason_OldDeviceUnavailable)
+    NSDictionary *userInfo = [notification userInfo];
+    NSUInteger routeChangeReason = [[userInfo objectForKey:AVAudioSessionRouteChangeReasonKey] unsignedIntegerValue];
+    if (routeChangeReason == AVAudioSessionRouteChangeReasonOldDeviceUnavailable)
     {
         [self pause];
     }
