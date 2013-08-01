@@ -96,41 +96,9 @@
 
 - (void)applyStylesheet
 {
-    [[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"search-bar-bg"]];
-    
     UINavigationBar *navigationBar = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-    [navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-port-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10.0f, 0, 10.0f)]
+    [navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-bar-bg"]
                         forBarMetrics:UIBarMetricsDefault];
-    [navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav-bar-land-bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10.0f, 0, 10.0f)]
-                        forBarMetrics:UIBarMetricsLandscapePhone];
-    
-    UIBarButtonItem *barButton = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil];
-    [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-port"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
-                         forState:UIControlStateNormal
-                       barMetrics:UIBarMetricsDefault];
-	[barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-port-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
-                         forState:UIControlStateHighlighted
-                       barMetrics:UIBarMetricsDefault];
-    [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-land"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
-                         forState:UIControlStateNormal
-                       barMetrics:UIBarMetricsLandscapePhone];
-    [barButton setBackgroundImage:[[UIImage imageNamed:@"nav-button-land-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 6.0f, 0, 6.0f)]
-                         forState:UIControlStateNormal
-                       barMetrics:UIBarMetricsLandscapePhone];
-    
-    // Nav back button
-	[barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-port"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
-                                   forState:UIControlStateNormal
-                                 barMetrics:UIBarMetricsDefault];
-    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-port-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
-                                   forState:UIControlStateHighlighted
-                                 barMetrics:UIBarMetricsDefault];
-    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-land"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
-                                   forState:UIControlStateNormal
-                                 barMetrics:UIBarMetricsLandscapePhone];
-    [barButton setBackButtonBackgroundImage:[[UIImage imageNamed:@"nav-back-button-land-highlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13.0f, 0, 5.0f)]
-                                   forState:UIControlStateHighlighted
-                                 barMetrics:UIBarMetricsLandscapePhone];
 }
 
 #pragma mark - Push Notifications
