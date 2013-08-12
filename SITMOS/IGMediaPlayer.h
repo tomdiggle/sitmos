@@ -22,7 +22,6 @@
 #import <Foundation/Foundation.h>
 
 /* Media Player Notifications */
-extern NSString * const IGMediaPlayerPlaybackLoading;
 extern NSString * const IGMediaPlayerPlaybackStatusChangedNotification;
 extern NSString * const IGMediaPlayerPlaybackFailedNotification;
 extern NSString * const IGMediaPlayerPlaybackEndedNotification;
@@ -30,6 +29,7 @@ extern NSString * const IGMediaPlayerPlaybackBufferEmptyNotification;
 extern NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification;
 
 typedef enum {
+    IGMediaPlayerPlaybackStateBuffering,
     IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStatePlaying,
     IGMediaPlayerPlaybackStatePaused,

@@ -30,7 +30,6 @@
 static IGMediaPlayer *__sharedInstance = nil;
 
 /* Media Player Notifications */
-NSString * const IGMediaPlayerPlaybackLoading = @"IGMediaPlayerPlaybackLoading";
 NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
 NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
 NSString * const IGMediaPlayerPlaybackEndedNotification = @"IGMediaPlayerPlaybackEndedNotification";
@@ -198,7 +197,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     
     _asset = asset;
 
-    [self postNotification:IGMediaPlayerPlaybackLoading];
+    [self setPlaybackState:IGMediaPlayerPlaybackStateBuffering];
 
     _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
 
@@ -311,7 +310,8 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 - (void)pause
 {
     [_player pause];
-    if (_pausedBlock) {
+    if (_pausedBlock)
+    {
         _pausedBlock([self currentTime]);
     }
     [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
