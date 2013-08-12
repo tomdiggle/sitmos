@@ -24,6 +24,7 @@
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGEpisode.h"
+#import "IGAudioPlayerViewController.h"
 #import "IGVideoPlayerViewController.h"
 #import "CoreData+MagicalRecord.h"
 
@@ -51,6 +52,11 @@
 {
     [super viewDidLoad];
     
+    [[[self navigationController] navigationBar] setTranslucent:NO];
+    [[[self navigationController] navigationBar] setBarStyle:UIBarStyleBlackOpaque];
+    [[[self navigationController] navigationBar] setTintColor:[UIColor whiteColor]];
+    [[[self navigationController] navigationBar] setBarTintColor:[UIColor colorWithRed:0.078 green:0.078 blue:0.078 alpha:1]];
+    
     if ([_mediaPlayerAsset isAudio])
     {
         [self showAudioPlayer];
@@ -65,26 +71,26 @@
 
 - (void)showAudioPlayer
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                         bundle:[NSBundle mainBundle]];
-    UIViewController *audioPlayer = [storyboard instantiateViewControllerWithIdentifier:@"IGAudioPlayerViewController"];
-    [audioPlayer setTitle:[_mediaPlayerAsset title]];
-    [[self navigationController] pushViewController:audioPlayer
-                                           animated:NO];
-    
     [self playAudio];
+    
+    IGAudioPlayerViewController *audioPlayerViewController = [[IGAudioPlayerViewController alloc] init];
+    [[self navigationController] pushViewController:audioPlayerViewController
+                                           animated:YES];
 }
 
 - (void)playAudio
 {
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([[_mediaPlayerAsset contentURL] isEqual:[[mediaPlayer asset] contentURL]]) return;
+    if ([[_mediaPlayerAsset contentURL] isEqual:[[mediaPlayer asset] contentURL]])
+    {
+        return;
+    }
+    
+    [mediaPlayer startWithAsset:_mediaPlayerAsset];
     
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                   withValue:[_mediaPlayerAsset title]];
-    
     [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
-    [mediaPlayer startWithAsset:_mediaPlayerAsset];
     
     [mediaPlayer setPausedBlock:^(Float64 currentTime) {
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {

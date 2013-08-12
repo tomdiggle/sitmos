@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="FWF-LQ-prz">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
@@ -28,10 +28,10 @@
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="episodeCell" rowHeight="76" id="Itm-hO-l8f" customClass="IGEpisodeCell">
+                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="episodeCell" rowHeight="76" id="Itm-hO-l8f" customClass="IGEpisodeCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Itm-hO-l8f" id="30n-8H-It1">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="Itm-hO-l8f" id="30n-8H-It1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -83,165 +83,12 @@
             </objects>
             <point key="canvasLocation" x="1259" y="318"/>
         </scene>
-        <!--Audio Player View Controller-->
-        <scene sceneID="kwx-v7-YPw">
-            <objects>
-                <viewController storyboardIdentifier="IGAudioPlayerViewController" id="U3O-W2-aEf" customClass="IGAudioPlayerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="owz-aV-3vI"/>
-                        <viewControllerLayoutGuide type="bottom" id="hLu-jc-cU5"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="CrI-Jn-xth">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView contentMode="scaleToFill" image="audio-player-bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="WlM-TV-RFA" userLabel="Background Image">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="391"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U53-Ux-UHX" userLabel="Lower Player Controls View">
-                                <rect key="frame" x="0.0" y="392" width="320" height="88"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Di9-qD-9IU" userLabel="Play/Pause Button">
-                                        <rect key="frame" x="144" y="11" width="32" height="32"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="play-button.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="playButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="WxT-o4-c40"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77O-6D-tGj" userLabel="Skip Forward Button">
-                                        <rect key="frame" x="230" y="11" width="32" height="32"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="skipping-forward-button.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="skipForwardButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="NI4-BM-Swd"/>
-                                            <outletCollection property="gestureRecognizers" destination="BrA-NH-ES8" appends="YES" id="SXP-c4-hev"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPI-Eh-kSX" userLabel="Skip Backward Button">
-                                        <rect key="frame" x="58" y="11" width="32" height="32"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="skipping-backward-button.png">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="skipBackwardButtonTapped:" destination="U3O-W2-aEf" eventType="touchUpInside" id="9ya-bs-yB0"/>
-                                            <outletCollection property="gestureRecognizers" destination="PMf-Za-T0r" appends="YES" id="NNO-af-bVL"/>
-                                        </connections>
-                                    </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="rXD-kk-NH2" userLabel="Progress Slider" customClass="TDSlider">
-                                        <rect key="frame" x="60" y="78" width="200" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="196" id="m7I-YW-12Y"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="seekToTime:" destination="U3O-W2-aEf" eventType="valueChanged" id="3sD-7h-rWm"/>
-                                            <action selector="seekToTimeStart:" destination="U3O-W2-aEf" eventType="touchDown" id="zfJ-Uf-t9N"/>
-                                            <action selector="seekToTimeStop:" destination="U3O-W2-aEf" eventType="touchUpInside" id="XBw-VT-YrW"/>
-                                        </connections>
-                                    </slider>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hUD-d0-zhz" userLabel="Current Time Label">
-                                        <rect key="frame" x="0.0" y="54" width="53" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="XRT-oG-wqq"/>
-                                            <constraint firstAttribute="width" constant="53" id="ikv-RW-bYy"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="yKe-uu-64E" userLabel="Duration Label">
-                                        <rect key="frame" x="268" y="54" width="52" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="52" id="Hbm-K9-XZa"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="hUD-d0-zhz" secondAttribute="bottom" constant="13" id="0z3-QT-OGO"/>
-                                    <constraint firstItem="77O-6D-tGj" firstAttribute="baseline" secondItem="rPI-Eh-kSX" secondAttribute="baseline" id="1vc-xD-vDf"/>
-                                    <constraint firstAttribute="trailing" secondItem="77O-6D-tGj" secondAttribute="trailing" constant="58" id="3ja-bV-hOs"/>
-                                    <constraint firstAttribute="bottom" secondItem="rXD-kk-NH2" secondAttribute="bottom" constant="10" id="5yk-zt-CnW"/>
-                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="U53-Ux-UHX" secondAttribute="centerX" id="7vz-7R-ePw"/>
-                                    <constraint firstAttribute="height" constant="88" id="EqX-F5-3d6"/>
-                                    <constraint firstItem="Di9-qD-9IU" firstAttribute="top" secondItem="rPI-Eh-kSX" secondAttribute="top" id="FH6-0x-axU"/>
-                                    <constraint firstItem="yKe-uu-64E" firstAttribute="baseline" secondItem="hUD-d0-zhz" secondAttribute="baseline" id="ZSP-yx-c8O"/>
-                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="leading" secondItem="U53-Ux-UHX" secondAttribute="leading" id="fDc-xl-igg"/>
-                                    <constraint firstItem="rXD-kk-NH2" firstAttribute="centerX" secondItem="Di9-qD-9IU" secondAttribute="centerX" id="jhr-Zq-En1"/>
-                                    <constraint firstItem="yKe-uu-64E" firstAttribute="trailing" secondItem="U53-Ux-UHX" secondAttribute="trailing" id="sTJ-YR-P4P"/>
-                                    <constraint firstItem="hUD-d0-zhz" firstAttribute="top" secondItem="yKe-uu-64E" secondAttribute="top" id="tXq-dh-oIa"/>
-                                    <constraint firstItem="rPI-Eh-kSX" firstAttribute="top" secondItem="U53-Ux-UHX" secondAttribute="top" constant="11" id="vei-8Y-qhO"/>
-                                    <constraint firstItem="rPI-Eh-kSX" firstAttribute="leading" secondItem="U53-Ux-UHX" secondAttribute="leading" constant="58" id="wMc-w6-e8r"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="WlM-TV-RFA" secondAttribute="bottom" constant="89" id="BCS-1g-XaL"/>
-                            <constraint firstItem="WlM-TV-RFA" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" id="IZi-6i-llQ"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="leading" secondItem="CrI-Jn-xth" secondAttribute="leading" id="XDi-cK-6bb"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="bottom" secondItem="CrI-Jn-xth" secondAttribute="bottom" id="oyJ-cg-Wsv"/>
-                            <constraint firstItem="WlM-TV-RFA" firstAttribute="top" secondItem="CrI-Jn-xth" secondAttribute="top" id="qdn-cS-62d"/>
-                            <constraint firstItem="U53-Ux-UHX" firstAttribute="trailing" secondItem="CrI-Jn-xth" secondAttribute="trailing" id="zsY-pl-oZ3"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="Rxh-I5-Oqi">
-                        <barButtonItem key="leftBarButtonItem" image="hide-media-player-icon.png" id="QdR-G8-3SI">
-                            <connections>
-                                <action selector="hideAudioPlayer:" destination="U3O-W2-aEf" id="Szg-MD-uPd"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                    <connections>
-                        <outlet property="backgroundImageView" destination="WlM-TV-RFA" id="91b-4O-1t1"/>
-                        <outlet property="currentTimeLabel" destination="hUD-d0-zhz" id="SJt-zF-RpG"/>
-                        <outlet property="durationLabel" destination="yKe-uu-64E" id="p9e-kJ-RYU"/>
-                        <outlet property="lowerPlayerControls" destination="U53-Ux-UHX" id="D6o-df-S8l"/>
-                        <outlet property="playButton" destination="Di9-qD-9IU" id="5du-qW-ub6"/>
-                        <outlet property="progressSlider" destination="rXD-kk-NH2" id="H18-oO-S46"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="234-ks-gua" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BrA-NH-ES8" userLabel="Seek Forward">
-                    <connections>
-                        <action selector="seekForward:" destination="U3O-W2-aEf" id="mG7-MR-f15"/>
-                    </connections>
-                </pongPressGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.99999999999999989" id="PMf-Za-T0r" userLabel="Seek Backward">
-                    <connections>
-                        <action selector="seekBackward:" destination="U3O-W2-aEf" id="76W-KA-Rw6"/>
-                    </connections>
-                </pongPressGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1718" y="318"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ijq-dU-R91">
             <objects>
                 <navigationController id="FWF-LQ-prz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translucent="NO" id="jGm-At-hV6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -256,13 +103,7 @@
             <point key="canvasLocation" x="799" y="318"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="audio-player-bg.png" width="320" height="329"/>
-        <image name="hide-media-player-icon.png" width="20" height="20"/>
-        <image name="play-button.png" width="32" height="32"/>
-        <image name="skipping-backward-button.png" width="32" height="32"/>
-        <image name="skipping-forward-button.png" width="32" height="32"/>
-    </resources>
+    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
         <simulatedOrientationMetrics key="orientation"/>

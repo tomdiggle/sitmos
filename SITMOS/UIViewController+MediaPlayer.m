@@ -67,10 +67,10 @@
 
 - (void)displayNowPlayingButon
 {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"show-media-player-icon"]
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-show-button"]
                                                                               style:UIBarButtonItemStyleBordered
                                                                              target:self
-                                                                             action:@selector(nowPlayingButtonTapped:)];
+                                                                             action:@selector(showMediaPlayer:)];
 }
 
 - (void)hideNowPlayingButton:(BOOL)animated
@@ -79,7 +79,7 @@
                                         animated:animated];
 }
 
-- (void)nowPlayingButtonTapped:(id)sender
+- (void)showMediaPlayer:(id)sender
 {
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
     [self presentMediaPlayerWithAsset:[mediaPlayer asset]];

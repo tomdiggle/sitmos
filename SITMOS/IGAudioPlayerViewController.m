@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -24,43 +24,49 @@
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGDefines.h"
-#import "TDSlider.h"
 #import "TDNotificationPanel.h"
-#import "RIButtonItem.h"
-#import "UIAlertView+Blocks.h"
-
-#import <MediaPlayer/MediaPlayer.h>
 
 @interface IGAudioPlayerViewController ()
 
-@property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
-@property (nonatomic, weak) IBOutlet UIView *lowerPlayerControls;
+@property (nonatomic, weak) IBOutlet UILabel *currentTime;
+@property (nonatomic, weak) IBOutlet UILabel *duration;
+@property (nonatomic, weak) IBOutlet UISlider *progressSlider;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *bufferingIndicator;
 @property (nonatomic, weak) IBOutlet UIButton *playButton;
-@property (nonatomic, weak) IBOutlet UILabel *currentTimeLabel;
-@property (nonatomic, weak) IBOutlet UILabel *durationLabel;
-@property (nonatomic, weak) IBOutlet TDSlider *progressSlider;
-@property (nonatomic, strong) IGMediaPlayer *mediaPlayer;
+@property (nonatomic, weak) IBOutlet UIButton *seekBackwardButton;
+@property (nonatomic, weak) IBOutlet UIButton *seekForwardButton;
 @property (nonatomic, strong) NSTimer *playbackProgressUpdateTimer;
+@property (nonatomic, strong) IGMediaPlayer *mediaPlayer;
 
 @end
 
 @implementation IGAudioPlayerViewController
 
-#pragma mark - View lifecycle
+#pragma mark - Memory Management
 
-- (void)viewDidLoad
+- (void)dealloc
 {
-    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Initializers
+
+- (id)init
+{
+    if (!(self = [super init])) return nil;
     
-    _mediaPlayer = [IGMediaPlayer sharedInstance];
+    [self observeNotifications];
     
-    [self play];
-    
-    [self applyStylesheet];
-    
+    return self;
+}
+
+#pragma mark - Setup
+
+- (void)observeNotifications
+{
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showBufferingHUD:)
-                                                 name:IGMediaPlayerPlaybackLoading
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:IGMediaPlayerPlaybackStatusChangedNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -74,17 +80,12 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:IGMediaPlayerPlaybackStatusChangedNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showBufferingHUD:)
+                                             selector:@selector(showBufferingIndicator)
                                                  name:IGMediaPlayerPlaybackBufferEmptyNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(hideBufferingHUD:)
+                                             selector:@selector(hideBufferingIndicator)
                                                  name:IGMediaPlayerPlaybackLikelyToKeepUpNotification
                                                object:nil];
     
@@ -97,6 +98,26 @@
                                              selector:@selector(applicationDidEnterForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    _mediaPlayer = [IGMediaPlayer sharedInstance];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-hide-button"]
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(hideAudioPlayer:)];
+    
+    [self setTitle:[[_mediaPlayer asset] title]];
+    
+    [self updatePlayButton];
+    
+    [_progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,110 +141,134 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
-#pragma mark - Memory Management
+#pragma mark - Update UI
 
-- (void)dealloc
+- (void)updatePlayButton
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - Stylesheet
-
-- (void)applyStylesheet
-{
-    [_lowerPlayerControls setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"audio-player-lower-controls-bg"]]];
-    [_progressSlider setProgressColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"progress-slider-fill"]]];
-    [_progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
-}
-
-- (void)updatePlayButtonImage
-{
-    if ([_mediaPlayer isPaused])
-	{
-        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
-        [_playButton setAccessibilityLabel:NSLocalizedString(@"Play", @"accessibility label for play")];
-        [_playButton setAccessibilityHint:NSLocalizedString(@"PlaysEpisode", @"accessibility hint for plays episode")];
-	}
-	else
+    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying)
 	{
         [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
         [_playButton setAccessibilityLabel:NSLocalizedString(@"Pause", @"accessibility label for pause")];
         [_playButton setAccessibilityHint:NSLocalizedString(@"PausesEpisode", @"accessibility hint for pauses episode")];
 	}
+	else
+	{
+        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
+        [_playButton setAccessibilityLabel:NSLocalizedString(@"Play", @"accessibility label for play")];
+        [_playButton setAccessibilityHint:NSLocalizedString(@"PlaysEpisode", @"accessibility hint for plays episode")];
+	}
 }
 
-#pragma mark - IBActions
+- (void)updatePlaybackProgress
+{
+    if ([_mediaPlayer duration] <= 0) return;
+    
+    [_currentTime setText:[self currentTimeString]];
+    [_duration setText:[self durationString]];
+    [_progressSlider setMaximumValue:[_mediaPlayer duration]];
+    [_progressSlider setValue:[_mediaPlayer currentTime]];
+}
 
-- (IBAction)hideAudioPlayer:(id)sender
+- (void)showBufferingIndicator
+{
+    [_bufferingIndicator startAnimating];
+    [_currentTime setHidden:YES];
+}
+
+- (void)hideBufferingIndicator
+{
+    if (![_bufferingIndicator isAnimating]) return;
+    
+    [_bufferingIndicator stopAnimating];
+    [_currentTime setHidden:NO];
+}
+
+#pragma mark - Hide Audio Player
+
+- (void)hideAudioPlayer:(id)sender
 {
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
 
+#pragma mark - Playback
+
 - (IBAction)playButtonTapped:(id)sender
 {
-    if ([[_playButton currentImage] isEqual:[UIImage imageNamed:@"play-button"]])
+    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
 	{
-        [self updatePlayButtonImage];
-		[self play];
-	}
-	else
-	{
-        [self updatePlayButtonImage];
-		[self pause];
-	}
+        [self play];
+    }
+    else
+    {
+        [self pause];
+    }
 }
 
-/**
- * Invoked when the next track button is held down for more than 1 second.
- */
+- (void)play
+{
+    [self startPlaybackProgressUpdateTimer];
+    [_mediaPlayer play];
+    [self updatePlayButton];
+}
+
+- (void)pause
+{
+    [self stopPlaybackProgressUpdateTimer];
+    [_mediaPlayer pause];
+    [self updatePlayButton];
+}
+
 - (IBAction)seekForward:(id)sender
 {
-    if ([sender state] == UIGestureRecognizerStateBegan)
+    if ([sender isKindOfClass:[UILongPressGestureRecognizer class]])
     {
-        [_mediaPlayer beginSeekingForward];
-    }
-    else if ([sender state] == UIGestureRecognizerStateEnded)
-    {
-        if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
+        if ([sender state] == UIGestureRecognizerStateBegan)
         {
-            [_mediaPlayer endSeeking];
+            [_mediaPlayer beginSeekingForward];
+        }
+        else if ([sender state] == UIGestureRecognizerStateEnded)
+        {
+            if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
+            {
+                [_mediaPlayer endSeeking];
+            }
         }
     }
+    else
+    {
+        NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
+        [_mediaPlayer seekToTime:[_mediaPlayer currentTime] + (float)skipForwardTime];
+    }
 }
 
-- (IBAction)skipForwardButtonTapped:(id)sender
-{
-    NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
-    [_mediaPlayer seekToTime:[_mediaPlayer currentTime] + (float)skipForwardTime];
-}
-
-/**
- * Invoked when the previous track button is held down for more than 1 second.
- */
 - (IBAction)seekBackward:(id)sender
 {
-    if ([sender state] == UIGestureRecognizerStateBegan)
+    if ([sender isKindOfClass:[UILongPressGestureRecognizer class]])
     {
-        [_mediaPlayer beginSeekingBackward];
-    }
-    else if ([sender state] == UIGestureRecognizerStateEnded)
-    {
-        if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingBackward)
+        if ([sender state] == UIGestureRecognizerStateBegan)
         {
-            [_mediaPlayer endSeeking];
+            [_mediaPlayer beginSeekingBackward];
+        }
+        else if ([sender state] == UIGestureRecognizerStateEnded)
+        {
+            if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingBackward)
+            {
+                [_mediaPlayer endSeeking];
+            }
         }
     }
+    else
+    {
+        NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];
+        [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - (float)skipBackwardTime];
+    }
 }
 
-- (IBAction)skipBackwardButtonTapped:(id)sender
-{
-    NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];
-    [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - (float)skipBackwardTime];
-}
+#pragma mark - Timing
 
 /**
- * Invoked when user moves slider. The time played and time left labels get updated while the slider is moving.
+ * Invoked when the progress slider is dragged.
  *
  * @param slider The progress slider.
  */
@@ -232,12 +277,12 @@
     Float64 newSeekTime = [slider value];
     [_mediaPlayer seekToTime:newSeekTime];
     
-    [_currentTimeLabel setText:[self currentTimeString]];
-    [_durationLabel setText:[self durationString]];
+    [_currentTime setText:[self currentTimeString]];
+    [_duration setText:[self durationString]];
 }
 
 /**
- * Invoked when the progress slider is touched down. Stops the playback progress update timer from updating the progress slider while the user is seeking.
+ * Invoked when the progress slider is touched down.
  *
  * @param slider The progress slider.
  */
@@ -247,7 +292,7 @@
 }
 
 /**
- * Invoked when the progress slider is touched up. Starts the playback progress update timer so the progress slider can be updated with the current playback progress and restarts playback.
+ * Invoked when the progress slider touched up.
  *
  * @param slider The progress slider.
  */
@@ -257,35 +302,6 @@
     [self play];
 }
 
-#pragma mark - Playback Methods
-
-/**
- * Restarts playback of episode, starts the playback progress update timer and changes the play button image to the pause icon.
- */
-- (void)play
-{
-    [self startPlaybackProgressUpdateTimer];
-    [_mediaPlayer play];
-    [self updatePlayButtonImage];
-}
-
-/**
- * Pauses playback of episode, stops the playback progress timer and chanegs the play button image to the play icon.
- */
-- (void)pause
-{
-    [self stopPlaybackProgressUpdateTimer];
-    [_mediaPlayer pause];
-    [self updatePlayButtonImage];
-}
-
-#pragma mark - Timing
-
-/**
- * Returns a formatted NSString of the current time of the current episode.
- *
- * @return A formatted NSString of the current time of the current episode.
- */
 - (NSString *)currentTimeString
 {
     Float64 currentTime = [_mediaPlayer currentTime];
@@ -297,11 +313,6 @@
     return hoursPlayed > 0 ? [NSString stringWithFormat:@"%2d:%02d:%02d", hoursPlayed, minutesPlayed, secondsPlayed] : [NSString stringWithFormat:@"%2d:%02d", minutesPlayed, secondsPlayed];
 }
 
-/**
- * Returns a formatted NSString of the duration of the current episode.
- *
- * @return A formatted NSString of the duration of the current episode.
- */
 - (NSString *)durationString
 {
     Float64 currentTime = [_mediaPlayer currentTime];
@@ -311,37 +322,10 @@
     NSInteger minutesLeft = ((NSInteger)duration - (NSInteger)currentTime) / 60 % 60;
     NSInteger hoursLeft = (((NSInteger)duration - (NSInteger)currentTime) / 60) / 60;
     
-    return hoursLeft > 0 ? [NSString stringWithFormat:@"%2d:%02d:%02d", hoursLeft, minutesLeft, secondsLeft] : [NSString stringWithFormat:@"%2d:%02d", minutesLeft, secondsLeft];
+    return hoursLeft > 0 ? [NSString stringWithFormat:@"-%2d:%02d:%02d", hoursLeft, minutesLeft, secondsLeft] : [NSString stringWithFormat:@"-%1d:%02d", minutesLeft, secondsLeft];
 }
 
-#pragma mark - Buffering HUD
-
-/**
- * Displays a buffering notification panel only if the audio is not a file url.
- */
-- (void)showBufferingHUD:(NSNotification *)notification
-{
-    if ([[[_mediaPlayer asset] contentURL] isFileURL]|| [[TDNotificationPanel notificationsInView:self.view] count] > 0) return;
-    
-    TDNotificationPanel *panel = [[TDNotificationPanel alloc] initWithView:self.view
-                                                                     title:@"Buffering..."
-                                                                  subtitle:nil
-                                                                      type:TDNotificationTypeMessage
-                                                                      mode:TDNotificationModeText
-                                                               dismissable:NO];
-    [[self view] addSubview:panel];
-    [panel show];
-}
-
-/**
- * Hides the buffering notification panel.
- */
-- (void)hideBufferingHUD:(NSNotification *)notification
-{
-    [TDNotificationPanel hideNotificationInView:self.view];
-}
-
-#pragma mark - Playback Progress Update
+#pragma mark - Playback Progress
 
 - (void)startPlaybackProgressUpdateTimer
 {
@@ -361,69 +345,48 @@
     [_playbackProgressUpdateTimer invalidate];
 }
 
-/**
- * Invoked while audio is playing by the playback progress update timer. Updates the progress slider's progress value and the time played and time left labels.
- */
-- (void)updatePlaybackProgress
-{
-    if ([_mediaPlayer duration] <= 0) return;
-    
-    [_progressSlider setMaximumValue:[_mediaPlayer duration]];
-    [_currentTimeLabel setText:[self currentTimeString]];
-    [_durationLabel setText:[self durationString]];
-    [_progressSlider setProgress:[_mediaPlayer availableDuration]];
-    [_progressSlider setValue:[_mediaPlayer currentTime]];
-}
-
 #pragma mark - Media Player Notification Observer Methods
 
-/**
- * When playback has finsihed pop the view back to the episode lists view controller.
- */
-- (void)playbackEnded:(NSNotification *)notification {
+- (void)playbackEnded:(NSNotification *)notification
+{
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
 
-/**
- * Invoked when playback fails. Displays an error message to user and will pop the view controller back to the episodes list when OK is tapped.
- */
 - (void)playbackFailed:(NSNotification *)notification
 {
-    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"OK", "text label for ok")];
-    cancelItem.action = ^{
-        [_mediaPlayer stop];
-        [self dismissViewControllerAnimated:YES
-                                 completion:nil];
-    };
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Sorry", "text label for sorry") 
-                                                        message:NSLocalizedString(@"EpisodePlaybackFailed", "text label for episode playback failed") 
-                                               cancelButtonItem:cancelItem 
-                                               otherButtonItems:nil];
-    [alertView show];
+    [TDNotificationPanel showNotificationInView:self.view.window
+                                          title:NSLocalizedString(@"EpisodePlaybackFailed", "text label for episode playback failed")
+                                       subtitle:nil
+                                           type:TDNotificationTypeError
+                                           mode:TDNotificationModeText
+                                    dismissable:YES
+                                 hideAfterDelay:4];
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
-/**
- * Invokced when the media playback state has changed. Syncs the play/pause button to match the current media player state.
- */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
-    [self updatePlayButtonImage];
+    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying || [_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
+    {
+        [self hideBufferingIndicator];
+        [self updatePlayButton];
+    }
+    else if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateBuffering)
+    {
+        [self showBufferingIndicator];
+    }
 }
 
 #pragma mark - UIApplication Notification Observer Methods 
 
-/**
- * When the application enters the background stop the playback progress update timer because there is no need to be updating the UI while in the background.
- */
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
     [self stopPlaybackProgressUpdateTimer];
 }
 
-/**
- * When the application enters the foreground start updating the UI by starting the playback progress update timer.
- */
 - (void)applicationDidEnterForeground:(NSNotification *)notification
 {
     [self startPlaybackProgressUpdateTimer];
