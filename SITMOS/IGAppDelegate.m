@@ -51,7 +51,7 @@
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
     
     [self applyStylesheet];
-    
+    [self registerDefaultSettings];
     [self checkForEpisodesOnDevice];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -97,7 +97,8 @@
 - (void)applyStylesheet
 {
     UINavigationBar *navigationBar = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-    [navigationBar setBarTintColor:[UIColor colorWithRed:0.333 green:0.643 blue:0.901 alpha:1]];
+    [navigationBar setBarTintColor:[UIColor colorWithRed:0.870 green:0.870 blue:0.870 alpha:1]];
+    [navigationBar setTintColor:[UIColor blackColor]];
 }
 
 #pragma mark - Push Notifications
