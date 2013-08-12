@@ -43,18 +43,13 @@
     return self;
 }
 
-- (void)viewDidLayoutSubviews
-{
-    self.view.backgroundColor = [UIColor redColor];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self setTitle:[_contentURL absoluteString]];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hide-media-player-icon"]
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-hide-button"]
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(hideMediaPlayer:)];
