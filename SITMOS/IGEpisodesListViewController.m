@@ -37,7 +37,7 @@
 #import "AFDownloadRequestOperation.h"
 #import "UIViewController+MediaPlayer.h"
 #import "TDNotificationPanel.h"
-#import "CoreData+MagicalRecord.h"
+//#import "CoreData+MagicalRecord.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, EGORefreshTableHeaderDelegate>
 

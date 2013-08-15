@@ -24,7 +24,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 #define HC_SHORTHAND
-#import <OCHamcrest/OCHamcrest.h>
+#import <OCHamcrestIOS/OCHamcrestIOS.h>
 
 @interface IGRSSXMLRequestOperationTests : SenTestCase
 @end

@@ -21,13 +21,13 @@
 
 #import "IGEpisode.h"
 
-#import "CoreData+MagicalRecord.h"
+//#import "CoreData+MagicalRecord.h"
 #import "NSDate+Helper.h"
 
 #import <SenTestingKit/SenTestingKit.h>
 
 #define HC_SHORTHAND
-#import <OCHamcrest/OCHamcrest.h>
+#import <OCHamcrestIOS/OCHamcrestIOS.h>
 
 @interface IGEpisodeTests : SenTestCase
 

@@ -29,8 +29,7 @@
 #import "IGEpisode.h"
 #import "IGDefines.h"
 #import "TDNotificationPanel.h"
-#import "TestFlight.h"
-#import "CoreData+MagicalRecord.h"
+//#import "TestFlight.h"
 #import "RIButtonItem.h"
 #import "UIAlertView+Blocks.h"
 
@@ -40,7 +39,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [TestFlight takeOff:IGTestFlightAPIKey];
+//    [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     

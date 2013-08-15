@@ -26,7 +26,7 @@
 #import "IGEpisode.h"
 #import "IGAudioPlayerViewController.h"
 #import "IGVideoPlayerViewController.h"
-#import "CoreData+MagicalRecord.h"
+//#import "CoreData+MagicalRecord.h"
 
 @interface IGMediaPlayerViewController ()
 

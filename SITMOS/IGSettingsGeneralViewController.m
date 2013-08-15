@@ -26,7 +26,7 @@
 #import "IGSettingsSkippingForwardViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
 #import "IGDefines.h"
-#import "CoreData+MagicalRecord.h"
+//#import "CoreData+MagicalRecord.h"
 
 @interface IGSettingsGeneralViewController ()
 
