@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,8 +22,6 @@
 #import "IGEpisode.h"
 
 #import <UIKit/UIKit.h>
-
-@protocol IGEpisodeCellDelegate;
 
 /**
  * The IGEpisodeCell class defines the attributes and behaviour of the cells that appear in IGEpisodesListViewController's UITableView.
@@ -69,6 +67,16 @@
 @property (nonatomic, strong) NSURL *downloadURL;
 
 /**
+ *
+ */
+@property (nonatomic, strong) UIButton *moreInfoButton;
+
+/**
+ *
+ */
+@property (nonatomic, strong) UIButton *downloadButton;
+
+/**
  * Returns the download status of the episode.
  */
 @property (nonatomic, assign) IGEpisodeDownloadStatus downloadStatus;
@@ -77,36 +85,5 @@
  * Returns the played status of the episode.
  */
 @property (nonatomic, assign) IGEpisodePlayedStatus playedStatus;
-
-/**
- * The object that acts as the delegate of the receiving episode table view cell.
- *
- * The delegate must adopt the IGEpisodeTableViewCellDelegate protocol. The delegate is not retained.
- */
-@property (nonatomic, weak) id <IGEpisodeCellDelegate> delegate;
-
-@end
-
-/**
- * The delegate of IGEpisodeCell object must adopt the IGEpisodeCellDelegate protocol.
- */
-
-@protocol IGEpisodeCellDelegate <NSObject>
-
-/**
- * Tells the delegate that the user tapped the more info button.
- *
- * @param episodeTableViewCell The episode table view cell object requesting the information.
- * @param title The title of the episode.
- */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title;
-
-/**
- * Tells the delegate that the user tapped the download button.
- *
- * @param episodeTableViewCell The episode table view cell object requesting the information.
- * @param button The button that has been tapped.
- */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button;
 
 @end

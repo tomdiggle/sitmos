@@ -35,7 +35,6 @@
 		321D8C4C145F1D8B008698DC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 321D8C4A145F1D8B008698DC /* InfoPlist.strings */; };
 		321D8C4E145F1D8B008698DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C4D145F1D8B008698DC /* main.m */; };
 		321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
-		321F218C15B9FD8D00610DC0 /* more-info-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218A15B9FD8C00610DC0 /* more-info-button.png */; };
 		321F218D15B9FD8D00610DC0 /* more-info-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */; };
 		32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */; };
 		3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
@@ -80,7 +79,6 @@
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
-		328D70F914FEADE70089D78A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 328D70F814FEADE70089D78A /* MainStoryboard.storyboard */; };
 		328E276B153DDFB0005AE70B /* IGMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 328E276A153DDFB0005AE70B /* IGMediaPlayer.m */; };
 		3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290193D15D18A4A00104FD8 /* IGDefines.m */; };
 		329272A814A75F0800119D48 /* IGAudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329272A614A75F0800119D48 /* IGAudioPlayerViewController.m */; };
@@ -100,6 +98,7 @@
 		32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB917AAAE2100838E66 /* Default-568h@2x.png */; };
 		32C69CBC17AAAE2100838E66 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CBA17AAAE2100838E66 /* Default@2x.png */; };
 		32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
+		32E3B49417B95D9D007A77DA /* IGEpisodesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32E3B49317B95D9D007A77DA /* IGEpisodesListViewController.xib */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
@@ -152,7 +151,6 @@
 		321D8C4F145F1D8B008698DC /* SITMOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SITMOS-Prefix.pch"; sourceTree = "<group>"; };
 		321D8C50145F1D8B008698DC /* IGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGAppDelegate.h; sourceTree = "<group>"; };
 		321D8C51145F1D8B008698DC /* IGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGAppDelegate.m; sourceTree = "<group>"; };
-		321F218A15B9FD8C00610DC0 /* more-info-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-button.png"; sourceTree = "<group>"; };
 		321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-button@2x.png"; sourceTree = "<group>"; };
 		32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsGeneralViewController.h; sourceTree = "<group>"; };
 		32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsGeneralViewController.m; sourceTree = "<group>"; };
@@ -218,7 +216,6 @@
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		3285E113156C43A0009E128A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		328D70F814FEADE70089D78A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		328E2769153DDFB0005AE70B /* IGMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaPlayer.h; path = SITMOS/IGMediaPlayer.h; sourceTree = "<group>"; };
 		328E276A153DDFB0005AE70B /* IGMediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaPlayer.m; path = SITMOS/IGMediaPlayer.m; sourceTree = "<group>"; };
 		3290193C15D18A4A00104FD8 /* IGDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGDefines.h; sourceTree = "<group>"; };
@@ -246,6 +243,7 @@
 		32C69CBA17AAAE2100838E66 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaPlayerAsset.h; path = SITMOS/IGMediaPlayerAsset.h; sourceTree = "<group>"; };
 		32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaPlayerAsset.m; path = SITMOS/IGMediaPlayerAsset.m; sourceTree = "<group>"; };
+		32E3B49317B95D9D007A77DA /* IGEpisodesListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IGEpisodesListViewController.xib; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingBackwardViewController.h; sourceTree = "<group>"; };
 		32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingBackwardViewController.m; sourceTree = "<group>"; };
@@ -563,7 +561,6 @@
 				32C69CB517AAADBD00838E66 /* icon-80.png */,
 				32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */,
 				3263DEBB1757965B00D74A1F /* media-player-show-button@2x.png */,
-				321F218A15B9FD8C00610DC0 /* more-info-button.png */,
 				321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */,
 				325920A915DC23D700345666 /* pause-button@2x.png */,
 				325920A515DC1B5700345666 /* play-button@2x.png */,
@@ -625,7 +622,6 @@
 		329886871461DE9C006B7BDE /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				328D70F814FEADE70089D78A /* MainStoryboard.storyboard */,
 				32C18773172DDD9000921169 /* Podcast Episodes */,
 				32C1876B172DA88900921169 /* Media Player */,
 				32EA27B016DA712B00BB528E /* Settings */,
@@ -649,6 +645,7 @@
 			children = (
 				3298868B1461DF85006B7BDE /* IGEpisodesListViewController.h */,
 				3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */,
+				32E3B49317B95D9D007A77DA /* IGEpisodesListViewController.xib */,
 				321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */,
 				321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */,
 				32B4360817627FD00015B90F /* IGEpisodeShowNotesHeader.h */,
@@ -751,11 +748,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				321D8C4C145F1D8B008698DC /* InfoPlist.strings in Resources */,
-				328D70F914FEADE70089D78A /* MainStoryboard.storyboard in Resources */,
+				32E3B49417B95D9D007A77DA /* IGEpisodesListViewController.xib in Resources */,
 				3285E114156C43A0009E128A /* Localizable.strings in Resources */,
 				321169B717AFC7D1004AFB0D /* seek-backward-button@2x.png in Resources */,
 				327C7C6D17B2C41B0022B665 /* IGAudioPlayerViewController.xib in Resources */,
-				321F218C15B9FD8D00610DC0 /* more-info-button.png in Resources */,
 				32B603F117AB0B7F000C8EEC /* media-player-hide-button@2x.png in Resources */,
 				321F218D15B9FD8D00610DC0 /* more-info-button@2x.png in Resources */,
 				32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */,

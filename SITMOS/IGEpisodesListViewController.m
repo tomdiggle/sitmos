@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -39,13 +39,13 @@
 #import "TDNotificationPanel.h"
 #import "CoreData+MagicalRecord.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, IGEpisodeCellDelegate, EGORefreshTableHeaderDelegate>
+@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, EGORefreshTableHeaderDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
-@property (strong, nonatomic) NSMutableArray *filteredEpisodeArray;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeaderView;
+@property (nonatomic, strong) NSMutableArray *filteredEpisodeArray;
 @property BOOL reloading;
 
 @end
@@ -56,13 +56,13 @@
 
 - (void)viewWillLayoutSubviews
 {
-    if (!_refreshHeaderView)
+    /*if (!_refreshHeaderView)
     {
-        EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - _tableView.bounds.size.height, self.view.frame.size.width, _tableView.bounds.size.height)];
+        EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
         [refreshView setDelegate:self];
-        [_tableView addSubview:refreshView];
+        [self.tableView addSubview:refreshView];
         _refreshHeaderView = refreshView;
-    }
+    }*/
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -78,22 +78,26 @@
     
     [self setTitle:@"SITMOS"];
     
-    _fetchedResultsController = [IGEpisode MR_fetchAllSortedBy:@"pubDate"
-                                                     ascending:NO
-                                                 withPredicate:nil
-                                                       groupBy:nil
-                                                      delegate:self];
+    [self.tableView registerClass:[IGEpisodeCell class]
+       forCellReuseIdentifier:@"episodeCell"];
+    [[self.searchDisplayController searchResultsTableView] setRowHeight:self.tableView.rowHeight];
     
-    [self reloadTableViewDataSource];
+    self.fetchedResultsController = [IGEpisode MR_fetchAllSortedBy:@"pubDate"
+                                                         ascending:NO
+                                                     withPredicate:nil
+                                                           groupBy:nil
+                                                          delegate:self];
+    
+//    [self reloadTableViewDataSource];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if ([_tableView indexPathForSelectedRow])
+    if ([self.tableView indexPathForSelectedRow])
     {
-        [_tableView reloadRowsAtIndexPaths:@[[_tableView indexPathForSelectedRow]]
+        [self.tableView reloadRowsAtIndexPaths:@[[self.tableView indexPathForSelectedRow]]
                           withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -142,24 +146,34 @@
 {
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        return [_filteredEpisodeArray count];
+        return [self.filteredEpisodeArray count];
     }
     
     id <NSFetchedResultsSectionInfo> sectionInfo = nil;
-    sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
 	return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IGEpisode *episode = tableView == self.searchDisplayController.searchResultsTableView ? [_filteredEpisodeArray objectAtIndex:indexPath.row] : [_fetchedResultsController objectAtIndexPath:indexPath];
+    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView dequeueReusableCellWithIdentifier:@"episodeCell"
+                                                                                   forIndexPath:indexPath];
     
-    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[_tableView dequeueReusableCellWithIdentifier:@"episodeCell"];
+    IGEpisode *episode = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+    {
+        episode = [self.filteredEpisodeArray objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        episode = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }
+    
     [self updateEpisodeCell:episodeCell
                     episode:episode];
     
-    UIColor *color = [indexPath row] % 2 ? kRGBA(245, 245, 245, 1) : kRGBA(240, 240, 240, 1);
-    [[episodeCell contentView] setBackgroundColor:color];
+    [[episodeCell moreInfoButton] setTag:indexPath.row];
+    [[episodeCell downloadButton] setTag:indexPath.row];
     
     UIView *selectedBackgroundView = [[UIView alloc] init];
     [selectedBackgroundView setBackgroundColor:kRGBA(217, 236, 245, 1)];
@@ -190,16 +204,11 @@
                              animated:YES];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 76.f;
-}
-
 #pragma mark - NSFetchResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-	[_tableView beginUpdates];
+	[self.tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
@@ -209,25 +218,25 @@
     {
 		case NSFetchedResultsChangeInsert:
             array = @[newIndexPath];
-            [_tableView insertRowsAtIndexPaths:array
+            [self.tableView insertRowsAtIndexPaths:array
                               withRowAnimation:UITableViewRowAnimationFade];
 			break;
             
 		case NSFetchedResultsChangeDelete:
             array = @[indexPath];
-            [_tableView deleteRowsAtIndexPaths:array
+            [self.tableView deleteRowsAtIndexPaths:array
                               withRowAnimation:UITableViewRowAnimationLeft];
 			break;
             
 		case NSFetchedResultsChangeUpdate:
-            [self updateEpisodeCell:(IGEpisodeCell *)[_tableView cellForRowAtIndexPath:indexPath]
-                            episode:[_fetchedResultsController objectAtIndexPath:indexPath]];
+            [self updateEpisodeCell:(IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:indexPath]
+                            episode:[self.fetchedResultsController objectAtIndexPath:indexPath]];
 			break;
             
         case NSFetchedResultsChangeMove:
-            [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
-            [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
                               withRowAnimation:UITableViewRowAnimationFade];
             break;
 	}
@@ -235,7 +244,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-	[_tableView endUpdates];
+	[self.tableView endUpdates];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -271,11 +280,12 @@
 
 - (IBAction)showMoreOptionsActionSheet:(UILongPressGestureRecognizer *)gestureRecognizer
 {
-    CGPoint p = [gestureRecognizer locationInView:_tableView];
-    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];
+    CGPoint p = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
     
-    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan && indexPath) {
-        IGEpisodeCell *episodeCell = (IGEpisodeCell *)[_tableView cellForRowAtIndexPath:indexPath];
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan && indexPath)
+    {
+        IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                       withValue:[episodeCell title]];
         
@@ -289,7 +299,7 @@
                 [localContext MR_saveToPersistentStoreAndWait];
             } completion:^(BOOL success, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_tableView reloadRowsAtIndexPaths:@[indexPath]
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                                       withRowAnimation:UITableViewRowAnimationNone];
                 });
             }];
@@ -304,7 +314,7 @@
                 [episode deleteDownloadedEpisode];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_tableView reloadRowsAtIndexPaths:@[indexPath]
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                                       withRowAnimation:UITableViewRowAnimationNone];
                 });
             };
@@ -314,16 +324,19 @@
             // Only Audio episodes are downloadable
             downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", @"text label for download")];
             downloadItem.action = ^{
-                if ([episode isDownloaded]) {
+                if ([episode isDownloaded])
+                {
                     [episode deleteDownloadedEpisode];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [_tableView reloadRowsAtIndexPaths:@[indexPath]
+                        [self.tableView reloadRowsAtIndexPaths:@[indexPath]
                                           withRowAnimation:UITableViewRowAnimationNone];
                     });
-                } else {
-                    [self igEpisodeTableViewCell:episodeCell
-                     downloadEpisodeButtonTapped:nil];
+                }
+                else
+                {
+//                    [self startDownloadFromURL:[NSURL URLWithString:[episode downloadURL]]
+//                                    targetPath:[episode fileURL]];
                 }
             };
         }
@@ -342,7 +355,6 @@
 
 - (void)updateEpisodeCell:(IGEpisodeCell *)episodeCell episode:(IGEpisode *)episode
 {
-    [episodeCell setDelegate:self];
     [episodeCell setTitle:[episode title]];
     [episodeCell setSummary:[episode summary]];
     [episodeCell setPubDate:[episode pubDate]];
@@ -350,17 +362,23 @@
     [episodeCell setPlayedStatus:[episode playedStatus]];
     [episodeCell setDownloadStatus:[episode downloadStatus]];
     [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
+    [[episodeCell moreInfoButton] addTarget:self
+                                     action:@selector(showMoreInfoAboutEpisode:)
+                           forControlEvents:UIControlEventTouchUpInside];
+    [[episodeCell downloadButton] addTarget:self
+                                     action:@selector(beginDownloadingEpisode:)
+                           forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Content Filtering
 
 - (void)filterContentForSearchText:(NSString *)searchText scope:(NSString *)scope
 {
-    [_filteredEpisodeArray removeAllObjects];
+    [self.filteredEpisodeArray removeAllObjects];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title CONTAINS[cd] %@ || summary CONTAINS[cd] %@", searchText, searchText];
     NSArray *tempArray = [IGEpisode MR_findAllWithPredicate:predicate];
-    _filteredEpisodeArray = [NSMutableArray arrayWithArray:tempArray];
+    self.filteredEpisodeArray = [NSMutableArray arrayWithArray:tempArray];
 }
 
 #pragma mark - Hide Search Bar
@@ -368,11 +386,11 @@
 - (void)hideSearchBar
 {
     // Check search bar is visible before continuing
-    if (_tableView.bounds.origin.y >= _searchBar.bounds.size.height) return;
+    if (self.tableView.bounds.origin.y >= CGRectGetHeight(self.searchBar.bounds)) return;
     
-    CGRect newBounds = [_tableView bounds];
-    newBounds.origin.y = newBounds.origin.y + _searchBar.bounds.size.height;
-    [_tableView setBounds:newBounds];
+    CGRect newBounds = [self.tableView bounds];
+    newBounds.origin.y = newBounds.origin.y + CGRectGetHeight(self.searchBar.bounds);
+    [self.tableView setBounds:newBounds];
 }
 
 #pragma mark - Refresh Feed
@@ -405,7 +423,7 @@
 - (void)doneLoadingTableViewData
 {
 	_reloading = NO;
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
     [self hideSearchBar];
 }
 
@@ -436,7 +454,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_tableView reloadData];
+            [self.tableView reloadData];
         });
     }];
 }
@@ -444,12 +462,14 @@
 #pragma mark - IGEpisodeTableViewCellDelegate Methods
 
 /**
- * Invoked when the more info icon is tapped. A popup view is displayed with more information about the episode.
+ * Invoked when the more info icon is tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell displayMoreInfoAboutEpisodeWithTitle:(NSString *)title
+- (void)showMoreInfoAboutEpisode:(UIButton *)sender
 {
+    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[sender tag] inSection:0]];
+    
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:title];
+                                                  withValue:[episodeCell title]];
     IGEpisodeShowNotesViewController *moreInfoViewController = [[IGEpisodeShowNotesViewController alloc] initWithEpisode:episode];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Episodes", @"text label for episodes")
                                                                              style:UIBarButtonItemStylePlain
@@ -462,10 +482,11 @@
 /**
  * Invoked when the download button in the table view cell is tapped.
  */
-- (void)igEpisodeTableViewCell:(IGEpisodeCell *)episodeTableViewCell downloadEpisodeButtonTapped:(UIButton *)button
-{    
+- (void)beginDownloadingEpisode:(UIButton *)sender
+{
+    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[sender tag] inSection:0]];
     IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[episodeTableViewCell title]];
+                                                  withValue:[episodeCell title]];
     NSURL *downloadFromURL = [NSURL URLWithString:[episode downloadURL]];
     
     IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
@@ -476,14 +497,14 @@
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
             cancelItem.action = ^{
-                [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+                [episodeCell setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
             };
             RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", @"text label for yes")];
             downloadItem.action = ^{
                 [self startDownloadFromURL:downloadFromURL
                                 targetPath:[episode fileURL]];
                 
-                [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
+                [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
             };
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
@@ -507,7 +528,7 @@
         [requestOperation pause];
     }
     
-    [episodeTableViewCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
+    [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
 }
 
 #pragma mark - EGORefreshTableHeaderDelegate Methods

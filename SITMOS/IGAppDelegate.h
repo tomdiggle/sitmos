@@ -21,8 +21,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class IGEpisodesListViewController;
+
 @interface IGAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) IBOutlet UIWindow* window;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) IGEpisodesListViewController *episodesListViewController;
 
 @end

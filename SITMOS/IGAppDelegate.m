@@ -22,6 +22,7 @@
 #import "IGAppDelegate.h"
 
 #import "IGHTTPClient.h"
+#import "IGEpisodesListViewController.h"
 #import "IGMediaPlayer.h"
 #import "IGAPIKeys.h"
 #import "IGEpisodeImporter.h"
@@ -47,6 +48,13 @@
     [IGHTTPClient setDevelopmentModeEnabled:YES];
 #endif
     
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.episodesListViewController = [[IGEpisodesListViewController alloc] init];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.episodesListViewController];
+    [[self.navigationController navigationBar] setTranslucent:NO];
+    [self.window setRootViewController:self.navigationController];
+    
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
     
@@ -61,6 +69,7 @@
                                                    object:nil];
     });
     
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

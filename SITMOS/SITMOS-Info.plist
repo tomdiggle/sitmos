@@ -63,8 +63,6 @@
 			<string>{320, 480}</string>
 		</dict>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -34,34 +34,25 @@
 @property (nonatomic, strong) UILabel *downloadSizeProgressLabel;
 @property (nonatomic, strong) UIImageView *playedStatusImageView;
 @property (nonatomic, strong) UIImageView *episodeDownloadedImageView;
-@property (nonatomic, strong) UIButton *moreInfoButton;
-@property (nonatomic, strong) UIButton *downloadButton;
 @property (nonatomic, strong) UIProgressView *downloadProgressView;
 
 @end
 
 @implementation IGEpisodeCell
 
-#pragma mark - Memory Management
-
-- (void)dealloc
-{
-    _delegate = nil;
-}
-
 #pragma mark - Initializers
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (!(self = [super initWithCoder:decoder])) return nil;
+    if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.f, 4.f, 200.f, 22.f)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 4.f, 200.f, 22.f)];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setFont:[UIFont boldSystemFontOfSize:14.f]];
     _titleLabel = label;
     [self addSubview:_titleLabel];
     
-    label = [[UILabel alloc] initWithFrame:CGRectMake(12.f, 20.f, 268.f, 40.f)];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 20.f, 266.f, 40.f)];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setFont:[UIFont systemFontOfSize:11.f]];
     [label setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
@@ -76,7 +67,7 @@
     _pubDateAndTimeLeftLabel = label;
     [self addSubview:_pubDateAndTimeLeftLabel];
     
-    label = [[UILabel alloc] initWithFrame:CGRectMake(12.f, 52.f, 140.f, 14.f)];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 52.f, 140.f, 14.f)];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setText:NSLocalizedString(@"Loading", @"text label for loading")];
     [label setFont:[UIFont systemFontOfSize:11.f]];
@@ -86,25 +77,19 @@
     _downloadSizeProgressLabel = label;
     [self addSubview:_downloadSizeProgressLabel];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, self.bounds.size.height)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
     [button setImage:[UIImage imageNamed:@"more-info-button"] forState:UIControlStateNormal];
-    [button addTarget:self
-               action:@selector(moreInfoButtonTapped:)
-     forControlEvents:UIControlEventTouchUpInside];
     [button setAccessibilityLabel:NSLocalizedString(@"MoreInfo", @"accessibility label for more info")];
     [button setAccessibilityHint:NSLocalizedString(@"ViewMoreInfo", @"accessibility hint for view more info")];
     _moreInfoButton = button;
     [self addSubview:_moreInfoButton];
     
-    button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, self.bounds.size.height)];
+    button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
     [button setHidden:YES];
-    [button addTarget:self
-               action:@selector(downloadButtonTapped:)
-     forControlEvents:UIControlEventTouchUpInside];
     _downloadButton = button;
     [self addSubview:_downloadButton];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.f, 58.f, 9.f, 9.f)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 58.f, 9.f, 9.f)];
     _playedStatusImageView = imageView;
     [self addSubview:_playedStatusImageView];
     
@@ -115,7 +100,7 @@
     [self addSubview:_episodeDownloadedImageView];
     
     UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [progressView setFrame:CGRectMake(12.f, 35.f, 260.f, 12.f)];
+    [progressView setFrame:CGRectMake(15.f, 35.f, 260.f, 12.f)];
     [progressView setTrackImage:[[UIImage imageNamed:@"download-episode-track-image"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8.f, 0, 8.f)]];
     [progressView setProgressImage:[[UIImage imageNamed:@"download-episode-progress-image"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8.f, 0, 8.f)]];
     [progressView setHidden:YES];
@@ -205,7 +190,7 @@
         UIImage *image = (_playedStatus == IGEpisodePlayedStatusUnplayed) ? [UIImage imageNamed:@"episode-unplayed-icon"] : (_playedStatus == IGEpisodePlayedStatusHalfPlayed) ? [UIImage imageNamed:@"episode-half-played-icon"] : nil;
         [_playedStatusImageView setImage:image];
         
-        CGRect rect = (_playedStatus == IGEpisodePlayedStatusUnplayed || _playedStatus == IGEpisodePlayedStatusHalfPlayed) ? CGRectMake(25.f, 52.f, 200.f, 22.f) : CGRectMake(12.f, 52.f, 200.f, 22.f);
+        CGRect rect = (_playedStatus == IGEpisodePlayedStatusUnplayed || _playedStatus == IGEpisodePlayedStatusHalfPlayed) ? CGRectMake(28.f, 53.f, 200.f, 22.f) : CGRectMake(15.f, 53.f, 200.f, 22.f);
         [_pubDateAndTimeLeftLabel setFrame:rect];
     }
 }
@@ -264,20 +249,6 @@
     _timeLeft = timeLeft;
     
     [_pubDateAndTimeLeftLabel setText:[NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:_pubDate withFormat:@"dd MMM yyyy"], timeLeft]];
-}
-
-#pragma mark - IBAction Methods
-
-- (IBAction)downloadButtonTapped:(id)sender
-{
-    [_delegate igEpisodeTableViewCell:self
-          downloadEpisodeButtonTapped:sender];
-}
-
-- (IBAction)moreInfoButtonTapped:(id)sender
-{
-    [_delegate igEpisodeTableViewCell:self
- displayMoreInfoAboutEpisodeWithTitle:_title];
 }
 
 @end
