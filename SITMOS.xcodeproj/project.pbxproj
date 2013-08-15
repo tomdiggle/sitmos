@@ -58,7 +58,6 @@
 		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
 		323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
-		324D0394164071D200D0143C /* TDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 324D0393164071D200D0143C /* TDSlider.m */; };
 		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
 		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
 		32523DEE1688BFF0006E9FFB /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
@@ -263,8 +262,6 @@
 		323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+LocalNotificationHelper.m"; sourceTree = "<group>"; };
 		323D5A3716B842770074E91F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		323D5A3916B842F30074E91F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		324D0392164071D200D0143C /* TDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSlider.h; sourceTree = "<group>"; };
-		324D0393164071D200D0143C /* TDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSlider.m; sourceTree = "<group>"; };
 		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
 		324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button@2x.png"; sourceTree = "<group>"; };
 		32523DEC1688BFF0006E9FFB /* IGHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGHTTPClient.h; sourceTree = "<group>"; };
@@ -600,7 +597,6 @@
 				32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */,
 				32E90A0617BD4A2F00392D67 /* SSPullToRefresh */,
 				322921EC17A3186700895986 /* TDNotificationPanel */,
-				324D0391164071D200D0143C /* TDSlider */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
 				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
 				326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */,
@@ -637,16 +633,6 @@
 				323923AD167F5E0500301439 /* UIAlertView+Blocks.m */,
 			);
 			path = "UIAlertView-Blocks";
-			sourceTree = "<group>";
-		};
-		324D0391164071D200D0143C /* TDSlider */ = {
-			isa = PBXGroup;
-			children = (
-				324D0392164071D200D0143C /* TDSlider.h */,
-				324D0393164071D200D0143C /* TDSlider.m */,
-			);
-			name = TDSlider;
-			path = TDSlider/TDSlider;
 			sourceTree = "<group>";
 		};
 		32523DEB1688BF65006E9FFB /* Networking */ = {
@@ -1144,7 +1130,6 @@
 				32E909C117BCEB4E00392D67 /* NSObject+MagicalDataImport.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */,
-				324D0394164071D200D0143C /* TDSlider.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 				32E909B917BCEB4E00392D67 /* MagicalImportFunctions.m in Sources */,
 				323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */,
