@@ -51,7 +51,6 @@
 		322D32DC17257A1F004856E9 /* IGPodcastFeedParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */; };
 		322D32E11725923E004856E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3293D63D148BBC090052B427 /* CoreData.framework */; };
 		322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 322D4621175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m */; };
-		32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */; };
 		3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32392399167F5C9100301439 /* NSDate+Helper.m */; };
 		323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A5167F5DD800301439 /* TSLibraryImport.m */; };
 		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
@@ -175,6 +174,9 @@
 		32E909EC17BCEB4E00392D67 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E909A217BCEB4E00392D67 /* MagicalRecord.m */; };
 		32E909ED17BCEE1B00392D67 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322D32BB17257568004856E9 /* SenTestingKit.framework */; };
 		32E909EF17BCEE9500392D67 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E909EE17BCEE9500392D67 /* Security.framework */; };
+		32E90A0E17BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0917BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m */; };
+		32E90A0F17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */; };
+		32E90A1017BD4A2F00392D67 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
 		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
 		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
@@ -247,8 +249,6 @@
 		322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.2.xcdatamodel"; sourceTree = "<group>"; };
 		322D4620175CF95A00BFDC8F /* IGEpisodeShowNotesBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesBody.h; sourceTree = "<group>"; };
 		322D4621175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesBody.m; sourceTree = "<group>"; };
-		32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
-		32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		32392398167F5C9100301439 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		32392399167F5C9100301439 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		323923A4167F5DD800301439 /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
@@ -395,6 +395,13 @@
 		32E909A317BCEB4E00392D67 /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		32E909A417BCEB4E00392D67 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		32E909EE17BCEE9500392D67 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		32E90A0717BD4A2F00392D67 /* SSPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPullToRefresh.h; sourceTree = "<group>"; };
+		32E90A0817BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPullToRefreshDefaultContentView.h; sourceTree = "<group>"; };
+		32E90A0917BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPullToRefreshDefaultContentView.m; sourceTree = "<group>"; };
+		32E90A0A17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPullToRefreshSimpleContentView.h; sourceTree = "<group>"; };
+		32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPullToRefreshSimpleContentView.m; sourceTree = "<group>"; };
+		32E90A0C17BD4A2F00392D67 /* SSPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPullToRefreshView.h; sourceTree = "<group>"; };
+		32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPullToRefreshView.m; sourceTree = "<group>"; };
 		32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingBackwardViewController.h; sourceTree = "<group>"; };
 		32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingBackwardViewController.m; sourceTree = "<group>"; };
 		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
@@ -589,9 +596,9 @@
 				32E9095217BCEB4E00392D67 /* AFDownloadRequestOperation */,
 				32E9095517BCEB4E00392D67 /* AFNetworking */,
 				32E9096917BCEB4E00392D67 /* MagicalRecord */,
-				32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */,
-				32392332167F5A6C00301439 /* EGORefreshTableHeaderView */,
 				32392397167F5C9100301439 /* NSDate-Helper */,
+				32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */,
+				32E90A0617BD4A2F00392D67 /* SSPullToRefresh */,
 				322921EC17A3186700895986 /* TDNotificationPanel */,
 				324D0391164071D200D0143C /* TDSlider */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
@@ -599,15 +606,6 @@
 				326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		32392332167F5A6C00301439 /* EGORefreshTableHeaderView */ = {
-			isa = PBXGroup;
-			children = (
-				32392333167F5A6C00301439 /* EGORefreshTableHeaderView.h */,
-				32392334167F5A6C00301439 /* EGORefreshTableHeaderView.m */,
-			);
-			path = EGORefreshTableHeaderView;
 			sourceTree = "<group>";
 		};
 		32392397167F5C9100301439 /* NSDate-Helper */ = {
@@ -940,6 +938,20 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		32E90A0617BD4A2F00392D67 /* SSPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				32E90A0717BD4A2F00392D67 /* SSPullToRefresh.h */,
+				32E90A0817BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.h */,
+				32E90A0917BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m */,
+				32E90A0A17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.h */,
+				32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */,
+				32E90A0C17BD4A2F00392D67 /* SSPullToRefreshView.h */,
+				32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */,
+			);
+			path = SSPullToRefresh;
+			sourceTree = "<group>";
+		};
 		32EA27B016DA712B00BB528E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,12 +1139,12 @@
 				32E909CB17BCEB4E00392D67 /* NSManagedObject+MagicalFinders.m in Sources */,
 				32E909BB17BCEB4E00392D67 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				32E909B717BCEB4E00392D67 /* UIImageView+AFNetworking.m in Sources */,
+				32E90A0E17BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				32E909B517BCEB4E00392D67 /* AFXMLRequestOperation.m in Sources */,
 				32E909C117BCEB4E00392D67 /* NSObject+MagicalDataImport.m in Sources */,
 				32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */,
 				32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */,
 				324D0394164071D200D0143C /* TDSlider.m in Sources */,
-				32392335167F5A6C00301439 /* EGORefreshTableHeaderView.m in Sources */,
 				3239239A167F5C9100301439 /* NSDate+Helper.m in Sources */,
 				32E909B917BCEB4E00392D67 /* MagicalImportFunctions.m in Sources */,
 				323923A6167F5DD800301439 /* TSLibraryImport.m in Sources */,
@@ -1158,12 +1170,14 @@
 				32C1876E172DA8A400921169 /* IGMediaPlayerViewController.m in Sources */,
 				32E909C517BCEB4E00392D67 /* NSString+MagicalDataImport.m in Sources */,
 				32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */,
+				32E90A1017BD4A2F00392D67 /* SSPullToRefreshView.m in Sources */,
 				32E909BF17BCEB4E00392D67 /* NSNumber+MagicalDataImport.m in Sources */,
 				32E909CD17BCEB4E00392D67 /* NSManagedObject+MagicalRecord.m in Sources */,
 				3263DEA31756A06A00D74A1F /* UIViewController+MediaPlayer.m in Sources */,
 				322D4622175CF95A00BFDC8F /* IGEpisodeShowNotesBody.m in Sources */,
 				32E909E117BCEB4E00392D67 /* MagicalRecord+ErrorHandling.m in Sources */,
 				32B4360A17627FD00015B90F /* IGEpisodeShowNotesHeader.m in Sources */,
+				32E90A0F17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m in Sources */,
 				32E909A717BCEB4E00392D67 /* AFHTTPClient.m in Sources */,
 				32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */,
 				322921F717A3186800895986 /* TDNotificationPanel.m in Sources */,

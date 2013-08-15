@@ -29,7 +29,7 @@
 #import "IGDefines.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGMediaPlayer.h"
-#import "EGORefreshTableHeaderView.h"
+#import "SSPullToRefresh.h"
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
@@ -37,16 +37,14 @@
 #import "AFDownloadRequestOperation.h"
 #import "UIViewController+MediaPlayer.h"
 #import "TDNotificationPanel.h"
-//#import "CoreData+MagicalRecord.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, EGORefreshTableHeaderDelegate>
+@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, SSPullToRefreshViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) EGORefreshTableHeaderView *refreshHeaderView;
 @property (nonatomic, strong) NSMutableArray *filteredEpisodeArray;
-@property BOOL reloading;
+@property (nonatomic, strong) SSPullToRefreshView *pullToRefreshView;
 
 @end
 
@@ -56,14 +54,6 @@
 
 - (void)viewWillLayoutSubviews
 {
-    /*if (!_refreshHeaderView)
-    {
-        EGORefreshTableHeaderView *refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
-        [refreshView setDelegate:self];
-        [self.tableView addSubview:refreshView];
-        _refreshHeaderView = refreshView;
-    }*/
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -88,7 +78,12 @@
                                                            groupBy:nil
                                                           delegate:self];
     
-//    [self reloadTableViewDataSource];
+    self.pullToRefreshView = [[SSPullToRefreshView alloc] initWithScrollView:self.tableView
+                                                                    delegate:self];
+    self.pullToRefreshView.contentView = [[SSPullToRefreshSimpleContentView alloc] init];
+    self.pullToRefreshView.backgroundColor = [UIColor whiteColor];
+
+    [self refreshFeed];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -247,18 +242,6 @@
 	[self.tableView endUpdates];
 }
 
-#pragma mark - UIScrollViewDelegate Methods
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-
 #pragma mark - UISearchDisplayControllerDelegate Methods
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -397,11 +380,8 @@
 
 - (void)refreshFeed
 {
-    if (_reloading) return;
-    
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
     [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSError *error) {
-       [self doneLoadingTableViewData];
         if (!success && error) {
             [TDNotificationPanel showNotificationInView:self.view
                                                   title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
@@ -411,20 +391,9 @@
                                             dismissable:YES
                                          hideAfterDelay:4];
         }
+        
+        [self.pullToRefreshView finishLoading];
     }];
-}
-
-- (void)reloadTableViewDataSource
-{
-    [self refreshFeed];
-	_reloading = YES;
-}
-
-- (void)doneLoadingTableViewData
-{
-	_reloading = NO;
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-    [self hideSearchBar];
 }
 
 #pragma mark - Episode Download Methods
@@ -531,16 +500,21 @@
     [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
 }
 
-#pragma mark - EGORefreshTableHeaderDelegate Methods
+#pragma mark - SSPullToRefreshViewDelegate
 
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+- (BOOL)pullToRefreshViewShouldStartLoading:(SSPullToRefreshView *)view
 {
-	[self reloadTableViewDataSource];
+    return YES;
 }
 
-- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView *)view
+- (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
-	return _reloading;
+    [self refreshFeed];
+}
+
+- (void)pullToRefreshViewDidFinishLoading:(SSPullToRefreshView *)view
+{
+//    [self hideSearchBar];
 }
 
 @end

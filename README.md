@@ -12,7 +12,6 @@ SITMOS - Podcast App uses [CocoaPods](http://cocoapods.org/) to manage third par
     $ git clone --recursive https://github.com/tomdiggle/sitmos.git
     $ cd sitmos
     $ rake setup
-    $ pod install
 
 ## Attribution
 SITMOS - Podcast App uses the following third party components &amp; libraries:
@@ -20,8 +19,8 @@ SITMOS - Podcast App uses the following third party components &amp; libraries:
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) by Mattt Thompson
 - [MagicalRecord](https://github.com/magicalpanda/MagicalRecord) by Magical Panda Software
 - [OCHamcrest](https://github.com/hamcrest/OCHamcrest) by Jon Reid
-- [EGOTableViewPullRefresh](https://github.com/enormego/EGOTableViewPullRefresh) by enormego
 - [NSDate-Helper](https://github.com/billymeltdown/nsdate-helper) by Billy Gray
+- [SSPullToRefresh](https://github.com/soffes/sspulltorefresh) by Sam Soffes
 - [TDNotificationPanel](https://github.com/tomdiggle/TDNotificationPanel) by Tom Diggle
 - [TDSlider](https://github.com/tomdiggle/TDSlider) by Tom Diggle
 - [TSLibraryImport](https://github.com/tapsquare/TSLibraryImport) by tapsquare
