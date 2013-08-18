@@ -24,7 +24,6 @@
 #import "IGHTTPClient.h"
 #import "IGDefines.h"
 #import "NSDate+Helper.h"
-//#import "CoreData+MagicalRecord.h"
 
 NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
