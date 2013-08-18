@@ -169,7 +169,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 - (void)markAsPlayed:(BOOL)played
 {
-    [self setPlayed:[NSNumber numberWithBool:played]];
+    [self setPlayed:@(played)];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults boolForKey:IGSettingUnseenBadge])
