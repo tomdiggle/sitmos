@@ -198,11 +198,11 @@
 /* accessibility label for pause download */
 "PauseDownload" = "Pause download";
 
-/* accessibility label for more info */
-"MoreInfo" = "More information";
+/* accessibility label for episode show notes */
+"EpisodeShowNotes" = "Episode show notes";
 
-/* accessibility hint for view more info */
-"ViewMoreInfo" = "View more information about episode";
+/* accessibility hint for view episode show notes */
+"ViewEpisodeShowNotes" = "View episode show notes";
 
 /* text label for show notes */
 "ShowNotes" = "Show Notes";

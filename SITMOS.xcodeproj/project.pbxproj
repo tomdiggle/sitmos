@@ -17,16 +17,9 @@
 		320602F31754C0B700301459 /* IGHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320602F21754C0B700301459 /* IGHTTPClientTests.m */; };
 		321169B517AFC58D004AFB0D /* seek-forward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321169B417AFC58D004AFB0D /* seek-forward-button@2x.png */; };
 		321169B717AFC7D1004AFB0D /* seek-backward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321169B617AFC7D1004AFB0D /* seek-backward-button@2x.png */; };
-		3213C5EE174913C6003C0BC4 /* episode-downloaded-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5EC174913C6003C0BC4 /* episode-downloaded-icon.png */; };
 		3213C5EF174913C6003C0BC4 /* episode-downloaded-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */; };
-		3213C5F217495570003C0BC4 /* episode-unplayed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F017495570003C0BC4 /* episode-unplayed-icon.png */; };
 		3213C5F317495570003C0BC4 /* episode-unplayed-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */; };
-		3213C5F6174A299D003C0BC4 /* episode-half-played-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F4174A299C003C0BC4 /* episode-half-played-icon.png */; };
 		3213C5F7174A299D003C0BC4 /* episode-half-played-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */; };
-		3213C60D174A4372003C0BC4 /* download-episode-track-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C60B174A4372003C0BC4 /* download-episode-track-image.png */; };
-		3213C60E174A4372003C0BC4 /* download-episode-track-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C60C174A4372003C0BC4 /* download-episode-track-image@2x.png */; };
-		3213C611174A5CF3003C0BC4 /* download-episode-progress-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C60F174A5CF3003C0BC4 /* download-episode-progress-image.png */; };
-		3213C612174A5CF3003C0BC4 /* download-episode-progress-image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C610174A5CF3003C0BC4 /* download-episode-progress-image@2x.png */; };
 		321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */; };
 		321D8C42145F1D8B008698DC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
 		321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C43145F1D8B008698DC /* Foundation.framework */; };
@@ -34,7 +27,7 @@
 		321D8C4C145F1D8B008698DC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 321D8C4A145F1D8B008698DC /* InfoPlist.strings */; };
 		321D8C4E145F1D8B008698DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C4D145F1D8B008698DC /* main.m */; };
 		321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
-		321F218D15B9FD8D00610DC0 /* more-info-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */; };
+		321F218D15B9FD8D00610DC0 /* episode-show-notes-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */; };
 		32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */; };
 		3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
 		3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222F7C6170F6B4000E8E76E /* Settings.bundle */; };
@@ -58,14 +51,14 @@
 		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
 		323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
-		324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0396164450DA00D0143C /* download-episode-pause-button.png */; };
-		324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */; };
 		32523DEE1688BFF0006E9FFB /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
 		32523DF1168B5410006E9FFB /* IGRSSXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF0168B540F006E9FFB /* IGRSSXMLRequestOperation.m */; };
 		32523DF4168E4277006E9FFB /* IGPodcastFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */; };
 		32523E69169B2748006E9FFB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32523E68169B2747006E9FFB /* libz.dylib */; };
 		325920A715DC1B5700345666 /* play-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A515DC1B5700345666 /* play-button@2x.png */; };
 		325920AB15DC23D700345666 /* pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A915DC23D700345666 /* pause-button@2x.png */; };
+		325A76FB17C0E13C0036C276 /* download-pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325A76F917C0E13C0036C276 /* download-pause-button@2x.png */; };
+		325A76FC17C0E13C0036C276 /* download-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325A76FA17C0E13C0036C276 /* download-resume-button@2x.png */; };
 		3263DEA31756A06A00D74A1F /* UIViewController+MediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3263DEA21756A06900D74A1F /* UIViewController+MediaPlayer.m */; };
 		3263DEBD1757965B00D74A1F /* media-player-show-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3263DEBB1757965B00D74A1F /* media-player-show-button@2x.png */; };
 		32678CEF147EDE7C007BD110 /* IGEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */; };
@@ -171,14 +164,15 @@
 		32E909EA17BCEB4E00392D67 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E909A017BCEB4E00392D67 /* MagicalRecord+ShorthandSupport.m */; };
 		32E909EB17BCEB4E00392D67 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E909A217BCEB4E00392D67 /* MagicalRecord.m */; };
 		32E909EC17BCEB4E00392D67 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E909A217BCEB4E00392D67 /* MagicalRecord.m */; };
-		32E909ED17BCEE1B00392D67 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322D32BB17257568004856E9 /* SenTestingKit.framework */; };
 		32E909EF17BCEE9500392D67 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E909EE17BCEE9500392D67 /* Security.framework */; };
 		32E90A0E17BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0917BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m */; };
 		32E90A0F17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */; };
 		32E90A1017BD4A2F00392D67 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */; };
+		32E90A1917BEBD2600392D67 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E909EE17BCEE9500392D67 /* Security.framework */; };
+		32E90A1A17BEBDB800392D67 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322D32BB17257568004856E9 /* SenTestingKit.framework */; };
+		32E90A1B17BEBE2700392D67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C45145F1D8B008698DC /* CoreGraphics.framework */; };
+		32E90A1C17BEBE4A00392D67 /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */; };
-		32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5216011AB2009A047A /* download-episode-resume-button.png */; };
-		32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */; };
 		32F023A01754FF4000A91E4B /* IGMockHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F0239F1754FF4000A91E4B /* IGMockHTTPClient.m */; };
 		32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */; };
 		32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
@@ -203,16 +197,9 @@
 		320602F21754C0B700301459 /* IGHTTPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGHTTPClientTests.m; sourceTree = "<group>"; };
 		321169B417AFC58D004AFB0D /* seek-forward-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seek-forward-button@2x.png"; sourceTree = "<group>"; };
 		321169B617AFC7D1004AFB0D /* seek-backward-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seek-backward-button@2x.png"; sourceTree = "<group>"; };
-		3213C5EC174913C6003C0BC4 /* episode-downloaded-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon.png"; sourceTree = "<group>"; };
 		3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon@2x.png"; sourceTree = "<group>"; };
-		3213C5F017495570003C0BC4 /* episode-unplayed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-unplayed-icon.png"; sourceTree = "<group>"; };
 		3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-unplayed-icon@2x.png"; sourceTree = "<group>"; };
-		3213C5F4174A299C003C0BC4 /* episode-half-played-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-half-played-icon.png"; sourceTree = "<group>"; };
 		3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-half-played-icon@2x.png"; sourceTree = "<group>"; };
-		3213C60B174A4372003C0BC4 /* download-episode-track-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-track-image.png"; sourceTree = "<group>"; };
-		3213C60C174A4372003C0BC4 /* download-episode-track-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-track-image@2x.png"; sourceTree = "<group>"; };
-		3213C60F174A5CF3003C0BC4 /* download-episode-progress-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-progress-image.png"; sourceTree = "<group>"; };
-		3213C610174A5CF3003C0BC4 /* download-episode-progress-image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-progress-image@2x.png"; sourceTree = "<group>"; };
 		321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesViewController.h; sourceTree = "<group>"; };
 		321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesViewController.m; sourceTree = "<group>"; };
 		321D8C3D145F1D8B008698DC /* SITMOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SITMOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,7 +212,7 @@
 		321D8C4F145F1D8B008698DC /* SITMOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SITMOS-Prefix.pch"; sourceTree = "<group>"; };
 		321D8C50145F1D8B008698DC /* IGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGAppDelegate.h; sourceTree = "<group>"; };
 		321D8C51145F1D8B008698DC /* IGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGAppDelegate.m; sourceTree = "<group>"; };
-		321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more-info-button@2x.png"; sourceTree = "<group>"; };
+		321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-show-notes-button@2x.png"; sourceTree = "<group>"; };
 		32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsGeneralViewController.h; sourceTree = "<group>"; };
 		32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsGeneralViewController.m; sourceTree = "<group>"; };
 		3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
@@ -262,8 +249,6 @@
 		323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+LocalNotificationHelper.m"; sourceTree = "<group>"; };
 		323D5A3716B842770074E91F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		323D5A3916B842F30074E91F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		324D0396164450DA00D0143C /* download-episode-pause-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button.png"; sourceTree = "<group>"; };
-		324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-pause-button@2x.png"; sourceTree = "<group>"; };
 		32523DEC1688BFF0006E9FFB /* IGHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGHTTPClient.h; sourceTree = "<group>"; };
 		32523DED1688BFF0006E9FFB /* IGHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGHTTPClient.m; sourceTree = "<group>"; };
 		32523DEF168B540F006E9FFB /* IGRSSXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGRSSXMLRequestOperation.h; sourceTree = "<group>"; };
@@ -273,6 +258,8 @@
 		32523E68169B2747006E9FFB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		325920A515DC1B5700345666 /* play-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button@2x.png"; sourceTree = "<group>"; };
 		325920A915DC23D700345666 /* pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-button@2x.png"; sourceTree = "<group>"; };
+		325A76F917C0E13C0036C276 /* download-pause-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-pause-button@2x.png"; sourceTree = "<group>"; };
+		325A76FA17C0E13C0036C276 /* download-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-resume-button@2x.png"; sourceTree = "<group>"; };
 		3263DEA11756A06900D74A1F /* UIViewController+MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MediaPlayer.h"; sourceTree = "<group>"; };
 		3263DEA21756A06900D74A1F /* UIViewController+MediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MediaPlayer.m"; sourceTree = "<group>"; };
 		3263DEBB1757965B00D74A1F /* media-player-show-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media-player-show-button@2x.png"; sourceTree = "<group>"; };
@@ -401,8 +388,6 @@
 		32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPullToRefreshView.m; sourceTree = "<group>"; };
 		32EA27B116DA71E300BB528E /* IGSettingsSkippingBackwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSkippingBackwardViewController.h; sourceTree = "<group>"; };
 		32EA27B216DA71E300BB528E /* IGSettingsSkippingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSkippingBackwardViewController.m; sourceTree = "<group>"; };
-		32EDEE5216011AB2009A047A /* download-episode-resume-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button.png"; sourceTree = "<group>"; };
-		32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-episode-resume-button@2x.png"; sourceTree = "<group>"; };
 		32F0239E1754FF4000A91E4B /* IGMockHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMockHTTPClient.h; sourceTree = "<group>"; };
 		32F0239F1754FF4000A91E4B /* IGMockHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMockHTTPClient.m; sourceTree = "<group>"; };
 		32F023A41755097A00A91E4B /* IGVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGVideoPlayerViewController.h; sourceTree = "<group>"; };
@@ -442,6 +427,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E90A1A17BEBDB800392D67 /* SenTestingKit.framework in Frameworks */,
 				322D32BD17257568004856E9 /* UIKit.framework in Frameworks */,
 				32E9095017BCEB3400392D67 /* OCHamcrestIOS.framework in Frameworks */,
 				322D32BE17257568004856E9 /* Foundation.framework in Frameworks */,
@@ -449,7 +435,8 @@
 				32054B0F172C6B3C00F2562D /* SystemConfiguration.framework in Frameworks */,
 				32E9095117BCEB3A00392D67 /* WindowsAzureMobileServices.framework in Frameworks */,
 				32054B10172C6B3F00F2562D /* MobileCoreServices.framework in Frameworks */,
-				32E909ED17BCEE1B00392D67 /* SenTestingKit.framework in Frameworks */,
+				32E90A1B17BEBE2700392D67 /* CoreGraphics.framework in Frameworks */,
+				32E90A1917BEBD2600392D67 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +477,6 @@
 		321D8C40145F1D8B008698DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				32E909EE17BCEE9500392D67 /* Security.framework */,
 				32E6BB95152A08EA00C78815 /* AudioToolbox.framework */,
 				327E9FBD1558F96300612C8B /* AVFoundation.framework */,
 				3293D63D148BBC090052B427 /* CoreData.framework */,
@@ -501,9 +487,10 @@
 				322AD78C153613BA00988B31 /* MediaPlayer.framework */,
 				323D5A3916B842F30074E91F /* MobileCoreServices.framework */,
 				32934D10149E66C400E939C0 /* QuartzCore.framework */,
+				32E909EE17BCEE9500392D67 /* Security.framework */,
+				322D32BB17257568004856E9 /* SenTestingKit.framework */,
 				323D5A3716B842770074E91F /* SystemConfiguration.framework */,
 				321D8C41145F1D8B008698DC /* UIKit.framework */,
-				322D32BB17257568004856E9 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -674,26 +661,17 @@
 				32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */,
 				32C69CB917AAAE2100838E66 /* Default-568h@2x.png */,
 				32C69CBA17AAAE2100838E66 /* Default@2x.png */,
-				324D0396164450DA00D0143C /* download-episode-pause-button.png */,
-				324D0397164450DA00D0143C /* download-episode-pause-button@2x.png */,
-				3213C60F174A5CF3003C0BC4 /* download-episode-progress-image.png */,
-				3213C610174A5CF3003C0BC4 /* download-episode-progress-image@2x.png */,
-				32EDEE5216011AB2009A047A /* download-episode-resume-button.png */,
-				32EDEE5316011AB6009A047A /* download-episode-resume-button@2x.png */,
-				3213C60B174A4372003C0BC4 /* download-episode-track-image.png */,
-				3213C60C174A4372003C0BC4 /* download-episode-track-image@2x.png */,
-				3213C5EC174913C6003C0BC4 /* episode-downloaded-icon.png */,
+				325A76F917C0E13C0036C276 /* download-pause-button@2x.png */,
+				325A76FA17C0E13C0036C276 /* download-resume-button@2x.png */,
 				3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */,
-				3213C5F4174A299C003C0BC4 /* episode-half-played-icon.png */,
 				3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */,
-				3213C5F017495570003C0BC4 /* episode-unplayed-icon.png */,
 				3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */,
 				32C69CB617AAADBD00838E66 /* icon-120.png */,
 				32282D6415CDEB690005E3B6 /* icon-58.png */,
 				32C69CB517AAADBD00838E66 /* icon-80.png */,
 				32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */,
 				3263DEBB1757965B00D74A1F /* media-player-show-button@2x.png */,
-				321F218B15B9FD8D00610DC0 /* more-info-button@2x.png */,
+				321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */,
 				325920A915DC23D700345666 /* pause-button@2x.png */,
 				325920A515DC1B5700345666 /* play-button@2x.png */,
 				32056E2915E1913F00235783 /* progress-slider-thumb@2x.png */,
@@ -1030,34 +1008,25 @@
 				3285E114156C43A0009E128A /* Localizable.strings in Resources */,
 				321169B717AFC7D1004AFB0D /* seek-backward-button@2x.png in Resources */,
 				327C7C6D17B2C41B0022B665 /* IGAudioPlayerViewController.xib in Resources */,
+				325A76FC17C0E13C0036C276 /* download-resume-button@2x.png in Resources */,
 				32B603F117AB0B7F000C8EEC /* media-player-hide-button@2x.png in Resources */,
-				321F218D15B9FD8D00610DC0 /* more-info-button@2x.png in Resources */,
+				321F218D15B9FD8D00610DC0 /* episode-show-notes-button@2x.png in Resources */,
 				32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */,
 				32C69CBC17AAAE2100838E66 /* Default@2x.png in Resources */,
 				32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */,
 				325920A715DC1B5700345666 /* play-button@2x.png in Resources */,
 				325920AB15DC23D700345666 /* pause-button@2x.png in Resources */,
 				32056E2B15E1913F00235783 /* progress-slider-thumb@2x.png in Resources */,
-				32EDEE5616011AC0009A047A /* download-episode-resume-button.png in Resources */,
-				32EDEE5716011AC0009A047A /* download-episode-resume-button@2x.png in Resources */,
-				324D0398164450DA00D0143C /* download-episode-pause-button.png in Resources */,
-				324D0399164450DA00D0143C /* download-episode-pause-button@2x.png in Resources */,
 				32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */,
 				3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */,
 				32C69CB817AAADBD00838E66 /* icon-120.png in Resources */,
-				3213C5EE174913C6003C0BC4 /* episode-downloaded-icon.png in Resources */,
 				321169B517AFC58D004AFB0D /* seek-forward-button@2x.png in Resources */,
 				3213C5EF174913C6003C0BC4 /* episode-downloaded-icon@2x.png in Resources */,
-				3213C5F217495570003C0BC4 /* episode-unplayed-icon.png in Resources */,
 				3213C5F317495570003C0BC4 /* episode-unplayed-icon@2x.png in Resources */,
-				3213C5F6174A299D003C0BC4 /* episode-half-played-icon.png in Resources */,
 				3213C5F7174A299D003C0BC4 /* episode-half-played-icon@2x.png in Resources */,
-				3213C60D174A4372003C0BC4 /* download-episode-track-image.png in Resources */,
-				3213C60E174A4372003C0BC4 /* download-episode-track-image@2x.png in Resources */,
-				3213C611174A5CF3003C0BC4 /* download-episode-progress-image.png in Resources */,
-				3213C612174A5CF3003C0BC4 /* download-episode-progress-image@2x.png in Resources */,
 				3263DEBD1757965B00D74A1F /* media-player-show-button@2x.png in Resources */,
 				322921F317A3186800895986 /* errorIcon.png in Resources */,
+				325A76FB17C0E13C0036C276 /* download-pause-button@2x.png in Resources */,
 				322921F417A3186800895986 /* errorIcon@2x.png in Resources */,
 				322921F517A3186800895986 /* successIcon.png in Resources */,
 				32C69CB717AAADBD00838E66 /* icon-80.png in Resources */,
@@ -1185,6 +1154,7 @@
 				32054B11172C6B6F00F2562D /* IGEpisode.m in Sources */,
 				32054B12172C6B7500F2562D /* IGPodcastFeedParser.m in Sources */,
 				32E909C217BCEB4E00392D67 /* NSObject+MagicalDataImport.m in Sources */,
+				32E90A1C17BEBE4A00392D67 /* IGHTTPClient.m in Sources */,
 				32E909DE17BCEB4E00392D67 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
 				32E909BA17BCEB4E00392D67 /* MagicalImportFunctions.m in Sources */,
 				32E909BC17BCEB4E00392D67 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
@@ -1401,6 +1371,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1434,6 +1405,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
@@ -1470,6 +1442,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";

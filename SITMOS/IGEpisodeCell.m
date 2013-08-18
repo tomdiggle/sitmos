@@ -22,7 +22,6 @@
 #import "IGEpisodeCell.h"
 
 #import "IGHTTPClient.h"
-#import "IGDefines.h"
 #import "AFDownloadRequestOperation.h"
 #import "NSDate+Helper.h"
 
@@ -46,65 +45,60 @@
 {
     if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 4.f, 200.f, 22.f)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setFont:[UIFont boldSystemFontOfSize:14.f]];
-    _titleLabel = label;
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 4.f, 200.f, 22.f)];
+    [_titleLabel setBackgroundColor:[UIColor clearColor]];
+    [_titleLabel setFont:[UIFont boldSystemFontOfSize:14.f]];
+    [_titleLabel setHighlightedTextColor:[UIColor whiteColor]];
     [self addSubview:_titleLabel];
     
-    label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 20.f, 266.f, 40.f)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setFont:[UIFont systemFontOfSize:11.f]];
-    [label setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
-    [label setNumberOfLines:2];
-    _summaryLabel = label;
+    _summaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 20.f, 266.f, 40.f)];
+    [_summaryLabel setBackgroundColor:[UIColor clearColor]];
+    [_summaryLabel setFont:[UIFont systemFontOfSize:12.f]];
+    [_summaryLabel setTextColor:[self playedColor]];
+    [_summaryLabel setHighlightedTextColor:[UIColor whiteColor]];
+    [_summaryLabel setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
+    [_summaryLabel setNumberOfLines:2];
     [self addSubview:_summaryLabel];
     
-    label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setFont:[UIFont systemFontOfSize:11.f]];
-    [label setTextColor:kRGBA(179, 179, 179, 1)];
-    _pubDateAndTimeLeftLabel = label;
+    _pubDateAndTimeLeftLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    [_pubDateAndTimeLeftLabel setBackgroundColor:[UIColor clearColor]];
+    [_pubDateAndTimeLeftLabel setFont:[UIFont systemFontOfSize:11.f]];
+    [_pubDateAndTimeLeftLabel setTextColor:[self playedColor]];
+    [_pubDateAndTimeLeftLabel setHighlightedTextColor:[UIColor whiteColor]];
     [self addSubview:_pubDateAndTimeLeftLabel];
     
-    label = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 52.f, 140.f, 14.f)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setText:NSLocalizedString(@"Loading", @"text label for loading")];
-    [label setFont:[UIFont systemFontOfSize:11.f]];
-    [label setTextColor:kRGBA(179, 179, 179, 1)];
-    [label setAccessibilityElementsHidden:YES];
-    [label setHidden:YES];
-    _downloadSizeProgressLabel = label;
+    _downloadSizeProgressLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 52.f, 140.f, 14.f)];
+    [_downloadSizeProgressLabel setBackgroundColor:[UIColor clearColor]];
+    [_downloadSizeProgressLabel setText:NSLocalizedString(@"Loading", @"text label for loading")];
+    [_downloadSizeProgressLabel setFont:[UIFont systemFontOfSize:11.f]];
+    [_downloadSizeProgressLabel setHighlightedTextColor:[UIColor whiteColor]];
+    [_downloadSizeProgressLabel setTextColor:[self playedColor]];
+    [_downloadSizeProgressLabel setAccessibilityElementsHidden:YES];
+    [_downloadSizeProgressLabel setHidden:YES];
     [self addSubview:_downloadSizeProgressLabel];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
-    [button setImage:[UIImage imageNamed:@"more-info-button"] forState:UIControlStateNormal];
-    [button setAccessibilityLabel:NSLocalizedString(@"MoreInfo", @"accessibility label for more info")];
-    [button setAccessibilityHint:NSLocalizedString(@"ViewMoreInfo", @"accessibility hint for view more info")];
-    _moreInfoButton = button;
-    [self addSubview:_moreInfoButton];
+    _showNotesButton = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
+    [_showNotesButton setImage:[UIImage imageNamed:@"more-info-button"] forState:UIControlStateNormal];
+    [_showNotesButton setAccessibilityLabel:NSLocalizedString(@"EpisodeShowNotes", @"accessibility label for episode show notes")];
+    [_showNotesButton setAccessibilityHint:NSLocalizedString(@"ViewEpisodeShowNotes", @"accessibility hint for view episode show notes")];
+    [self addSubview:_showNotesButton];
     
-    button = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
-    [button setHidden:YES];
-    _downloadButton = button;
+    _downloadButton = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
+    [_downloadButton setHidden:YES];
     [self addSubview:_downloadButton];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 58.f, 9.f, 9.f)];
-    _playedStatusImageView = imageView;
+    _playedStatusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 60.f, 8.f, 8.f)];
     [self addSubview:_playedStatusImageView];
     
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 20.f, 0, 20.f, 20.f)];
-    [imageView setImage:[UIImage imageNamed:@"episode-downloaded-icon"]];
-    [imageView setHidden:YES];
-    _episodeDownloadedImageView = imageView;
+    _episodeDownloadedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 21.f, 0, 21.f, 22.f)];
+    [_episodeDownloadedImageView setImage:[UIImage imageNamed:@"episode-downloaded-icon"]];
+    [_episodeDownloadedImageView setHidden:YES];
     [self addSubview:_episodeDownloadedImageView];
     
-    UIProgressView *progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [progressView setFrame:CGRectMake(15.f, 35.f, 260.f, 12.f)];
-    [progressView setTrackImage:[[UIImage imageNamed:@"download-episode-track-image"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8.f, 0, 8.f)]];
-    [progressView setProgressImage:[[UIImage imageNamed:@"download-episode-progress-image"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8.f, 0, 8.f)]];
-    [progressView setHidden:YES];
-    _downloadProgressView = progressView;
+    _downloadProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    [_downloadProgressView setFrame:CGRectMake(15.f, 40.f, 260.f, 12.f)];
+    [_downloadProgressView setProgressTintColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
+    [_downloadProgressView setHidden:YES];
     [self addSubview:_downloadProgressView];
     
     return self;
@@ -122,8 +116,7 @@
         AFDownloadRequestOperation *operation = [httpClient requestOperationForURL:_downloadURL];
         if (operation)
         {
-            [_titleLabel setTextColor:kRGBA(41, 41, 41, 1)];
-            [_titleLabel setHighlightedTextColor:kRGBA(41, 41, 41, 1)];
+            [_titleLabel setTextColor:[self unplayedColor]];
             
             [_downloadProgressView setHidden:NO];
             [_downloadSizeProgressLabel setHidden:NO];
@@ -131,17 +124,17 @@
             [_summaryLabel setHidden:YES];
             [_playedStatusImageView setHidden:YES];
             [_pubDateAndTimeLeftLabel setHidden:YES];
-            [_moreInfoButton setHidden:YES];
+            [_showNotesButton setHidden:YES];
             
             if ([operation isPaused])
             {
-                [_downloadButton setImage:[UIImage imageNamed:@"download-episode-resume-button"]
+                [_downloadButton setImage:[UIImage imageNamed:@"download-resume-button"]
                                  forState:UIControlStateNormal];
                 [_downloadButton setAccessibilityLabel:NSLocalizedString(@"ResumeDownload", @"accessibility label for resume download")];
             }
             else
             {
-                [_downloadButton setImage:[UIImage imageNamed:@"download-episode-pause-button"]
+                [_downloadButton setImage:[UIImage imageNamed:@"download-pause-button"]
                                  forState:UIControlStateNormal];
                 [_downloadButton setAccessibilityLabel:NSLocalizedString(@"PauseDownload", @"accessibility label for pause download")];
             }
@@ -164,16 +157,21 @@
     }
     else
     {
-        UIColor *color = _playedStatus == IGEpisodePlayedStatusPlayed ? kRGBA(179, 179, 179, 1) : kRGBA(41, 41, 41, 1);
+        UIColor *color = nil;
+        if (_playedStatus == IGEpisodePlayedStatusPlayed)
+        {
+            color = [self playedColor];
+        }
+        else
+        {
+            color = [self unplayedColor];
+        }
         [_titleLabel setTextColor:color];
-        [_titleLabel setHighlightedTextColor:color];
-        [_summaryLabel setTextColor:color];
-        [_summaryLabel setHighlightedTextColor:color];
         
         [_summaryLabel setHidden:NO];
         [_playedStatusImageView setHidden:NO];
         [_pubDateAndTimeLeftLabel setHidden:NO];
-        [_moreInfoButton setHidden:NO];
+        [_showNotesButton setHidden:NO];
         [_downloadProgressView setHidden:YES];
         [_downloadSizeProgressLabel setHidden:YES];
         [_downloadButton setHidden:YES];
@@ -187,10 +185,26 @@
             [_episodeDownloadedImageView setHidden:YES];
         }
         
-        UIImage *image = (_playedStatus == IGEpisodePlayedStatusUnplayed) ? [UIImage imageNamed:@"episode-unplayed-icon"] : (_playedStatus == IGEpisodePlayedStatusHalfPlayed) ? [UIImage imageNamed:@"episode-half-played-icon"] : nil;
+        UIImage *image = nil;
+        if (_playedStatus == IGEpisodePlayedStatusUnplayed)
+        {
+            image = [UIImage imageNamed:@"episode-unplayed-icon"];
+        }
+        else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
+        {
+            image = [UIImage imageNamed:@"episode-half-played-icon"];
+        }
         [_playedStatusImageView setImage:image];
         
-        CGRect rect = (_playedStatus == IGEpisodePlayedStatusUnplayed || _playedStatus == IGEpisodePlayedStatusHalfPlayed) ? CGRectMake(28.f, 53.f, 200.f, 22.f) : CGRectMake(15.f, 53.f, 200.f, 22.f);
+        CGRect rect = CGRectZero;
+        if (_playedStatus == IGEpisodePlayedStatusUnplayed || _playedStatus == IGEpisodePlayedStatusHalfPlayed)
+        {
+            rect = CGRectMake(28.f, 53.f, 200.f, 22.f);
+        }
+        else
+        {
+            rect = CGRectMake(15.f, 53.f, 200.f, 22.f);
+        }
         [_pubDateAndTimeLeftLabel setFrame:rect];
     }
 }
@@ -198,9 +212,7 @@
 #pragma mark - Setters
 
 - (void)setDownloadStatus:(IGEpisodeDownloadStatus)downloadStatus
-{
-//    if (downloadStatus == _downloadStatus) return;
-    
+{  
     _downloadStatus = downloadStatus;
     
     [self setNeedsLayout];
@@ -249,6 +261,18 @@
     _timeLeft = timeLeft;
     
     [_pubDateAndTimeLeftLabel setText:[NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:_pubDate withFormat:@"dd MMM yyyy"], timeLeft]];
+}
+
+#pragma mark - Color's for the labels
+
+- (UIColor *)playedColor
+{
+    return [UIColor colorWithRed:0.701 green:0.701 blue:0.701 alpha:1];
+}
+
+- (UIColor *)unplayedColor
+{
+    return [UIColor blackColor];
 }
 
 @end
