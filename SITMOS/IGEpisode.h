@@ -137,12 +137,12 @@ extern NSString * const IGEpisodeDateFormat;
 - (void)deleteDownloadedEpisode;
 
 /**
- * @return YES if the episode is audio has been completely downloaded, NO otherwise.
+ * @return YES if the episode has been downloaded, NO otherwise.
  */
 - (BOOL)isDownloaded;
 
 /**
- * @return YES if the episode is audio is partially downloaded, NO otherwise.
+ * @return YES if the episode downloading, NO otherwise.
  */
 - (BOOL)isDownloading;
 
