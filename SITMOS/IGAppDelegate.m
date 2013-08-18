@@ -51,7 +51,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.episodesListViewController = [[IGEpisodesListViewController alloc] init];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.episodesListViewController];
-    [[self.navigationController navigationBar] setTranslucent:NO];
     [self.window setRootViewController:self.navigationController];
     
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
@@ -104,9 +103,9 @@
 
 - (void)applyStylesheet
 {
-    UINavigationBar *navigationBar = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-    [navigationBar setBarTintColor:[UIColor colorWithRed:0.870 green:0.870 blue:0.870 alpha:1]];
-    [navigationBar setTintColor:[UIColor blackColor]];
+    [[self.navigationController navigationBar] setBarTintColor:[UIColor colorWithRed:0.870 green:0.870 blue:0.870 alpha:1]];
+    [[self.navigationController navigationBar] setTintColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
+    [[self.navigationController navigationBar] setTranslucent:NO];
 }
 
 #pragma mark - Push Notifications
