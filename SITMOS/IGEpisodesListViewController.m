@@ -27,18 +27,18 @@
 #import "IGEpisodeShowNotesViewController.h"
 #import "IGSettingsViewController.h"
 #import "IGDefines.h"
-#import "IGMediaPlayerAsset.h"
 #import "IGMediaPlayer.h"
+#import "IGMediaPlayerAsset.h"
 #import "SSPullToRefresh.h"
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
 #import "IGHTTPClient.h"
 #import "AFDownloadRequestOperation.h"
-#import "UIViewController+MediaPlayer.h"
+#import "UIViewController+IGNowPlayingButton.h"
 #import "TDNotificationPanel.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, SSPullToRefreshViewDelegate>
+@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIDataSourceModelAssociation, SSPullToRefreshViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
@@ -50,7 +50,7 @@
 
 @implementation IGEpisodesListViewController
 
-#pragma mark - View lifecycle
+#pragma mark - View Lifecycle
 
 - (void)viewWillLayoutSubviews
 {
@@ -65,12 +65,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setTitle:@"SITMOS"];
-    
-    [self.tableView registerClass:[IGEpisodeCell class]
-           forCellReuseIdentifier:@"episodeCell"];
-    [[self.searchDisplayController searchResultsTableView] setRowHeight:self.tableView.rowHeight];
     
     self.fetchedResultsController = [IGEpisode MR_fetchAllSortedBy:@"pubDate"
                                                          ascending:NO
@@ -101,15 +95,40 @@
 {
     [super viewWillAppear:animated];
     
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([mediaPlayer asset])
+    [self showNowPlayingButton];
+}
+
+#pragma mark - UIDataSourceModelAssociation
+
+- (NSString *)modelIdentifierForElementAtIndexPath:(NSIndexPath *)idx inView:(UIView *)view
+{
+    NSString *identifier = nil;
+    if (idx && view)
     {
-        [self displayNowPlayingButon];
+        NSDictionary *episode = [self.fetchedResultsController objectAtIndexPath:idx];
+        identifier = [episode valueForKey:@"title"];
     }
-    else
+    
+    return identifier;
+}
+
+- (NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view
+{
+    NSIndexPath *indexPath = nil;
+    if (identifier && view)
     {
-        [self hideNowPlayingButton:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title == %@", identifier];
+        NSInteger row = [[self.fetchedResultsController fetchedObjects] indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return [predicate evaluateWithObject:obj];
+        }];
+        
+        if (row != NSNotFound)
+        {
+            indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        }
     }
+    
+    return indexPath;
 }
 
 #pragma mark - Orientation Support
@@ -160,32 +179,12 @@
     [[episodeCell downloadButton] setTag:indexPath.row];
     
     UIView *selectedBackgroundView = [[UIView alloc] init];
-    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.930 green:0.930 blue:0.930 alpha:1]];
+    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
     [episodeCell setSelectedBackgroundView:selectedBackgroundView];
     
     [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
     
     return episodeCell;
-}
-
-#pragma mark - UITableViewDelegate Methods
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Build media player asset
-    IGEpisodeCell *cell = (IGEpisodeCell *)[tableView cellForRowAtIndexPath:indexPath];
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[cell title]];
-    IGMediaPlayerAsset *asset = [[IGMediaPlayerAsset alloc] init];
-    [asset setTitle:[episode title]];
-    NSURL *contentURL = [episode isDownloaded] ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-    [asset setContentURL:contentURL];
-    [asset setAudio:[episode isAudio]];
-    
-    [self showMediaPlayerWithAsset:asset];
-    
-    [tableView deselectRowAtIndexPath:indexPath
-                             animated:YES];
 }
 
 #pragma mark - NSFetchResultsControllerDelegate
@@ -324,12 +323,41 @@
     [episodeCell setPlayedStatus:[episode playedStatus]];
     [episodeCell setDownloadStatus:[episode downloadStatus]];
     [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
-    [[episodeCell showNotesButton] addTarget:self
-                                      action:@selector(showEpisodeShowNotes:)
-                            forControlEvents:UIControlEventTouchUpInside];
     [[episodeCell downloadButton] addTarget:self
                                      action:@selector(pauseResumeDownload:)
                            forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"episodeShowNotesSegue"])
+    {
+        IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[sender tag]];
+        IGEpisodeShowNotesViewController *showNotesViewController = [segue destinationViewController];
+        [showNotesViewController setEpisode:episode];
+    }
+    else if ([[segue identifier] isEqualToString:@"mediaPlayerSegue"])
+    {
+        UINavigationController *mediaPlayerNavigationController = [segue destinationViewController];
+        IGMediaPlayerViewController *mediaPlayerViewController = (IGMediaPlayerViewController *)[mediaPlayerNavigationController topViewController];
+        
+        IGEpisode *episode = nil;
+        if ([sender isKindOfClass:[UITableViewCell class]])
+        {
+            IGEpisodeCell *cell = (IGEpisodeCell *)sender;
+            episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[[cell downloadButton] tag]];
+        }
+        else
+        {
+            IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+            episode = [IGEpisode MR_findFirstByAttribute:@"title"
+                                               withValue:[mediaPlayer.asset title]];
+            
+        }
+        [mediaPlayerViewController setEpisode:episode];
+    }
 }
 
 #pragma mark - Content Filtering
@@ -450,36 +478,6 @@
     
     requestOperation.isPaused ? [requestOperation resume] : [requestOperation pause];
     [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-}
-
-#pragma mark - Show Settings
-
-- (IBAction)showSettings:(id)sender
-{
-    IGSettingsViewController *settingsViewController = [[IGSettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *settingsNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
-    [[self navigationController] presentViewController:settingsNavigationController
-                                              animated:YES
-                                            completion:nil];
-}
-
-#pragma mark - Show Episode Show Notes
-
-/**
- * 
- */
-- (void)showEpisodeShowNotes:(UIButton *)sender
-{
-    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[sender tag] inSection:0]];
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[episodeCell title]];
-    IGEpisodeShowNotesViewController *moreInfoViewController = [[IGEpisodeShowNotesViewController alloc] initWithEpisode:episode];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Episodes", @"text label for episodes")
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:nil
-                                                                            action:nil];
-    [[self navigationController] pushViewController:moreInfoViewController
-                                           animated:YES];
 }
 
 #pragma mark - SSPullToRefreshViewDelegate

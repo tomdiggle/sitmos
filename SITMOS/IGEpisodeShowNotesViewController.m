@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -22,54 +22,75 @@
 #import "IGEpisodeShowNotesViewController.h"
 
 #import "IGEpisode.h"
-#import "IGEpisodeShowNotesHeader.h"
-#import "IGEpisodeShowNotesBody.h"
-#import "IGDefines.h"
+#import "UIViewController+IGNowPlayingButton.h"
+#import "NSDate+Helper.h"
 
 @interface IGEpisodeShowNotesViewController ()
 
-@property (nonatomic, strong) IGEpisode *episode;
+@property (nonatomic, weak) IBOutlet UIImageView *episodeImageView;
+@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *pubDateAndTimeLeftLabel;
+@property (nonatomic, weak) IBOutlet UILabel *pubDateLabel;
+@property (nonatomic, weak) IBOutlet UILabel *durationLabel;
+@property (nonatomic, weak) IBOutlet UILabel *mediaTypeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *fileSizeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *summaryLabel;
 
 @end
 
 @implementation IGEpisodeShowNotesViewController
 
-- (id)initWithEpisode:(IGEpisode *)episode
+#pragma mark - Setup
+
+- (void)setupLabels
 {
-    if (!(self = [super init])) return nil;
+    NSString *pubDate = [NSDate stringFromDate:[self.episode pubDate] withFormat:@"dd MMM yyyy"];
+    NSString *mediaType = NSLocalizedString(@"Audio", @"text label for audio");
+    if (![self.episode isAudio])
+    {
+        mediaType = NSLocalizedString(@"Video", @"text label for video");
+    }
     
-    _episode = episode;
-    
-    return self;
+    [self.titleLabel setText:[self.episode title]];
+    [self.pubDateAndTimeLeftLabel setText:[NSString stringWithFormat:@"%@ - %@", pubDate, [self.episode duration]]];
+    [self.durationLabel setText:[self.episode duration]];
+    [self.pubDateLabel setText:[NSDate stringFromDate:[self.episode pubDate] withFormat:@"dd MMM yyyy"]];
+    [self.mediaTypeLabel setText:mediaType];
+    [self.fileSizeLabel setText:[self.episode readableFileSize]];
+    [self.summaryLabel setText:[self.episode summary]];
 }
+
+#pragma mark - State Preservation and Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+    
+    [coder encodeObject:[[self.episode objectID] URIRepresentation] forKey:@"IGEpisodeURI"];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    
+    NSURL *episodeURI = [coder decodeObjectForKey:@"IGEpisodeURI"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSManagedObjectID *episodeObjectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:episodeURI];
+    if (episodeObjectID)
+    {
+        self.episode = (IGEpisode *)[context objectWithID:episodeObjectID];
+        [self setupLabels];
+    }
+}
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self setTitle:NSLocalizedString(@"ShowNotes", @"text label for show notes")];
-    
-    IGEpisodeShowNotesHeader *header = [[IGEpisodeShowNotesHeader alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 56.f)];
-    [header setTitle:[_episode title]];
-    [header setPubDate:[_episode pubDate]];
-    [header setDuration:[_episode duration]];
-    [header setPlayedStatus:[_episode playedStatus]];
-    [header setDownloadStatus:[_episode downloadStatus]];
-    [[self view] addSubview:header];
-    
-    IGEpisodeShowNotesBody *showNotes = [[IGEpisodeShowNotesBody alloc] initWithFrame:CGRectZero];
-    [showNotes setDuration:[_episode duration]];
-    [showNotes setFileSize:[_episode readableFileSize]];
-    [showNotes setPubDate:[_episode pubDate]];
-    [showNotes setAudio:[_episode isAudio]];
-    [showNotes setSummary:[_episode summary]];
-    
-    UIScrollView *body = [[UIScrollView alloc] initWithFrame:CGRectMake(0, header.frame.size.height, self.view.bounds.size.width, self.view.bounds.size.height - header.frame.size.height)];
-    [body setBackgroundColor:kRGBA(245, 245, 245, 1)];
-    [body setContentSize:self.view.bounds.size];
-    [body addSubview:showNotes];
-    
-    [[self view] addSubview:body];
+    [self setupLabels];
+    [self showNowPlayingButton];
 }
 
 #pragma mark - Orientation Support

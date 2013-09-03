@@ -19,16 +19,34 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+#import "UIViewController+IGNowPlayingButton.h"
 
-@class IGMediaPlayerAsset;
+#import "IGMediaPlayer.h"
+#import "IGMediaPlayerAsset.h"
 
-@interface UIViewController (MediaPlayer)
+@implementation UIViewController (IGNowPlayingButton)
 
-- (void)showMediaPlayerWithAsset:(IGMediaPlayerAsset *)asset;
+- (void)showNowPlayingButton
+{
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    if ([mediaPlayer asset])
+    {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-show-button"]
+                                                                                  style:UIBarButtonItemStyleBordered
+                                                                                 target:self
+                                                                                 action:@selector(showMediaPlayer:)];
+    }
+    else
+    {
+        [[self navigationItem] setRightBarButtonItem:nil
+                                            animated:YES];
+    }
+}
 
-- (void)displayNowPlayingButon;
-
-- (void)hideNowPlayingButton:(BOOL)animated;
+- (void)showMediaPlayer:(id)sender
+{
+    [self performSegueWithIdentifier:@"mediaPlayerSegue"
+                              sender:nil];
+}
 
 @end

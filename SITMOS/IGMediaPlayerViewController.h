@@ -21,10 +21,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class IGMediaPlayerAsset;
+@class IGEpisode;
 
-@interface IGMediaPlayerViewController : UIViewController
+@interface IGMediaPlayerViewController : UIViewController <UIAlertViewDelegate>
 
-- (id)initWithMediaPlayerAsset:(IGMediaPlayerAsset *)asset;
+@property (nonatomic, strong) IGEpisode *episode;
 
 @end

@@ -23,6 +23,6 @@
 
 @interface IGVideoPlayerViewController : UIViewController
 
-- (id)initWithContentURL:(NSURL *)contentURL;
+@property (nonatomic, strong) NSURL *contentURL;
 
 @end

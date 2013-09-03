@@ -21,10 +21,52 @@
 
 #import "IGMediaPlayerAsset.h"
 
-@interface IGMediaPlayerAsset ()
+@interface IGMediaPlayerAsset () <NSCoding>
+
+@property (nonatomic, strong, readwrite) NSString *title;
+@property (nonatomic, strong, readwrite) NSURL *contentURL;
+@property (nonatomic, assign, readwrite, getter = isAudio) BOOL audio;
 
 @end
 
 @implementation IGMediaPlayerAsset
+
+- (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio
+{
+    if (!(self = [super init])) return nil;
+    
+    self.title = title;
+    self.contentURL = contentURL;
+    self.audio = audio;
+    self.shouldRestoreState = NO;
+    
+    return self;
+}
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    NSString *title = [decoder decodeObjectForKey:@"IGMediaPlayerAssetTitle"];
+    NSURL *contentURL = [decoder decodeObjectForKey:@"IGMediaPlayerAssetContentURL"];
+    BOOL isAudio = [decoder decodeBoolForKey:@"IGMediaPlayerAssetIsAudio"];
+    BOOL shouldRestoreState = [decoder decodeBoolForKey:@"IGMediaPlayerAssetShouldRestoreState"];
+    
+    self = [self initWithTitle:title
+                    contentURL:contentURL
+                       isAudio:isAudio];
+    
+    self.shouldRestoreState = shouldRestoreState;
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:self.title forKey:@"IGMediaPlayerAssetTitle"];
+    [encoder encodeObject:self.contentURL forKey:@"IGMediaPlayerAssetContentURL"];
+    [encoder encodeBool:self.isAudio forKey:@"IGMediaPlayerAssetIsAudio"];
+    [encoder encodeBool:self.shouldRestoreState forKey:@"IGMediaPlayerAssetShouldRestoreState"];
+}
 
 @end

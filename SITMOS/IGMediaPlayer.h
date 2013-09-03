@@ -91,9 +91,9 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 @property (nonatomic, copy) IGMediaPlayerStoppedBlock stoppedBlock;
 
 /**
- * The asset of which the media was initialized. (read-only)
+ * The asset of which the media was initialized.
  */
-@property (nonatomic, strong, readonly) IGMediaPlayerAsset *asset;
+@property (nonatomic, strong) IGMediaPlayerAsset *asset;
 
 #pragma mark - Getting the Media Player Instance
 

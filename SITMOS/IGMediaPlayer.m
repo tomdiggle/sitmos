@@ -63,7 +63,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (nonatomic, readwrite) Float64 currentTime;
 @property (nonatomic, readwrite) Float64 duration;
 @property (nonatomic, readwrite) IGMediaPlayerPlaybackState playbackState;
-@property (nonatomic, strong, readwrite) IGMediaPlayerAsset *asset;
+//@property (nonatomic, strong) IGMediaPlayerAsset *asset;
 
 @end
 
@@ -187,7 +187,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 {
     NSParameterAssert(asset != nil);
     
-    if ([_asset.contentURL isEqual:asset.contentURL])
+    if ([_asset.contentURL isEqual:asset.contentURL] && ![asset shouldRestoreState])
     {
         return;
     }

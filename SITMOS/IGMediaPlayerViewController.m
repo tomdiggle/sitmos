@@ -24,114 +24,169 @@
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGEpisode.h"
+#import "IGHTTPClient.h"
 #import "IGAudioPlayerViewController.h"
 #import "IGVideoPlayerViewController.h"
-//#import "CoreData+MagicalRecord.h"
-
-@interface IGMediaPlayerViewController ()
-
-@property (nonatomic, strong) IGMediaPlayerAsset *mediaPlayerAsset;
-
-@end
 
 @implementation IGMediaPlayerViewController
 
-- (id)initWithMediaPlayerAsset:(IGMediaPlayerAsset *)asset
+#pragma mark - State Preservation and Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    if (!(self = [super init]))
-    {
-        return nil;
-    }
+    [super encodeRestorableStateWithCoder:coder];
     
-    _mediaPlayerAsset = asset;
-    
-    return self;
+    [coder encodeObject:[[self.episode objectID] URIRepresentation] forKey:@"IGEpisodeURI"];
 }
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    
+    NSURL *episodeURI = [coder decodeObjectForKey:@"IGEpisodeURI"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSManagedObjectID *episodeObjectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:episodeURI];
+    if (episodeObjectID)
+    {
+        self.episode = (IGEpisode *)[context objectWithID:episodeObjectID];
+        if ([self.episode isAudio])
+        {
+            [self playAudio];
+        }
+        else
+        {
+            IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+            [mediaPlayer stop];
+        }
+    }
+}
+
+#pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[[self navigationController] navigationBar] setTranslucent:NO];
-    [[[self navigationController] navigationBar] setBarStyle:UIBarStyleBlackOpaque];
-    [[[self navigationController] navigationBar] setTintColor:[UIColor whiteColor]];
-    [[[self navigationController] navigationBar] setBarTintColor:[UIColor colorWithRed:0.078 green:0.078 blue:0.078 alpha:1]];
-    
-    if ([_mediaPlayerAsset isAudio])
-    {
-        [self showAudioPlayer];
-    }
-    else
-    {
-        [self showVideoPlayer];
-    }
+
+    [self loadPlayerViewController];
 }
 
-#pragma mark - Audio Playing Methods
+#pragma mark - Seque
 
-- (void)showAudioPlayer
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [self playAudio];
+    if ([segue.identifier isEqualToString:@"audioPlayerSegue"])
+    {
+        if (![self.episode isDownloaded] && ![IGHTTPClient allowCellularDataStreaming])
+        {
+            IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+            [mediaPlayer stop];
+        
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataTitle", nil)
+                                                                message:NSLocalizedString(@"StreamingWithCellularDataMessage", nil)
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", "text label for cancel")
+                                                      otherButtonTitles:NSLocalizedString(@"Stream", @"text label for stream"), nil];
+            [alertView show];
+        }
+        else
+        {
+            [self playAudio];
+        }
     
-    IGAudioPlayerViewController *audioPlayerViewController = [[IGAudioPlayerViewController alloc] init];
-    [[self navigationController] pushViewController:audioPlayerViewController
-                                           animated:YES];
+        IGAudioPlayerViewController *audioPlayerViewController = [segue destinationViewController];
+        [audioPlayerViewController setTitle:[self.episode title]];
+    }
+    else if ([segue.identifier isEqualToString:@"videoPlayerSegue"])
+    {
+        IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+        [mediaPlayer stop];
+        
+        IGVideoPlayerViewController *videoPlayerViewController = [segue destinationViewController];
+        [videoPlayerViewController setContentURL:[NSURL URLWithString:[self.episode downloadURL]]];
+    }
 }
+
+#pragma mark - Load Player View Controller
+
+/**
+ * Loads the correct view controller depending on the current media type.
+ */
+- (void)loadPlayerViewController
+{
+    if ([self.episode isAudio])
+    {
+        [self performSegueWithIdentifier:@"audioPlayerSegue"
+                                  sender:nil];
+    }
+    else if (![self.episode isAudio])
+    {
+        [self performSegueWithIdentifier:@"videoPlayerSegue"
+                                  sender:self];
+    }
+}
+
+#pragma mark - Play Audio
 
 - (void)playAudio
 {
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([[_mediaPlayerAsset contentURL] isEqual:[[mediaPlayer asset] contentURL]])
+    IGMediaPlayerAsset *asset = nil;
+    
+    if ([mediaPlayer.asset shouldRestoreState])
+    {
+        asset = [mediaPlayer asset];
+    }
+    else
+    {
+        NSURL *contentURL = ([self.episode isDownloaded]) ? [self.episode fileURL] : [NSURL URLWithString:[self.episode downloadURL]];
+        asset = [[IGMediaPlayerAsset alloc] initWithTitle:[self.episode title]
+                                               contentURL:contentURL
+                                                  isAudio:[self.episode isAudio]];
+    }
+    
+    if ([[asset contentURL] isEqual:[[mediaPlayer asset] contentURL]] && ![mediaPlayer.asset shouldRestoreState])
     {
         return;
     }
     
-    [mediaPlayer startWithAsset:_mediaPlayerAsset];
+    [mediaPlayer startWithAsset:asset];
     
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[_mediaPlayerAsset title]];
-    [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
+    [mediaPlayer setStartFromTime:[[self.episode progress] floatValue]];
     
     [mediaPlayer setPausedBlock:^(Float64 currentTime) {
-        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            IGMediaPlayerAsset *localAsset = _mediaPlayerAsset;
-            IGEpisode *localEpisode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                               withValue:[localAsset title]
-                                                               inContext:localContext];
-            [localEpisode setProgress:@(currentTime)];
-        }];
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        IGEpisode *localEpisode = [self.episode MR_inContext:localContext];
+        [localEpisode setProgress:@(currentTime)];
+        [localContext MR_saveToPersistentStoreAndWait];
     }];
     
     [mediaPlayer setStoppedBlock:^(Float64 currentTime, BOOL playbackEnded) {
-        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            IGMediaPlayerAsset *localAsset = _mediaPlayerAsset;
-            IGEpisode *localEpisode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                               withValue:[localAsset title]
-                                                               inContext:localContext];
-            
-            NSNumber *progress = @(currentTime);
-            if (playbackEnded)
-            {
-                progress = @(0);
-                [localEpisode markAsPlayed:playbackEnded];
-            }
-            [localEpisode setProgress:progress];
-        }];
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        IGEpisode *localEpisode = [self.episode MR_inContext:localContext];
+        NSNumber *progress = @(currentTime);
+        if (playbackEnded)
+        {
+            progress = @(0);
+            [localEpisode markAsPlayed:playbackEnded];
+        }
+        [localEpisode setProgress:progress];
+        [localContext MR_saveToPersistentStoreAndWait];
     }];
 }
 
-#pragma mark - Video Playing Methods
+#pragma mark - UIAlertViewDelegate
 
-- (void)showVideoPlayer
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    [mediaPlayer stop];
-    
-    [[self navigationItem] setHidesBackButton:YES];
-    
-    IGVideoPlayerViewController *videoPlayer = [[IGVideoPlayerViewController alloc] initWithContentURL:[_mediaPlayerAsset contentURL]];
-    [[self navigationController] pushViewController:videoPlayer
-                                           animated:NO];
+    if (buttonIndex == 0)
+    {
+        [self dismissViewControllerAnimated:YES
+                                 completion:nil];
+    }
+    else if (buttonIndex == 1)
+    {
+        [self playAudio];
+    }
 }
 
 @end

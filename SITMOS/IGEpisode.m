@@ -53,6 +53,15 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 + (void)importPodcastFeedItems:(NSArray *)feed
                     completion:(void (^) (BOOL success, NSError *error))completion
 {
+    if ([feed count] == 0)
+    {
+        if (completion)
+        {
+            completion(YES, nil);
+        }
+        return;
+    }
+    
     NSDate *latestEpisodePubDate = nil;
     NSUInteger episodes = [IGEpisode MR_countOfEntities];
     if (episodes == 0)

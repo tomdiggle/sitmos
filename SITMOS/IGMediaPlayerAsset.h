@@ -26,16 +26,26 @@
 /**
  * The title of the media currently playing.
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong, readonly) NSString *title;
 
 /**
  * The url of the content currently playing.
  */
-@property (nonatomic, strong) NSURL *contentURL;
+@property (nonatomic, strong, readonly) NSURL *contentURL;
 
 /**
  *
  */
-@property (nonatomic, assign, getter = isAudio) BOOL audio;
+@property (nonatomic, assign, readonly, getter = isAudio) BOOL audio;
+
+/**
+ *
+ */
+@property (nonatomic, assign) BOOL shouldRestoreState;
+
+/**
+ *
+ */
+- (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio;
 
 @end

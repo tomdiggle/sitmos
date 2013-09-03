@@ -21,6 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IGSettingsSkippingForwardViewController : UITableViewController
+@interface IGSettingsSeekingForwardViewController : UITableViewController
 
 @end

@@ -22,38 +22,45 @@
 #import "IGSettingsViewController.h"
 
 #import "IGHTTPClient.h"
+#import "IGEpisode.h"
 #import "IGDefines.h"
-#import "IGSettingsGeneralViewController.h"
 
 @interface IGSettingsViewController ()
 
+@property (nonatomic, weak) IBOutlet UISwitch *cellularDataStreamingSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *cellularDataDownloadingSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *pushNotificationsNewEpisodesSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *episodesUnplayedBadgeSwitch;
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
 @end
 
 @implementation IGSettingsViewController
 
-- (void)viewWillLayoutSubviews
+#pragma mark - Memory Management
+
+- (void)dealloc
 {
-    [super viewWillLayoutSubviews];
-    
-    [[self view] setBackgroundColor:kRGBA(240, 240, 240, 1)];
-    [[self tableView] setBackgroundView:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setTitle:NSLocalizedString(@"Settings", @"text label for settings")];
 
-//    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setColor:kRGBA(41.f, 41.f, 41.f, 1)];
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                          target:self
-                                                                                          action:@selector(doneButtonTapped:)];
-
-    _userDefaults = [NSUserDefaults standardUserDefaults];
+    [self.cellularDataStreamingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataStreaming]];
+    [self.cellularDataDownloadingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataDownloading]];
+    [self.pushNotificationsNewEpisodesSwitch setOn:[self.userDefaults boolForKey:IGSettingPushNotifications]];
+    [self.episodesUnplayedBadgeSwitch setOn:[self.userDefaults boolForKey:IGSettingUnseenBadge]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDefaultsChanged:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:nil];
 }
 
 #pragma mark - Orientation Support
@@ -65,89 +72,51 @@
 
 #pragma mark - UITableViewDataSource Methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 2) return 2;
-    
-    return 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"cellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
+    UITableViewCell *cell = [super tableView:tableView
+                       cellForRowAtIndexPath:indexPath];
+    
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
+    
+    if (section == 1)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier];
+        // Playback Section
+        if (row == 0)
+        {
+            NSString *skippingBackwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGSettingSkippingBackwardTime]];
+            [[cell detailTextLabel] setText:skippingBackwardTime];
+        }
+        else if (row == 1)
+        {
+            NSString *skippingForwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGSettingSkippingForwardTime]];
+            [[cell detailTextLabel] setText:skippingForwardTime];
+        }
+    }
+    else if (section == 3)
+    {
+        // Episodes Section
+        if (row == 1)
+        {
+            NSString *deleteMethod = [self.userDefaults boolForKey:IGSettingEpisodesDelete] ? NSLocalizedString(@"Automatically", @"text label for automatically") : NSLocalizedString(@"Never", @"text label for never");
+            [[cell detailTextLabel] setText:deleteMethod];
+        }
     }
     
-    [cell setBackgroundColor:kRGBA(245, 245, 245, 1)];
-    
-    UISwitch *accessoryViewSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-    if ([indexPath section] == 0)
-    {
-        if ([indexPath row] == 0)
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"General", @"text label for general")];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        }
-    }
-    else if ([indexPath section] == 1)
-    {
-        [[cell textLabel] setText:NSLocalizedString(@"PushNotifications", @"text label for push notifications")];
-        [cell setAccessoryView:accessoryViewSwitch];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [accessoryViewSwitch setOn:[_userDefaults boolForKey:IGSettingPushNotifications]];
-        [accessoryViewSwitch addTarget:self
-                                action:@selector(updateSettingPushNotifications:)
-                      forControlEvents:UIControlEventTouchUpInside];
-    }
-    else if ([indexPath section] == 2)
-    {
-        if ([indexPath row] == 0)
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"ReviewOnAppStore", @"text label for review on app store")];
-            [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
-            [cell setAccessibilityTraits:UIAccessibilityTraitLink];
-        }
-        else if ([indexPath row] == 1)
-        {
-            [[cell textLabel] setText:NSLocalizedString(@"FollowSITMOSOnTwitter", @"text label for follow sitmos on twitter")];
-            [[cell textLabel] setTextAlignment:NSTextAlignmentCenter];
-            [cell setAccessibilityTraits:UIAccessibilityTraitLink];
-        }
-    }
-
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-{
-    if (section != 2) return nil;
-    
-    return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+//{
+//    return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+//}
 
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath section] == 0)
-    {
-        if ([indexPath row] == 0)
-        {
-            IGSettingsGeneralViewController *settingsGeneralViewController = [[IGSettingsGeneralViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            [[self navigationController] pushViewController:settingsGeneralViewController
-                                                   animated:YES];
-        }
-    }
-    else if ([indexPath section] == 2)
+    if ([indexPath section] == 4)
     {
         if ([indexPath row] == 0)
         {
@@ -194,10 +163,27 @@
 
 #pragma mark - Update Settings
 
-- (void)updateSettingPushNotifications:(id)sender
+- (void)userDefaultsChanged:(id)sender
 {
-    [_userDefaults setBool:[sender isOn] forKey:IGSettingPushNotifications];
-    [_userDefaults synchronize];
+    [[self tableView] reloadData];
+}
+
+- (IBAction)updateSettingCellularDataStreaming:(id)sender
+{
+    [self.userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataStreaming];
+    [self.userDefaults synchronize];
+}
+
+- (IBAction)updateSettingCellularDataDownloading:(id)sender
+{
+    [self.userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataDownloading];
+    [self.userDefaults synchronize];
+}
+
+- (IBAction)updateSettingPushNotifications:(id)sender
+{
+    [self.userDefaults setBool:[sender isOn] forKey:IGSettingPushNotifications];
+    [self.userDefaults synchronize];
     
     if (![sender isOn])
     {
@@ -207,9 +193,9 @@
             {
                 NSLog(@"Error: %@", error);
                 // Reset the setting
-                [_userDefaults setBool:([sender isOn] ? NO : YES)
+                [self.userDefaults setBool:([sender isOn] ? NO : YES)
                                 forKey:IGSettingPushNotifications];
-                [_userDefaults synchronize];
+                [self.userDefaults synchronize];
         
                 // Reset the switch
                 [sender setOn:([sender isOn] ? NO : YES)
@@ -220,6 +206,23 @@
     else
     {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+}
+
+- (IBAction)updateSettingUnseenBadge:(id)sender
+{
+    [self.userDefaults setBool:[sender isOn] forKey:IGSettingUnseenBadge];
+    [self.userDefaults synchronize];
+    
+    if ([sender isOn])
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"played == NO"];
+        NSUInteger numberOfUnplayedEpisodes = [IGEpisode MR_countOfEntitiesWithPredicate:predicate];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:numberOfUnplayedEpisodes];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     }
 }
 

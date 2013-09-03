@@ -23,63 +23,68 @@
 
 @interface IGVideoPlayerViewController () <UIWebViewDelegate>
 
-@property (nonatomic, strong) NSURL *contentURL;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 
 @end
 
 @implementation IGVideoPlayerViewController
 
-- (id)initWithContentURL:(NSURL *)contentURL
+#pragma mark - State Preservation and Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    if (!(self = [super init]))
-    {
-        return nil;
-    }
+    [super encodeRestorableStateWithCoder:coder];
     
-    _contentURL = contentURL;
-    
-    return self;
+    [coder encodeObject:self.contentURL forKey:@"IGVideoEpisodeContentURL"];
 }
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    
+    self.contentURL = [coder decodeObjectForKey:@"IGVideoEpisodeContentURL"];
+    [self loadContentURL:self.contentURL];
+}
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self setTitle:[_contentURL absoluteString]];
+    [self setTitle:[self.contentURL absoluteString]];
+    [self loadContentURL:self.contentURL];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-hide-button"]
-                                                                   style:UIBarButtonItemStyleBordered
-                                                                  target:self
-                                                                  action:@selector(hideMediaPlayer:)];
-    
-    _loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    [_loadingIndicator hidesWhenStopped];
-    [_loadingIndicator startAnimating];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_loadingIndicator];
-    
-    _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [_webView setDelegate:self];
-    NSURLRequest *request = [NSURLRequest requestWithURL:_contentURL];
-    [_webView loadRequest:request];
-    [[self view] addSubview:_webView];
+    self.loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.loadingIndicator hidesWhenStopped];
+    [self.loadingIndicator startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.loadingIndicator];
 }
 
-#pragma mark - UIWebViewDelegate Methods
+#pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     NSString *title = [[self webView] stringByEvaluatingJavaScriptFromString:@"document.title"];
     [self setTitle:title];
     
-    [_loadingIndicator stopAnimating];
+    [self.loadingIndicator stopAnimating];
+}
+
+#pragma mark - Load Content
+
+- (void)loadContentURL:(NSURL *)url
+{
+    self.contentURL = url;
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
 
 #pragma mark - Hide Media Player
 
-- (void)hideMediaPlayer:(id)sender
+- (IBAction)hideMediaPlayer:(id)sender
 {
     [self dismissViewControllerAnimated:YES
                              completion:nil];

@@ -22,8 +22,8 @@
 #import "IGSettingsGeneralViewController.h"
 
 #import "IGEpisode.h"
-#import "IGSettingsSkippingBackwardViewController.h"
-#import "IGSettingsSkippingForwardViewController.h"
+#import "IGSettingsSeekingBackwardViewController.h"
+#import "IGSettingsSeekingForwardViewController.h"
 #import "IGSettingsEpisodesDeleteViewController.h"
 #import "IGDefines.h"
 //#import "CoreData+MagicalRecord.h"
@@ -187,13 +187,13 @@
     {
         if ([indexPath row] == 0)
         {
-            IGSettingsSkippingBackwardViewController *skippingBackwardViewController = [[IGSettingsSkippingBackwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            IGSettingsSeekingBackwardViewController *skippingBackwardViewController = [[IGSettingsSeekingBackwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:skippingBackwardViewController
                                                    animated:YES];
         }
         else if ([indexPath row] == 1)
         {
-            IGSettingsSkippingForwardViewController *skippingForwardViewController = [[IGSettingsSkippingForwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            IGSettingsSeekingForwardViewController *skippingForwardViewController = [[IGSettingsSeekingForwardViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [[self navigationController] pushViewController:skippingForwardViewController
                                                    animated:YES];
         }

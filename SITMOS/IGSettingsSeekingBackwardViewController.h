@@ -21,14 +21,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "IGEpisode.h"
-
-@interface IGEpisodeShowNotesHeader : UIView
-
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSDate *pubDate;
-@property (nonatomic, strong) NSString *duration;
-@property (nonatomic, assign) IGEpisodePlayedStatus playedStatus;
-@property (nonatomic, assign) IGEpisodeDownloadStatus downloadStatus;
+@interface IGSettingsSeekingBackwardViewController : UITableViewController
 
 @end

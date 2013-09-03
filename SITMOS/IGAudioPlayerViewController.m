@@ -51,9 +51,9 @@
 
 #pragma mark - Initializers
 
-- (id)init
+- (id)initWithCoder:(NSCoder *)coder
 {
-    if (!(self = [super init])) return nil;
+    if (!(self = [super initWithCoder:coder])) return nil;
     
     [self observeNotifications];
     
@@ -100,24 +100,36 @@
                                                object:nil];
 }
 
+#pragma mark - State Preservation and Restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [super decodeRestorableStateWithCoder:coder];
+    
+    [self setTitle:[[self.mediaPlayer asset] title]];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    _mediaPlayer = [IGMediaPlayer sharedInstance];
+    self.mediaPlayer = [IGMediaPlayer sharedInstance];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-hide-button"]
                                                                              style:UIBarButtonItemStyleBordered
                                                                             target:self
                                                                             action:@selector(hideAudioPlayer:)];
     
-    [self setTitle:[[_mediaPlayer asset] title]];
-    
     [self updatePlayButton];
     
-    [_progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
+    [self.progressSlider setThumbImage:[UIImage imageNamed:@"progress-slider-thumb"] forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated

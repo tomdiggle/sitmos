@@ -19,31 +19,25 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "IGSettingsSkippingBackwardViewController.h"
+#import "IGSettingsSeekingForwardViewController.h"
 
 #import "IGDefines.h"
 
-@interface IGSettingsSkippingBackwardViewController ()
+@interface IGSettingsSeekingForwardViewController ()
 
-@property (nonatomic, strong) NSArray *skippingBackwardTimes;
+@property (nonatomic, strong) NSArray *skippingForwardTimes;
 
 @end
 
-@implementation IGSettingsSkippingBackwardViewController
+@implementation IGSettingsSeekingForwardViewController
 
-- (void)viewDidLayoutSubviews
-{
-    [[self view] setBackgroundColor:kRGBA(240, 240, 240, 1)];
-    [[self tableView] setBackgroundView:nil];
-}
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self setTitle:NSLocalizedString(@"SkippingBackward", @"text label for skipping backward")];
-    
-    _skippingBackwardTimes = @[@10, @15, @30, @45];
+    self.skippingForwardTimes = @[@10, @15, @30, @45];
 }
 
 #pragma mark - Orientation Support
@@ -68,17 +62,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier
+                                                            forIndexPath:indexPath];
     
-    [cell setBackgroundColor:kRGBA(245, 245, 245, 1)];
-    [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-    [[cell textLabel] setText:[NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [[_skippingBackwardTimes objectAtIndex:indexPath.row] integerValue]]];
+    [[cell textLabel] setText:[NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [[self.skippingForwardTimes objectAtIndex:indexPath.row] integerValue]]];
     
-    if ([[self currentSkippingBackwardTime] isEqualToNumber:[_skippingBackwardTimes objectAtIndex:indexPath.row]])
+    if ([[self currentSkippingForwardTime] isEqualToNumber:[self.skippingForwardTimes objectAtIndex:indexPath.row]])
     {
         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
@@ -89,12 +78,12 @@
 #pragma mark - UITableViewDelegate
 
 /**
- * Checkmark then newly selected setting, remove the checkmark from the old setting and pop the view controller.
+ * Checkmark then newly selected setting, remove the checkmark from the old setting.
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // The table view cell which is currently checkmarked
-    NSInteger currentIndex = [_skippingBackwardTimes indexOfObject:[self currentSkippingBackwardTime]];
+    NSInteger currentIndex = [self.skippingForwardTimes indexOfObject:[self currentSkippingForwardTime]];
     NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:currentIndex
                                                        inSection:0];
     UITableViewCell *currentCheckedCell = [tableView cellForRowAtIndexPath:currentIndexPath];
@@ -103,27 +92,24 @@
     // Checkmark the currently selected setting
     [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
     
-    [self setSettingSkippingBackwardTime:[_skippingBackwardTimes objectAtIndex:indexPath.row]];
+    [self setSettingSkippingForwardTime:[self.skippingForwardTimes objectAtIndex:indexPath.row]];
     
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
-    
-    // Pop view controller
-    [[self navigationController] popViewControllerAnimated:YES];
 }
 
-#pragma mark - Skipping Backward
+#pragma mark - Skipping Forward
 
-- (NSNumber *)currentSkippingBackwardTime
+- (NSNumber *)currentSkippingForwardTime
 {
-    return [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime]];
+    return [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime]];
 }
 
-- (void)setSettingSkippingBackwardTime:(NSNumber *)time
+- (void)setSettingSkippingForwardTime:(NSNumber *)time
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:[time integerValue]
-                          forKey:IGSettingSkippingBackwardTime];
+                      forKey:IGSettingSkippingForwardTime];
     [userDefaults synchronize];
 }
 

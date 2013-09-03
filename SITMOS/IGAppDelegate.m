@@ -22,8 +22,8 @@
 #import "IGAppDelegate.h"
 
 #import "IGHTTPClient.h"
-#import "IGEpisodesListViewController.h"
 #import "IGMediaPlayer.h"
+#import "IGMediaPlayerAsset.h"
 #import "IGAPIKeys.h"
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
@@ -39,6 +39,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"willFinishLaunchingWithOptions: %@", launchOptions);
 //    [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
@@ -47,16 +48,9 @@
     [IGHTTPClient setDevelopmentModeEnabled:YES];
 #endif
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    self.episodesListViewController = [[IGEpisodesListViewController alloc] init];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.episodesListViewController];
-    [self.window setRootViewController:self.navigationController];
-    
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
     
-    [self applyStylesheet];
     [self registerDefaultSettings];
     [self checkForEpisodesOnDevice];
     
@@ -67,13 +61,21 @@
                                                    object:nil];
     });
     
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSLog(@"didFinishLaunchingWithOptions: %@", launchOptions);
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [MagicalRecord cleanUp];
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    [mediaPlayer stop];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:IGMediaPlayerPlaybackStatusChangedNotification
@@ -83,6 +85,42 @@
     {
         [self resignFirstResponder];
         [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    }
+    
+    [MagicalRecord cleanUp];
+}
+
+#pragma mark - State Preservation and Restoration 
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    // Save media player asset
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    if ([mediaPlayer asset])
+    {
+        [mediaPlayer.asset setShouldRestoreState:YES];
+        [coder encodeObject:[mediaPlayer asset] forKey:@"IGMediaAssetCurrentlyPlaying"];
+    }
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    // Load the saved media player asset
+    IGMediaPlayerAsset *asset = [coder decodeObjectForKey:@"IGMediaAssetCurrentlyPlaying"];
+    if (asset)
+    {
+        IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+        [mediaPlayer setAsset:asset];
     }
 }
 
@@ -97,15 +135,6 @@
     }
     
     return UIInterfaceOrientationMaskPortrait;
-}
-
-#pragma mark - Stylesheet
-
-- (void)applyStylesheet
-{
-    [[self.navigationController navigationBar] setBarTintColor:[UIColor colorWithRed:0.870 green:0.870 blue:0.870 alpha:1]];
-    [[self.navigationController navigationBar] setTintColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
-    [[self.navigationController navigationBar] setTranslucent:NO];
 }
 
 #pragma mark - Push Notifications
@@ -277,7 +306,7 @@
 #pragma mark - Remote Control Events
 
 /**
- * The iPod controls will send these events when the app is in the background
+ * The iPod controls will send these events when the app is in the background.
  */
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event 
 {

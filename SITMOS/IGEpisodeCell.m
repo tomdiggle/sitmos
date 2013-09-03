@@ -27,13 +27,14 @@
 
 @interface IGEpisodeCell ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *summaryLabel;
-@property (nonatomic, strong) UILabel *pubDateAndTimeLeftLabel;
-@property (nonatomic, strong) UILabel *downloadSizeProgressLabel;
-@property (nonatomic, strong) UIImageView *playedStatusImageView;
-@property (nonatomic, strong) UIImageView *episodeDownloadedImageView;
-@property (nonatomic, strong) UIProgressView *downloadProgressView;
+@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *summaryLabel;
+@property (nonatomic, weak) IBOutlet UILabel *pubDateAndTimeLeftLabel;
+@property (nonatomic, weak) IBOutlet UILabel *downloadSizeProgressLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *playedStatusImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
+@property (nonatomic, weak) IBOutlet UIProgressView *downloadProgressView;
+@property (nonatomic, strong) NSLayoutConstraint *pubDateAndTimeLeftLayoutConstraint;
 
 @end
 
@@ -41,67 +42,16 @@
 
 #pragma mark - Initializers
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)awakeFromNib
 {
-    if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) return nil;
-    
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 4.f, 200.f, 22.f)];
-    [_titleLabel setBackgroundColor:[UIColor clearColor]];
-    [_titleLabel setFont:[UIFont boldSystemFontOfSize:14.f]];
-    [_titleLabel setHighlightedTextColor:[UIColor whiteColor]];
-    [self addSubview:_titleLabel];
-    
-    _summaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 20.f, 266.f, 40.f)];
-    [_summaryLabel setBackgroundColor:[UIColor clearColor]];
-    [_summaryLabel setFont:[UIFont systemFontOfSize:12.f]];
-    [_summaryLabel setTextColor:[self playedColor]];
-    [_summaryLabel setHighlightedTextColor:[UIColor whiteColor]];
-    [_summaryLabel setLineBreakMode:NSLineBreakByWordWrapping | NSLineBreakByTruncatingTail];
-    [_summaryLabel setNumberOfLines:2];
-    [self addSubview:_summaryLabel];
-    
-    _pubDateAndTimeLeftLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_pubDateAndTimeLeftLabel setBackgroundColor:[UIColor clearColor]];
-    [_pubDateAndTimeLeftLabel setFont:[UIFont systemFontOfSize:11.f]];
-    [_pubDateAndTimeLeftLabel setTextColor:[self playedColor]];
-    [_pubDateAndTimeLeftLabel setHighlightedTextColor:[UIColor whiteColor]];
-    [self addSubview:_pubDateAndTimeLeftLabel];
-    
-    _downloadSizeProgressLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f, 52.f, 140.f, 14.f)];
-    [_downloadSizeProgressLabel setBackgroundColor:[UIColor clearColor]];
-    [_downloadSizeProgressLabel setText:NSLocalizedString(@"Loading", @"text label for loading")];
-    [_downloadSizeProgressLabel setFont:[UIFont systemFontOfSize:11.f]];
-    [_downloadSizeProgressLabel setHighlightedTextColor:[UIColor whiteColor]];
-    [_downloadSizeProgressLabel setTextColor:[self playedColor]];
-    [_downloadSizeProgressLabel setAccessibilityElementsHidden:YES];
-    [_downloadSizeProgressLabel setHidden:YES];
-    [self addSubview:_downloadSizeProgressLabel];
-    
-    _showNotesButton = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
-    [_showNotesButton setImage:[UIImage imageNamed:@"more-info-button"] forState:UIControlStateNormal];
-    [_showNotesButton setAccessibilityLabel:NSLocalizedString(@"EpisodeShowNotes", @"accessibility label for episode show notes")];
-    [_showNotesButton setAccessibilityHint:NSLocalizedString(@"ViewEpisodeShowNotes", @"accessibility hint for view episode show notes")];
-    [self addSubview:_showNotesButton];
-    
-    _downloadButton = [[UIButton alloc] initWithFrame:CGRectMake(280.f, 0, 40.f, 78.f)];
-    [_downloadButton setHidden:YES];
-    [self addSubview:_downloadButton];
-    
-    _playedStatusImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 60.f, 8.f, 8.f)];
-    [self addSubview:_playedStatusImageView];
-    
-    _episodeDownloadedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 21.f, 0, 21.f, 22.f)];
-    [_episodeDownloadedImageView setImage:[UIImage imageNamed:@"episode-downloaded-icon"]];
-    [_episodeDownloadedImageView setHidden:YES];
-    [self addSubview:_episodeDownloadedImageView];
-    
-    _downloadProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    [_downloadProgressView setFrame:CGRectMake(15.f, 40.f, 260.f, 12.f)];
-    [_downloadProgressView setProgressTintColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
-    [_downloadProgressView setHidden:YES];
-    [self addSubview:_downloadProgressView];
-    
-    return self;
+    self.pubDateAndTimeLeftLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.pubDateAndTimeLeftLabel
+                                                                           attribute:NSLayoutAttributeLeading
+                                                                           relatedBy:NSLayoutRelationEqual
+                                                                              toItem:self.contentView
+                                                                           attribute:NSLayoutAttributeLeading
+                                                                          multiplier:1
+                                                                            constant:15];
+    [self addConstraint:self.pubDateAndTimeLeftLayoutConstraint];
 }
 
 #pragma mark - Layout
@@ -157,17 +107,6 @@
     }
     else
     {
-        UIColor *color = nil;
-        if (_playedStatus == IGEpisodePlayedStatusPlayed)
-        {
-            color = [self playedColor];
-        }
-        else
-        {
-            color = [self unplayedColor];
-        }
-        [_titleLabel setTextColor:color];
-        
         [_summaryLabel setHidden:NO];
         [_playedStatusImageView setHidden:NO];
         [_pubDateAndTimeLeftLabel setHidden:NO];
@@ -175,52 +114,50 @@
         [_downloadProgressView setHidden:YES];
         [_downloadSizeProgressLabel setHidden:YES];
         [_downloadButton setHidden:YES];
-        
-        if (_downloadStatus == IGEpisodeDownloadStatusDownloaded)
-        {
-            [_episodeDownloadedImageView setHidden:NO];
-        }
-        else
-        {
-            [_episodeDownloadedImageView setHidden:YES];
-        }
-        
-        UIImage *image = nil;
-        if (_playedStatus == IGEpisodePlayedStatusUnplayed)
-        {
-            image = [UIImage imageNamed:@"episode-unplayed-icon"];
-        }
-        else if (_playedStatus == IGEpisodePlayedStatusHalfPlayed)
-        {
-            image = [UIImage imageNamed:@"episode-half-played-icon"];
-        }
-        [_playedStatusImageView setImage:image];
-        
-        CGRect rect = CGRectZero;
-        if (_playedStatus == IGEpisodePlayedStatusUnplayed || _playedStatus == IGEpisodePlayedStatusHalfPlayed)
-        {
-            rect = CGRectMake(28.f, 53.f, 200.f, 22.f);
-        }
-        else
-        {
-            rect = CGRectMake(15.f, 53.f, 200.f, 22.f);
-        }
-        [_pubDateAndTimeLeftLabel setFrame:rect];
     }
 }
 
 #pragma mark - Setters
 
 - (void)setDownloadStatus:(IGEpisodeDownloadStatus)downloadStatus
-{  
+{
+    if (downloadStatus == IGEpisodeDownloadStatusDownloaded)
+    {
+        [_episodeDownloadedImageView setHidden:NO];
+    }
+    else
+    {
+        [_episodeDownloadedImageView setHidden:YES];
+    }
+    
     _downloadStatus = downloadStatus;
     
     [self setNeedsLayout];
 }
 
 - (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
-{
-    if (playedStatus == _playedStatus) return;
+{    
+    if (playedStatus == IGEpisodePlayedStatusUnplayed)
+    {
+        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
+        [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-unplayed-icon"]];
+        [self.playedStatusImageView setHighlightedImage:[UIImage imageNamed:@"episode-unplayed-icon-highlighted"]];
+        [self.titleLabel setTextColor:[self unplayedColor]];
+    }
+    else if (playedStatus == IGEpisodePlayedStatusHalfPlayed)
+    {
+        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
+        [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-half-played-icon"]];
+        [self.playedStatusImageView setHighlightedImage:[UIImage imageNamed:@"episode-half-played-icon-highlighted"]];
+        [self.titleLabel setTextColor:[self unplayedColor]];
+    }
+    else
+    {
+        [self.pubDateAndTimeLeftLayoutConstraint setConstant:15];
+        [self.playedStatusImageView setImage:nil];
+        [self.playedStatusImageView setHighlightedImage:nil];
+        [self.titleLabel setTextColor:[self playedColor]];
+    }
     
     _playedStatus = playedStatus;
     

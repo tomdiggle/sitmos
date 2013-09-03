@@ -25,19 +25,6 @@
 
 @implementation IGSettingsEpisodesDeleteViewController
 
-- (void)viewDidLayoutSubviews
-{
-    [[self view] setBackgroundColor:kRGBA(240, 240, 240, 1)];
-    [[self tableView] setBackgroundView:nil];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self setTitle:NSLocalizedString(@"Delete", @"text label for delete")];
-}
-
 #pragma mark - Orientation Support
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -60,16 +47,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cellIdentifier";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier
+                                                            forIndexPath:indexPath];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [[cell textLabel] setFont:[UIFont boldSystemFontOfSize:16.f]];
-    [cell setBackgroundColor:kRGBA(245, 245, 245, 1)];
-    
     if (indexPath.row == 0)
     {
         [[cell textLabel] setText:NSLocalizedString(@"Never", @"text label for never")];
@@ -94,7 +75,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Put a check mark to the setting selected, deselect the row and pop the view controller
     NSInteger currentIndex = indexPath.row == 0 ? 1 : 0;
     NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:currentIndex
                                                 inSection:0];
@@ -109,8 +89,6 @@
     
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];
-    
-    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 @end
