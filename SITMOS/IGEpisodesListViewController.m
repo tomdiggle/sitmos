@@ -395,7 +395,7 @@
                                                subtitle:nil
                                                    type:TDNotificationTypeError
                                                    mode:TDNotificationModeText
-                                            dismissable:YES
+                                            dismissible:YES
                                          hideAfterDelay:4];
         }
         
@@ -453,7 +453,7 @@
                                                    subtitle:[error localizedDescription]
                                                        type:TDNotificationTypeError
                                                        mode:TDNotificationModeText
-                                                dismissable:YES
+                                                dismissible:YES
                                              hideAfterDelay:4];
             });
         }

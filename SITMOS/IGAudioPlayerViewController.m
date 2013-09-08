@@ -372,7 +372,7 @@
                                        subtitle:nil
                                            type:TDNotificationTypeError
                                            mode:TDNotificationModeText
-                                    dismissable:YES
+                                    dismissible:YES
                                  hideAfterDelay:4];
     
     [self dismissViewControllerAnimated:YES
