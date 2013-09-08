@@ -28,24 +28,34 @@
 @interface IGEpisodeImporter : NSObject
 
 /**
- * Returns an array of media items of Stuck in the Middle of Somewhere stored in the iPod library, or an empty array if none exist.
+ * The completion handler block to execute.
  */
-+ (NSArray *)episodesOnDevice;
+@property (nonatomic, copy) void(^completion)(NSUInteger episodesImported, BOOL success, NSError *error);
 
 /**
- * Creates and returns an IGEpisodeImporter object and sets the specified episodes to import, destination directory and completion block.
+ * Returns an array of media items of Stuck in the Middle of Somewhere stored in the iPod library, or an empty array if none exist.
+ */
++ (NSArray *)episodesInMediaLibrary;
+
+/**
+ * Creates and returns an IGEpisodeImporter object and sets the specified episodes to import, destination directory and the view used to display the notification view.
  *
  * @param episodes Use the method episodesOnDevice to get an array of episodes to import.
  * @param destinationDirectory The directory the episodes will be located when imported.
- * @param completion The completion handler block to execute. 
+ * @param view The view to display the progress notification, if no progress notification view is required set to nil.
  *
  * @see episodesOnDevice
  */
-+ (instancetype)importEpisodes:(NSArray *)episodes destinationDirectory:(NSURL *)destinationDirectory completion:(void (^)(NSUInteger episodesImported, BOOL success, NSError *error))completion;
+- (id)initWithEpisodes:(NSArray *)episodes destinationDirectory:(NSURL *)destinationDirectory notificationView:(UIView *)view;
+
+/**
+ * Will show an alert before import starts.
+ */
+- (void)showAlert;
 
 /**
  * Will start import.
  */
-- (void)importEpisodes;
+- (void)startImport;
 
 @end

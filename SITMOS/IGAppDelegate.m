@@ -28,10 +28,7 @@
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
-#import "TDNotificationPanel.h"
 //#import "TestFlight.h"
-#import "RIButtonItem.h"
-#import "UIAlertView+Blocks.h"
 
 @implementation IGAppDelegate
 
@@ -52,7 +49,7 @@
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
     
     [self registerDefaultSettings];
-    [self checkForEpisodesOnDevice];
+    [self importEpisodesFromMediaLibrary];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -166,9 +163,9 @@
     NSLog(@"Remote Notifications received: %@", remoteNotification);
 }
 
-#pragma mark - Importing Episodes
+#pragma mark - Import Episodes Media Library
 
-- (void)checkForEpisodesOnDevice
+- (void)importEpisodesFromMediaLibrary
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults boolForKey:IGInitialSetupImportEpisodes])
@@ -178,68 +175,21 @@
         return;
     }
     
-    NSArray *episodes = [IGEpisodeImporter episodesOnDevice];
-    
+    NSArray *episodes = [IGEpisodeImporter episodesInMediaLibrary];
     if ([episodes count] > 0)
     {
-        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
-        cancelItem.action = ^{
+        IGEpisodeImporter *importer = [[IGEpisodeImporter alloc] initWithEpisodes:episodes
+                                                             destinationDirectory:[IGEpisode episodesDirectory]
+                                                                 notificationView:self.window];
+        [importer setCompletion:^(NSUInteger episodesImported, BOOL success, NSError *error) {
             [self registerForPushNotifications];
-        };
-        RIButtonItem *importItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Import", "text label for import")];
-        importItem.action = ^{
-            [self importEpisodes:episodes];
-            [self registerForPushNotifications];
-        };
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ImportEpisodesTitle", "text label for import episodes title")
-                                                            message:NSLocalizedString(@"ImportEpisodesDesc", "text label for import episodes desc")
-                                                   cancelButtonItem:cancelItem
-                                                   otherButtonItems:importItem, nil];
-        [alertView show];
+        }];
+        [importer showAlert];
     }
     
     // An inital search for any episodes has taken place, make sure the user isn't asked again next time.
     [userDefaults setBool:YES forKey:IGInitialSetupImportEpisodes];
     [userDefaults synchronize];
-}
-
-- (void)importEpisodes:(NSArray *)episodes
-{
-    TDNotificationPanel *notification = [[TDNotificationPanel alloc] initWithView:self.window
-                                                                            title:NSLocalizedString(@"ImportingEpisodes", @"text label for importing episodes")
-                                                                         subtitle:nil
-                                                                             type:TDNotificationTypeMessage
-                                                                             mode:TDNotificationModeActivityIndicator
-                                                                      dismissable:NO];
-    [[self window] addSubview:notification];
-    [notification show];
-    
-    NSURL *destDir = [IGEpisode episodesDirectory];
-    IGEpisodeImporter *importer = [IGEpisodeImporter importEpisodes:episodes destinationDirectory:destDir completion:^(NSUInteger episodesImported, BOOL success, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [notification hide];
-            
-            NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ImportedEpisodes", @"text label for imported # episodes"), episodesImported];
-            NSString *subtitle = nil;
-            TDNotificationType type = TDNotificationTypeSuccess;
-            if (!success && error)
-            {
-                title = NSLocalizedString(@"ImportFailed", @"text label for import failed");
-                subtitle = [error localizedDescription];
-                type = TDNotificationTypeError;
-            }
-            
-            [TDNotificationPanel showNotificationInView:self.window
-                                                  title:title
-                                               subtitle:nil
-                                                   type:type
-                                                   mode:TDNotificationModeText
-                                            dismissable:YES
-                                         hideAfterDelay:3];
-        });
-    }];
-    [importer importEpisodes];
 }
 
 #pragma mark - Settings

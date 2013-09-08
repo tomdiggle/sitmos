@@ -21,29 +21,34 @@
 
 #import "IGEpisodeImporter.h"
 
+#import "TDNotificationPanel.h"
 #import "TSLibraryImport.h"
+#import "RIButtonItem.h"
+#import "UIAlertView+Blocks.h"
 
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 
 @interface IGEpisodeImporter ()
 
-
 @property (nonatomic, copy) NSURL *destinationDirectory;
 @property (nonatomic, copy) NSArray *episodes;
-@property (nonatomic, copy) void(^completion)(NSUInteger episodesImported, BOOL success, NSError *error);
+@property (nonatomic, strong) UIView *notificationView;
 @property (nonatomic, assign) NSUInteger episodesImported;
 @property (nonatomic, assign) NSUInteger episodesToImport;
+@property (nonatomic, strong) TDNotificationPanel *progressNotification;
 
 @end
 
 @implementation IGEpisodeImporter
 
-+ (NSArray *)episodesOnDevice
+#pragma mark - Class Methods
+
++ (NSArray *)episodesInMediaLibrary
 {
 #if TARGET_IPHONE_SIMULATOR
     // Searching for media while targeting the simulator doesn't work, so just skip it.
-    return nil;
+    return [NSArray array];
 #endif
     
     MPMediaPropertyPredicate *albumTitlePredicate = [MPMediaPropertyPredicate predicateWithValue:@"Stuck in the Middle of Somewhere"
@@ -55,29 +60,62 @@
     return [mediaQuery items];
 }
 
-+ (instancetype)importEpisodes:(NSArray *)episodes destinationDirectory:(NSURL *)destinationDirectory completion:(void (^)(NSUInteger episodesImported, BOOL success, NSError *error))completion
-{
-    IGEpisodeImporter *importer = [[IGEpisodeImporter alloc] initWithEpisodes:episodes];
-    [importer setDestinationDirectory:destinationDirectory];
-    [importer setCompletion:completion];
-    
-    return importer;
-}
+#pragma mark - Initializers
 
-- (id)initWithEpisodes:(NSArray *)episodes
+- (id)initWithEpisodes:(NSArray *)episodes destinationDirectory:(NSURL *)destinationDirectory notificationView:(UIView *)view
 {
-    if (!(self = [super init])) return nil;
+    if (!(self = [super init]))
+    {
+        return nil;
+    }
     
-    _episodes = episodes;
-    _episodesImported = 0;
-    _episodesToImport = 0;
+    self.episodes = episodes;
+    self.destinationDirectory = destinationDirectory;
+    self.notificationView = view;
+    self.episodesImported = 0;
+    self.episodesToImport = 0;
     
     return self;
 }
 
-- (void)importEpisodes
+#pragma mark - Show Alert
+
+- (void)showAlert
 {
-    [_episodes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
+    cancelItem.action = ^{
+        if (self.completion)
+        {
+            self.completion(0, YES, nil);
+        }
+    };
+    RIButtonItem *importItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Import", nil)];
+    importItem.action = ^{
+        [self startImport];
+    };
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ImportEpisodesTitle", nil)
+                                                        message:NSLocalizedString(@"ImportEpisodesDesc", nil)
+                                               cancelButtonItem:cancelItem
+                                               otherButtonItems:importItem, nil];
+    [alertView show];
+}
+
+#pragma mark - Import Episodes
+
+- (void)startImport
+{
+    if (self.notificationView)
+    {
+        self.progressNotification = [TDNotificationPanel showNotificationInView:self.notificationView
+                                                                          title:NSLocalizedString(@"ImportingEpisodes", nil)
+                                                                       subtitle:nil
+                                                                           type:TDNotificationTypeMessage
+                                                                           mode:TDNotificationModeActivityIndicator
+                                                                    dismissible:NO];
+    }
+    
+    [self.episodes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSString *title = [obj valueForProperty:MPMediaItemPropertyTitle];
         NSURL *assetURL = [obj valueForProperty:MPMediaItemPropertyAssetURL];
         if (!assetURL)
@@ -91,11 +129,11 @@
 
 - (void)importAssetAtURL:(NSURL *)assetURL withTitle:(NSString *)title
 {
-    _episodesToImport += 1;
+    self.episodesToImport += 1;
     
     // Create destination URL
     NSString *ext = [TSLibraryImport extensionForAssetURL:assetURL];
-    NSURL *destDir = [[_destinationDirectory URLByAppendingPathComponent:title] URLByAppendingPathExtension:ext];
+    NSURL *destDir = [[self.destinationDirectory URLByAppendingPathComponent:title] URLByAppendingPathExtension:ext];
     
     // We're responsible for making sure the destination url doesn't already exist
     [[NSFileManager defaultManager] removeItemAtURL:destDir error:nil];
@@ -103,27 +141,73 @@
     // Create the import object
     TSLibraryImport *import = [[TSLibraryImport alloc] init];
     [import importAsset:assetURL toURL:destDir completionBlock:^(TSLibraryImport *import) {
-        _episodesImported += 1;
+        self.episodesImported += 1;
         
-        if (_episodesToImport == _episodesImported)
+        if (self.episodesToImport == self.episodesImported)
         {
-            // All episodes imported
-            if (_completion)
-            {
-                _completion(_episodesToImport, YES, nil);
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self importFinished];
+                
+                if (self.completion)
+                {
+                    self.completion(self.episodesImported, YES, nil);
+                }
+            });
         }
         
         if (import.status != AVAssetExportSessionStatusCompleted)
         {
-            // Something went wrong with the import
-            if (_completion)
-            {
-                _completion(_episodesToImport, NO, [import error]);
-                import = nil;
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self importFailed:[import error]];
+                
+                if (self.completion)
+                {
+                    self.completion(0, NO, [import error]);
+                }
+            });
+            import = nil;
         }
     }];
+}
+
+- (void)importFinished
+{
+    if (!self.notificationView)
+    {
+        return;
+    }
+    
+    // Hide the progress notification
+    [self.progressNotification hide];
+    
+    // Show a notification informing the user that the import was a success
+    [TDNotificationPanel showNotificationInView:self.notificationView
+                                          title:[NSString stringWithFormat:NSLocalizedString(@"ImportedEpisodes", @"text label for imported # episodes"), self.episodesImported]
+                                       subtitle:nil
+                                           type:TDNotificationTypeSuccess
+                                           mode:TDNotificationModeText
+                                    dismissible:YES
+                                 hideAfterDelay:3];
+}
+
+- (void)importFailed:(NSError *)error
+{
+    if (!self.notificationView)
+    {
+        return;
+    }
+    
+    // Hide the progress notification
+    [self.progressNotification hide];
+    
+    // Show a notification informing the user that the import failed
+    [TDNotificationPanel showNotificationInView:self.notificationView
+                                          title:NSLocalizedString(@"ImportFailed", @"text label for import failed")
+                                       subtitle:[error localizedDescription]
+                                           type:TDNotificationTypeError
+                                           mode:TDNotificationModeText
+                                    dismissible:YES
+                                 hideAfterDelay:3];
 }
 
 @end
