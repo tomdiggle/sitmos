@@ -21,7 +21,6 @@
 
 #import "IGHTTPClient.h"
 
-#import "IGRSSXMLRequestOperation.h"
 #import "IGPodcastFeedParser.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
@@ -29,6 +28,7 @@
 #import "UIApplication+LocalNotificationHelper.h"
 #import "NSDate+Helper.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "AFXMLRequestOperation.h"
 #import "AFDownloadRequestOperation.h"
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
@@ -150,8 +150,7 @@ static BOOL __developmentMode = NO;
 
 - (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)operation
 {
-	operation.successCallbackQueue = _callbackQueue;
-	operation.failureCallbackQueue = _callbackQueue;
+    operation.completionQueue = self.callbackQueue;
 	[super enqueueHTTPRequestOperation:operation];
 }
 
@@ -197,7 +196,7 @@ static BOOL __developmentMode = NO;
     [self enqueueBatchOfHTTPRequestOperations:[self podcastFeedRequestOperations] progressBlock:nil completionBlock:^(NSArray *operations) {
         NSMutableArray *podcastFeedItems = [[NSMutableArray alloc] init];
         [operations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            IGRSSXMLRequestOperation *operation = (IGRSSXMLRequestOperation *)obj;
+            AFXMLRequestOperation *operation = obj;
             if ([operation error])
             {
                if (completion)
@@ -208,7 +207,8 @@ static BOOL __developmentMode = NO;
             }
             else
             {
-                [IGPodcastFeedParser PodcastFeedParserWithXMLParser:[operation responseXMLParser] completion:^(NSArray *feedItems, NSError *error) {
+                NSXMLParser *xml = [[NSXMLParser alloc] initWithData:operation.responseData];
+                [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
                     if (error)
                     {
                         if (completion)
@@ -245,10 +245,10 @@ static BOOL __developmentMode = NO;
 - (NSArray *)podcastFeedRequestOperations
 {
     NSURLRequest *audioFeedRequest = [self requestWithURL:_audioPodcastFeedURL];
-    IGRSSXMLRequestOperation *audioFeedOperation = [[IGRSSXMLRequestOperation alloc] initWithRequest:audioFeedRequest];
+    AFXMLRequestOperation *audioFeedOperation = [[AFXMLRequestOperation alloc] initWithRequest:audioFeedRequest];
     
     NSURLRequest *videoFeedRequest = [self requestWithURL:_videoPodcastFeedURL];
-    IGRSSXMLRequestOperation *videoFeedOperation = [[IGRSSXMLRequestOperation alloc] initWithRequest:videoFeedRequest];
+    AFXMLRequestOperation *videoFeedOperation = [[AFXMLRequestOperation alloc] initWithRequest:videoFeedRequest];
     
     return @[audioFeedOperation, videoFeedOperation];
 }

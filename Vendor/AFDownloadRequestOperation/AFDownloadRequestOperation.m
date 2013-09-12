@@ -22,6 +22,7 @@
 
 #import "AFDownloadRequestOperation.h"
 #import "AFURLConnectionOperation.h"
+#import "AFDownloadSerializer.h"
 #import <CommonCrypto/CommonDigest.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -63,8 +64,11 @@ typedef void (^AFURLConnectionProgressiveOperationProgressBlock)(AFDownloadReque
 - (id)initWithRequest:(NSURLRequest *)urlRequest targetPath:(NSString *)targetPath shouldResume:(BOOL)shouldResume {
     if ((self = [super initWithRequest:urlRequest])) {
         NSParameterAssert(targetPath != nil && urlRequest != nil);
+        
+        self.responseSerializer =[AFDownloadSerializer serializer];
+        
         _shouldResume = shouldResume;
-
+        
         // Ee assume that at least the directory has to exist on the targetPath
         BOOL isDirectory;
         if(![[NSFileManager defaultManager] fileExistsAtPath:targetPath isDirectory:&isDirectory]) {
@@ -182,15 +186,6 @@ typedef void (^AFURLConnectionProgressiveOperationProgressBlock)(AFDownloadReque
     return fileSize;
 }
 
-#pragma mark - AFHTTPRequestOperation
-
-+ (NSIndexSet *)acceptableStatusCodes {
-	NSMutableIndexSet *acceptableStatusCodes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(200, 100)];
-	[acceptableStatusCodes addIndex:416];
-	
-	return acceptableStatusCodes;
-}
-
 #pragma mark - AFURLRequestOperation
 
 - (void)pause {
@@ -231,13 +226,13 @@ typedef void (^AFURLConnectionProgressiveOperationProgressBlock)(AFDownloadReque
 
         if (self.error) {
             if (failure) {
-                dispatch_async(self.failureCallbackQueue ?: dispatch_get_main_queue(), ^{
+                dispatch_async(self.completionQueue ?: dispatch_get_main_queue(), ^{
                     failure(self, self.error);
                 });
             }
         } else {
             if (success) {
-                dispatch_async(self.successCallbackQueue ?: dispatch_get_main_queue(), ^{
+                dispatch_async(self.completionQueue ?: dispatch_get_main_queue(), ^{
                     success(self, _targetPath);
                 });
             }
@@ -280,9 +275,6 @@ typedef void (^AFURLConnectionProgressiveOperationProgressBlock)(AFDownloadReque
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data  {
-    if (![self hasAcceptableStatusCode] || ![self hasAcceptableContentType])
-        return; // don't write to output stream if any error occurs
-
     [super connection:connection didReceiveData:data];
 
     // track custom bytes read because totalBytesRead persists between pause/resume.
