@@ -21,6 +21,9 @@
 
 #import "IGPodcastFeedParser.h"
 
+#import "NSDate+Helper.h"
+#import "IGEpisode.h"
+
 @interface IGPodcastFeedParser () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSXMLParser *XMLParser;
@@ -28,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *feedItems;
 @property (nonatomic, strong) NSMutableDictionary *currentFeedItem;
 @property (nonatomic, strong) NSMutableString *tmpString;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (nonatomic, copy) void (^completion)(NSArray *feedItems, NSError *error);
 
 @end
@@ -54,6 +58,9 @@
     _numberFormatter = [[NSNumberFormatter alloc] init];
     _feedItems = [[NSMutableArray alloc] init];
     _completion = completion;
+    _dateFormatter = [[NSDateFormatter alloc] init];
+    [_dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [_dateFormatter setDateFormat:IGEpisodeDateFormat];
     
     return self;
 }
@@ -98,7 +105,9 @@
         }
         
         if ([elementName isEqualToString:@"pubDate"]) {
-            [_currentFeedItem setObject:_tmpString forKey:@"pubDate"];
+            // Since iOS 7 the default locale can not be trusted to understand the feed's date strings.
+            NSDate *pubDate = [_dateFormatter dateFromString:_tmpString];
+            [_currentFeedItem setObject:[NSDate stringFromDate:pubDate withFormat:IGEpisodeDateFormat] forKey:@"pubDate"];
         }
         
         if ([elementName isEqualToString:@"itunes:summary"]) {
