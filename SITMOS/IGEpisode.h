@@ -54,6 +54,11 @@ extern NSString * const IGEpisodeDateFormat;
 @property (nonatomic, strong) NSNumber *fileSize;
 
 /**
+ *
+ */
+@property (nonatomic, strong) NSString *imageURL;
+
+/**
  * Indicates the date the episode was published.
  */
 @property (nonatomic, strong) NSDate *pubDate;

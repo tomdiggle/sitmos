@@ -40,6 +40,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 
 @dynamic duration;
 @dynamic fileSize;
+@dynamic imageURL;
 @dynamic pubDate;
 @dynamic summary;
 @dynamic title;
@@ -62,13 +63,9 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
         return;
     }
     
-    NSDate *latestEpisodePubDate = nil;
-    NSUInteger episodes = [IGEpisode MR_countOfEntities];
-    if (episodes == 0)
-    {
-        latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
-                                           withFormat:IGEpisodeDateFormat];
-    }
+    NSDate *latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
+                                               withFormat:IGEpisodeDateFormat];
+    NSUInteger episodesCount = [IGEpisode MR_countOfEntities];
     
     __block IGEpisode *episode = nil;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -78,7 +75,8 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
                                         inContext:localContext];
             [episode MR_importValuesForKeysWithObject:obj];
             
-            if (!latestEpisodePubDate || [[episode pubDate] isEqualToDate:latestEpisodePubDate])
+            if ((episodesCount == 0 && [latestEpisodePubDate isEqualToDate:[episode pubDate]]) ||
+                (episodesCount > 0 && ([latestEpisodePubDate isEqualToDate:[episode pubDate]] || [[episode pubDate] compare:latestEpisodePubDate] == NSOrderedAscending)))
             {
                 // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed
                 [episode markAsPlayed:NO];
@@ -95,7 +93,8 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
 + (IGEpisode *)episodeWithTitle:(NSString *)title inContext:(NSManagedObjectContext *)context
 {
     IGEpisode *episode = [self MR_findFirstByAttribute:@"title"
-                                             withValue:title];
+                                             withValue:title
+                                             inContext:context];
     if (!episode)
     {
         episode = [self MR_createInContext:context];

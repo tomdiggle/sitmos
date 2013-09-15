@@ -23,11 +23,13 @@
 
 #import "IGEpisode.h"
 #import "UIViewController+IGNowPlayingButton.h"
+#import "UIImageView+AFNetworking.h"
 #import "NSDate+Helper.h"
 
 @interface IGEpisodeShowNotesViewController ()
 
 @property (nonatomic, weak) IBOutlet UIImageView *episodeImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *pubDateAndTimeLeftLabel;
 @property (nonatomic, weak) IBOutlet UILabel *pubDateLabel;
@@ -45,10 +47,10 @@
 - (void)setupLabels
 {
     NSString *pubDate = [NSDate stringFromDate:[self.episode pubDate] withFormat:@"dd MMM yyyy"];
-    NSString *mediaType = NSLocalizedString(@"Audio", @"text label for audio");
+    NSString *mediaType = NSLocalizedString(@"Audio", nil);
     if (![self.episode isAudio])
     {
-        mediaType = NSLocalizedString(@"Video", @"text label for video");
+        mediaType = NSLocalizedString(@"Video", nil);
     }
     
     [self.titleLabel setText:[self.episode title]];
@@ -58,6 +60,12 @@
     [self.mediaTypeLabel setText:mediaType];
     [self.fileSizeLabel setText:[self.episode readableFileSize]];
     [self.summaryLabel setText:[self.episode summary]];
+    [self.episodeImageView setImageWithURL:[NSURL URLWithString:[self.episode imageURL]] placeholderImage:[UIImage imageNamed:@"episode-image-placeholder"]];
+    
+    if ([self.episode isDownloaded])
+    {
+        [self.episodeDownloadedImageView setHidden:NO];
+    }
 }
 
 #pragma mark - State Preservation and Restoration
@@ -90,7 +98,6 @@
     [super viewDidLoad];
     
     [self setupLabels];
-    [self showNowPlayingButton];
 }
 
 #pragma mark - Orientation Support

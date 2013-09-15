@@ -99,6 +99,8 @@
 		32678CEF147EDE7C007BD110 /* IGEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */; };
 		326AAB1E176F26F100FA5613 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */; };
 		3276373217A31E3200E233AD /* IGEpisodeImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3276373117A31E3200E233AD /* IGEpisodeImporter.m */; };
+		3277FEB117E61FF60068CCC9 /* episode-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */; };
+		3277FEB417E64DC50068CCC9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277FEB217E64D890068CCC9 /* SenTestingKit.framework */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		327FCBA017CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */; };
@@ -125,7 +127,6 @@
 		32E6771D17E18AB400A2126F /* AFDownloadSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */; };
 		32E6771E17E18AB400A2126F /* AFDownloadSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
-		32E908F917BCEA3E00392D67 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */; };
 		32E9095017BCEB3400392D67 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */; };
 		32E9095117BCEB3A00392D67 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326AAB1D176F26F100FA5613 /* WindowsAzureMobileServices.framework */; };
 		32E909A517BCEB4E00392D67 /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E9095417BCEB4E00392D67 /* AFDownloadRequestOperation.m */; };
@@ -187,7 +188,6 @@
 		32E90A0F17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */; };
 		32E90A1017BD4A2F00392D67 /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */; };
 		32E90A1917BEBD2600392D67 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E909EE17BCEE9500392D67 /* Security.framework */; };
-		32E90A1A17BEBDB800392D67 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 322D32BB17257568004856E9 /* SenTestingKit.framework */; };
 		32E90A1B17BEBE2700392D67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C45145F1D8B008698DC /* CoreGraphics.framework */; };
 		32E90A1C17BEBE4A00392D67 /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */; };
@@ -245,12 +245,12 @@
 		322921F217A3186800895986 /* TDNotificationPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDNotificationPanel.m; sourceTree = "<group>"; };
 		322AD78C153613BA00988B31 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		322D32BA17257568004856E9 /* SITMOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SITMOSTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		322D32BB17257568004856E9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		322D32CF17257637004856E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		322D32D017257637004856E9 /* SITMOSTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SITMOSTests-Info.plist"; sourceTree = "<group>"; };
 		322D32D117257637004856E9 /* SITMOSTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SITMOSTests-Prefix.pch"; sourceTree = "<group>"; };
 		322D32DB17257A1F004856E9 /* IGPodcastFeedParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGPodcastFeedParserTests.m; sourceTree = "<group>"; };
 		322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.2.xcdatamodel"; sourceTree = "<group>"; };
+		3235A51A17E43B170012882B /* SITMOS-v2.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v2.0.xcdatamodel"; sourceTree = "<group>"; };
 		323734AC17DE2344008E7768 /* AFEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFEventSource.h; sourceTree = "<group>"; };
 		323734AD17DE2344008E7768 /* AFEventSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFEventSource.m; sourceTree = "<group>"; };
 		323734AE17DE2344008E7768 /* AFHTTPClient+Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPClient+Rocket.h"; sourceTree = "<group>"; };
@@ -321,6 +321,8 @@
 		3276373017A31E3200E233AD /* IGEpisodeImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeImporter.h; sourceTree = "<group>"; };
 		3276373117A31E3200E233AD /* IGEpisodeImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeImporter.m; sourceTree = "<group>"; };
 		327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.0b1.xcdatamodel"; sourceTree = "<group>"; };
+		3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-image-placeholder@2x.png"; sourceTree = "<group>"; };
+		3277FEB217E64D890068CCC9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon-highlighted@2x.png"; sourceTree = "<group>"; };
@@ -449,7 +451,6 @@
 				32934D11149E66C400E939C0 /* QuartzCore.framework in Frameworks */,
 				3293D63E148BBC090052B427 /* CoreData.framework in Frameworks */,
 				321D8C42145F1D8B008698DC /* UIKit.framework in Frameworks */,
-				32E908F917BCEA3E00392D67 /* OCHamcrestIOS.framework in Frameworks */,
 				321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */,
 				321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */,
 				32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */,
@@ -461,7 +462,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32E90A1A17BEBDB800392D67 /* SenTestingKit.framework in Frameworks */,
+				3277FEB417E64DC50068CCC9 /* SenTestingKit.framework in Frameworks */,
 				322D32BD17257568004856E9 /* UIKit.framework in Frameworks */,
 				32E9095017BCEB3400392D67 /* OCHamcrestIOS.framework in Frameworks */,
 				322D32BE17257568004856E9 /* Foundation.framework in Frameworks */,
@@ -510,6 +511,7 @@
 		321D8C40145F1D8B008698DC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3277FEB217E64D890068CCC9 /* SenTestingKit.framework */,
 				32E6BB95152A08EA00C78815 /* AudioToolbox.framework */,
 				327E9FBD1558F96300612C8B /* AVFoundation.framework */,
 				3293D63D148BBC090052B427 /* CoreData.framework */,
@@ -521,7 +523,6 @@
 				323D5A3916B842F30074E91F /* MobileCoreServices.framework */,
 				32934D10149E66C400E939C0 /* QuartzCore.framework */,
 				32E909EE17BCEE9500392D67 /* Security.framework */,
-				322D32BB17257568004856E9 /* SenTestingKit.framework */,
 				323D5A3716B842770074E91F /* SystemConfiguration.framework */,
 				321D8C41145F1D8B008698DC /* UIKit.framework */,
 			);
@@ -749,6 +750,7 @@
 				3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */,
 				327FCBA517CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png */,
 				3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */,
+				3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */,
 				327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */,
 				321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */,
 				327FCBA317CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png */,
@@ -1081,6 +1083,7 @@
 				32C69CBC17AAAE2100838E66 /* Default@2x.png in Resources */,
 				32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */,
 				325920A715DC1B5700345666 /* play-button@2x.png in Resources */,
+				3277FEB117E61FF60068CCC9 /* episode-image-placeholder@2x.png in Resources */,
 				325920AB15DC23D700345666 /* pause-button@2x.png in Resources */,
 				32056E2B15E1913F00235783 /* progress-slider-thumb@2x.png in Resources */,
 				32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */,
@@ -1390,6 +1393,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
@@ -1421,6 +1425,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
@@ -1443,11 +1448,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\\\"$(SDKROOT)/Developer/Library/Frameworks\\\"",
-					"\\\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\\\"",
-					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOSTests/SITMOSTests-Prefix.pch";
@@ -1457,9 +1463,10 @@
 				);
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1478,12 +1485,13 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\\\"$(SDKROOT)/Developer/Library/Frameworks\\\"",
-					"\\\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\\\"",
-					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1493,7 +1501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1515,12 +1523,13 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\\\"$(SDKROOT)/Developer/Library/Frameworks\\\"",
-					"\\\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\\\"",
-					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1530,7 +1539,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1581,6 +1590,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SITMOS/SITMOS-Prefix.pch";
@@ -1637,12 +1647,13 @@
 		3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3235A51A17E43B170012882B /* SITMOS-v2.0.xcdatamodel */,
 				322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */,
 				329E458316EE542D00663CE0 /* SITMOS-v1.1.xcdatamodel */,
 				327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */,
 				3293D646148BBCF20052B427 /* SITMOS.xcdatamodel */,
 			);
-			currentVersion = 322D32E21725BF7B004856E9 /* SITMOS-v1.2.xcdatamodel */;
+			currentVersion = 3235A51A17E43B170012882B /* SITMOS-v2.0.xcdatamodel */;
 			path = SITMOS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

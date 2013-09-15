@@ -83,6 +83,10 @@
         _currentFeedItem = [[NSMutableDictionary alloc] init];
     }
     
+    if ([elementName isEqualToString:@"itunes:image"]) {
+        [_currentFeedItem setObject:[attributeDict valueForKey:@"href"] forKey:@"imageURL"];
+    }
+    
     if ([elementName isEqualToString:@"enclosure"]) {
         [_currentFeedItem setObject:[attributeDict valueForKey:@"url"] forKey:@"downloadURL"];
         
