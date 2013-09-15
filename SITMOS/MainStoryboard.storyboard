@@ -514,37 +514,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Push Notifications" id="cf3-96-Rby" userLabel="Push Notifications">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pushNotificationsNewEpisodesCell" id="Htb-2v-udi" userLabel="New Episodes">
-                                        <rect key="frame" x="0.0" y="327" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Htb-2v-udi" id="kMP-v8-Tui">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Episodes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IP-p6-6j4">
-                                                    <rect key="frame" x="15" y="11" width="121" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t0c-lb-5k3">
-                                                    <rect key="frame" x="251" y="6" width="51" height="31"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <connections>
-                                                        <action selector="updateSettingPushNotifications:" destination="4eu-fW-gQR" eventType="valueChanged" id="ReZ-xL-dzS"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Episodes" footerTitle="An episode can be deleted automatically once it has been played." id="Yu6-lh-lhs" userLabel="Episodes">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="episodesUnplayedBadgeCell" id="vvu-fI-4UU" userLabel="Unplayed Badge">
-                                        <rect key="frame" x="0.0" y="419" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="327" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vvu-fI-4UU" id="Zk1-s1-tll">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -567,7 +540,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="episodesDeleteCell" textLabel="TB6-Ho-hwY" detailTextLabel="eO1-JE-zZX" style="IBUITableViewCellStyleValue1" id="IHK-gr-daR" userLabel="Delete">
-                                        <rect key="frame" x="0.0" y="463" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="371" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IHK-gr-daR" id="6St-Td-RxV">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -598,7 +571,7 @@
                             <tableViewSection id="NJf-na-UYq" userLabel="Misc">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="kBf-M3-nIO" style="IBUITableViewCellStyleDefault" id="QcZ-aG-58b" userLabel="Review on the App Store">
-                                        <rect key="frame" x="0.0" y="564" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="472" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QcZ-aG-58b" id="dRZ-D3-iL1">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -618,7 +591,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="VOi-7G-5jT" style="IBUITableViewCellStyleDefault" id="RCv-Fw-Ot5" userLabel="Follow @sitmos on Twitter">
-                                        <rect key="frame" x="0.0" y="608" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="516" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RCv-Fw-Ot5" id="PDt-K5-HdV">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -652,7 +625,6 @@
                         <outlet property="cellularDataDownloadingSwitch" destination="0gq-Su-Ae6" id="Jci-4l-8Hb"/>
                         <outlet property="cellularDataStreamingSwitch" destination="PGl-dE-MnL" id="DW1-DL-WpH"/>
                         <outlet property="episodesUnplayedBadgeSwitch" destination="s6X-aR-fxY" id="sU8-Br-O4m"/>
-                        <outlet property="pushNotificationsNewEpisodesSwitch" destination="t0c-lb-5k3" id="bxN-nF-jac"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PhA-Hs-yR3" userLabel="First Responder" sceneMemberID="firstResponder"/>

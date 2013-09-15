@@ -29,7 +29,6 @@
 
 @property (nonatomic, weak) IBOutlet UISwitch *cellularDataStreamingSwitch;
 @property (nonatomic, weak) IBOutlet UISwitch *cellularDataDownloadingSwitch;
-@property (nonatomic, weak) IBOutlet UISwitch *pushNotificationsNewEpisodesSwitch;
 @property (nonatomic, weak) IBOutlet UISwitch *episodesUnplayedBadgeSwitch;
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
@@ -54,7 +53,6 @@
     
     [self.cellularDataStreamingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataStreaming]];
     [self.cellularDataDownloadingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataDownloading]];
-    [self.pushNotificationsNewEpisodesSwitch setOn:[self.userDefaults boolForKey:IGSettingPushNotifications]];
     [self.episodesUnplayedBadgeSwitch setOn:[self.userDefaults boolForKey:IGSettingUnseenBadge]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -94,7 +92,7 @@
             [[cell detailTextLabel] setText:skippingForwardTime];
         }
     }
-    else if (section == 3)
+    else if (section == 2)
     {
         // Episodes Section
         if (row == 1)
@@ -116,7 +114,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath section] == 4)
+    if ([indexPath section] == 3)
     {
         if ([indexPath row] == 0)
         {

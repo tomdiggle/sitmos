@@ -36,7 +36,6 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"willFinishLaunchingWithOptions: %@", launchOptions);
 //    [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
@@ -63,7 +62,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"didFinishLaunchingWithOptions: %@", launchOptions);
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -170,8 +168,6 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults boolForKey:IGInitialSetupImportEpisodes])
     {
-        // Register for push notifications after importing episodes. This is to avoid displaying two alert's when user first launches app.
-        [self registerForPushNotifications];
         return;
     }
     
@@ -181,9 +177,6 @@
         IGEpisodeImporter *importer = [[IGEpisodeImporter alloc] initWithEpisodes:episodes
                                                              destinationDirectory:[IGEpisode episodesDirectory]
                                                                  notificationView:self.window];
-        [importer setCompletion:^(NSUInteger episodesImported, BOOL success, NSError *error) {
-            [self registerForPushNotifications];
-        }];
         [importer showAlert];
     }
     
