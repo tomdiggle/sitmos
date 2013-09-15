@@ -207,25 +207,25 @@ static BOOL __developmentMode = NO;
             }
             else
             {
-                NSXMLParser *xml = [[NSXMLParser alloc] initWithData:operation.responseData];
-                [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
-                    if (error)
-                    {
-                        if (completion)
+                NSHTTPURLResponse *response = (NSHTTPURLResponse *)[obj response];
+                if ([self isPodcastFeed:[[operation request] URL] modifiedSince:[[response allHeaderFields] valueForKey:@"Last-Modified"]])
+                {
+                    NSXMLParser *xml = [[NSXMLParser alloc] initWithData:operation.responseData];
+                    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
+                        if (error)
                         {
-                            completion(NO, error);
-                            *stop = YES;
+                            if (completion)
+                            {
+                                completion(NO, error);
+                                *stop = YES;
+                            }
                         }
-                    }
-                    else
-                    {
-                        NSHTTPURLResponse *response = (NSHTTPURLResponse *)[obj response];
-                        if ([self isPodcastFeed:[[operation request] URL] modifiedSince:[[response allHeaderFields] valueForKey:@"Last-Modified"]])
+                        else
                         {
                             [podcastFeedItems addObjectsFromArray:feedItems];
                         }
-                    }
-                }];
+                    }];
+                }
             }
         }];
         
