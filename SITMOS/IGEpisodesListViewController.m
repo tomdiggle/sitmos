@@ -72,6 +72,8 @@
                                                            groupBy:nil
                                                           delegate:self];
     
+    self.searchDisplayController.searchResultsTableView.rowHeight = self.tableView.rowHeight;
+    
     self.pullToRefreshView = [[SSPullToRefreshView alloc] initWithScrollView:self.tableView
                                                                     delegate:self];
     self.pullToRefreshView.contentView = [[SSPullToRefreshSimpleContentView alloc] init];
@@ -88,6 +90,12 @@
     {
         [self.tableView reloadRowsAtIndexPaths:@[[self.tableView indexPathForSelectedRow]]
                           withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+    if ([self.searchDisplayController.searchResultsTableView indexPathForSelectedRow])
+    {
+        [self.searchDisplayController.searchResultsTableView reloadRowsAtIndexPaths:@[[self.searchDisplayController.searchResultsTableView indexPathForSelectedRow]]
+                                                                   withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
