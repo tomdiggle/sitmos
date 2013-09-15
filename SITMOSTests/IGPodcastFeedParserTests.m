@@ -126,7 +126,7 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
     [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Tue, 10 Aug 2010 00:00:00 MST"));
+        assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Tue, 10 Aug 2010 08:00:00 BST"));
         
         dispatch_semaphore_signal(semaphore);
     }];
@@ -238,7 +238,7 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
     [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
         
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Sat, 25 Dec 2010 00:00:00 MST"));
+        assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Sat, 25 Dec 2010 07:00:00 GMT"));
         
         dispatch_semaphore_signal(semaphore);
     }];

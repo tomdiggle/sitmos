@@ -46,8 +46,8 @@
     [NSManagedObjectModel MR_setDefaultManagedObjectModel:[NSManagedObjectModel MR_managedObjectModelNamed:@"SITMOS.momd"]];
     [MagicalRecord setupCoreDataStackWithInMemoryStore];
     
-    NSDictionary *episodeOneFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_1.mp3", @"duration": @"31:15", @"fileSize": @(28900000), @"mediaType": @"audio/mpeg", @"pubDate": @"Tue, 10 Aug 2010 00:00:00 MST", @"title": @"Episode 1", @"summary": @"Achievements, Arizona Immigration Laws, and Annoying Social Networking Apps"};
-    NSDictionary *episodeTwoFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_2.mp3", @"duration": @"36:52", @"fileSize": @(34000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Sat, 21 Aug 2010 00:00:00 MST", @"title": @"Episode 2", @"summary": @"Dr, Laura vs. Dr. Satan, PC Gaming vs. Consoles, Black Ops Sheep and Twitter Questions - So Hide Your Kids, Hide your Wife!"};
+    NSDictionary *episodeOneFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_1.mp3", @"duration": @"31:15", @"fileSize": @(28900000), @"mediaType": @"audio/mpeg", @"pubDate": @"Tue, 10 Aug 2010 08:00:00 BST", @"title": @"Episode 1", @"summary": @"Achievements, Arizona Immigration Laws, and Annoying Social Networking Apps"};
+    NSDictionary *episodeTwoFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_2.mp3", @"duration": @"36:52", @"fileSize": @(34000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Sat, 21 Aug 2010 08:00:00 BST", @"title": @"Episode 2", @"summary": @"Dr, Laura vs. Dr. Satan, PC Gaming vs. Consoles, Black Ops Sheep and Twitter Questions - So Hide Your Kids, Hide your Wife!"};
     _feedItems = @[episodeOneFeedItem, episodeTwoFeedItem];
 
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -66,7 +66,7 @@
 }
 
 - (void)tearDown {
-//    [MagicalRecord cleanUp];
+    [MagicalRecord cleanUp];
     _feedItems = nil;
     _episodeOne = nil;
 }
@@ -96,7 +96,7 @@
 }
 
 - (void)testEpisodeOnePubDatePresentedInFeedItemsArrayIsSavedInEpisodeOneEntity {
-    assertThat([_episodeOne pubDate], equalTo([NSDate dateFromString:@"Tue, 10 Aug 2010 00:00:00 MST" withFormat:IGEpisodeDateFormat]));
+    assertThat([_episodeOne pubDate], equalTo([NSDate dateFromString:@"Tue, 10 Aug 2010 08:00:00 BST" withFormat:IGEpisodeDateFormat]));
 }
 
 - (void)testEpisodeOneSummaryPresentedInFeedItemsArrayIsSavedInEpisodeOneEntity {
@@ -134,9 +134,9 @@
 - (void)testWhenTwoNewEpisodesGetSavedBothAreMarkedAsUnplayed {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    NSDictionary *episodeThreeFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_3.5.mp3", @"duration": @"40:03", @"fileSize": @(37000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Mon, 6 Sep 2010 00:00:00 MST", @"title": @"Episode 3.5", @"summary": @"War Between New and Used Games, Dead Rising 2 Case:Zero and Shank reviews, Black Ops trash talk take back, banning MMA in Canada and more Pure Pwnage news!"};
-    NSDictionary *episodeFourFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_4.mp3", @"duration": @"32:56", @"fileSize": @(34000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Fri, 17 Sep 2010 00:00:00 MST", @"title": @"Episode 4", @"summary": @"Dr, Laura vs. Dr. Satan, PC Gaming vs. Consoles, Black Ops Sheep and Twitter Questions - So Hide Your Kids, Hide your Wife!"};
-    NSArray *newFeedItems = @[episodeThreeFeedItem, episodeFourFeedItem];
+    NSDictionary *episodeThreePointFiveFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_3.5.mp3", @"duration": @"40:03", @"fileSize": @(37000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Mon, 6 Sep 2010 08:00:00 BST", @"title": @"Episode 3.5", @"summary": @"War Between New and Used Games, Dead Rising 2 Case:Zero and Shank reviews, Black Ops trash talk take back, banning MMA in Canada and more Pure Pwnage news!"};
+    NSDictionary *episodeFourFeedItem = @{@"downloadURL": @"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_4.mp3", @"duration": @"32:56", @"fileSize": @(34000000), @"mediaType": @"audio/mpeg", @"pubDate": @"Fri, 17 Sep 2010 08:00:00 BST", @"title": @"Episode 4", @"summary": @"Dr, Laura vs. Dr. Satan, PC Gaming vs. Consoles, Black Ops Sheep and Twitter Questions - So Hide Your Kids, Hide your Wife!"};
+    NSArray *newFeedItems = @[episodeThreePointFiveFeedItem, episodeFourFeedItem];
     
     [IGEpisode importPodcastFeedItems:newFeedItems completion:^(BOOL success, NSError *error) {
         IGEpisode *episodeThreePointFive = [IGEpisode MR_findFirstByAttribute:@"title"
