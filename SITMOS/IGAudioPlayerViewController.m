@@ -249,7 +249,7 @@
     }
     else
     {
-        NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
+        NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipForwardPeriodKey];
         [_mediaPlayer seekToTime:[_mediaPlayer currentTime] + (float)skipForwardTime];
     }
 }
@@ -272,7 +272,7 @@
     }
     else
     {
-        NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];
+        NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipBackPeriodKey];
         [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - (float)skipBackwardTime];
     }
 }

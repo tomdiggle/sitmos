@@ -79,7 +79,7 @@ static BOOL __developmentMode = NO;
 
 + (BOOL)allowCellularDataStreaming
 {
-    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataStreaming];
+    BOOL allowCellularDataStreaming = [[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataStreamingKey];
     AFNetworkReachabilityStatus networkReachabilityStatus = [[IGHTTPClient sharedClient] networkReachabilityStatus];
     if (!allowCellularDataStreaming && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi)
     {
@@ -91,7 +91,7 @@ static BOOL __developmentMode = NO;
 
 + (BOOL)allowCellularDataDownloading
 {
-    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGSettingCellularDataDownloading];
+    BOOL allowCellularDataDownloading = [[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataDownloadingKey];
     AFNetworkReachabilityStatus networkReachabilityStatus = [[IGHTTPClient sharedClient] networkReachabilityStatus];
     if (!allowCellularDataDownloading && networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi)
     {

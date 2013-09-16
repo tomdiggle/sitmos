@@ -54,7 +54,7 @@
     if (indexPath.row == 0)
     {
         [[cell textLabel] setText:NSLocalizedString(@"Never", @"text label for never")];
-        if (![userDefaults boolForKey:IGSettingEpisodesDelete])
+        if (![userDefaults boolForKey:IGAutoDeleteAfterFinishedPlayingKey])
         {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
@@ -62,7 +62,7 @@
     else
     {
         [[cell textLabel] setText:NSLocalizedString(@"Automatically", @"text label for automatically")];
-        if ([userDefaults boolForKey:IGSettingEpisodesDelete])
+        if ([userDefaults boolForKey:IGAutoDeleteAfterFinishedPlayingKey])
         {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
@@ -84,8 +84,8 @@
     [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL episodeDelete = [userDefaults boolForKey:IGSettingEpisodesDelete] ? NO : YES;
-    [userDefaults setBool:episodeDelete forKey:IGSettingEpisodesDelete];
+    BOOL episodeDelete = [userDefaults boolForKey:IGAutoDeleteAfterFinishedPlayingKey] ? NO : YES;
+    [userDefaults setBool:episodeDelete forKey:IGAutoDeleteAfterFinishedPlayingKey];
     
     [tableView deselectRowAtIndexPath:indexPath
                              animated:YES];

@@ -102,14 +102,14 @@
 
 - (NSNumber *)currentSkippingBackwardTime
 {
-    return [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime]];
+    return [NSNumber numberWithInteger:[[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipBackPeriodKey]];
 }
 
 - (void)setSettingSkippingBackwardTime:(NSNumber *)time
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:[time integerValue]
-                          forKey:IGSettingSkippingBackwardTime];
+                          forKey:IGPlayerSkipBackPeriodKey];
     [userDefaults synchronize];
 }
 

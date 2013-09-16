@@ -51,9 +51,9 @@
 
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     
-    [self.cellularDataStreamingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataStreaming]];
-    [self.cellularDataDownloadingSwitch setOn:[self.userDefaults boolForKey:IGSettingCellularDataDownloading]];
-    [self.episodesUnplayedBadgeSwitch setOn:[self.userDefaults boolForKey:IGSettingUnseenBadge]];
+    [self.cellularDataStreamingSwitch setOn:[self.userDefaults boolForKey:IGAllowCellularDataStreamingKey]];
+    [self.cellularDataDownloadingSwitch setOn:[self.userDefaults boolForKey:IGAllowCellularDataDownloadingKey]];
+    [self.episodesUnplayedBadgeSwitch setOn:[self.userDefaults boolForKey:IGShowApplicationBadgeForUnseenKey]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userDefaultsChanged:)
@@ -83,12 +83,12 @@
         // Playback Section
         if (row == 0)
         {
-            NSString *skippingBackwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGSettingSkippingBackwardTime]];
+            NSString *skippingBackwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGPlayerSkipBackPeriodKey]];
             [[cell detailTextLabel] setText:skippingBackwardTime];
         }
         else if (row == 1)
         {
-            NSString *skippingForwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGSettingSkippingForwardTime]];
+            NSString *skippingForwardTime = [NSString stringWithFormat:NSLocalizedString(@"Seconds", @"text label for seconds"), [self.userDefaults integerForKey:IGPlayerSkipForwardPeriodKey]];
             [[cell detailTextLabel] setText:skippingForwardTime];
         }
     }
@@ -97,7 +97,7 @@
         // Episodes Section
         if (row == 1)
         {
-            NSString *deleteMethod = [self.userDefaults boolForKey:IGSettingEpisodesDelete] ? NSLocalizedString(@"Automatically", @"text label for automatically") : NSLocalizedString(@"Never", @"text label for never");
+            NSString *deleteMethod = [self.userDefaults boolForKey:IGAutoDeleteAfterFinishedPlayingKey] ? NSLocalizedString(@"Automatically", @"text label for automatically") : NSLocalizedString(@"Never", @"text label for never");
             [[cell detailTextLabel] setText:deleteMethod];
         }
     }
@@ -168,19 +168,19 @@
 
 - (IBAction)updateSettingCellularDataStreaming:(id)sender
 {
-    [self.userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataStreaming];
+    [self.userDefaults setBool:[sender isOn] forKey:IGAllowCellularDataStreamingKey];
     [self.userDefaults synchronize];
 }
 
 - (IBAction)updateSettingCellularDataDownloading:(id)sender
 {
-    [self.userDefaults setBool:[sender isOn] forKey:IGSettingCellularDataDownloading];
+    [self.userDefaults setBool:[sender isOn] forKey:IGAllowCellularDataDownloadingKey];
     [self.userDefaults synchronize];
 }
 
 - (IBAction)updateSettingPushNotifications:(id)sender
 {
-    [self.userDefaults setBool:[sender isOn] forKey:IGSettingPushNotifications];
+    [self.userDefaults setBool:[sender isOn] forKey:IGEnablePushNotificationsKey];
     [self.userDefaults synchronize];
     
     if (![sender isOn])
@@ -192,7 +192,7 @@
                 NSLog(@"Error: %@", error);
                 // Reset the setting
                 [self.userDefaults setBool:([sender isOn] ? NO : YES)
-                                forKey:IGSettingPushNotifications];
+                                forKey:IGEnablePushNotificationsKey];
                 [self.userDefaults synchronize];
         
                 // Reset the switch
@@ -209,7 +209,7 @@
 
 - (IBAction)updateSettingUnseenBadge:(id)sender
 {
-    [self.userDefaults setBool:[sender isOn] forKey:IGSettingUnseenBadge];
+    [self.userDefaults setBool:[sender isOn] forKey:IGShowApplicationBadgeForUnseenKey];
     [self.userDefaults synchronize];
     
     if ([sender isOn])

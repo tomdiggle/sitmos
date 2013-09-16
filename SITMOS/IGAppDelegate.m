@@ -136,7 +136,7 @@
 
 - (void)registerForPushNotifications
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:IGSettingPushNotifications])
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:IGEnablePushNotificationsKey])
     {
         NSLog(@"Registering for remote notifications");
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -166,7 +166,7 @@
 - (void)importEpisodesFromMediaLibrary
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults boolForKey:IGInitialSetupImportEpisodes])
+    if ([userDefaults boolForKey:IGInitialImportEpisodesKey])
     {
         return;
     }
@@ -181,7 +181,7 @@
     }
     
     // An inital search for any episodes has taken place, make sure the user isn't asked again next time.
-    [userDefaults setBool:YES forKey:IGInitialSetupImportEpisodes];
+    [userDefaults setBool:YES forKey:IGInitialImportEpisodesKey];
     [userDefaults synchronize];
 }
 
@@ -189,40 +189,24 @@
 
 - (void)registerDefaultSettings
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (![userDefaults objectForKey:IGSettingCellularDataStreaming])
-    {
-        [userDefaults setBool:YES forKey:IGSettingCellularDataStreaming];
-    }
+    NSString *defaultSettingsPath = [[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"];
+    NSData *defaultSettingsData = [NSData dataWithContentsOfFile:defaultSettingsPath];
+    NSString *errorDescription = nil;
+    NSPropertyListFormat format;
+    NSDictionary *defaultSettings = [NSPropertyListSerialization propertyListFromData:defaultSettingsData
+                                                                     mutabilityOption:NSPropertyListImmutable
+                                                                               format:&format
+                                                                     errorDescription:&errorDescription];
     
-    if (![userDefaults objectForKey:IGSettingCellularDataDownloading])
+    if (!defaultSettings)
     {
-        [userDefaults setBool:NO forKey:IGSettingCellularDataDownloading];
+        NSLog(@"Error importing default settings - %@", errorDescription);
     }
-    
-    if (![userDefaults objectForKey:IGSettingEpisodesDelete])
+    else
     {
-        [userDefaults setBool:NO forKey:IGSettingEpisodesDelete];
-    }
-    
-    if (![userDefaults objectForKey:IGSettingUnseenBadge])
-    {
-        [userDefaults setBool:NO forKey:IGSettingUnseenBadge];
-    }
-    
-    if (![userDefaults objectForKey:IGSettingSkippingForwardTime])
-    {
-        [userDefaults setInteger:30 forKey:IGSettingSkippingForwardTime];
-    }
-    
-    if (![userDefaults objectForKey:IGSettingSkippingBackwardTime])
-    {
-        [userDefaults setInteger:30 forKey:IGSettingSkippingBackwardTime];
-    }
-    
-    if (![userDefaults objectForKey:IGSettingPushNotifications])
-    {
-        [userDefaults setBool:YES forKey:IGSettingPushNotifications];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults registerDefaults:defaultSettings];
+        [defaults synchronize];
     }
 }
 
@@ -270,14 +254,14 @@
 			break;
 		case UIEventSubtypeRemoteControlNextTrack:
         {
-            NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingForwardTime];
+            NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipForwardPeriodKey];
             [mediaPlayer seekToTime:[mediaPlayer currentTime] + (float)skipForwardTime];
             
             break;
         }
         case UIEventSubtypeRemoteControlPreviousTrack:
         {
-            NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGSettingSkippingBackwardTime];
+            NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipBackPeriodKey];
             [mediaPlayer seekToTime:[mediaPlayer currentTime] - (float)skipBackwardTime];
             
             break;

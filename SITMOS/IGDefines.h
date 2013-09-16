@@ -19,15 +19,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/* */
-#define kRGBA(r, g, b, a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
-
 /* Settings */
-extern NSString * const IGSettingCellularDataStreaming;
-extern NSString * const IGSettingCellularDataDownloading;
-extern NSString * const IGSettingEpisodesDelete;
-extern NSString * const IGSettingUnseenBadge;
-extern NSString * const IGSettingSkippingForwardTime;
-extern NSString * const IGSettingSkippingBackwardTime;
-extern NSString * const IGSettingPushNotifications;
-extern NSString * const IGInitialSetupImportEpisodes;
+extern NSString * const IGAllowCellularDataStreamingKey;
+extern NSString * const IGAllowCellularDataDownloadingKey;
+extern NSString * const IGAutoDeleteAfterFinishedPlayingKey;
+extern NSString * const IGShowApplicationBadgeForUnseenKey;
+extern NSString * const IGPlayerSkipForwardPeriodKey;
+extern NSString * const IGPlayerSkipBackPeriodKey;
+extern NSString * const IGEnablePushNotificationsKey;
+extern NSString * const IGInitialImportEpisodesKey;

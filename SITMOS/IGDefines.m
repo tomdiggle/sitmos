@@ -22,11 +22,11 @@
 #import "IGDefines.h"
 
 /* Settings */
-NSString * const IGSettingCellularDataStreaming = @"IGSettingCellularDataStreaming";
-NSString * const IGSettingCellularDataDownloading = @"IGSettingCellularDataDownloading";
-NSString * const IGSettingEpisodesDelete = @"IGSettingEpisodesDelete"; // YES will delete episode automatically, NO will never delete episode after playback has finished.
-NSString * const IGSettingUnseenBadge = @"IGSettingUnseenBadge";
-NSString * const IGSettingSkippingForwardTime = @"IGSettingSkippingForwardTime";
-NSString * const IGSettingSkippingBackwardTime = @"IGSettingSkippingBackwardTime";
-NSString * const IGSettingPushNotifications = @"IGSettingPushNotifications";
-NSString * const IGInitialSetupImportEpisodes = @"IGInitialSetupImportEpisodes";
+NSString * const IGAllowCellularDataStreamingKey = @"AllowCellularDataStreaming";
+NSString * const IGAllowCellularDataDownloadingKey = @"AllowCellularDataDownloading";
+NSString * const IGAutoDeleteAfterFinishedPlayingKey = @"AutoDeleteAfterFinishedPlaying";
+NSString * const IGShowApplicationBadgeForUnseenKey = @"ShowApplicationBadgeForUnseen";
+NSString * const IGPlayerSkipForwardPeriodKey = @"PlayerSkipForwardPeriod";
+NSString * const IGPlayerSkipBackPeriodKey = @"PlayerSkipBackPeriod";
+NSString * const IGEnablePushNotificationsKey = @"EnablePushNotifications";
+NSString * const IGInitialImportEpisodesKey = @"InitialImportEpisodes";

@@ -28,7 +28,6 @@
 		321D8C4E145F1D8B008698DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C4D145F1D8B008698DC /* main.m */; };
 		321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
 		321F218D15B9FD8D00610DC0 /* episode-show-notes-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */; };
-		32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */; };
 		3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
 		3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222F7C6170F6B4000E8E76E /* Settings.bundle */; };
 		32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6415CDEB690005E3B6 /* icon-58.png */; };
@@ -101,6 +100,8 @@
 		3276373217A31E3200E233AD /* IGEpisodeImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3276373117A31E3200E233AD /* IGEpisodeImporter.m */; };
 		3277FEB117E61FF60068CCC9 /* episode-image-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */; };
 		3277FEB417E64DC50068CCC9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3277FEB217E64D890068CCC9 /* SenTestingKit.framework */; };
+		3277FEFD17E6F9E00068CCC9 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3277FEFC17E6F9E00068CCC9 /* Defaults.plist */; };
+		3277FEFE17E6F9E00068CCC9 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3277FEFC17E6F9E00068CCC9 /* Defaults.plist */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
 		327FCBA017CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */; };
@@ -231,8 +232,6 @@
 		321D8C50145F1D8B008698DC /* IGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGAppDelegate.h; sourceTree = "<group>"; };
 		321D8C51145F1D8B008698DC /* IGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGAppDelegate.m; sourceTree = "<group>"; };
 		321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-show-notes-button@2x.png"; sourceTree = "<group>"; };
-		32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsGeneralViewController.h; sourceTree = "<group>"; };
-		32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsGeneralViewController.m; sourceTree = "<group>"; };
 		3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsViewController.h; sourceTree = "<group>"; };
 		3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsViewController.m; sourceTree = "<group>"; };
 		3222F7C6170F6B4000E8E76E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -323,6 +322,7 @@
 		327766D4160CD61700D7DEF4 /* SITMOS-v1.0b1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.0b1.xcdatamodel"; sourceTree = "<group>"; };
 		3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-image-placeholder@2x.png"; sourceTree = "<group>"; };
 		3277FEB217E64D890068CCC9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		3277FEFC17E6F9E00068CCC9 /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Defaults.plist; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon-highlighted@2x.png"; sourceTree = "<group>"; };
@@ -551,16 +551,17 @@
 			isa = PBXGroup;
 			children = (
 				32732B49156C41A800DCF77C /* Graphics */,
-				321D8C49145F1D8B008698DC /* SITMOS-Info.plist */,
-				3285E112156C43A0009E128A /* Localizable.strings */,
-				321D8C4A145F1D8B008698DC /* InfoPlist.strings */,
-				321D8C4D145F1D8B008698DC /* main.m */,
-				321D8C4F145F1D8B008698DC /* SITMOS-Prefix.pch */,
-				3290193C15D18A4A00104FD8 /* IGDefines.h */,
-				3290193D15D18A4A00104FD8 /* IGDefines.m */,
+				3277FEFC17E6F9E00068CCC9 /* Defaults.plist */,
 				32FBC4EE1618DE66005078EC /* IGAPIKeys.h */,
 				32FBC4EF1618DE66005078EC /* IGAPIKeys.m */,
+				3290193C15D18A4A00104FD8 /* IGDefines.h */,
+				3290193D15D18A4A00104FD8 /* IGDefines.m */,
+				321D8C4A145F1D8B008698DC /* InfoPlist.strings */,
+				3285E112156C43A0009E128A /* Localizable.strings */,
+				321D8C4D145F1D8B008698DC /* main.m */,
 				3222F7C6170F6B4000E8E76E /* Settings.bundle */,
+				321D8C49145F1D8B008698DC /* SITMOS-Info.plist */,
+				321D8C4F145F1D8B008698DC /* SITMOS-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -989,8 +990,6 @@
 			children = (
 				3222F7C3170B57F900E8E76E /* IGSettingsViewController.h */,
 				3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */,
-				32206E5E1765311500F02380 /* IGSettingsGeneralViewController.h */,
-				32206E5F1765311500F02380 /* IGSettingsGeneralViewController.m */,
 				32EA27B116DA71E300BB528E /* IGSettingsSeekingBackwardViewController.h */,
 				32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */,
 				32BF7B1A16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.h */,
@@ -1097,6 +1096,7 @@
 				3263DEBD1757965B00D74A1F /* media-player-show-button@2x.png in Resources */,
 				322921F317A3186800895986 /* errorIcon.png in Resources */,
 				325A76FB17C0E13C0036C276 /* download-pause-button@2x.png in Resources */,
+				3277FEFD17E6F9E00068CCC9 /* Defaults.plist in Resources */,
 				322921F417A3186800895986 /* errorIcon@2x.png in Resources */,
 				322921F517A3186800895986 /* successIcon.png in Resources */,
 				32C69CB717AAADBD00838E66 /* icon-80.png in Resources */,
@@ -1110,6 +1110,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3277FEFE17E6F9E00068CCC9 /* Defaults.plist in Resources */,
 				322D32D217257637004856E9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1212,7 +1213,6 @@
 				323734CF17DE2344008E7768 /* AFJSONPatchSerializer.m in Sources */,
 				323734D317DE2344008E7768 /* AFPropertyListRequestOperation.m in Sources */,
 				323734EA17DE2388008E7768 /* AFNetworkActivityIndicatorManager.m in Sources */,
-				32206E601765311500F02380 /* IGSettingsGeneralViewController.m in Sources */,
 				322921F717A3186800895986 /* TDNotificationPanel.m in Sources */,
 				323734F017DE2388008E7768 /* UIImageView+AFNetworking.m in Sources */,
 				3276373217A31E3200E233AD /* IGEpisodeImporter.m in Sources */,
