@@ -8,5 +8,4 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import "CoreData+MagicalRecord.h"
-    #import "TestFlight.h"
 #endif

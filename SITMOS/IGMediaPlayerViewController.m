@@ -27,6 +27,7 @@
 #import "IGHTTPClient.h"
 #import "IGAudioPlayerViewController.h"
 #import "IGVideoPlayerViewController.h"
+#import "TestFlight.h"
 
 @implementation IGMediaPlayerViewController
 

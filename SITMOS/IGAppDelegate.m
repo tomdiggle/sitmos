@@ -29,6 +29,7 @@
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
+#import "TestFlight.h"
 
 @implementation IGAppDelegate
 

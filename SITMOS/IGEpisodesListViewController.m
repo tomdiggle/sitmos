@@ -37,6 +37,7 @@
 #import "AFDownloadRequestOperation.h"
 #import "UIViewController+IGNowPlayingButton.h"
 #import "TDNotificationPanel.h"
+#import "TestFlight.h"
 
 @interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIDataSourceModelAssociation, SSPullToRefreshViewDelegate>
 
