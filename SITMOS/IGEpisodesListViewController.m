@@ -431,6 +431,7 @@
     
     if ([IGHTTPClient allowCellularDataDownloading])
     {
+        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Downloading %@", [episode title]]];
         [self startDownloadFromURL:downloadURL
                         targetPath:[episode fileURL]];
         [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
@@ -440,6 +441,7 @@
     RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
     RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", @"text label for yes")];
     downloadItem.action = ^{
+        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Downloading %@", [episode title]]];
         [self startDownloadFromURL:downloadURL
                         targetPath:[episode fileURL]];
         [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];

@@ -29,7 +29,6 @@
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
-//#import "TestFlight.h"
 
 @implementation IGAppDelegate
 
@@ -37,16 +36,13 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [TestFlight takeOff:IGTestFlightAPIKey];
+    [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     
 #ifdef DEVELOPMENT_MODE
     [IGHTTPClient setDevelopmentModeEnabled:YES];
 #endif
-    
-//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
     
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     

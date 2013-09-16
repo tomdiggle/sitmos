@@ -113,6 +113,8 @@
  */
 - (void)loadPlayerViewController
 {
+    [TestFlight passCheckpoint:[NSString stringWithFormat:@"Playing %@", [self.episode title]]];
+    
     if ([self.episode isAudio])
     {
         [self performSegueWithIdentifier:@"audioPlayerSegue"

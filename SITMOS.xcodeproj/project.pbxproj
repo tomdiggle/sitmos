@@ -140,6 +140,9 @@
 		320A8AC417E71B6600D4B06C /* episode-downloaded-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */; };
 		320A8AC517E71B6600D4B06C /* successIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921F017A3186800895986 /* successIcon@2x.png */; };
 		320A8AC617E71B6600D4B06C /* episode-show-notes-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */; };
+		320A8AD217E72E5900D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
+		320A8AD317E72E5A00D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
+		320A8AD417E72E5A00D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
 		321169B517AFC58D004AFB0D /* seek-forward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321169B417AFC58D004AFB0D /* seek-forward-button@2x.png */; };
 		321169B717AFC7D1004AFB0D /* seek-backward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321169B617AFC7D1004AFB0D /* seek-backward-button@2x.png */; };
 		3213C5EF174913C6003C0BC4 /* episode-downloaded-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */; };
@@ -340,6 +343,10 @@
 		32056E2915E1913F00235783 /* progress-slider-thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-slider-thumb@2x.png"; sourceTree = "<group>"; };
 		320602F21754C0B700301459 /* IGHTTPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGHTTPClientTests.m; sourceTree = "<group>"; };
 		320A8ACB17E71B6600D4B06C /* SITMOS Background Fetch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SITMOS Background Fetch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		320A8ACE17E72E5900D4B06C /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		320A8ACF17E72E5900D4B06C /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		320A8AD017E72E5900D4B06C /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		320A8AD117E72E5900D4B06C /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		321169B417AFC58D004AFB0D /* seek-forward-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seek-forward-button@2x.png"; sourceTree = "<group>"; };
 		321169B617AFC7D1004AFB0D /* seek-backward-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seek-backward-button@2x.png"; sourceTree = "<group>"; };
 		3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon@2x.png"; sourceTree = "<group>"; };
@@ -567,6 +574,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				320A8AD317E72E5A00D4B06C /* libTestFlight.a in Frameworks */,
 				320A8A9717E71B6600D4B06C /* Security.framework in Frameworks */,
 				320A8A9817E71B6600D4B06C /* SystemConfiguration.framework in Frameworks */,
 				320A8A9917E71B6600D4B06C /* libz.dylib in Frameworks */,
@@ -588,6 +596,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				320A8AD217E72E5900D4B06C /* libTestFlight.a in Frameworks */,
 				32E909EF17BCEE9500392D67 /* Security.framework in Frameworks */,
 				323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */,
 				32523E69169B2748006E9FFB /* libz.dylib in Frameworks */,
@@ -611,6 +620,7 @@
 			files = (
 				3277FEB417E64DC50068CCC9 /* SenTestingKit.framework in Frameworks */,
 				322D32BD17257568004856E9 /* UIKit.framework in Frameworks */,
+				320A8AD417E72E5A00D4B06C /* libTestFlight.a in Frameworks */,
 				32E9095017BCEB3400392D67 /* OCHamcrestIOS.framework in Frameworks */,
 				322D32BE17257568004856E9 /* Foundation.framework in Frameworks */,
 				322D32E11725923E004856E9 /* CoreData.framework in Frameworks */,
@@ -633,6 +643,17 @@
 				320602F21754C0B700301459 /* IGHTTPClientTests.m */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		320A8ACD17E72E5900D4B06C /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				320A8ACE17E72E5900D4B06C /* libTestFlight.a */,
+				320A8ACF17E72E5900D4B06C /* TestFlight+AsyncLogging.h */,
+				320A8AD017E72E5900D4B06C /* TestFlight+ManualSessions.h */,
+				320A8AD117E72E5900D4B06C /* TestFlight.h */,
+			);
+			path = TestFlight;
 			sourceTree = "<group>";
 		};
 		321D8C32145F1D8B008698DC = {
@@ -766,6 +787,7 @@
 				32E908CF17BCEA3E00392D67 /* OCHamcrestIOS.framework */,
 				32E90A0617BD4A2F00392D67 /* SSPullToRefresh */,
 				322921EC17A3186700895986 /* TDNotificationPanel */,
+				320A8ACD17E72E5900D4B06C /* TestFlight */,
 				323923A3167F5DD800301439 /* TSLibraryImport */,
 				323923A7167F5E0500301439 /* UIAlertView-Blocks */,
 				323734DD17DE2388008E7768 /* UIKit+AFNetworking */,
@@ -1631,7 +1653,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "SITMOS Background Fetch";
 				PROVISIONING_PROFILE = "";
@@ -1659,7 +1684,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "SITMOS Background Fetch";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1687,7 +1715,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "SITMOS Background Fetch";
 				PROVISIONING_PROFILE = "";
@@ -1783,7 +1814,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1811,7 +1845,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1842,6 +1879,10 @@
 				GCC_WARN_UNDECLARED_SELECTOR = NO;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1880,6 +1921,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1918,6 +1963,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "SITMOSTests/SITMOSTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1977,7 +2026,10 @@
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "SITMOS/SITMOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/tomdiggle/Tom-Diggle/sitmos/Vendor/TestFlight",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
