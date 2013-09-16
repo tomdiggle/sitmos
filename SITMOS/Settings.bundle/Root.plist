@@ -14,7 +14,7 @@
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
-			<string>IGSettingCellularDataStreaming</string>
+			<string>AllowCellularDataStreaming</string>
 			<key>Title</key>
 			<string>Streaming</string>
 			<key>Type</key>
@@ -24,7 +24,7 @@
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
-			<string>IGSettingCellularDataDownloading</string>
+			<string>AllowCellularDataDownloading</string>
 			<key>Title</key>
 			<string>Downloading</string>
 			<key>Type</key>
@@ -40,7 +40,7 @@
 			<key>DefaultValue</key>
 			<integer>30</integer>
 			<key>Key</key>
-			<string>IGSettingSkippingBackwardTime</string>
+			<string>PlayerSkipBackPeriod</string>
 			<key>Title</key>
 			<string>SkippingBackward</string>
 			<key>Titles</key>
@@ -64,7 +64,7 @@
 			<key>DefaultValue</key>
 			<integer>30</integer>
 			<key>Key</key>
-			<string>IGSettingSkippingForwardTime</string>
+			<string>PlayerSkipForwardPeriod</string>
 			<key>Title</key>
 			<string>SkippingForward</string>
 			<key>Titles</key>
@@ -96,7 +96,7 @@
 			<key>DefaultValue</key>
 			<false/>
 			<key>Key</key>
-			<string>IGSettingUnseenBadge</string>
+			<string>ShowApplicationBadgeForUnseen</string>
 			<key>Title</key>
 			<string>UnplayedBadge</string>
 			<key>Type</key>
@@ -106,7 +106,7 @@
 			<key>DefaultValue</key>
 			<true/>
 			<key>Key</key>
-			<string>IGSettingEpisodesDelete</string>
+			<string>AutoDeleteAfterFinishedPlaying</string>
 			<key>Title</key>
 			<string>Delete</string>
 			<key>Titles</key>
