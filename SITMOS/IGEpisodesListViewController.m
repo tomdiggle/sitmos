@@ -78,8 +78,8 @@
                                                                     delegate:self];
     self.pullToRefreshView.contentView = [[SSPullToRefreshSimpleContentView alloc] init];
     self.pullToRefreshView.backgroundColor = [UIColor whiteColor];
-
-    [self refreshFeed];
+    
+    [self refreshPodcastFeedsWithCompletionHandler:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -391,23 +391,33 @@
     [self.tableView setBounds:newBounds];
 }
 
-#pragma mark - Refresh Feed
+#pragma mark - Refresh Podcast Feeds
 
-- (void)refreshFeed
+- (void)refreshPodcastFeedsWithCompletionHandler:(void (^)(BOOL newEpisodes))completion
 {
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSError *error) {
-        if (!success && error) {
+    [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
+        if (!success && error)
+        {
             [TDNotificationPanel showNotificationInView:self.view
-                                                  title:NSLocalizedString(@"ErrorFetchingFeed", @"text label for error fetching feed")
-                                               subtitle:nil
+                                                  title:NSLocalizedString(@"ErrorFetchingFeed", nil)
+                                               subtitle:[error localizedDescription]
                                                    type:TDNotificationTypeError
                                                    mode:TDNotificationModeText
                                             dismissible:YES
                                          hideAfterDelay:4];
         }
+        else
+        {
+            [IGEpisode importPodcastFeedItems:feedItems completion:nil];
+        }
         
         [self.pullToRefreshView finishLoading];
+        
+        if (completion)
+        {
+            completion(feedItems ? YES : NO);
+        }
     }];
 }
 
@@ -497,7 +507,7 @@
 
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
-    [self refreshFeed];
+    [self refreshPodcastFeedsWithCompletionHandler:nil];
 }
 
 @end

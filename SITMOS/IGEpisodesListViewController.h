@@ -23,4 +23,6 @@
 
 @interface IGEpisodesListViewController : UIViewController
 
+- (void)refreshPodcastFeedsWithCompletionHandler:(void (^)(BOOL didReceiveNewEpisodes))completion;
+
 @end

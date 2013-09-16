@@ -191,19 +191,17 @@ static BOOL __developmentMode = NO;
 
 #pragma mark - Syncing Podcast Feeds
 
-- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSError *error))completion
+- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion
 {
     [self enqueueBatchOfHTTPRequestOperations:[self podcastFeedRequestOperations] progressBlock:nil completionBlock:^(NSArray *operations) {
         NSMutableArray *podcastFeedItems = [[NSMutableArray alloc] init];
+        __block NSError *syncError = nil;
         [operations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             AFXMLRequestOperation *operation = obj;
             if ([operation error])
             {
-               if (completion)
-               {
-                   completion(NO, [operation error]);
-                   *stop = YES;
-               }
+                syncError = [operation error];
+                *stop = YES;
             }
             else
             {
@@ -214,11 +212,8 @@ static BOOL __developmentMode = NO;
                     [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
                         if (error)
                         {
-                            if (completion)
-                            {
-                                completion(NO, error);
-                                *stop = YES;
-                            }
+                            syncError = error;
+                            *stop = YES;
                         }
                         else
                         {
@@ -229,16 +224,10 @@ static BOOL __developmentMode = NO;
             }
         }];
         
-        [IGEpisode importPodcastFeedItems:podcastFeedItems completion:^(BOOL success, NSError *error) {
-            if (!success && error)
-            {
-                completion(NO, error);
-            }
-            else if (completion)
-            {
-                completion(YES, nil);
-            }
-        }];
+        if (completion)
+        {
+            completion(syncError ? NO : YES, syncError ? nil : podcastFeedItems, syncError);
+        }
     }];
 }
 

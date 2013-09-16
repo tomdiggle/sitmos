@@ -124,7 +124,7 @@ extern NSString * const IGVideoPodcastFeedURL;
  *
  * @param The completion handler block to execute.
  */
-- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion;
 
 #pragma mark - Downloading Episode
 

@@ -21,6 +21,7 @@
 
 #import "IGAppDelegate.h"
 
+#import "IGEpisodesListViewController.h"
 #import "IGHTTPClient.h"
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
@@ -46,6 +47,8 @@
     
 //    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IGInitialSetupImportEpisodes];
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IGSettingPushNotifications];
+    
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     [self registerDefaultSettings];
     [self importEpisodesFromMediaLibrary];
@@ -159,6 +162,21 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)remoteNotification
 {
     NSLog(@"Remote Notifications received: %@", remoteNotification);
+}
+
+#pragma mark - Background Fetching
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
+                                                             bundle:nil];
+    IGEpisodesListViewController *episodesListViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"episodesListViewController"];
+    [episodesListViewController refreshPodcastFeedsWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
+        if (completionHandler)
+        {
+            completionHandler(didReceiveNewEpisodes ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);
+        }
+    }];
 }
 
 #pragma mark - Import Episodes Media Library
