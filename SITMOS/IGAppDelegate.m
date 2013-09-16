@@ -191,16 +191,16 @@
 {
     NSString *defaultSettingsPath = [[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"];
     NSData *defaultSettingsData = [NSData dataWithContentsOfFile:defaultSettingsPath];
-    NSString *errorDescription = nil;
+    NSError *error = nil;
     NSPropertyListFormat format;
-    NSDictionary *defaultSettings = [NSPropertyListSerialization propertyListFromData:defaultSettingsData
-                                                                     mutabilityOption:NSPropertyListImmutable
+    NSDictionary *defaultSettings = [NSPropertyListSerialization propertyListWithData:defaultSettingsData
+                                                                              options:0
                                                                                format:&format
-                                                                     errorDescription:&errorDescription];
+                                                                                error:&error];
     
     if (!defaultSettings)
     {
-        NSLog(@"Error importing default settings - %@", errorDescription);
+        NSLog(@"Error importing default settings - %@", [error localizedDescription]);
     }
     else
     {
