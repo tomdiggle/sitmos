@@ -1,5 +1,5 @@
 // TDNotificationPanel.h
-// Version 0.4.1
+// Version 0.4.3
 // Created by Tom Diggle 08.02.2013
 
 /**
@@ -33,6 +33,24 @@
 #else
     #define TDTextAlignmentLeft UITextAlignmentLeft
     #define TDLineBreakByWordWrapping UILineBreakModeWordWrap
+#endif
+
+// Text size methods borrowed of MBProgressHUD by Jonathan George
+// https://github.com/jdg/MBProgressHUD
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+    #define MB_TEXTSIZE(text, font) [text length] > 0 ? [text \
+            sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
+#else
+    #define MB_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithFont:font] : CGSizeZero;
+#endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+    #define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
+            boundingRectWithSize:maxSize options:(NSStringDrawingUsesLineFragmentOrigin) \
+            attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
+#else
+    #define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
+            sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
 #endif
 
 static const CGFloat kXPadding = 20.f;
@@ -389,7 +407,7 @@ static const CGFloat kSubtitleFontSize = 12.f;
     if (_titleText)
     {
         CGRect title = { .origin.x = CGRectGetMinX(_icon.frame) + CGRectGetWidth(_icon.frame) + kXPadding, .origin.y = kYPadding };
-        CGSize titleSize = [[_title text] sizeWithFont:[_title font]];
+        CGSize titleSize = MB_TEXTSIZE(self.titleText, self.titleFont);
         titleSize.width = MIN(titleSize.width, size.width - title.origin.x - kXPadding);
         title.size = titleSize;
         _title.frame = title;
@@ -421,9 +439,7 @@ static const CGFloat kSubtitleFontSize = 12.f;
         subtitle.origin.x = CGRectGetMinX(_icon.frame) + CGRectGetWidth(_icon.frame) + kXPadding;
         subtitle.origin.y = (_notificationMode == TDNotificationModeProgressBar) ? CGRectGetMaxY([_progressBar frame]) + kSpacing : CGRectGetMaxY(_title.frame) + kSpacing;
         CGSize subtitleMaxSize = { .width = size.width - subtitle.origin.x - kXPadding, .height = CGRectGetHeight(self.bounds) };
-        subtitle.size = [[_subtitle text] sizeWithFont:_subtitle.font
-                                                    constrainedToSize:subtitleMaxSize
-                                               lineBreakMode:_subtitle.lineBreakMode];
+        subtitle.size = MB_MULTILINE_TEXTSIZE(self.subtitleText, self.subtitleFont, subtitleMaxSize, [self.subtitle lineBreakMode]);
         _subtitle.frame = subtitle;
         
         size.height += CGRectGetHeight(_subtitle.frame);
