@@ -25,8 +25,6 @@
 #import "IGDefines.h"
 #import "NSDate+Helper.h"
 
-NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
-
 @interface IGEpisode ()
 
 /**
@@ -64,7 +62,7 @@ NSString * const IGEpisodeDateFormat = @"EEE, dd MMM yyyy HH:mm:ss zzz";
     }
     
     NSDate *latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
-                                               withFormat:IGEpisodeDateFormat];
+                                               withFormat:IGDateFormatString];
     NSUInteger episodesCount = [IGEpisode MR_countOfEntities];
     
     __block IGEpisode *episode = nil;

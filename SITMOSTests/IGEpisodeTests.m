@@ -21,7 +21,7 @@
 
 #import "IGEpisode.h"
 
-//#import "CoreData+MagicalRecord.h"
+#import "IGDefines.h"
 #import "NSDate+Helper.h"
 
 #import <SenTestingKit/SenTestingKit.h>
@@ -72,7 +72,7 @@
 }
 
 - (void)testDateFormatIsCorrect {
-    assertThat(IGEpisodeDateFormat, equalTo(@"EEE, dd MMM yyyy HH:mm:ss zzz"));
+    assertThat(IGDateFormatString, equalTo(@"EEE, dd MMM yyyy HH:mm:ss zzz"));
 }
 
 - (void)testEpisodeOneEntityNotNil {
@@ -96,7 +96,7 @@
 }
 
 - (void)testEpisodeOnePubDatePresentedInFeedItemsArrayIsSavedInEpisodeOneEntity {
-    assertThat([_episodeOne pubDate], equalTo([NSDate dateFromString:@"Tue, 10 Aug 2010 08:00:00 BST" withFormat:IGEpisodeDateFormat]));
+    assertThat([_episodeOne pubDate], equalTo([NSDate dateFromString:@"Tue, 10 Aug 2010 08:00:00 BST" withFormat:IGDateFormatString]));
 }
 
 - (void)testEpisodeOneSummaryPresentedInFeedItemsArrayIsSavedInEpisodeOneEntity {

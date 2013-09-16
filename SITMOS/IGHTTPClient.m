@@ -22,7 +22,6 @@
 #import "IGHTTPClient.h"
 
 #import "IGPodcastFeedParser.h"
-#import "IGEpisode.h"
 #import "IGDefines.h"
 #import "IGAPIKeys.h"
 #import "UIApplication+LocalNotificationHelper.h"
@@ -248,13 +247,13 @@ static BOOL __developmentMode = NO;
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:key]
-                                            withFormat:IGEpisodeDateFormat];
+                                            withFormat:IGDateFormatString];
     NSDate *feedLastModified = [NSDate dateFromString:modifiedDate
-                                           withFormat:IGEpisodeDateFormat];
+                                           withFormat:IGDateFormatString];
     
     if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending))
     {
-        [userDefaults setObject:[NSDate stringFromDate:[NSDate date] withFormat:IGEpisodeDateFormat]
+        [userDefaults setObject:[NSDate stringFromDate:[NSDate date] withFormat:IGDateFormatString]
                          forKey:key];
         [userDefaults synchronize];
         return YES;

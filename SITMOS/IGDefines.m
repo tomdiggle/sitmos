@@ -21,6 +21,9 @@
 
 #import "IGDefines.h"
 
+/* Date Format */
+NSString * const IGDateFormatString = @"EEE, dd MMM yyyy HH:mm:ss zzz";
+
 /* Settings */
 NSString * const IGAllowCellularDataStreamingKey = @"AllowCellularDataStreaming";
 NSString * const IGAllowCellularDataDownloadingKey = @"AllowCellularDataDownloading";

@@ -19,6 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/* Date Format */
+extern NSString * const IGDateFormatString;
+
 /* Settings */
 extern NSString * const IGAllowCellularDataStreamingKey;
 extern NSString * const IGAllowCellularDataDownloadingKey;

@@ -35,8 +35,6 @@ typedef enum {
     IGEpisodePlayedStatusHalfPlayed
 } IGEpisodePlayedStatus;
 
-extern NSString * const IGEpisodeDateFormat;
-
 /**
  * The IGEpisode class provides access to a episode entity.
  */
