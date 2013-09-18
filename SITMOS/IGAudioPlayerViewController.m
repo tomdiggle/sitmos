@@ -173,7 +173,7 @@
 
 - (void)updatePlaybackProgress
 {
-    if ([_mediaPlayer duration] <= 0) return;
+    if (isnan([_mediaPlayer duration])) return;
     
     [_currentTime setText:[self currentTimeString]];
     [_duration setText:[self durationString]];
