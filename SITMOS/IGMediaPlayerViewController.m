@@ -114,8 +114,9 @@
  */
 - (void)loadPlayerViewController
 {
-    [TestFlight passCheckpoint:[NSString stringWithFormat:@"Playing %@", [self.episode title]]];
-    
+    NSString *from = ([self.episode isDownloaded]) ? @"download" : @"stream";
+    [TestFlight passCheckpoint:[NSString stringWithFormat:@"Playing %@ from %@", [self.episode title], from]];
+        
     if ([self.episode isAudio])
     {
         [self performSegueWithIdentifier:@"audioPlayerSegue"
