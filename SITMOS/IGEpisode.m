@@ -74,7 +74,7 @@
             [episode MR_importValuesForKeysWithObject:obj];
             
             if ((episodesCount == 0 && [latestEpisodePubDate isEqualToDate:[episode pubDate]]) ||
-                (episodesCount > 0 && ([latestEpisodePubDate isEqualToDate:[episode pubDate]] || [[episode pubDate] compare:latestEpisodePubDate] == NSOrderedAscending)))
+                (episodesCount > 0 && ([latestEpisodePubDate isEqualToDate:[episode pubDate]] || [[episode pubDate] compare:latestEpisodePubDate] == NSOrderedDescending)))
             {
                 // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed
                 [episode markAsPlayed:NO];
@@ -88,7 +88,7 @@
     }];
 }
 
-+ (IGEpisode *)episodeWithTitle:(NSString *)title inContext:(NSManagedObjectContext *)context
++ (instancetype)episodeWithTitle:(NSString *)title inContext:(NSManagedObjectContext *)context
 {
     IGEpisode *episode = [self MR_findFirstByAttribute:@"title"
                                              withValue:title
