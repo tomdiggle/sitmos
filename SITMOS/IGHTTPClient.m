@@ -223,9 +223,18 @@ static BOOL __developmentMode = NO;
             }
         }];
         
+        // Because there are two feeds (audio and video) to make life easier when importing the feed items get sorted by date with the latest episode as the last object in the sorted array.
+        NSArray *sortedPodcastFeedItems = [podcastFeedItems sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSDate *d1 = [NSDate dateFromString:[obj1 valueForKey:@"pubDate"]
+                                     withFormat:IGDateFormatString];
+            NSDate *d2 = [NSDate dateFromString:[obj2 valueForKey:@"pubDate"]
+                                     withFormat:IGDateFormatString];
+            return [d1 compare:d2];
+        }];
+        
         if (completion)
         {
-            completion(syncError ? NO : YES, syncError ? nil : podcastFeedItems, syncError);
+            completion(syncError ? NO : YES, syncError ? nil : sortedPodcastFeedItems, syncError);
         }
     }];
 }
