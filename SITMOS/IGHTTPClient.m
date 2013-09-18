@@ -27,7 +27,6 @@
 #import "UIApplication+LocalNotificationHelper.h"
 #import "NSDate+Helper.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "AFXMLRequestOperation.h"
 #import "AFDownloadRequestOperation.h"
 
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
@@ -196,7 +195,7 @@ static BOOL __developmentMode = NO;
         NSMutableArray *podcastFeedItems = [[NSMutableArray alloc] init];
         __block NSError *syncError = nil;
         [operations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            AFXMLRequestOperation *operation = obj;
+            AFHTTPRequestOperation *operation = obj;
             if ([operation error])
             {
                 syncError = [operation error];
@@ -242,10 +241,12 @@ static BOOL __developmentMode = NO;
 - (NSArray *)podcastFeedRequestOperations
 {
     NSURLRequest *audioFeedRequest = [self requestWithURL:_audioPodcastFeedURL];
-    AFXMLRequestOperation *audioFeedOperation = [[AFXMLRequestOperation alloc] initWithRequest:audioFeedRequest];
+    AFHTTPRequestOperation *audioFeedOperation = [[AFHTTPRequestOperation alloc] initWithRequest:audioFeedRequest];
+    audioFeedOperation.responseSerializer = [AFXMLParserSerializer serializer];
     
     NSURLRequest *videoFeedRequest = [self requestWithURL:_videoPodcastFeedURL];
-    AFXMLRequestOperation *videoFeedOperation = [[AFXMLRequestOperation alloc] initWithRequest:videoFeedRequest];
+    AFHTTPRequestOperation *videoFeedOperation = [[AFHTTPRequestOperation alloc] initWithRequest:videoFeedRequest];
+    videoFeedOperation.responseSerializer = [AFXMLParserSerializer serializer];
     
     return @[audioFeedOperation, videoFeedOperation];
 }
