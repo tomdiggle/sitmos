@@ -153,9 +153,11 @@
         return;
     }
     
+    [mediaPlayer setStartFromTime:[[self.episode progress] floatValue]];
+    
     [mediaPlayer startWithAsset:asset];
     
-    [mediaPlayer setStartFromTime:[[self.episode progress] floatValue]];
+    [mediaPlayer.asset setShouldRestoreState:NO];
     
     [mediaPlayer setPausedBlock:^(Float64 currentTime) {
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
