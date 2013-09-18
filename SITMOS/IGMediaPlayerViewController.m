@@ -160,14 +160,14 @@
     [mediaPlayer.asset setShouldRestoreState:NO];
     
     [mediaPlayer setPausedBlock:^(Float64 currentTime) {
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_defaultContext];
         IGEpisode *localEpisode = [self.episode MR_inContext:localContext];
         [localEpisode setProgress:@(currentTime)];
         [localContext MR_saveToPersistentStoreAndWait];
     }];
     
     [mediaPlayer setStoppedBlock:^(Float64 currentTime, BOOL playbackEnded) {
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_defaultContext];
         IGEpisode *localEpisode = [self.episode MR_inContext:localContext];
         NSNumber *progress = @(currentTime);
         if (playbackEnded)
