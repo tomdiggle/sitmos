@@ -61,9 +61,14 @@
         return;
     }
     
-    NSDate *latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
-                                               withFormat:IGDateFormatString];
-    NSUInteger episodesCount = [IGEpisode MR_countOfEntities];
+    NSDate *latestEpisodePubDate = latestEpisodePubDate = [NSDate dateFromString:[[feed lastObject] valueForKey:@"pubDate"]
+                                                                      withFormat:IGDateFormatString];;
+    if  ([IGEpisode MR_countOfEntities] > 0)
+    {
+        IGEpisode *latestEpisode = [IGEpisode MR_findFirstOrderedByAttribute:@"pubDate"
+                                                                   ascending:NO];
+        latestEpisodePubDate = [latestEpisode pubDate];
+    }
     
     __block IGEpisode *episode = nil;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -73,8 +78,7 @@
                                         inContext:localContext];
             [episode MR_importValuesForKeysWithObject:obj];
             
-            if ((episodesCount == 0 && [latestEpisodePubDate isEqualToDate:[episode pubDate]]) ||
-                (episodesCount > 0 && ([latestEpisodePubDate isEqualToDate:[episode pubDate]] || [[episode pubDate] compare:latestEpisodePubDate] == NSOrderedDescending)))
+            if ([latestEpisodePubDate isEqualToDate:[episode pubDate]] || [[episode pubDate] compare:latestEpisodePubDate] == NSOrderedDescending)
             {
                 // If there are no episodes saved, only mark the latest episode as unplayed or if there are episodes already saved, mark all new episodes as unplayed
                 [episode markAsPlayed:NO];
