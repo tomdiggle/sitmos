@@ -18,14 +18,8 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-/* text label for ok */
-"OK" = "OK";
-
 /* text label for cancel */
 "Cancel" = "Cancel";
-
-/* text label for sorry */
-"Sorry" = "Sorry";
 
 /* text label for episode playback failed */
 "EpisodePlaybackFailed" = "Episode playback failed";
@@ -35,9 +29,6 @@
 
 /* text label for pause */
 "Pause" = "Pause";
-
-/* text label for of */
-"Of" = "of";
 
 /* text label for no */
 "No" = "No";
@@ -53,9 +44,6 @@
 
 /* text label for Delete */
 "Delete" = "Delete";
-
-/* text label for continue */
-"Continue" = "Continue";
 
 /* text label for audio */
 "Audio" = "Audio";
@@ -81,18 +69,6 @@
 /* text label for episodes */
 "Episodes" = "Episodes";
 
-/* text label for streaming */
-"Streaming" = "Streaming";
-
-/* text label for downloading */
-"Downloading" = "Downloading";
-
-/* text label for settings */
-"Settings" = "Settings";
-
-/* text label for settings episodes section footer */
-"SettingsEpisodesSectionFooter" = "An episode can be deleted automatically once it has been played.";
-
 /* text label for streaming with cellular data title */
 "StreamingWithCellularDataTitle" = "Streaming with Cellular Data?";
 
@@ -114,12 +90,6 @@
 /* text label for version */
 "Version" = "Version";
 
-/* text label for done */
-"Done" = "Done";
-
-/* text label for unplayed episode badge */
-"UnplayedBadge" = "Unplayed Badge";
-
 /* text label for import episodes title */
 "ImportEpisodesTitle" = "Import Episodes?";
 
@@ -129,20 +99,8 @@
 /* text label for importing episodes */
 "ImportingEpisodes" = "Importing Episodes";
 
-/* text label for this may take a while */
-"ThisMayTakeAWhile" = "This may take a while";
-
-/* text label for completed */
-"Completed" = "Completed";
-
 /* text label for error fetching feed */
 "ErrorFetchingFeed" = "Error Fetching Feed";
-
-/* text label for buffering */
-"Buffering" = "Buffering...";
-
-/* text label for retry */
-"Retry" = "Retry";
 
 /* accessibility hint for plays episode */
 "PlaysEpisode" = "Plays episode.";
@@ -165,23 +123,8 @@
 /* text label for successfully imported episodes */
 "SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";
 
-/* text label for error importing episodes */
-"ErrorImportingEpisodes" = "Error while importing episodes";
-
 /* text label for seconds */
 "Seconds" = "%i seconds";
-
-/* text label for playback */
-"Playback" = "Playback";
-
-/* text label for skipping backward */
-"SkippingBackward" = "Skipping Backward";
-
-/* text label for skipping forward */
-"SkippingForward" = "Skipping Forward";
-
-/* text label for loading */
-"Loading" = "Loading...";
 
 /* Pull down to refresh status */
 "Pull down to refresh..." = "Pull down to refresh...";
@@ -198,38 +141,8 @@
 /* accessibility label for pause download */
 "PauseDownload" = "Pause download";
 
-/* accessibility label for episode show notes */
-"EpisodeShowNotes" = "Episode show notes";
-
-/* accessibility hint for view episode show notes */
-"ViewEpisodeShowNotes" = "View episode show notes";
-
-/* text label for show notes */
-"ShowNotes" = "Show Notes";
-
-/* text label for duration */
-"Duration" = "Duration";
-
-/* text label for published */
-"Published" = "Published";
-
-/* text label for size */
-"Size" = "Size";
-
-/* text label for type */
-"Type" = "Type";
-
 /* text label for follow sitmos on twitter */
 "FollowSITMOSOnTwitter" = "Follow @sitmos on Twitter";
-
-/* text label for general */
-"General" = "General";
-
-/* text label for push notifications */
-"PushNotifications" = "Push Notifications";
-
-/* text label for new episode */
-"NewEpisode" = "New Episode";
 
 /* text label for Import */
 "Import" = "Import";
