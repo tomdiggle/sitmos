@@ -188,7 +188,6 @@
                         <outlet property="searchBar" destination="5Z4-GW-5rF" id="hZD-Er-p10"/>
                         <outlet property="searchDisplayController" destination="JFG-4N-6J2" id="WHT-q2-mtB"/>
                         <outlet property="tableView" destination="bOX-wV-iz5" id="EQW-jz-QvV"/>
-                        <outlet property="view" destination="ARN-5p-GYe" id="6bO-t3-QpJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qjx-tc-dgo" userLabel="First Responder" sceneMemberID="firstResponder"/>
