@@ -1,3 +1,13 @@
+### Version 2.0
+
+*Released on September ##, 2013*
+
+Completely overhauled user interface for iOS 7
+
+Improved multitasking and background functionality
+
+iOS 7 or higher required
+
 ### Version 1.1.2
 
 *Released on May 4, 2013*
@@ -5,7 +15,6 @@
 Fixes possible streaming bug
 
 Minor improvements to the audio player
-
 
 ### Version 1.1.1
 

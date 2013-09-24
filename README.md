@@ -7,22 +7,26 @@ Stay up to date with each episode of [SITMOS](http://sitmos.net) (Stuck in the M
 Actor/Writer Joel F Gardiner and Comedian Derek Sweet discuss whatever is on their minds. While video games are often the focus of conversation, topics of discussion can be almost anything.
 
 ## Getting Started
-SITMOS - Podcast App uses [CocoaPods](http://cocoapods.org/) to manage third party components &amp; libraries please make sure it is installed before continuing. Once CocoaPods is installed run the following commands to get started:
+Run the following commands to get started:
 
     $ git clone --recursive https://github.com/tomdiggle/sitmos.git
     $ cd sitmos
     $ rake setup
+    
+## Want to Beta Test?
+If you are interested in helping test new versions of the app, all beta versions are shipped via TestFlight. You can sign up [here](http://tflig.ht/OSDHqC).
 
 ## Attribution
 SITMOS - Podcast App uses the following third party components &amp; libraries:
 
+- [AFDownloadRequestOperation](https://github.com/steipete/AFDownloadRequestOperation) by Peter Steinberger
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) by Mattt Thompson
 - [MagicalRecord](https://github.com/magicalpanda/MagicalRecord) by Magical Panda Software
-- [OCHamcrest](https://github.com/hamcrest/OCHamcrest) by Jon Reid
 - [NSDate-Helper](https://github.com/billymeltdown/nsdate-helper) by Billy Gray
+- [OCHamcrest](https://github.com/hamcrest/OCHamcrest) by Jon Reid
 - [SSPullToRefresh](https://github.com/soffes/sspulltorefresh) by Sam Soffes
 - [TDNotificationPanel](https://github.com/tomdiggle/TDNotificationPanel) by Tom Diggle
-- [TDSlider](https://github.com/tomdiggle/TDSlider) by Tom Diggle
+- [TestFlight](https://testflightapp.com) by TestFlight App, Inc
 - [TSLibraryImport](https://github.com/tapsquare/TSLibraryImport) by tapsquare
 - [UIAlertView-Blocks](https://github.com/jivadevoe/UIAlertView-Blocks) by Jiva DeVoe
     
