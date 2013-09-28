@@ -63,7 +63,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (nonatomic, readwrite) Float64 currentTime;
 @property (nonatomic, readwrite) Float64 duration;
 @property (nonatomic, readwrite) IGMediaPlayerPlaybackState playbackState;
-//@property (nonatomic, strong) IGMediaPlayerAsset *asset;
 
 @end
 

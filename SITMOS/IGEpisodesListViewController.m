@@ -23,7 +23,7 @@
 
 #import "IGEpisodeCell.h"
 #import "IGEpisode.h"
-#import "IGMediaPlayerViewController.h"
+#import "IGAudioPlayerViewController.h"
 #import "IGEpisodeShowNotesViewController.h"
 #import "IGSettingsViewController.h"
 #import "IGDefines.h"
@@ -80,7 +80,7 @@
     self.pullToRefreshView.contentView = [[SSPullToRefreshSimpleContentView alloc] init];
     self.pullToRefreshView.backgroundColor = [UIColor whiteColor];
     
-    [self refreshPodcastFeedsWithCompletionHandler:nil];
+    [self refreshPodcastFeedWithCompletionHandler:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -269,7 +269,7 @@
         IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                       withValue:[episodeCell title]];
         
-        NSString *playedItemLabel = [episode isPlayed] ? NSLocalizedString(@"MarkAsUnplayed", "text label for mark as unplayed") : NSLocalizedString(@"MarkAsPlayed", "text label for mark as played");
+        NSString *playedItemLabel = [episode isPlayed] ? NSLocalizedString(@"MarkAsUnplayed", nil) : NSLocalizedString(@"MarkAsPlayed", nil);
         BOOL isPlayed = [episode isPlayed] ? NO : YES;
         RIButtonItem *playedItem = [RIButtonItem itemWithLabel:playedItemLabel];
         playedItem.action = ^{
@@ -287,31 +287,27 @@
         
         RIButtonItem *deleteDownloadItem = nil;
         RIButtonItem *downloadItem = nil;
-        // Only Audio episodes are downloadable
-        if ([episode isAudio])
+        if ([episode isDownloaded])
         {
-            if ([episode isDownloaded])
-            {
-                deleteDownloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"DeleteDownload", @"text label for delete download")];
-                deleteDownloadItem.action = ^{
-                    [episode deleteDownloadedEpisode];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadRowsAtIndexPaths:@[indexPath]
-                                              withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                };
-            }
-            else
-            {
-                downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", @"text label for download")];
-                downloadItem.action = ^{
-                    [self showAllowCellularDataDownloadingAlert:episodeCell];
-                };
-            }
+            deleteDownloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"DeleteDownload", nil)];
+            deleteDownloadItem.action = ^{
+                [episode deleteDownloadedEpisode];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath]
+                                          withRowAnimation:UITableViewRowAnimationNone];
+                });
+            };
+        }
+        else
+        {
+            downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", nil)];
+            downloadItem.action = ^{
+                [self showAllowCellularDataDownloadingAlert:episodeCell];
+            };
         }
         
-        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", @"text label for cancel")];
+        RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Cancel", nil)];
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                          cancelButtonItem:cancelItem
@@ -339,6 +335,33 @@
 
 #pragma mark - Segue
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"audioPlayerSegue"] && [sender isKindOfClass:[UITableViewCell class]])
+    {
+        IGEpisodeCell *cell = (IGEpisodeCell *)sender;
+        IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[[cell downloadButton] tag]];
+        if (![episode isDownloaded] && ![IGHTTPClient allowCellularDataStreaming])
+        {
+            RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
+            RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", nil)];
+            streamItem.action = ^{
+                [self performSegueWithIdentifier:@"audioPlayerSegue" sender:sender];
+            };
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataAlertTitle", nil)
+                                                                message:NSLocalizedString(@"StreamingWithCellularDataAlertMessage", nil)
+                                                       cancelButtonItem:cancelItem
+                                                       otherButtonItems:streamItem, nil];
+            [alertView show];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"episodeShowNotesSegue"])
@@ -347,10 +370,10 @@
         IGEpisodeShowNotesViewController *showNotesViewController = [segue destinationViewController];
         [showNotesViewController setEpisode:episode];
     }
-    else if ([[segue identifier] isEqualToString:@"mediaPlayerSegue"])
+    else if ([[segue identifier] isEqualToString:@"audioPlayerSegue"])
     {
-        UINavigationController *mediaPlayerNavigationController = [segue destinationViewController];
-        IGMediaPlayerViewController *mediaPlayerViewController = (IGMediaPlayerViewController *)[mediaPlayerNavigationController topViewController];
+        UINavigationController *audioPlayerNavigationController = [segue destinationViewController];
+        IGAudioPlayerViewController *audioPlayerViewController = (IGAudioPlayerViewController *)[audioPlayerNavigationController topViewController];
         
         IGEpisode *episode = nil;
         if ([sender isKindOfClass:[UITableViewCell class]])
@@ -360,12 +383,13 @@
         }
         else
         {
+            // Tapped from the nav bar
             IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
             episode = [IGEpisode MR_findFirstByAttribute:@"title"
                                                withValue:[mediaPlayer.asset title]];
             
         }
-        [mediaPlayerViewController setEpisode:episode];
+        [audioPlayerViewController loadAudioPlayerWithEpisode:episode];
     }
 }
 
@@ -394,10 +418,10 @@
 
 #pragma mark - Refresh Podcast Feeds
 
-- (void)refreshPodcastFeedsWithCompletionHandler:(void (^)(BOOL newEpisodes))completion
+- (void)refreshPodcastFeedWithCompletionHandler:(void (^)(BOOL newEpisodes))completion
 {
     IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedsWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
+    [httpClient syncPodcastFeedWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
         if (!success && error)
         {
             [TDNotificationPanel showNotificationInView:self.view
@@ -510,7 +534,7 @@
 
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
-    [self refreshPodcastFeedsWithCompletionHandler:nil];
+    [self refreshPodcastFeedWithCompletionHandler:nil];
 }
 
 @end

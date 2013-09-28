@@ -21,6 +21,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class IGEpisode;
+
 @interface IGAudioPlayerViewController : UIViewController
+
+- (void)loadAudioPlayerWithEpisode:(IGEpisode *)episode;
 
 @end

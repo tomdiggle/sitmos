@@ -32,17 +32,14 @@
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 
 NSString * const IGDevelopmentBaseURL = @"http://www.tomdiggle.com/";
-NSString * const IGDevelopmentAudioPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml";
-NSString * const IGDevelopmentVideoPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-video-feed.xml";
+NSString * const IGDevelopmentPodcastFeedURL = @"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml";
 
 NSString * const IGBaseURL = @"http://www.dereksweet.com/";
-NSString * const IGAudioPodcastFeedURL = @"http://www.dereksweet.com/sitmos/sitmos.xml";
-NSString * const IGVideoPodcastFeedURL = @"http://www.dereksweet.com/sitmos/sitmos-video-feed.xml";
+NSString * const IGPodcastFeedURL = @"http://www.dereksweet.com/sitmos/sitmos.xml";
 
 NSString * const IGHTTPClientCurrentDownloadRequests = @"IGHTTPClientCurrentDownloadRequests";
 
-NSString * const IGAudioPodcastFeedLastModifiedKey = @"IGAudioPodcastFeedLastModifiedKey";
-NSString * const IGVideoPodcastFeedLastModifiedKey = @"IGVideoPodcastFeedLastModifiedKey";
+NSString * const IGPodcastFeedLastModifiedDateKey = @"PodcastFeedLastModifiedDate";
 
 NSString * const IGWindowsAzureMobileServicesURL = @"https://sitmos.azure-mobile.net/";
 
@@ -52,7 +49,6 @@ static BOOL __developmentMode = NO;
 
 @property (nonatomic, strong) NSDictionary *deviceToken;
 @property (nonatomic, strong) NSURL *audioPodcastFeedURL;
-@property (nonatomic, strong) NSURL *videoPodcastFeedURL;
 @property (nonatomic, strong) dispatch_queue_t callbackQueue;
 @property (nonatomic, strong, readwrite) NSMutableArray *currentDownloadRequests;
 @property (nonatomic, strong) MSClient *azureClient;
@@ -114,14 +110,12 @@ static BOOL __developmentMode = NO;
     if (__developmentMode)
     {
         baseURL = [NSURL URLWithString:IGDevelopmentBaseURL];
-        _audioPodcastFeedURL = [NSURL URLWithString:IGDevelopmentAudioPodcastFeedURL];
-        _videoPodcastFeedURL = [NSURL URLWithString:IGDevelopmentVideoPodcastFeedURL];
+        _audioPodcastFeedURL = [NSURL URLWithString:IGDevelopmentPodcastFeedURL];
     }
     else
     {
         baseURL = [NSURL URLWithString:IGBaseURL];
-        _audioPodcastFeedURL = [NSURL URLWithString:IGAudioPodcastFeedURL];
-        _videoPodcastFeedURL = [NSURL URLWithString:IGDevelopmentVideoPodcastFeedURL];
+        _audioPodcastFeedURL = [NSURL URLWithString:IGPodcastFeedURL];
     }
     
     if ((self = [super initWithBaseURL:baseURL]))
@@ -187,76 +181,38 @@ static BOOL __developmentMode = NO;
     }];
 }
 
-#pragma mark - Syncing Podcast Feeds
+#pragma mark - Syncing Podcast Feed
 
-- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion
+- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion
 {
-    [self enqueueBatchOfHTTPRequestOperations:[self podcastFeedRequestOperations] progressBlock:nil completionBlock:^(NSArray *operations) {
-        NSMutableArray *podcastFeedItems = [[NSMutableArray alloc] init];
-        __block NSError *syncError = nil;
-        [operations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            AFHTTPRequestOperation *operation = obj;
-            if ([operation error])
-            {
-                syncError = [operation error];
-                *stop = YES;
-            }
-            else
-            {
-                NSHTTPURLResponse *response = (NSHTTPURLResponse *)[obj response];
-                if ([self isPodcastFeed:[[operation request] URL] modifiedSince:[[response allHeaderFields] valueForKey:@"Last-Modified"]])
+    NSURLRequest *podcastFeedRequest = [self requestWithURL:_audioPodcastFeedURL];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:podcastFeedRequest];
+    operation.responseSerializer = [AFXMLParserSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *)[operation response];
+        if ([self isPodcastFeedModifiedSince:[[response allHeaderFields] valueForKey:@"Last-Modified"]])
+        {
+            NSXMLParser *xml = [[NSXMLParser alloc] initWithData:operation.responseData];
+            [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
+                if (completion)
                 {
-                    NSXMLParser *xml = [[NSXMLParser alloc] initWithData:operation.responseData];
-                    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:xml completion:^(NSArray *feedItems, NSError *error) {
-                        if (error)
-                        {
-                            syncError = error;
-                            *stop = YES;
-                        }
-                        else
-                        {
-                            [podcastFeedItems addObjectsFromArray:feedItems];
-                        }
-                    }];
+                    completion(error ? NO : YES, feedItems, error);
                 }
-            }
-        }];
-        
-        // Because there are two feeds (audio and video) to make life easier when importing the feed items get sorted by date with the latest episode as the last object in the sorted array.
-        NSArray *sortedPodcastFeedItems = [podcastFeedItems sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSDate *d1 = [NSDate dateFromString:[obj1 valueForKey:@"pubDate"]
-                                     withFormat:IGDateFormatString];
-            NSDate *d2 = [NSDate dateFromString:[obj2 valueForKey:@"pubDate"]
-                                     withFormat:IGDateFormatString];
-            return [d1 compare:d2];
-        }];
-        
+            }];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion)
         {
-            completion(syncError ? NO : YES, syncError ? nil : sortedPodcastFeedItems, syncError);
+            completion(NO, nil, error);
         }
     }];
+    [operation start];
 }
 
-- (NSArray *)podcastFeedRequestOperations
+- (BOOL)isPodcastFeedModifiedSince:(NSString *)modifiedDate
 {
-    NSURLRequest *audioFeedRequest = [self requestWithURL:_audioPodcastFeedURL];
-    AFHTTPRequestOperation *audioFeedOperation = [[AFHTTPRequestOperation alloc] initWithRequest:audioFeedRequest];
-    audioFeedOperation.responseSerializer = [AFXMLParserSerializer serializer];
-    
-    NSURLRequest *videoFeedRequest = [self requestWithURL:_videoPodcastFeedURL];
-    AFHTTPRequestOperation *videoFeedOperation = [[AFHTTPRequestOperation alloc] initWithRequest:videoFeedRequest];
-    videoFeedOperation.responseSerializer = [AFXMLParserSerializer serializer];
-    
-    return @[audioFeedOperation, videoFeedOperation];
-}
-
-- (BOOL)isPodcastFeed:(NSURL *)feedURL modifiedSince:(NSString *)modifiedDate
-{
-    NSString *key = ([feedURL isEqual:_audioPodcastFeedURL]) ? IGAudioPodcastFeedLastModifiedKey : IGVideoPodcastFeedLastModifiedKey;
-    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:key]
+    NSDate *feedLastRefreshed = [NSDate dateFromString:[userDefaults objectForKey:IGPodcastFeedLastModifiedDateKey]
                                             withFormat:IGDateFormatString];
     NSDate *feedLastModified = [NSDate dateFromString:modifiedDate
                                            withFormat:IGDateFormatString];
@@ -264,7 +220,7 @@ static BOOL __developmentMode = NO;
     if (!feedLastRefreshed || ([feedLastRefreshed compare:feedLastModified] == NSOrderedAscending))
     {
         [userDefaults setObject:[NSDate stringFromDate:[NSDate date] withFormat:IGDateFormatString]
-                         forKey:key];
+                         forKey:IGPodcastFeedLastModifiedDateKey];
         [userDefaults synchronize];
         return YES;
     }

@@ -26,12 +26,10 @@
 @class AFDownloadRequestOperation;
 
 extern NSString * const IGDevelopmentBaseURL;
-extern NSString * const IGDevelopmentAudioPodcastFeedURL;
-extern NSString * const IGDevelopmentVideoPodcastFeedURL;
+extern NSString * const IGDevelopmentPodcastFeedURL;
 
 extern NSString * const IGBaseURL;
-extern NSString * const IGAudioPodcastFeedURL;
-extern NSString * const IGVideoPodcastFeedURL;
+extern NSString * const IGPodcastFeedURL;
 
 /**
  * The IGHTTPClient class provides a centralized point of control for network connections.
@@ -113,18 +111,18 @@ extern NSString * const IGVideoPodcastFeedURL;
  */
 - (void)unregisterPushNotificationsWithCompletion:(void (^)(NSError *error))completion;
 
-#pragma mark - Syncing Podcast Feeds
+#pragma mark - Syncing Podcast Feed
 
 /**
- * @name Syncing Podcast Feeds
+ * @name Syncing Podcast Feed
  */
 
 /**
- * Syncs the audio and video podcast feeds and executes a handler block when complete.
+ * Syncs the podcast feed and executes a handler block when complete.
  *
  * @param The completion handler block to execute.
  */
-- (void)syncPodcastFeedsWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion;
+- (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion;
 
 #pragma mark - Downloading Episode
 

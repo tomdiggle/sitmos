@@ -42,8 +42,6 @@
 		320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */; };
 		320A8A8117E71B6600D4B06C /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
 		320A8A8217E71B6600D4B06C /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
-		320A8A8417E71B6600D4B06C /* IGMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C1876D172DA8A400921169 /* IGMediaPlayerViewController.m */; };
-		320A8A8617E71B6600D4B06C /* IGVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */; };
 		320A8A8717E71B6600D4B06C /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */; };
 		320A8A8D17E71B6600D4B06C /* UIViewController+IGNowPlayingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3263DEA21756A06900D74A1F /* UIViewController+IGNowPlayingButton.m */; };
 		320A8A8F17E71B6600D4B06C /* SSPullToRefreshSimpleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0B17BD4A2F00392D67 /* SSPullToRefreshSimpleContentView.m */; };
@@ -287,7 +285,6 @@
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
 		32B603F117AB0B7F000C8EEC /* media-player-hide-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */; };
 		32BF7B1C16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */; };
-		32C1876E172DA8A400921169 /* IGMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32C1876D172DA8A400921169 /* IGMediaPlayerViewController.m */; };
 		32C69CB717AAADBD00838E66 /* icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB517AAADBD00838E66 /* icon-80.png */; };
 		32C69CB817AAADBD00838E66 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB617AAADBD00838E66 /* icon-120.png */; };
 		32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB917AAAE2100838E66 /* Default-568h@2x.png */; };
@@ -309,7 +306,6 @@
 		32E90A1C17BEBE4A00392D67 /* IGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGHTTPClient.m */; };
 		32EA27B316DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */; };
 		32F023A01754FF4000A91E4B /* IGMockHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F0239F1754FF4000A91E4B /* IGMockHTTPClient.m */; };
-		32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */; };
 		32F0C80D16F73501009BC0BF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3916B842F30074E91F /* MobileCoreServices.framework */; };
 		32FBC4C31610D68C005078EC /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
 		32FBC4F01618DE66005078EC /* IGAPIKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGAPIKeys.m */; };
@@ -513,8 +509,6 @@
 		32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media-player-hide-button@2x.png"; sourceTree = "<group>"; };
 		32BF7B1A16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsSeekingForwardViewController.h; sourceTree = "<group>"; };
 		32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSeekingForwardViewController.m; sourceTree = "<group>"; };
-		32C1876C172DA8A400921169 /* IGMediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMediaPlayerViewController.h; sourceTree = "<group>"; };
-		32C1876D172DA8A400921169 /* IGMediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMediaPlayerViewController.m; sourceTree = "<group>"; };
 		32C69CB517AAADBD00838E66 /* icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-80.png"; sourceTree = "<group>"; };
 		32C69CB617AAADBD00838E66 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		32C69CB917AAAE2100838E66 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -539,8 +533,6 @@
 		32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsSeekingBackwardViewController.m; sourceTree = "<group>"; };
 		32F0239E1754FF4000A91E4B /* IGMockHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGMockHTTPClient.h; sourceTree = "<group>"; };
 		32F0239F1754FF4000A91E4B /* IGMockHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGMockHTTPClient.m; sourceTree = "<group>"; };
-		32F023A41755097A00A91E4B /* IGVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGVideoPlayerViewController.h; sourceTree = "<group>"; };
-		32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGVideoPlayerViewController.m; sourceTree = "<group>"; };
 		32FBC4C11610D68B005078EC /* IGSettingsEpisodesDeleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGSettingsEpisodesDeleteViewController.h; sourceTree = "<group>"; };
 		32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGSettingsEpisodesDeleteViewController.m; sourceTree = "<group>"; };
 		32FBC4EE1618DE66005078EC /* IGAPIKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGAPIKeys.h; sourceTree = "<group>"; };
@@ -921,15 +913,6 @@
 			name = "Audio Player";
 			sourceTree = "<group>";
 		};
-		327C7C6817B2C3A10022B665 /* Video Player */ = {
-			isa = PBXGroup;
-			children = (
-				32F023A41755097A00A91E4B /* IGVideoPlayerViewController.h */,
-				32F023A51755097A00A91E4B /* IGVideoPlayerViewController.m */,
-			);
-			name = "Video Player";
-			sourceTree = "<group>";
-		};
 		328B4A4617EA4A4800777C28 /* MagicalRecord */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,7 +1048,7 @@
 			children = (
 				325A76FF17C3DF1F0036C276 /* MainStoryboard.storyboard */,
 				32C18773172DDD9000921169 /* Podcast Episodes */,
-				32C1876B172DA88900921169 /* Media Player */,
+				327C7C6717B2C3880022B665 /* Audio Player */,
 				32EA27B016DA712B00BB528E /* Settings */,
 			);
 			name = "View Controllers";
@@ -1078,17 +1061,6 @@
 				3276373117A31E3200E233AD /* IGEpisodeImporter.m */,
 			);
 			name = "Episode Importer";
-			sourceTree = "<group>";
-		};
-		32C1876B172DA88900921169 /* Media Player */ = {
-			isa = PBXGroup;
-			children = (
-				32C1876C172DA8A400921169 /* IGMediaPlayerViewController.h */,
-				32C1876D172DA8A400921169 /* IGMediaPlayerViewController.m */,
-				327C7C6717B2C3880022B665 /* Audio Player */,
-				327C7C6817B2C3A10022B665 /* Video Player */,
-			);
-			name = "Media Player";
 			sourceTree = "<group>";
 		};
 		32C18773172DDD9000921169 /* Podcast Episodes */ = {
@@ -1402,9 +1374,7 @@
 				320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */,
 				320A8A8117E71B6600D4B06C /* IGMediaPlayerAsset.m in Sources */,
 				320A8A8217E71B6600D4B06C /* IGSettingsViewController.m in Sources */,
-				320A8A8417E71B6600D4B06C /* IGMediaPlayerViewController.m in Sources */,
 				328B4AC817EA4A4800777C28 /* MagicalRecord+Setup.m in Sources */,
-				320A8A8617E71B6600D4B06C /* IGVideoPlayerViewController.m in Sources */,
 				3267F86D17EA4F9900051AA4 /* AFHTTPRequestOperation.m in Sources */,
 				320A8A8717E71B6600D4B06C /* SSPullToRefreshView.m in Sources */,
 				328B4AB917EA4A4800777C28 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,
@@ -1483,9 +1453,7 @@
 				32BF7B1C16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m in Sources */,
 				32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
 				3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */,
-				32C1876E172DA8A400921169 /* IGMediaPlayerViewController.m in Sources */,
 				328B4AC717EA4A4800777C28 /* MagicalRecord+Setup.m in Sources */,
-				32F023A61755097A00A91E4B /* IGVideoPlayerViewController.m in Sources */,
 				3267F86C17EA4F9900051AA4 /* AFHTTPRequestOperation.m in Sources */,
 				32E90A1017BD4A2F00392D67 /* SSPullToRefreshView.m in Sources */,
 				328B4AB817EA4A4800777C28 /* NSPersistentStoreCoordinator+MagicalRecord.m in Sources */,

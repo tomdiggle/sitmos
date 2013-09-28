@@ -26,9 +26,9 @@
 #define HC_SHORTHAND
 #import <OCHamcrestIOS/OCHamcrestIOS.h>
 
-static NSString *errorXMLFeed = @"Error XML";
+static NSString *errorXMLString = @"Error XML";
 
-static NSString *audioPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+static NSString *feedXMLString = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 @"<rss xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" version=\"2.0\">"
 @"<channel>"
 @"<title>Stuck in the Middle of Somewhere</title>"
@@ -61,28 +61,9 @@ static NSString *audioPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 @"</channel>"
 @"</rss>";
 
-static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-@"<rss xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" version=\"2.0\">"
-@"<channel>"
-@"<title>Stuck in the Middle of Somewhere</title>"
-@"<itunes:summary>TV Actor Joel Gardiner and Comedian Derek Sweet discuss whatever is on their minds. While video games are often the focus of conversation, topics of discussion can be almost anything. One thing is for sure, it's always hilarious and entertaining.</itunes:summary>"
-@"<link>http://www.sitmos.net</link>"
-@"<item>"
-@"<title>Episode 15</title>"
-@"<itunes:author>Joel Gardiner and Derek Sweet</itunes:author>"
-@"<itunes:summary>Stuck in the Middle of Somewhere Video Special - In This Special Video Edition of the Podcast, Derek and I Go Back In Time and Play a Bunch of His Old Sega Dreamcast Games To See If They Still Hold Up Today, Or If We Just Wasted 4 Hours of Our Life.</itunes:summary>"
-@"<pubDate>Sat, 25 Dec 2010 00:00:00 MST</pubDate>"
-@"<enclosure url=\"http://vimeo.com/18185007\" length=\"0\" type=\"video/web\" />"
-@"<guid>http://http://vimeo.com/18185007</guid>"
-@"<itunes:duration>51:50</itunes:duration>"
-@"</item>"
-@"</channel>"
-@"</rss>";
-
 @interface IGPodcastFeedParserTests : SenTestCase
 
-@property (nonatomic, strong) NSXMLParser *audioXMLParser;
-@property (nonatomic, strong) NSXMLParser *videoXMLParser;
+@property (nonatomic, strong) NSXMLParser *feedXMLParser;
 @property (nonatomic, strong) NSXMLParser *errorXMLParser;
 
 @end
@@ -93,23 +74,21 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 }
 
 - (void)setUp {
-    _audioXMLParser = [[NSXMLParser alloc] initWithData:[audioPodcastFeed dataUsingEncoding:NSUTF8StringEncoding]];
-    _videoXMLParser = [[NSXMLParser alloc] initWithData:[videoPodcastFeed dataUsingEncoding:NSUTF8StringEncoding]];
-    _errorXMLParser = [[NSXMLParser alloc] initWithData:[errorXMLFeed dataUsingEncoding:NSUTF8StringEncoding]];
+    self.feedXMLParser = [[NSXMLParser alloc] initWithData:[feedXMLString dataUsingEncoding:NSUTF8StringEncoding]];
+    self.errorXMLParser = [[NSXMLParser alloc] initWithData:[errorXMLString dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 - (void)tearDown {
-    _audioXMLParser = nil;
-    _videoXMLParser = nil;
-    _errorXMLParser = nil;
+    self.feedXMLParser = nil;
+    self.errorXMLParser = nil;
 }
 
 #pragma mark - Audio Podcast Feed Tests
 
-- (void)testEpisodeFeedParserReturnsTitlePresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsTitlePresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"title"], equalTo(@"Episode 1"));
         
@@ -121,10 +100,10 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
 }
 
-- (void)testEpisodeFeedParserReturnsPubDatePresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsPubDatePresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
        
         assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Tue, 10 Aug 2010 08:00:00 BST"));
         
@@ -136,10 +115,10 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
 }
 
-- (void)testEpisodeFeedParserReturnsSummaryPresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsSummaryPresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"summary"], equalTo(@"Achievements, Arizona Immigration Laws, and Annoying Social Networking Apps"));
         
@@ -152,10 +131,10 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
  
 }
 
-- (void)testEpisodeFeedParserReturnsDownloadURLPresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsDownloadURLPresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"downloadURL"], equalTo(@"https://s3.amazonaws.com/SITMOS_Audio_Episodes/SITMOS_EP_1.mp3"));
         
@@ -168,10 +147,10 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
 }
 
-- (void)testEpisodeFeedParserReturnsFileSizePresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsFileSizePresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"fileSize"], equalTo(@(28900000)));
         
@@ -184,10 +163,10 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
 }
 
-- (void)testEpisodeFeedParserReturnsMediaTypePresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsMediaTypePresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"mediaType"], equalTo(@"audio/mpeg"));
         
@@ -200,124 +179,12 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
     
 }
 
-- (void)testEpisodeFeedParserReturnsDurationPresentedInAudioFeedXML {
+- (void)testEpisodeFeedParserReturnsDurationPresentedInFeedXML {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_audioXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.feedXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat([[episodes objectAtIndex:0] valueForKey:@"duration"], equalTo(@"31:15"));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
-}
-
-#pragma mark - Video Podcast Feed Tests
-
-- (void)testEpisodeFeedParserReturnsTitlePresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"title"], equalTo(@"Episode 15"));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-}
-
-- (void)testEpisodeFeedParserReturnsPubDatePresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"pubDate"], equalTo(@"Sat, 25 Dec 2010 07:00:00 GMT"));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-}
-
-- (void)testEpisodeFeedParserReturnsSummaryPresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"summary"], equalTo(@"Stuck in the Middle of Somewhere Video Special - In This Special Video Edition of the Podcast, Derek and I Go Back In Time and Play a Bunch of His Old Sega Dreamcast Games To See If They Still Hold Up Today, Or If We Just Wasted 4 Hours of Our Life."));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
-}
-
-- (void)testEpisodeFeedParserReturnsDownloadURLPresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"downloadURL"], equalTo(@"http://vimeo.com/18185007"));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
-}
-
-- (void)testEpisodeFeedParserReturnsFileSizePresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"fileSize"], equalTo(@(0)));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
-}
-
-- (void)testEpisodeFeedParserReturnsMediaTypePresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"mediaType"], equalTo(@"video/web"));
-        
-        dispatch_semaphore_signal(semaphore);
-    }];
-    
-    while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
-                                 beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-    
-}
-
-- (void)testEpisodeFeedParserReturnsDurationPresentedInVideoFeedXML {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_videoXMLParser completion:^(NSArray *episodes, NSError *error) {
-        
-        assertThat([[episodes objectAtIndex:0] valueForKey:@"duration"], equalTo(@"51:50"));
         
         dispatch_semaphore_signal(semaphore);
     }];
@@ -333,7 +200,7 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 - (void)testEpisodeFeedParserReturnsErrorWhenErrorOccurs {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_errorXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.errorXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat(error, notNilValue());
         
@@ -348,7 +215,7 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 - (void)testEpisodeFeedParserReturnsNilEpisodeArrayWhenErrorOccurs {
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:_errorXMLParser completion:^(NSArray *episodes, NSError *error) {
+    [IGPodcastFeedParser PodcastFeedParserWithXMLParser:self.errorXMLParser completion:^(NSArray *episodes, NSError *error) {
         
         assertThat(episodes, nilValue());
         
@@ -359,6 +226,5 @@ static NSString *videoPodcastFeed = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                  beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
 }
-
 
 @end

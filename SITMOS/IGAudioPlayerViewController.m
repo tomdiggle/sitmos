@@ -21,6 +21,7 @@
 
 #import "IGAudioPlayerViewController.h"
 
+#import "IGEpisode.h"
 #import "IGMediaPlayer.h"
 #import "IGMediaPlayerAsset.h"
 #import "IGDefines.h"
@@ -105,13 +106,25 @@
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
     [super encodeRestorableStateWithCoder:coder];
+    
+    // Save the current playing episodes URIRepresentation, which we can use to look up the episode on restore and call loadAudioPlayerWithEpisode: method.
+    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
+                                                  withValue:[[self.mediaPlayer asset] title]];
+    [coder encodeObject:[[episode objectID] URIRepresentation] forKey:@"episodeURIRepresentation"];
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
     [super decodeRestorableStateWithCoder:coder];
     
-    [self setTitle:[[self.mediaPlayer asset] title]];
+    NSURL *episodeURI = [coder decodeObjectForKey:@"episodeURIRepresentation"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSManagedObjectID *episodeObjectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:episodeURI];
+    if (episodeObjectID)
+    {
+        IGEpisode *episode = (IGEpisode *)[context objectWithID:episodeObjectID];
+        [self loadAudioPlayerWithEpisode:episode];
+    }
 }
 
 #pragma mark - View lifecycle
@@ -157,42 +170,42 @@
 
 - (void)updatePlayButton
 {
-    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying)
+    if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying)
 	{
-        [_playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
-        [_playButton setAccessibilityLabel:NSLocalizedString(@"Pause", @"accessibility label for pause")];
-        [_playButton setAccessibilityHint:NSLocalizedString(@"PausesEpisode", @"accessibility hint for pauses episode")];
+        [self.playButton setImage:[UIImage imageNamed:@"pause-button"] forState:UIControlStateNormal];
+        [self.playButton setAccessibilityLabel:NSLocalizedString(@"Pause", @"accessibility label for pause")];
+        [self.playButton setAccessibilityHint:NSLocalizedString(@"PausesEpisode", @"accessibility hint for pauses episode")];
 	}
 	else
 	{
-        [_playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
-        [_playButton setAccessibilityLabel:NSLocalizedString(@"Play", @"accessibility label for play")];
-        [_playButton setAccessibilityHint:NSLocalizedString(@"PlaysEpisode", @"accessibility hint for plays episode")];
+        [self.playButton setImage:[UIImage imageNamed:@"play-button"] forState:UIControlStateNormal];
+        [self.playButton setAccessibilityLabel:NSLocalizedString(@"Play", @"accessibility label for play")];
+        [self.playButton setAccessibilityHint:NSLocalizedString(@"PlaysEpisode", @"accessibility hint for plays episode")];
 	}
 }
 
 - (void)updatePlaybackProgress
 {
-    if (isnan([_mediaPlayer duration])) return;
+    if (isnan([self.mediaPlayer duration])) return;
     
-    [_currentTime setText:[self currentTimeString]];
-    [_duration setText:[self durationString]];
-    [_progressSlider setMaximumValue:[_mediaPlayer duration]];
-    [_progressSlider setValue:[_mediaPlayer currentTime]];
+    [self.currentTime setText:[self currentTimeString]];
+    [self.duration setText:[self durationString]];
+    [self.progressSlider setMaximumValue:[self.mediaPlayer duration]];
+    [self.progressSlider setValue:[self.mediaPlayer currentTime]];
 }
 
 - (void)showBufferingIndicator
 {
-    [_bufferingIndicator startAnimating];
-    [_currentTime setHidden:YES];
+    [self.bufferingIndicator startAnimating];
+    [self.currentTime setHidden:YES];
 }
 
 - (void)hideBufferingIndicator
 {
-    if (![_bufferingIndicator isAnimating]) return;
+    if (![self.bufferingIndicator isAnimating]) return;
     
-    [_bufferingIndicator stopAnimating];
-    [_currentTime setHidden:NO];
+    [self.bufferingIndicator stopAnimating];
+    [self.currentTime setHidden:NO];
 }
 
 #pragma mark - Hide Audio Player
@@ -207,7 +220,7 @@
 
 - (IBAction)playButtonTapped:(id)sender
 {
-    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
+    if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
 	{
         [self play];
     }
@@ -220,14 +233,65 @@
 - (void)play
 {
     [self startPlaybackProgressUpdateTimer];
-    [_mediaPlayer play];
+    [self.mediaPlayer play];
     [self updatePlayButton];
+}
+
+- (void)loadAudioPlayerWithEpisode:(IGEpisode *)episode
+{
+    self.title = episode.title;
+    
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    IGMediaPlayerAsset *asset = nil;
+    
+    if ([mediaPlayer.asset shouldRestoreState])
+    {
+        asset = [mediaPlayer asset];
+    }
+    else
+    {
+        NSURL *contentURL = ([episode isDownloaded]) ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+        asset = [[IGMediaPlayerAsset alloc] initWithTitle:[episode title]
+                                               contentURL:contentURL
+                                                  isAudio:[episode isAudio]];
+    }
+    
+    if ([[asset contentURL] isEqual:[[mediaPlayer asset] contentURL]] && ![mediaPlayer.asset shouldRestoreState])
+    {
+        return;
+    }
+    
+    [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
+    
+    [mediaPlayer startWithAsset:asset];
+    
+    [mediaPlayer.asset setShouldRestoreState:NO];
+    
+    [mediaPlayer setPausedBlock:^(Float64 currentTime) {
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_defaultContext];
+        IGEpisode *localEpisode = [episode MR_inContext:localContext];
+        [localEpisode setProgress:@(currentTime)];
+        [localContext MR_saveToPersistentStoreAndWait];
+    }];
+    
+    [mediaPlayer setStoppedBlock:^(Float64 currentTime, BOOL playbackEnded) {
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_defaultContext];
+        IGEpisode *localEpisode = [episode MR_inContext:localContext];
+        NSNumber *progress = @(currentTime);
+        if (playbackEnded)
+        {
+            progress = @(0);
+            [localEpisode markAsPlayed:playbackEnded];
+        }
+        [localEpisode setProgress:progress];
+        [localContext MR_saveToPersistentStoreAndWait];
+    }];
 }
 
 - (void)pause
 {
     [self stopPlaybackProgressUpdateTimer];
-    [_mediaPlayer pause];
+    [self.mediaPlayer pause];
     [self updatePlayButton];
 }
 
@@ -237,20 +301,20 @@
     {
         if ([sender state] == UIGestureRecognizerStateBegan)
         {
-            [_mediaPlayer beginSeekingForward];
+            [self.mediaPlayer beginSeekingForward];
         }
         else if ([sender state] == UIGestureRecognizerStateEnded)
         {
-            if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
+            if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingForward)
             {
-                [_mediaPlayer endSeeking];
+                [self.mediaPlayer endSeeking];
             }
         }
     }
     else
     {
         NSUInteger skipForwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipForwardPeriodKey];
-        [_mediaPlayer seekToTime:[_mediaPlayer currentTime] + (float)skipForwardTime];
+        [self.mediaPlayer seekToTime:[self.mediaPlayer currentTime] + (float)skipForwardTime];
     }
 }
 
@@ -260,20 +324,20 @@
     {
         if ([sender state] == UIGestureRecognizerStateBegan)
         {
-            [_mediaPlayer beginSeekingBackward];
+            [self.mediaPlayer beginSeekingBackward];
         }
         else if ([sender state] == UIGestureRecognizerStateEnded)
         {
-            if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingBackward)
+            if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStateSeekingBackward)
             {
-                [_mediaPlayer endSeeking];
+                [self.mediaPlayer endSeeking];
             }
         }
     }
     else
     {
         NSUInteger skipBackwardTime = [[NSUserDefaults standardUserDefaults] integerForKey:IGPlayerSkipBackPeriodKey];
-        [_mediaPlayer seekToTime:[_mediaPlayer currentTime] - (float)skipBackwardTime];
+        [self.mediaPlayer seekToTime:[self.mediaPlayer currentTime] - (float)skipBackwardTime];
     }
 }
 
@@ -287,10 +351,10 @@
 - (IBAction)seekToTime:(UISlider *)slider
 {
     Float64 newSeekTime = [slider value];
-    [_mediaPlayer seekToTime:newSeekTime];
+    [self.mediaPlayer seekToTime:newSeekTime];
     
-    [_currentTime setText:[self currentTimeString]];
-    [_duration setText:[self durationString]];
+    [self.currentTime setText:[self currentTimeString]];
+    [self.duration setText:[self durationString]];
 }
 
 /**
@@ -316,7 +380,7 @@
 
 - (NSString *)currentTimeString
 {
-    Float64 currentTime = [_mediaPlayer currentTime];
+    Float64 currentTime = [self.mediaPlayer currentTime];
     
     NSInteger secondsPlayed = (NSInteger)currentTime % 60;
     NSInteger minutesPlayed = (NSInteger)currentTime / 60 % 60;
@@ -327,8 +391,8 @@
 
 - (NSString *)durationString
 {
-    Float64 currentTime = [_mediaPlayer currentTime];
-    Float64 duration = [_mediaPlayer duration];
+    Float64 currentTime = [self.mediaPlayer currentTime];
+    Float64 duration = [self.mediaPlayer duration];
     
     NSInteger secondsLeft = ((NSInteger)duration - (NSInteger)currentTime) % 60;
     NSInteger minutesLeft = ((NSInteger)duration - (NSInteger)currentTime) / 60 % 60;
@@ -341,20 +405,20 @@
 
 - (void)startPlaybackProgressUpdateTimer
 {
-    if ([_playbackProgressUpdateTimer isValid]) return;
+    if ([self.playbackProgressUpdateTimer isValid]) return;
     
-    _playbackProgressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.2
-                                                                    target:self
-                                                                  selector:@selector(updatePlaybackProgress)
-                                                                  userInfo:nil
-                                                                   repeats:YES];
+    self.playbackProgressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.2
+                                                                        target:self
+                                                                      selector:@selector(updatePlaybackProgress)
+                                                                      userInfo:nil
+                                                                       repeats:YES];
 }
 
 - (void)stopPlaybackProgressUpdateTimer
 {
-    if (![_playbackProgressUpdateTimer isValid]) return;
+    if (![self.playbackProgressUpdateTimer isValid]) return;
     
-    [_playbackProgressUpdateTimer invalidate];
+    [self.playbackProgressUpdateTimer invalidate];
 }
 
 #pragma mark - Media Player Notification Observer Methods
@@ -381,12 +445,12 @@
 
 - (void)playbackStateChanged:(NSNotification *)notification
 {
-    if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying || [_mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
+    if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePlaying || [self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStatePaused)
     {
         [self hideBufferingIndicator];
         [self updatePlayButton];
     }
-    else if ([_mediaPlayer playbackState] == IGMediaPlayerPlaybackStateBuffering)
+    else if ([self.mediaPlayer playbackState] == IGMediaPlayerPlaybackStateBuffering)
     {
         [self showBufferingIndicator];
     }

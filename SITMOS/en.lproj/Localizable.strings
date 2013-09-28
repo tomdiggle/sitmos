@@ -70,10 +70,10 @@
 "Episodes" = "Episodes";
 
 /* text label for streaming with cellular data title */
-"StreamingWithCellularDataTitle" = "Streaming with Cellular Data?";
+"StreamingWithCellularDataAlertTitle" = "Streaming with Cellular Data?";
 
 /* text label for streaming with cellular data message */
-"StreamingWithCellularDataMessage" = "There is currently no WiFi available. Do you really want to use cellular data for streaming this episode?";
+"StreamingWithCellularDataAlertMessage" = "There is currently no WiFi available. Do you really want to use cellular data for streaming this episode?";
 
 /* text label for downloading with cellular data title */
 "DownloadingWithCellularDataTitle" = "Downloading with Cellular Data?";

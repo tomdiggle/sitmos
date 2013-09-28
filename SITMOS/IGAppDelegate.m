@@ -94,12 +94,11 @@
 
 - (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    // Save media player asset
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
     if ([mediaPlayer asset])
     {
         [mediaPlayer.asset setShouldRestoreState:YES];
-        [coder encodeObject:[mediaPlayer asset] forKey:@"IGMediaAssetCurrentlyPlaying"];
+        [coder encodeObject:[mediaPlayer asset] forKey:@"CurrentMediaPlayerAsset"];
     }
 }
 
@@ -110,12 +109,14 @@
 
 - (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    // Load the saved media player asset
-    IGMediaPlayerAsset *asset = [coder decodeObjectForKey:@"IGMediaAssetCurrentlyPlaying"];
+    IGMediaPlayerAsset *asset = [coder decodeObjectForKey:@"CurrentMediaPlayerAsset"];
     if (asset)
     {
         IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-        [mediaPlayer setAsset:asset];
+        if (![mediaPlayer asset])
+        {
+            [mediaPlayer setAsset:asset];
+        }
     }
 }
 
@@ -168,7 +169,7 @@
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
     IGEpisodesListViewController *episodesListViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"episodesListViewController"];
-    [episodesListViewController refreshPodcastFeedsWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
+    [episodesListViewController refreshPodcastFeedWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
         if (completionHandler)
         {
             completionHandler(didReceiveNewEpisodes ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);

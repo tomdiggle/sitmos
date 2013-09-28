@@ -34,7 +34,7 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-show-button"]
                                                                                   style:UIBarButtonItemStyleBordered
                                                                                  target:self
-                                                                                 action:@selector(showMediaPlayer:)];
+                                                                                 action:@selector(showAudioPlayer:)];
     }
     else
     {
@@ -43,9 +43,9 @@
     }
 }
 
-- (void)showMediaPlayer:(id)sender
+- (void)showAudioPlayer:(id)sender
 {
-    [self performSegueWithIdentifier:@"mediaPlayerSegue"
+    [self performSegueWithIdentifier:@"audioPlayerSegue"
                               sender:nil];
 }
 

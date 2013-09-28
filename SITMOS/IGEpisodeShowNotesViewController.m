@@ -34,7 +34,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *pubDateAndTimeLeftLabel;
 @property (nonatomic, weak) IBOutlet UILabel *pubDateLabel;
 @property (nonatomic, weak) IBOutlet UILabel *durationLabel;
-@property (nonatomic, weak) IBOutlet UILabel *mediaTypeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *fileSizeLabel;
 @property (nonatomic, weak) IBOutlet UILabel *summaryLabel;
 
@@ -47,17 +46,10 @@
 - (void)setupLabels
 {
     NSString *pubDate = [NSDate stringFromDate:[self.episode pubDate] withFormat:@"dd MMM yyyy"];
-    NSString *mediaType = NSLocalizedString(@"Audio", nil);
-    if (![self.episode isAudio])
-    {
-        mediaType = NSLocalizedString(@"Video", nil);
-    }
-    
     [self.titleLabel setText:[self.episode title]];
     [self.pubDateAndTimeLeftLabel setText:[NSString stringWithFormat:@"%@ - %@", pubDate, [self.episode duration]]];
     [self.durationLabel setText:[self.episode duration]];
     [self.pubDateLabel setText:[NSDate stringFromDate:[self.episode pubDate] withFormat:@"dd MMM yyyy"]];
-    [self.mediaTypeLabel setText:mediaType];
     [self.fileSizeLabel setText:[self.episode readableFileSize]];
     [self.summaryLabel setText:[self.episode summary]];
     [self.episodeImageView setImageWithURL:[NSURL URLWithString:[self.episode imageURL]] placeholderImage:[UIImage imageNamed:@"episode-image-placeholder"]];

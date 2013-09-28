@@ -39,24 +39,16 @@
     assertThat(IGDevelopmentBaseURL, equalTo(@"http://www.tomdiggle.com/"));
 }
 
-- (void)testDevelopmentModeAudioPodcastFeedURLIsCorrect {
-    assertThat(IGDevelopmentAudioPodcastFeedURL, equalTo(@"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml"));
-}
-
-- (void)testDevelopmentModeVideoPodcastFeedURLIsCorrect {
-    assertThat(IGDevelopmentVideoPodcastFeedURL, equalTo(@"http://www.tomdiggle.com/sitmos-development-feed/sitmos-video-feed.xml"));
+- (void)testDevelopmentModePodcastFeedURLIsCorrect {
+    assertThat(IGDevelopmentPodcastFeedURL, equalTo(@"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml"));
 }
 
 - (void)testBaseURLIsCorrect {
     assertThat(IGBaseURL, equalTo(@"http://www.dereksweet.com/"));
 }
 
-- (void)testAudioPodcastFeedURLIsCorrect {
-    assertThat(IGAudioPodcastFeedURL, equalTo(@"http://www.dereksweet.com/sitmos/sitmos.xml"));
-}
-
-- (void)testVideoPodcastFeedURLIsCorrect {
-    assertThat(IGVideoPodcastFeedURL, equalTo(@"http://www.dereksweet.com/sitmos/sitmos-video-feed.xml"));
+- (void)testPodcastFeedURLIsCorrect {
+    assertThat(IGPodcastFeedURL, equalTo(@"http://www.dereksweet.com/sitmos/sitmos.xml"));
 }
 
 @end

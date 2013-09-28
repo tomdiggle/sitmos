@@ -162,7 +162,7 @@
                                             <outlet property="showNotesButton" destination="hWz-KL-Xu5" id="iRk-PD-4UD"/>
                                             <outlet property="summaryLabel" destination="cdL-Bx-KXw" id="8Ar-WJ-Ocy"/>
                                             <outlet property="titleLabel" destination="avk-Ju-Iw8" id="HnS-W0-zc4"/>
-                                            <segue destination="JtR-nA-dov" kind="modal" identifier="mediaPlayerSegue" id="9WQ-AU-T0M"/>
+                                            <segue destination="JtR-nA-dov" kind="modal" identifier="audioPlayerSegue" id="9WQ-AU-T0M"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -279,7 +279,7 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDZ-Yd-9mS" userLabel="Episode Type Label">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zDZ-Yd-9mS" userLabel="Episode Type Label">
                                         <rect key="frame" x="222" y="12" width="78" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -391,7 +391,6 @@
                         <outlet property="episodeDownloadedImageView" destination="lKz-9t-k0A" id="CLW-bX-4HS"/>
                         <outlet property="episodeImageView" destination="L5q-FN-nyL" id="nA9-yL-CXR"/>
                         <outlet property="fileSizeLabel" destination="KB4-SP-qIc" id="oW0-N6-2ob"/>
-                        <outlet property="mediaTypeLabel" destination="zDZ-Yd-9mS" id="mYe-ZE-SUt"/>
                         <outlet property="pubDateAndTimeLeftLabel" destination="frB-JB-ilc" id="Fpe-oK-4TV"/>
                         <outlet property="pubDateLabel" destination="36v-Am-VLr" id="QIQ-cE-VKx"/>
                         <outlet property="summaryLabel" destination="Kqz-s6-Kp0" id="AaB-iJ-rob"/>
@@ -768,43 +767,21 @@
             </objects>
             <point key="canvasLocation" x="739" y="-771"/>
         </scene>
-        <!--Media Player Navigation Controller-->
+        <!--Audio Player Navigation Controller-->
         <scene sceneID="uev-4z-UKU">
             <objects>
-                <navigationController storyboardIdentifier="mediaPlayerNavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JtR-nA-dov" userLabel="Media Player Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="audioPlayerNavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JtR-nA-dov" userLabel="Audio Player Navigation Controller" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="RJL-zp-81a">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="kjo-pQ-YLb" kind="relationship" relationship="rootViewController" id="Tyv-1q-oww"/>
+                        <segue destination="mWg-Eo-bRS" kind="relationship" relationship="rootViewController" id="6Yg-o5-B72"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zwl-Yx-Mvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="739" y="652"/>
-        </scene>
-        <!--Media Player View Controller-->
-        <scene sceneID="krc-YC-WHX">
-            <objects>
-                <viewController storyboardIdentifier="mediaPlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kjo-pQ-YLb" customClass="IGMediaPlayerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0gd-2T-0l2"/>
-                        <viewControllerLayoutGuide type="bottom" id="Oeg-ek-LP4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ALJ-fg-8ae">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="UEi-FM-Ec8"/>
-                    <connections>
-                        <segue destination="mWg-Eo-bRS" kind="push" identifier="audioPlayerSegue" id="Hdi-Lm-vz7"/>
-                        <segue destination="wpc-I3-Lzi" kind="push" identifier="videoPlayerSegue" id="KkU-LE-H7X"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FHF-cO-pQ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1271" y="652"/>
         </scene>
         <!--Audio Player View Controller-->
         <scene sceneID="ZrB-gb-LB3">
@@ -942,54 +919,14 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1757" y="652"/>
-        </scene>
-        <!--Video Player View Controller-->
-        <scene sceneID="YK6-JV-I2o">
-            <objects>
-                <viewController storyboardIdentifier="videoPlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wpc-I3-Lzi" customClass="IGVideoPlayerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0zh-eN-Lck"/>
-                        <viewControllerLayoutGuide type="bottom" id="ybl-IZ-mhz"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Pqd-Qu-eNW">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="IGVideoPlayerWebView" translatesAutoresizingMaskIntoConstraints="NO" id="oav-tS-QBO">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="wpc-I3-Lzi" id="G7Y-2Y-mGb"/>
-                                </connections>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="oCb-Nx-n74">
-                        <barButtonItem key="leftBarButtonItem" image="media-player-hide-button.png" id="zsQ-Fu-uvF">
-                            <connections>
-                                <action selector="hideMediaPlayer:" destination="wpc-I3-Lzi" id="X6d-oc-HVw"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="oav-tS-QBO" id="n3i-ec-weL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="X2C-NN-bbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1757" y="1337"/>
+            <point key="canvasLocation" x="1271" y="652"/>
         </scene>
     </scenes>
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
-        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
-        <image name="media-player-hide-button.png" width="28" height="14"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
         <image name="play-button.png" width="24" height="28"/>
         <image name="seek-backward-button.png" width="30" height="20"/>
