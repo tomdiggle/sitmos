@@ -200,6 +200,13 @@ static BOOL __developmentMode = NO;
                 }
             }];
         }
+        else
+        {
+            if (completion)
+            {
+                completion(YES, nil, nil);
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion)
         {
