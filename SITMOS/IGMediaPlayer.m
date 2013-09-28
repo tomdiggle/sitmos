@@ -446,9 +446,15 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
  */
 - (void)addNowPlayingInfo
 {
+    NSNumber *duration = !isnan(self.duration) ? @(self.duration) : @(0);
     MPMediaItemArtwork *propertyArtwork = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"audio-player-bg"]];
-    NSDictionary *nowPlayingInfo = @{MPMediaItemPropertyTitle : [_asset title], MPMediaItemPropertyAlbumTitle : @"Stuck in the Middle of Somewhere", MPMediaItemPropertyArtist : @"Joel Gardiner and Derek Sweet", MPMediaItemPropertyArtwork : propertyArtwork};
-    
+    NSDictionary *nowPlayingInfo = @{ MPMediaItemPropertyTitle : [self.asset title],
+                                      MPMediaItemPropertyAlbumTitle : @"Stuck in the Middle of Somewhere",
+                                      MPMediaItemPropertyArtist : @"Joel Gardiner and Derek Sweet",
+                                      MPMediaItemPropertyArtwork : propertyArtwork,
+                                      MPMediaItemPropertyPlaybackDuration : duration,
+                                      MPNowPlayingInfoPropertyPlaybackRate : @(self.playbackRate),
+                                      MPNowPlayingInfoPropertyElapsedPlaybackTime : @(self.startFromTime) };
     MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
     [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
 }
