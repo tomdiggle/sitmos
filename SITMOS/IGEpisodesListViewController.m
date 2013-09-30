@@ -89,14 +89,14 @@
     
     if ([self.tableView indexPathForSelectedRow])
     {
-        [self.tableView reloadRowsAtIndexPaths:@[[self.tableView indexPathForSelectedRow]]
-                          withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow]
+                                      animated:YES];
     }
     
     if ([self.searchDisplayController.searchResultsTableView indexPathForSelectedRow])
     {
-        [self.searchDisplayController.searchResultsTableView reloadRowsAtIndexPaths:@[[self.searchDisplayController.searchResultsTableView indexPathForSelectedRow]]
-                                                                   withRowAnimation:UITableViewRowAnimationFade];
+        [self.searchDisplayController.searchResultsTableView deselectRowAtIndexPath:[self.searchDisplayController.searchResultsTableView indexPathForSelectedRow]
+                                                                           animated:YES];
     }
 }
 
@@ -190,7 +190,6 @@
     UIView *selectedBackgroundView = [[UIView alloc] init];
     [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
     [episodeCell setSelectedBackgroundView:selectedBackgroundView];
-    
     [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
     
     return episodeCell;
