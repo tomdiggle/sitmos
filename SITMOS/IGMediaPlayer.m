@@ -416,9 +416,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 - (Float64)currentTime
 {
-    Float64 currentTime = isnan(CMTimeGetSeconds([_player currentTime])) ? 0.f : CMTimeGetSeconds([_player currentTime]);
-    
-    return currentTime;
+    return CMTIME_IS_VALID([self.player currentTime]) ? CMTimeGetSeconds([_player currentTime]) : 0.f;
 }
 
 - (void)seekToTime:(Float64)time
