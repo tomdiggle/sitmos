@@ -76,10 +76,10 @@
 "StreamingWithCellularDataAlertMessage" = "There is currently no WiFi available. Do you really want to use cellular data for streaming this episode?";
 
 /* text label for downloading with cellular data title */
-"DownloadingWithCellularDataTitle" = "Downloading with Cellular Data?";
+"DownloadingWithCellularDataAlertTitle" = "Downloading with Cellular Data?";
 
 /* text label for downloading with cellular data message */
-"DownloadingWithCellularDataMessage" = "Downloading with cellular data is switched off. Do you want to switch it on?";
+"DownloadingWithCellularDataAlertMessage" = "There is currently no WiFi available. Do you really want to use cellular data for downloading this episode?";
 
 /* text label for never */
 "Never" = "Never";

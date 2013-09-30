@@ -462,8 +462,8 @@
         return;
     }
     
-    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", "text label for no")];
-    RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Yes", @"text label for yes")];
+    RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
+    RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", nil)];
     downloadItem.action = ^{
         [TestFlight passCheckpoint:[NSString stringWithFormat:@"Downloading %@", [episode title]]];
         [self startDownloadFromURL:downloadURL
@@ -471,8 +471,8 @@
         [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
     };
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataTitle", @"text label for downloading with cellular data title")
-                                                        message:NSLocalizedString(@"DownloadingWithCellularDataMessage", @"text label for downloading with cellular data message")
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataAlertTitle", nil)
+                                                        message:NSLocalizedString(@"DownloadingWithCellularDataAlertMessage", nil)
                                                cancelButtonItem:cancelItem
                                                otherButtonItems:downloadItem, nil];
     [alertView show];
