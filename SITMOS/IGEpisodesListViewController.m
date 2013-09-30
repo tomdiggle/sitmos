@@ -343,9 +343,16 @@
         if (![episode isDownloaded] && ![IGHTTPClient allowCellularDataStreaming])
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
+            cancelItem.action = ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForCell:cell]
+                                                  animated:YES];
+                });
+            };
             RIButtonItem *streamItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Stream", nil)];
             streamItem.action = ^{
-                [self performSegueWithIdentifier:@"audioPlayerSegue" sender:sender];
+                [self performSegueWithIdentifier:@"audioPlayerSegue"
+                                          sender:sender];
             };
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"StreamingWithCellularDataAlertTitle", nil)
