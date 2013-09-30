@@ -26,6 +26,7 @@
 #import "IGMediaPlayerAsset.h"
 #import "IGDefines.h"
 #import "TDNotificationPanel.h"
+#import "TestFlight.h"
 
 @interface IGAudioPlayerViewController ()
 
@@ -286,6 +287,9 @@
         [localEpisode setProgress:progress];
         [localContext MR_saveToPersistentStoreAndWait];
     }];
+    
+    NSString *from = ([episode isDownloaded]) ? @"download" : @"stream";
+    [TestFlight passCheckpoint:[NSString stringWithFormat:@"Playing %@ from %@", [episode title], from]];
 }
 
 - (void)pause
