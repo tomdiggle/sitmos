@@ -119,14 +119,15 @@
 {
     if ([indexPath section] == 3)
     {
-        if ([indexPath row] == 0)
+        // Misc Section
+        if ([indexPath row] == 1)
         {
             // Review on the App Store
             NSString *appStoreLink = @"itms://itunes.apple.com/app/id567269025";
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreLink]];
             
         }
-        else if ([indexPath row] == 1)
+        else if ([indexPath row] == 2)
         {
             [self followSitmosOnTwitter];
         }
