@@ -101,14 +101,17 @@
             [[cell detailTextLabel] setText:deleteMethod];
         }
     }
+    else if (section == 3)
+    {
+        // Misc Section
+        if (row == 0)
+        {
+            [[cell detailTextLabel] setText:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+        }
+    }
     
     return cell;
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
-//{
-//    return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Version", @"textLabel for version"), [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-//}
 
 #pragma mark - UITableViewDelegate Methods
 
