@@ -340,6 +340,13 @@
     {
         IGEpisodeCell *cell = (IGEpisodeCell *)sender;
         IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[[cell downloadButton] tag]];
+        if ([episode isDownloading])
+        {
+            [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForCell:cell]
+                                          animated:YES];
+            return NO;
+        }
+        
         if (![episode isDownloaded] && ![IGHTTPClient allowCellularDataStreaming])
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
