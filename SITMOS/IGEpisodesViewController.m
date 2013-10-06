@@ -377,7 +377,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"episodeShowNotesSegue"])
+    if ([[segue identifier] isEqualToString:@"showNotesSegue"])
     {
         IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[sender tag]];
         IGShowNotesViewController *showNotesViewController = [segue destinationViewController];

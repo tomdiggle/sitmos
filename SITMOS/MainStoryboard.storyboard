@@ -95,7 +95,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <segue destination="vNQ-FR-lWF" kind="push" identifier="episodeShowNotesSegue" id="fj7-7K-LnH"/>
+                                                        <segue destination="vNQ-FR-lWF" kind="push" identifier="showNotesSegue" id="fj7-7K-LnH"/>
                                                     </connections>
                                                 </button>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="episode-downloaded-icon.png" highlightedImage="episode-downloaded-icon-highlighted.png" translatesAutoresizingMaskIntoConstraints="NO" id="F9i-70-ZhR" userLabel="Episode Downloaded Icon">
@@ -222,10 +222,10 @@
             </objects>
             <point key="canvasLocation" x="197" y="-66"/>
         </scene>
-        <!--Episode Show Notes-->
+        <!--Show Notes-->
         <scene sceneID="tvd-fz-tpW">
             <objects>
-                <viewController storyboardIdentifier="episodeShowNotesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vNQ-FR-lWF" userLabel="Episode Show Notes" customClass="IGShowNotesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="showNotesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vNQ-FR-lWF" userLabel="Show Notes" customClass="IGShowNotesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="glZ-jw-VRC"/>
                         <viewControllerLayoutGuide type="bottom" id="F5x-Gw-PNT"/>
