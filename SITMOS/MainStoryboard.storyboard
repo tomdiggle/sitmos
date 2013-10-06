@@ -242,7 +242,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pub Date and Time Left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frB-JB-ilc" userLabel="Pub Date and Time Left Label">
-                                <rect key="frame" x="88" y="68" width="153" height="12"/>
+                                <rect key="frame" x="88" y="68" width="153" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
@@ -376,7 +376,7 @@
                             <constraint firstItem="UxV-8e-Nxt" firstAttribute="top" secondItem="lKz-9t-k0A" secondAttribute="bottom" constant="74" id="0e4-7j-rWg"/>
                             <constraint firstItem="UxV-8e-Nxt" firstAttribute="top" secondItem="edB-aS-6ua" secondAttribute="bottom" id="1ja-6c-DId"/>
                             <constraint firstItem="Cf6-kO-OXv" firstAttribute="leading" secondItem="frB-JB-ilc" secondAttribute="leading" id="5La-Nb-v8O"/>
-                            <constraint firstItem="UxV-8e-Nxt" firstAttribute="top" secondItem="frB-JB-ilc" secondAttribute="bottom" constant="16" id="65l-jt-JLf"/>
+                            <constraint firstItem="UxV-8e-Nxt" firstAttribute="top" secondItem="frB-JB-ilc" secondAttribute="bottom" constant="15" id="65l-jt-JLf"/>
                             <constraint firstItem="lKz-9t-k0A" firstAttribute="top" secondItem="glZ-jw-VRC" secondAttribute="bottom" id="8L8-78-AvZ"/>
                             <constraint firstItem="lKz-9t-k0A" firstAttribute="leading" secondItem="jV1-14-Uek" secondAttribute="leading" constant="299" id="CFa-ro-HKb"/>
                             <constraint firstItem="Cf6-kO-OXv" firstAttribute="top" secondItem="jV1-14-Uek" secondAttribute="top" constant="20" symbolic="YES" id="DVR-3v-182"/>
@@ -966,6 +966,7 @@
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
+        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
