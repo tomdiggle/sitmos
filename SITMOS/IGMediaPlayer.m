@@ -27,8 +27,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
 
-static IGMediaPlayer *__sharedInstance = nil;
-
 /* Media Player Notifications */
 NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
 NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
@@ -72,6 +70,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 + (instancetype)sharedInstance
 {
+    static IGMediaPlayer *__sharedInstance = nil;
     static dispatch_once_t once = 0;
     dispatch_once(&once, ^{
         __sharedInstance = [[self alloc] init];
