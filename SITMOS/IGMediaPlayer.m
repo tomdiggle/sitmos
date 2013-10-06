@@ -80,6 +80,27 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     return __sharedInstance;
 }
 
+#pragma mark - Memory Management
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+/**
+ * Invoked when playback is stopped or has reached the end.
+ */
+- (void)cleanUp
+{
+    _player = nil;
+    _asset = nil;
+    _urlAsset = nil;
+    _pausedBlock = nil;
+    _stoppedBlock = nil;
+    _currentTime = 0.f;
+    _duration = 0.f;
+}
+
 #pragma mark - Initializers
 
 - (id)init
@@ -104,22 +125,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
                                                object:nil];
     
     return self;
-}
-
-#pragma mark - Clean Up
-
-/**
- * Invoked when playback is stopped or has reached the end.
- */
-- (void)cleanUp
-{
-    _player = nil;
-    _asset = nil;
-    _urlAsset = nil;
-    _pausedBlock = nil;
-    _stoppedBlock = nil;
-    _currentTime = 0.f;
-    _duration = 0.f;
 }
 
 #pragma mark - KVO
