@@ -90,6 +90,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <accessibility key="accessibilityConfiguration" hint="View episode show notes" label="Episode show notes"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" image="episode-show-notes-button.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -101,13 +102,14 @@
                                                     <rect key="frame" x="299" y="0.0" width="21" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBQ-ED-iIT" userLabel="Download Button">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBQ-ED-iIT" userLabel="Download Button">
                                                     <rect key="frame" x="280" y="0.0" width="40" height="77"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="TOS-um-PIu"/>
                                                         <constraint firstAttribute="height" constant="77" id="W8b-xb-CSe"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -966,6 +968,7 @@
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
+        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
