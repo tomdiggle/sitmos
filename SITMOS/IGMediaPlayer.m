@@ -366,22 +366,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     return [_player rate] < 0.01;
 }
 
-- (Float64)availableDuration
-{
-    NSArray *loadedTimeRanges = [[_player currentItem] loadedTimeRanges];
-    
-    if ([loadedTimeRanges count] == 0)
-    {
-        return 0.0f;
-    }
-    
-    CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
-    Float64 startSeconds = CMTimeGetSeconds(timeRange.start);
-    Float64 durationSeconds = CMTimeGetSeconds(timeRange.duration);
-    
-    return startSeconds + durationSeconds;
-}
-
 - (void)setPlaybackRate:(float)playbackRate
 {
     if (_playbackRate != playbackRate)
