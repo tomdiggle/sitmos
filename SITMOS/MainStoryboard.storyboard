@@ -967,7 +967,6 @@
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
-        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
         <image name="play-button.png" width="24" height="28"/>
