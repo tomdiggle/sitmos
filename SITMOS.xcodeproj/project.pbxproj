@@ -26,7 +26,7 @@
 		320A8A6017E71B6600D4B06C /* IGMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 328E276A153DDFB0005AE70B /* IGMediaPlayer.m */; };
 		320A8A6117E71B6600D4B06C /* IGEpisode.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FEA285153DF03400F17ABE /* IGEpisode.m */; };
 		320A8A6217E71B6600D4B06C /* IGDefines.m in Sources */ = {isa = PBXBuildFile; fileRef = 3290193D15D18A4A00104FD8 /* IGDefines.m */; };
-		320A8A6317E71B6600D4B06C /* IGEpisodeShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */; };
+		320A8A6317E71B6600D4B06C /* IGShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGShowNotesViewController.m */; };
 		320A8A6717E71B6600D4B06C /* SSPullToRefreshDefaultContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0917BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m */; };
 		320A8A6917E71B6600D4B06C /* IGSettingsEpisodesDeleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4C21610D68B005078EC /* IGSettingsEpisodesDeleteViewController.m */; };
 		320A8A6A17E71B6600D4B06C /* IGAPIKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 32FBC4EF1618DE66005078EC /* IGAPIKeys.m */; };
@@ -102,7 +102,7 @@
 		3213C5EF174913C6003C0BC4 /* episode-downloaded-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */; };
 		3213C5F317495570003C0BC4 /* episode-unplayed-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */; };
 		3213C5F7174A299D003C0BC4 /* episode-half-played-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */; };
-		321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */; };
+		321579BF15FCFA760074518D /* IGShowNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 321579BE15FCFA760074518D /* IGShowNotesViewController.m */; };
 		321D8C42145F1D8B008698DC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C41145F1D8B008698DC /* UIKit.framework */; };
 		321D8C44145F1D8B008698DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C43145F1D8B008698DC /* Foundation.framework */; };
 		321D8C46145F1D8B008698DC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321D8C45145F1D8B008698DC /* CoreGraphics.framework */; };
@@ -336,8 +336,8 @@
 		3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon@2x.png"; sourceTree = "<group>"; };
 		3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-unplayed-icon@2x.png"; sourceTree = "<group>"; };
 		3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-half-played-icon@2x.png"; sourceTree = "<group>"; };
-		321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodeShowNotesViewController.h; sourceTree = "<group>"; };
-		321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodeShowNotesViewController.m; sourceTree = "<group>"; };
+		321579BD15FCFA760074518D /* IGShowNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGShowNotesViewController.h; sourceTree = "<group>"; };
+		321579BE15FCFA760074518D /* IGShowNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGShowNotesViewController.m; sourceTree = "<group>"; };
 		321D8C3D145F1D8B008698DC /* SITMOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SITMOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		321D8C41145F1D8B008698DC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		321D8C43145F1D8B008698DC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1068,8 +1068,8 @@
 			children = (
 				3298868B1461DF85006B7BDE /* IGEpisodesListViewController.h */,
 				3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */,
-				321579BD15FCFA760074518D /* IGEpisodeShowNotesViewController.h */,
-				321579BE15FCFA760074518D /* IGEpisodeShowNotesViewController.m */,
+				321579BD15FCFA760074518D /* IGShowNotesViewController.h */,
+				321579BE15FCFA760074518D /* IGShowNotesViewController.m */,
 			);
 			name = "Podcast Episodes";
 			sourceTree = "<group>";
@@ -1345,7 +1345,7 @@
 				320A8A6117E71B6600D4B06C /* IGEpisode.m in Sources */,
 				320A8A6217E71B6600D4B06C /* IGDefines.m in Sources */,
 				328B4A8317EA4A4800777C28 /* MagicalImportFunctions.m in Sources */,
-				320A8A6317E71B6600D4B06C /* IGEpisodeShowNotesViewController.m in Sources */,
+				320A8A6317E71B6600D4B06C /* IGShowNotesViewController.m in Sources */,
 				320A8A6717E71B6600D4B06C /* SSPullToRefreshDefaultContentView.m in Sources */,
 				328B4AC217EA4A4800777C28 /* MagicalRecord+iCloud.m in Sources */,
 				328B4AC517EA4A4800777C28 /* MagicalRecord+Options.m in Sources */,
@@ -1424,7 +1424,7 @@
 				32FEA286153DF03A00F17ABE /* IGEpisode.m in Sources */,
 				3290193E15D18A4A00104FD8 /* IGDefines.m in Sources */,
 				328B4A8217EA4A4800777C28 /* MagicalImportFunctions.m in Sources */,
-				321579BF15FCFA760074518D /* IGEpisodeShowNotesViewController.m in Sources */,
+				321579BF15FCFA760074518D /* IGShowNotesViewController.m in Sources */,
 				32E90A0E17BD4A2F00392D67 /* SSPullToRefreshDefaultContentView.m in Sources */,
 				328B4AC117EA4A4800777C28 /* MagicalRecord+iCloud.m in Sources */,
 				328B4AC417EA4A4800777C28 /* MagicalRecord+Options.m in Sources */,

@@ -19,14 +19,14 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "IGEpisodeShowNotesViewController.h"
+#import "IGShowNotesViewController.h"
 
 #import "IGEpisode.h"
 #import "UIViewController+IGNowPlayingButton.h"
 #import "UIImageView+AFNetworking.h"
 #import "NSDate+Helper.h"
 
-@interface IGEpisodeShowNotesViewController ()
+@interface IGShowNotesViewController ()
 
 @property (nonatomic, weak) IBOutlet UIImageView *episodeImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation IGEpisodeShowNotesViewController
+@implementation IGShowNotesViewController
 
 #pragma mark - Setup
 

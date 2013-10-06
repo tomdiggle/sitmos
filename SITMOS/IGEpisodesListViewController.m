@@ -24,7 +24,7 @@
 #import "IGEpisodeCell.h"
 #import "IGEpisode.h"
 #import "IGAudioPlayerViewController.h"
-#import "IGEpisodeShowNotesViewController.h"
+#import "IGShowNotesViewController.h"
 #import "IGSettingsViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayer.h"
@@ -380,7 +380,7 @@
     if ([[segue identifier] isEqualToString:@"episodeShowNotesSegue"])
     {
         IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[sender tag]];
-        IGEpisodeShowNotesViewController *showNotesViewController = [segue destinationViewController];
+        IGShowNotesViewController *showNotesViewController = [segue destinationViewController];
         [showNotesViewController setEpisode:episode];
     }
     else if ([[segue identifier] isEqualToString:@"audioPlayerSegue"])

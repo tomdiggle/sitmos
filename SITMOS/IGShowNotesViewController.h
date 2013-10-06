@@ -23,7 +23,7 @@
 
 @class IGEpisode;
 
-@interface IGEpisodeShowNotesViewController : UIViewController
+@interface IGShowNotesViewController : UIViewController
 
 @property (nonatomic, strong) IGEpisode *episode;
 
