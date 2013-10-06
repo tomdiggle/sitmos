@@ -21,7 +21,7 @@
 
 #import "IGAppDelegate.h"
 
-#import "IGEpisodesListViewController.h"
+#import "IGEpisodesViewController.h"
 #import "IGHTTPClient.h"
 #import "IGMediaPlayer.h"
 #import "IGMediaAsset.h"
@@ -145,8 +145,8 @@
 {
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
                                                              bundle:nil];
-    IGEpisodesListViewController *episodesListViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"episodesListViewController"];
-    [episodesListViewController refreshPodcastFeedWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
+    IGEpisodesViewController *episodesViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"episodesViewController"];
+    [episodesViewController refreshPodcastFeedWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
         if (completionHandler)
         {
             completionHandler(didReceiveNewEpisodes ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);

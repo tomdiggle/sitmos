@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-332" y="-66"/>
         </scene>
-        <!--Episodes List View Controller-->
+        <!--Episodes View Controller-->
         <scene sceneID="oJl-y6-Q9u">
             <objects>
-                <viewController storyboardIdentifier="episodesListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JPa-fG-T09" userLabel="Episodes List View Controller" customClass="IGEpisodesListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="episodesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JPa-fG-T09" userLabel="Episodes View Controller" customClass="IGEpisodesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5GG-wo-ikZ"/>
                         <viewControllerLayoutGuide type="bottom" id="Rh2-lc-SRf"/>
@@ -968,6 +968,7 @@
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
+        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>

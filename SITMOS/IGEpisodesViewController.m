@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "IGEpisodesListViewController.h"
+#import "IGEpisodesViewController.h"
 
 #import "IGEpisodeCell.h"
 #import "IGEpisode.h"
@@ -39,7 +39,7 @@
 #import "TDNotificationPanel.h"
 #import "TestFlight.h"
 
-@interface IGEpisodesListViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIDataSourceModelAssociation, SSPullToRefreshViewDelegate>
+@interface IGEpisodesViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIDataSourceModelAssociation, SSPullToRefreshViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation IGEpisodesListViewController
+@implementation IGEpisodesViewController
 
 #pragma mark - View Lifecycle
 

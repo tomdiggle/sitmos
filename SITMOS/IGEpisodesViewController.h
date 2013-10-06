@@ -21,7 +21,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IGEpisodesListViewController : UIViewController
+@interface IGEpisodesViewController : UIViewController
 
 - (void)refreshPodcastFeedWithCompletionHandler:(void (^)(BOOL didReceiveNewEpisodes))completion;
 

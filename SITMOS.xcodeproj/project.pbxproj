@@ -18,7 +18,7 @@
 		320A8A4A17E71B6600D4B06C /* AFDownloadRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E9095417BCEB4E00392D67 /* AFDownloadRequestOperation.m */; };
 		320A8A4B17E71B6600D4B06C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C4D145F1D8B008698DC /* main.m */; };
 		320A8A4E17E71B6600D4B06C /* IGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 321D8C51145F1D8B008698DC /* IGAppDelegate.m */; };
-		320A8A5017E71B6600D4B06C /* IGEpisodesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */; };
+		320A8A5017E71B6600D4B06C /* IGEpisodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298868C1461DF85006B7BDE /* IGEpisodesViewController.m */; };
 		320A8A5517E71B6600D4B06C /* IGEpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32678CEE147EDE7C007BD110 /* IGEpisodeCell.m */; };
 		320A8A5A17E71B6600D4B06C /* SITMOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */; };
 		320A8A5B17E71B6600D4B06C /* AFDownloadSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */; };
@@ -281,7 +281,7 @@
 		32934D11149E66C400E939C0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32934D10149E66C400E939C0 /* QuartzCore.framework */; };
 		3293D63E148BBC090052B427 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3293D63D148BBC090052B427 /* CoreData.framework */; };
 		3293D647148BBCF20052B427 /* SITMOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3293D645148BBCF20052B427 /* SITMOS.xcdatamodeld */; };
-		3298868E1461DF85006B7BDE /* IGEpisodesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */; };
+		3298868E1461DF85006B7BDE /* IGEpisodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298868C1461DF85006B7BDE /* IGEpisodesViewController.m */; };
 		32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
 		32B603F117AB0B7F000C8EEC /* media-player-hide-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */; };
 		32BF7B1C16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */; };
@@ -502,8 +502,8 @@
 		32934D10149E66C400E939C0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3293D63D148BBC090052B427 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3293D646148BBCF20052B427 /* SITMOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SITMOS.xcdatamodel; sourceTree = "<group>"; };
-		3298868B1461DF85006B7BDE /* IGEpisodesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodesListViewController.h; sourceTree = "<group>"; };
-		3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodesListViewController.m; sourceTree = "<group>"; };
+		3298868B1461DF85006B7BDE /* IGEpisodesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGEpisodesViewController.h; sourceTree = "<group>"; };
+		3298868C1461DF85006B7BDE /* IGEpisodesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGEpisodesViewController.m; sourceTree = "<group>"; };
 		329E458316EE542D00663CE0 /* SITMOS-v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "SITMOS-v1.1.xcdatamodel"; sourceTree = "<group>"; };
 		32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio-player-bg@2x.png"; sourceTree = "<group>"; };
 		32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media-player-hide-button@2x.png"; sourceTree = "<group>"; };
@@ -1066,8 +1066,8 @@
 		32C18773172DDD9000921169 /* Podcast Episodes */ = {
 			isa = PBXGroup;
 			children = (
-				3298868B1461DF85006B7BDE /* IGEpisodesListViewController.h */,
-				3298868C1461DF85006B7BDE /* IGEpisodesListViewController.m */,
+				3298868B1461DF85006B7BDE /* IGEpisodesViewController.h */,
+				3298868C1461DF85006B7BDE /* IGEpisodesViewController.m */,
 				321579BD15FCFA760074518D /* IGShowNotesViewController.h */,
 				321579BE15FCFA760074518D /* IGShowNotesViewController.m */,
 			);
@@ -1320,7 +1320,7 @@
 				320A8A4B17E71B6600D4B06C /* main.m in Sources */,
 				328B4AA417EA4A4800777C28 /* NSManagedObject+MagicalRequests.m in Sources */,
 				320A8A4E17E71B6600D4B06C /* IGAppDelegate.m in Sources */,
-				320A8A5017E71B6600D4B06C /* IGEpisodesListViewController.m in Sources */,
+				320A8A5017E71B6600D4B06C /* IGEpisodesViewController.m in Sources */,
 				328B4A9217EA4A4800777C28 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				328B4A8617EA4A4800777C28 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				3267F87917EA4F9900051AA4 /* AFPropertyListRequestOperation.m in Sources */,
@@ -1399,7 +1399,7 @@
 				321D8C4E145F1D8B008698DC /* main.m in Sources */,
 				328B4AA317EA4A4800777C28 /* NSManagedObject+MagicalRequests.m in Sources */,
 				321D8C52145F1D8B008698DC /* IGAppDelegate.m in Sources */,
-				3298868E1461DF85006B7BDE /* IGEpisodesListViewController.m in Sources */,
+				3298868E1461DF85006B7BDE /* IGEpisodesViewController.m in Sources */,
 				328B4A9117EA4A4800777C28 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
 				328B4A8517EA4A4800777C28 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				3267F87817EA4F9900051AA4 /* AFPropertyListRequestOperation.m in Sources */,
