@@ -24,7 +24,7 @@
 #import "IGEpisodesListViewController.h"
 #import "IGHTTPClient.h"
 #import "IGMediaPlayer.h"
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 #import "IGAPIKeys.h"
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
@@ -109,7 +109,7 @@
 
 - (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    IGMediaPlayerAsset *asset = [coder decodeObjectForKey:@"CurrentMediaPlayerAsset"];
+    IGMediaAsset *asset = [coder decodeObjectForKey:@"CurrentMediaPlayerAsset"];
     if (asset)
     {
         IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];

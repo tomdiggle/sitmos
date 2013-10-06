@@ -21,7 +21,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IGMediaPlayerAsset : NSObject
+@interface IGMediaAsset : NSObject
 
 /**
  * The title of the media currently playing.

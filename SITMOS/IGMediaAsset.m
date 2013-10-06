@@ -19,9 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 
-@interface IGMediaPlayerAsset () <NSCoding>
+@interface IGMediaAsset () <NSCoding>
 
 @property (nonatomic, strong, readwrite) NSString *title;
 @property (nonatomic, strong, readwrite) NSURL *contentURL;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation IGMediaPlayerAsset
+@implementation IGMediaAsset
 
 - (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio
 {

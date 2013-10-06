@@ -40,7 +40,7 @@
 		320A8A7B17E71B6600D4B06C /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		320A8A7E17E71B6600D4B06C /* IGSettingsSeekingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */; };
 		320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */; };
-		320A8A8117E71B6600D4B06C /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
+		320A8A8117E71B6600D4B06C /* IGMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaAsset.m */; };
 		320A8A8217E71B6600D4B06C /* IGSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3222F7C4170B57F900E8E76E /* IGSettingsViewController.m */; };
 		320A8A8717E71B6600D4B06C /* SSPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E90A0D17BD4A2F00392D67 /* SSPullToRefreshView.m */; };
 		320A8A8D17E71B6600D4B06C /* UIViewController+IGNowPlayingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3263DEA21756A06900D74A1F /* UIViewController+IGNowPlayingButton.m */; };
@@ -289,7 +289,7 @@
 		32C69CB817AAADBD00838E66 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB617AAADBD00838E66 /* icon-120.png */; };
 		32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB917AAAE2100838E66 /* Default-568h@2x.png */; };
 		32C69CBC17AAAE2100838E66 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CBA17AAAE2100838E66 /* Default@2x.png */; };
-		32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */; };
+		32D0092F16EA830A00EAEA81 /* IGMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaAsset.m */; };
 		32E6771D17E18AB400A2126F /* AFDownloadSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */; };
 		32E6771E17E18AB400A2126F /* AFDownloadSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */; };
 		32E6BB96152A08EA00C78815 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32E6BB95152A08EA00C78815 /* AudioToolbox.framework */; };
@@ -513,8 +513,8 @@
 		32C69CB617AAADBD00838E66 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		32C69CB917AAAE2100838E66 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		32C69CBA17AAAE2100838E66 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaPlayerAsset.h; path = SITMOS/IGMediaPlayerAsset.h; sourceTree = "<group>"; };
-		32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaPlayerAsset.m; path = SITMOS/IGMediaPlayerAsset.m; sourceTree = "<group>"; };
+		32D0092D16EA830A00EAEA81 /* IGMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IGMediaAsset.h; path = SITMOS/IGMediaAsset.h; sourceTree = "<group>"; };
+		32D0092E16EA830A00EAEA81 /* IGMediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IGMediaAsset.m; path = SITMOS/IGMediaAsset.m; sourceTree = "<group>"; };
 		32E6771B17E18AB400A2126F /* AFDownloadSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDownloadSerializer.h; sourceTree = "<group>"; };
 		32E6771C17E18AB400A2126F /* AFDownloadSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDownloadSerializer.m; sourceTree = "<group>"; };
 		32E6BB95152A08EA00C78815 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1019,8 +1019,8 @@
 			children = (
 				328E2769153DDFB0005AE70B /* IGMediaPlayer.h */,
 				328E276A153DDFB0005AE70B /* IGMediaPlayer.m */,
-				32D0092D16EA830A00EAEA81 /* IGMediaPlayerAsset.h */,
-				32D0092E16EA830A00EAEA81 /* IGMediaPlayerAsset.m */,
+				32D0092D16EA830A00EAEA81 /* IGMediaAsset.h */,
+				32D0092E16EA830A00EAEA81 /* IGMediaAsset.m */,
 			);
 			name = MediaPlayer;
 			path = ..;
@@ -1372,7 +1372,7 @@
 				320A8A7B17E71B6600D4B06C /* UIApplication+LocalNotificationHelper.m in Sources */,
 				320A8A7E17E71B6600D4B06C /* IGSettingsSeekingBackwardViewController.m in Sources */,
 				320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */,
-				320A8A8117E71B6600D4B06C /* IGMediaPlayerAsset.m in Sources */,
+				320A8A8117E71B6600D4B06C /* IGMediaAsset.m in Sources */,
 				320A8A8217E71B6600D4B06C /* IGSettingsViewController.m in Sources */,
 				328B4AC817EA4A4800777C28 /* MagicalRecord+Setup.m in Sources */,
 				3267F86D17EA4F9900051AA4 /* AFHTTPRequestOperation.m in Sources */,
@@ -1451,7 +1451,7 @@
 				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
 				32EA27B316DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m in Sources */,
 				32BF7B1C16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m in Sources */,
-				32D0092F16EA830A00EAEA81 /* IGMediaPlayerAsset.m in Sources */,
+				32D0092F16EA830A00EAEA81 /* IGMediaAsset.m in Sources */,
 				3222F7C5170B57F900E8E76E /* IGSettingsViewController.m in Sources */,
 				328B4AC717EA4A4800777C28 /* MagicalRecord+Setup.m in Sources */,
 				3267F86C17EA4F9900051AA4 /* AFHTTPRequestOperation.m in Sources */,

@@ -22,7 +22,7 @@
 #import "UIViewController+IGNowPlayingButton.h"
 
 #import "IGMediaPlayer.h"
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 
 @implementation UIViewController (IGNowPlayingButton)
 

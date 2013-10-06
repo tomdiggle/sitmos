@@ -41,7 +41,7 @@ typedef enum {
 typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);
 typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnded);
 
-@class IGMediaPlayerAsset;
+@class IGMediaAsset;
 
 /**
  * The IGMediaPlayer class provides a centralized point of control for media playing in SITMOS.
@@ -93,7 +93,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 /**
  * The asset of which the media was initialized.
  */
-@property (nonatomic, strong) IGMediaPlayerAsset *asset;
+@property (nonatomic, strong) IGMediaAsset *asset;
 
 #pragma mark - Getting the Media Player Instance
 
@@ -119,7 +119,7 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
  *
  * @warning *Important:* This method must be called first when wanting to play new content.
  */
-- (void)startWithAsset:(IGMediaPlayerAsset *)asset;
+- (void)startWithAsset:(IGMediaAsset *)asset;
 
 /**
  * Begins playback of current episode.

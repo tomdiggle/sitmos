@@ -21,7 +21,7 @@
 
 #import "IGMediaPlayer.h"
 
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -186,7 +186,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 #pragma mark - Managing Playback
 
-- (void)startWithAsset:(IGMediaPlayerAsset *)asset
+- (void)startWithAsset:(IGMediaAsset *)asset
 {
     NSParameterAssert(asset != nil);
     

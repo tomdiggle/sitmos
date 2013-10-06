@@ -28,7 +28,7 @@
 #import "IGSettingsViewController.h"
 #import "IGDefines.h"
 #import "IGMediaPlayer.h"
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 #import "SSPullToRefresh.h"
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"

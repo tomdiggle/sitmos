@@ -23,7 +23,7 @@
 
 #import "IGEpisode.h"
 #import "IGMediaPlayer.h"
-#import "IGMediaPlayerAsset.h"
+#import "IGMediaAsset.h"
 #import "IGDefines.h"
 #import "TDNotificationPanel.h"
 #import "TestFlight.h"
@@ -243,7 +243,7 @@
     self.title = episode.title;
     
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    IGMediaPlayerAsset *asset = nil;
+    IGMediaAsset *asset = nil;
     
     if ([mediaPlayer.asset shouldRestoreState])
     {
@@ -252,7 +252,7 @@
     else
     {
         NSURL *contentURL = ([episode isDownloaded]) ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-        asset = [[IGMediaPlayerAsset alloc] initWithTitle:[episode title]
+        asset = [[IGMediaAsset alloc] initWithTitle:[episode title]
                                                contentURL:contentURL
                                                   isAudio:[episode isAudio]];
     }
