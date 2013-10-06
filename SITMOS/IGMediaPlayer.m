@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -26,6 +26,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <MediaPlayer/MediaPlayer.h>
+
+/* Saved Asset */
+static NSString * const IGMediaPlayerCurrentAssetKey = @"MediaPlayerCurrentAsset";
 
 /* Media Player Notifications */
 NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
@@ -61,6 +64,7 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 @property (nonatomic, readwrite) Float64 currentTime;
 @property (nonatomic, readwrite) Float64 duration;
 @property (nonatomic, readwrite) IGMediaPlayerPlaybackState playbackState;
+@property (nonatomic, strong, readwrite) IGMediaAsset *asset;
 
 @end
 
@@ -110,6 +114,13 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     _duration = 0.f;
     _currentTime = 0.f;
     _playbackRate = 1.f;
+    
+    NSData *assetData = [[NSUserDefaults standardUserDefaults] objectForKey:IGMediaPlayerCurrentAssetKey];
+    if (assetData)
+    {
+        IGMediaAsset *asset = [NSKeyedUnarchiver unarchiveObjectWithData:assetData];
+        self.asset = asset;
+    }
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
@@ -190,28 +201,22 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 {
     NSParameterAssert(asset != nil);
     
-    if ([_asset.contentURL isEqual:asset.contentURL] && ![asset shouldRestoreState])
-    {
-        return;
-    }
-    
-    // Stops any existing audio playing. Useful when switching from a downloaded episode to streaming one because streaming an episode can sometimes take a while to begin depending on the users connection.
-    [self stop];
-    
-    _asset = asset;
-
+    [self setAsset:asset];
     [self setPlaybackState:IGMediaPlayerPlaybackStateBuffering];
-
-    _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
-
-    NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
     
+    _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
+    
+    NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
     [_urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self prepareToPlayAsset:_urlAsset
                             withKeys:requestedKeys];
         });
     }];
+    
+    // Save the asset so it can be restored later if necessary. The saved asset will be removed if playback has failed or reached the end.
+    NSData *assetData = [NSKeyedArchiver archivedDataWithRootObject:self.asset];
+    [[NSUserDefaults standardUserDefaults] setObject:assetData forKey:IGMediaPlayerCurrentAssetKey];
 }
 
 /**
@@ -392,12 +397,16 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     [self removeNowPlayingInfo];
     [self postNotification:IGMediaPlayerPlaybackEndedNotification];
     [self cleanUp];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:IGMediaPlayerCurrentAssetKey];
 }
 
 - (void)playbackFailed
 {
     [self postNotification:IGMediaPlayerPlaybackFailedNotification];
     [self cleanUp];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:IGMediaPlayerCurrentAssetKey];
 }
 
 #pragma mark - Managing Time

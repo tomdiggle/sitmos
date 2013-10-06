@@ -41,11 +41,6 @@
 /**
  *
  */
-@property (nonatomic, assign) BOOL shouldRestoreState;
-
-/**
- *
- */
 - (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio;
 
 @end

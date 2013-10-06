@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -92,8 +92,10 @@ typedef void (^IGMediaPlayerStoppedBlock)(Float64 currentTime, BOOL playbackEnde
 
 /**
  * The asset of which the media was initialized.
+ *
+ * The media player class takes care of saving and restoring the asset. The asset will be set to nil if playback has stopped, reached the end or failed.
  */
-@property (nonatomic, strong) IGMediaAsset *asset;
+@property (nonatomic, strong, readonly) IGMediaAsset *asset;
 
 #pragma mark - Getting the Media Player Instance
 

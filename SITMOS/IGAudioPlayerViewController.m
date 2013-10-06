@@ -243,30 +243,15 @@
     self.title = episode.title;
     
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    IGMediaAsset *asset = nil;
+    [mediaPlayer stop];
     
-    if ([mediaPlayer.asset shouldRestoreState])
-    {
-        asset = [mediaPlayer asset];
-    }
-    else
-    {
-        NSURL *contentURL = ([episode isDownloaded]) ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
-        asset = [[IGMediaAsset alloc] initWithTitle:[episode title]
-                                               contentURL:contentURL
-                                                  isAudio:[episode isAudio]];
-    }
-    
-    if ([[asset contentURL] isEqual:[[mediaPlayer asset] contentURL]] && ![mediaPlayer.asset shouldRestoreState])
-    {
-        return;
-    }
+    NSURL *contentURL = ([episode isDownloaded]) ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
+    IGMediaAsset *asset = [[IGMediaAsset alloc] initWithTitle:[episode title]
+                                                   contentURL:contentURL
+                                                      isAudio:[episode isAudio]];
     
     [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
-    
     [mediaPlayer startWithAsset:asset];
-    
-    [mediaPlayer.asset setShouldRestoreState:NO];
     
     [mediaPlayer setPausedBlock:^(Float64 currentTime) {
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_defaultContext];

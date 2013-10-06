@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012, Tom Diggle
+ * Copyright (c) 2012-2013, Tom Diggle
  *
  * Permission is hereby granted, free of charge, to any person obtaining a 
  * copy of this software and associated documentation files (the "Software"), 
@@ -92,32 +92,9 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application willEncodeRestorableStateWithCoder:(NSCoder *)coder
-{
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    if ([mediaPlayer asset])
-    {
-        [mediaPlayer.asset setShouldRestoreState:YES];
-        [coder encodeObject:[mediaPlayer asset] forKey:@"CurrentMediaPlayerAsset"];
-    }
-}
-
 - (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
 {
     return YES;
-}
-
-- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder
-{
-    IGMediaAsset *asset = [coder decodeObjectForKey:@"CurrentMediaPlayerAsset"];
-    if (asset)
-    {
-        IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-        if (![mediaPlayer asset])
-        {
-            [mediaPlayer setAsset:asset];
-        }
-    }
 }
 
 #pragma mark - Orientation Support

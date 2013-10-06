@@ -38,7 +38,6 @@
     self.title = title;
     self.contentURL = contentURL;
     self.audio = audio;
-    self.shouldRestoreState = NO;
     
     return self;
 }
@@ -50,13 +49,10 @@
     NSString *title = [decoder decodeObjectForKey:@"IGMediaPlayerAssetTitle"];
     NSURL *contentURL = [decoder decodeObjectForKey:@"IGMediaPlayerAssetContentURL"];
     BOOL isAudio = [decoder decodeBoolForKey:@"IGMediaPlayerAssetIsAudio"];
-    BOOL shouldRestoreState = [decoder decodeBoolForKey:@"IGMediaPlayerAssetShouldRestoreState"];
     
     self = [self initWithTitle:title
                     contentURL:contentURL
                        isAudio:isAudio];
-    
-    self.shouldRestoreState = shouldRestoreState;
     
     return self;
 }
@@ -66,7 +62,6 @@
     [encoder encodeObject:self.title forKey:@"IGMediaPlayerAssetTitle"];
     [encoder encodeObject:self.contentURL forKey:@"IGMediaPlayerAssetContentURL"];
     [encoder encodeBool:self.isAudio forKey:@"IGMediaPlayerAssetIsAudio"];
-    [encoder encodeBool:self.shouldRestoreState forKey:@"IGMediaPlayerAssetShouldRestoreState"];
 }
 
 @end
