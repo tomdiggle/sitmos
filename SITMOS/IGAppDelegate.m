@@ -21,7 +21,6 @@
 
 #import "IGAppDelegate.h"
 
-#import "IGEpisodesViewController.h"
 #import "IGNetworkManager.h"
 #import "IGMediaPlayer.h"
 #import "IGMediaAsset.h"
@@ -143,13 +142,16 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"MainStoryboard"
-                                                             bundle:nil];
-    IGEpisodesViewController *episodesViewController = [mainStoryboard instantiateViewControllerWithIdentifier:@"episodesViewController"];
-    [episodesViewController refreshPodcastFeedWithCompletionHandler:^(BOOL didReceiveNewEpisodes) {
+    IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
+    [networkManager syncPodcastFeedWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
+        if (success && feedItems)
+        {
+            [IGEpisode importPodcastFeedItems:feedItems completion:nil];
+        }
+        
         if (completionHandler)
         {
-            completionHandler(didReceiveNewEpisodes ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);
+            completionHandler(feedItems ? UIBackgroundFetchResultNewData : UIBackgroundFetchResultNoData);
         }
     }];
 }

@@ -79,7 +79,7 @@
     self.pullToRefreshView.contentView = [[SSPullToRefreshSimpleContentView alloc] init];
     self.pullToRefreshView.backgroundColor = [UIColor whiteColor];
     
-    [self refreshPodcastFeedWithCompletionHandler:nil];
+    [self refreshPodcastFeed];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -436,7 +436,7 @@
 
 #pragma mark - Refresh Podcast Feeds
 
-- (void)refreshPodcastFeedWithCompletionHandler:(void (^)(BOOL newEpisodes))completion
+- (void)refreshPodcastFeed
 {
     IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
     [networkManager syncPodcastFeedWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
@@ -456,11 +456,6 @@
         }
         
         [self.pullToRefreshView finishLoading];
-        
-        if (completion)
-        {
-            completion(feedItems ? YES : NO);
-        }
     }];
 }
 
@@ -518,7 +513,7 @@
 
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
-    [self refreshPodcastFeedWithCompletionHandler:nil];
+    [self refreshPodcastFeed];
 }
 
 @end
