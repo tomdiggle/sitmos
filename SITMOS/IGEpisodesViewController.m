@@ -33,8 +33,7 @@
 #import "RIButtonItem.h"
 #import "UIActionSheet+Blocks.h"
 #import "UIAlertView+Blocks.h"
-#import "IGHTTPClient.h"
-#import "AFDownloadRequestOperation.h"
+#import "IGNetworkManager.h"
 #import "UIViewController+IGNowPlayingButton.h"
 #import "TDNotificationPanel.h"
 #import "TestFlight.h"
@@ -302,7 +301,16 @@
         {
             downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", nil)];
             downloadItem.action = ^{
-                [self showAllowCellularDataDownloadingAlert:episodeCell];
+                if ([IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] objectForKey:IGAllowCellularDataDownloadingKey])
+                {
+                    [self showAllowCellularDataDownloadingAlertWithDownloadURL:[NSURL URLWithString:[episode downloadURL]]
+                                                                    targetPath:[episode fileURL]];
+                }
+                else
+                {
+                    [self downloadEpisodeFromURL:[NSURL URLWithString:[episode downloadURL]]
+                                      targetPath:[episode fileURL]];
+                }
             };
         }
         
@@ -327,9 +335,6 @@
     [episodeCell setPlayedStatus:[episode playedStatus]];
     [episodeCell setDownloadStatus:[episode downloadStatus]];
     [episodeCell setDownloadURL:[NSURL URLWithString:[episode downloadURL]]];
-    [[episodeCell downloadButton] addTarget:self
-                                     action:@selector(pauseResumeDownload:)
-                           forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Segue
@@ -347,7 +352,7 @@
             return NO;
         }
         
-        if (![episode isDownloaded] && ![IGHTTPClient allowCellularDataStreaming])
+        if (![episode isDownloaded] && [IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] objectForKey:IGAllowCellularDataStreamingKey])
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
             cancelItem.action = ^{
@@ -433,8 +438,8 @@
 
 - (void)refreshPodcastFeedWithCompletionHandler:(void (^)(BOOL newEpisodes))completion
 {
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient syncPodcastFeedWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
+    IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
+    [networkManager syncPodcastFeedWithCompletion:^(BOOL success, NSArray *feedItems, NSError *error) {
         if (!success && error)
         {
             [TDNotificationPanel showNotificationInView:self.view
@@ -461,28 +466,13 @@
 
 #pragma mark - Episode Download Methods
 
-- (void)showAllowCellularDataDownloadingAlert:(IGEpisodeCell *)episodeCell
+- (void)showAllowCellularDataDownloadingAlertWithDownloadURL:(NSURL *)downloadURL targetPath:(NSURL *)targetPath
 {
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[episodeCell title]];
-    NSURL *downloadURL = [NSURL URLWithString:[episode downloadURL]];
-    
-    if ([IGHTTPClient allowCellularDataDownloading])
-    {
-        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Downloading %@", [episode title]]];
-        [self startDownloadFromURL:downloadURL
-                        targetPath:[episode fileURL]];
-        [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
-        return;
-    }
-    
     RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
     RIButtonItem *downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", nil)];
     downloadItem.action = ^{
-        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Downloading %@", [episode title]]];
-        [self startDownloadFromURL:downloadURL
-                        targetPath:[episode fileURL]];
-        [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
+        [self downloadEpisodeFromURL:downloadURL
+                          targetPath:targetPath];
     };
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DownloadingWithCellularDataAlertTitle", nil)
@@ -498,44 +488,25 @@
  * @param downloadFromURL The URL to download the episode from.
  * @param targetPath The path to save the episode to.
  */
-- (void)startDownloadFromURL:(NSURL *)downloadURL
-                  targetPath:(NSURL *)targetPath
+- (void)downloadEpisodeFromURL:(NSURL *)downloadURL targetPath:(NSURL *)targetPath
 {
-    IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
-    [sharedClient downloadEpisodeWithURL:downloadURL targetPath:targetPath completion:^(BOOL success, NSError *error) {
+    IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
+    [networkManager downloadEpisodeWithDownloadURL:downloadURL destinationURL:targetPath completion:^(BOOL success, NSError *error) {
         if (!success && error)
         {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [TDNotificationPanel showNotificationInView:self.view
-                                                      title:NSLocalizedString(@"FailedToDownloadEpisode", @"text label for failed to download episode")
-                                                   subtitle:[error localizedDescription]
-                                                       type:TDNotificationTypeError
-                                                       mode:TDNotificationModeText
-                                                dismissible:YES
-                                             hideAfterDelay:4];
-            });
+            [TDNotificationPanel showNotificationInView:self.view
+                                                  title:NSLocalizedString(@"FailedToDownloadEpisode", nil)
+                                               subtitle:[error localizedDescription]
+                                                   type:TDNotificationTypeError
+                                                   mode:TDNotificationModeText
+                                            dismissible:YES
+                                         hideAfterDelay:4];
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
+        [self.tableView reloadData];
     }];
-}
-
-- (void)pauseResumeDownload:(UIButton *)sender
-{
-    IGEpisodeCell *episodeCell = (IGEpisodeCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[sender tag] inSection:0]];
-    IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title"
-                                                  withValue:[episodeCell title]];
-    IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
-    AFDownloadRequestOperation *requestOperation = [sharedClient requestOperationForURL:[NSURL URLWithString:[episode downloadURL]]];
-    if (!requestOperation)
-    {
-        return;
-    }
     
-    requestOperation.isPaused ? [requestOperation resume] : [requestOperation pause];
-    [episodeCell setDownloadStatus:IGEpisodeDownloadStatusDownloading];
+    [self.tableView reloadData];
 }
 
 #pragma mark - SSPullToRefreshViewDelegate

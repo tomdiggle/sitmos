@@ -19,36 +19,41 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//#import "IGHTTPClient.h"
+#import "IGXMLResponseSerialization.h"
 
-#import "IGMockHTTPClient.h"
-#import <SenTestingKit/SenTestingKit.h>
+@implementation IGXMLResponseSerialization
 
-#define HC_SHORTHAND
-#import <OCHamcrestIOS/OCHamcrestIOS.h>
-
-@interface IGHTTPClientTests : SenTestCase
-@end
-
-@implementation IGHTTPClientTests
-{
++ (instancetype)serializer {
+    IGXMLResponseSerialization *serializer = [[self alloc] init];
     
+    return serializer;
 }
 
-- (void)testDevelopmentModeBaseURLIsCorrect {
-    assertThat(IGDevelopmentBaseURL, equalTo(@"http://www.tomdiggle.com/"));
+- (instancetype)init {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/xml", @"text/xml", @"application/rss+xml", nil];
+    
+    return self;
 }
 
-- (void)testDevelopmentModePodcastFeedURLIsCorrect {
-    assertThat(IGDevelopmentPodcastFeedURL, equalTo(@"http://www.tomdiggle.com/sitmos-development-feed/sitmos-audio-feed.xml"));
+#pragma mark - AFURLResponseSerialization
+
+- (id)responseObjectForResponse:(NSHTTPURLResponse *)response
+                           data:(NSData *)data
+                          error:(NSError *__autoreleasing *)error
+{
+    if (![self validateResponse:(NSHTTPURLResponse *)response data:data error:error]) {
+        if ([(NSError *)(*error) code] == NSURLErrorCannotDecodeContentData) {
+            return nil;
+        }
+    }
+    
+    return [[NSXMLParser alloc] initWithData:data];
 }
 
-- (void)testBaseURLIsCorrect {
-    assertThat(IGBaseURL, equalTo(@"http://www.dereksweet.com/"));
-}
-
-- (void)testPodcastFeedURLIsCorrect {
-    assertThat(IGPodcastFeedURL, equalTo(@"http://www.dereksweet.com/sitmos/sitmos.xml"));
-}
 
 @end

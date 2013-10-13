@@ -21,9 +21,10 @@
 
 #import "IGEpisode.h"
 
-#import "IGHTTPClient.h"
+#import "IGNetworkManager.h"
 #import "IGDefines.h"
 #import "NSDate+Helper.h"
+#import "NSString+MD5.h"
 
 @interface IGEpisode ()
 
@@ -163,9 +164,8 @@
 
 - (BOOL)isDownloading
 {
-    NSArray *request = @[[NSURL URLWithString:[self downloadURL]], [self fileURL]];
-    NSArray *currentDownloadRequests = [[IGHTTPClient sharedClient] currentDownloadRequests];
-    return [currentDownloadRequests containsObject:request];
+    NSURLSessionTask *downloadTask = [IGNetworkManager downloadTaskForURL:[NSURL URLWithString:self.downloadURL]];
+    return downloadTask ? YES : NO;
 }
 
 #pragma mark - File Media Type

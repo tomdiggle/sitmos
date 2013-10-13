@@ -21,7 +21,7 @@
 
 #import "IGSettingsViewController.h"
 
-#import "IGHTTPClient.h"
+#import "IGNetworkManager.h"
 #import "IGEpisode.h"
 #import "IGDefines.h"
 
@@ -189,8 +189,8 @@
     
     if (![sender isOn])
     {
-        IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-        [httpClient unregisterPushNotificationsWithCompletion:^(NSError *error) {
+        IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
+        [networkManager unregisterPushNotificationsWithCompletion:^(NSError *error) {
             if (error)
             {
                 NSLog(@"Error: %@", error);

@@ -22,14 +22,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AFSerialization.h"
+#import "AFURLResponseSerialization.h"
+#import "AFURLRequestSerialization.h"
+#import "AFSecurityPolicy.h"
+#import "AFNetworkReachabilityManager.h"
 
 /**
  `AFURLSessionManager` creates and manages an `NSURLSession` object based on a specified `NSURLSessionConfiguration` object, which conforms to `<NSURLSessionTaskDelegate>`, `<NSURLSessionDataDelegate>`, `<NSURLSessionDownloadDelegate>`, and `<NSURLSessionDelegate>`.
  
  ## Subclassing Notes
  
- This is the base class for `AFHTTPClient`, which adds functionality specific to making HTTP requests. If you are looking to extend `AFURLSessionManager` specifically for HTTP, consider subclassing `AFHTTPClient` instead.
+ This is the base class for `AFHTTPSessionManager`, which adds functionality specific to making HTTP requests. If you are looking to extend `AFURLSessionManager` specifically for HTTP, consider subclassing `AFHTTPSessionManager` instead.
  
  ## NSURLSession & NSURLSessionTask Delegate Methods
  
@@ -53,6 +56,7 @@
  - `URLSession:dataTask:didBecomeDownloadTask:`
  - `URLSession:dataTask:didReceiveData:`
  - `URLSession:dataTask:willCacheResponse:completionHandler:`
+ - `URLSessionDidFinishEventsForBackgroundURLSession:`
 
  ### `NSURLSessionDownloadDelegate`
 
@@ -61,6 +65,10 @@
  - `URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:`
  
  If any of these methods are overridden in a subclass, they _must_ call the `super` implementation first.
+ 
+ ## Network Reachability Monitoring
+
+ Network reachability status and change monitoring is available through the `reachabilityManager` property. Applications may choose to monitor network reachability conditions in order to prevent or suspend any outbound requests. See `AFNetworkReachabilityManager` for more details.
  
  ## NSCoding Caveats
  
@@ -71,6 +79,9 @@
  - `-copy` and `-copyWithZone:` return a new manager with a new `NSURLSession` created from the configuration of the original.
  - Operation copies do not include any delegate callback blocks, as they often strongly captures a reference to `self`, which would otherwise have the unintuitive side-effect of pointing to the _original_ session manager when copied.
  */
+
+#if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000) || (defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= 1090)
+
 @interface AFURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSCoding, NSCopying>
 
 /**
@@ -84,11 +95,29 @@
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
 
 /**
- Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to a compound serializer, which serializes data from responses with either a `application/json` or `application/x-plist` MIME type, and falls back to the raw data object. The serializer validates the status code to be in the `2XX` range, denoting success. If the response serializer generates an error in `-responseObjectForResponse:data:error:`, the `failure` callback of the session task or request operation will be executed; otherwise, the `success` callback will be executed.
+ Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to an instance of `AFJSONResponseSerializer`.
 
  @warning `responseSerializer` must not be `nil`.
  */
 @property (nonatomic, strong) id <AFURLResponseSerialization> responseSerializer;
+
+///-------------------------------
+/// @name Managing Security Policy
+///-------------------------------
+
+/**
+ The security policy used by created request operations to evaluate server trust for secure connections. `AFURLSessionManager` uses the `defaultPolicy` unless otherwise specified.
+ */
+@property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
+
+///--------------------------------------
+/// @name Monitoring Network Reachability
+///--------------------------------------
+
+/**
+ The network reachability manager. `AFURLSessionManager` uses the `sharedManager` by default.
+ */
+@property (readonly, nonatomic, strong) AFNetworkReachabilityManager *reachabilityManager;
 
 ///----------------------------
 /// @name Getting Session Tasks
@@ -113,6 +142,20 @@
  The download tasks currently run by the managed session.
  */
 @property (readonly, nonatomic, strong) NSArray *downloadTasks;
+
+///---------------------------------
+/// @name Managing Callback Queues
+///---------------------------------
+
+/**
+ The dispatch queue for `completionBlock`. If `NULL` (default), the main queue is used.
+ */
+@property (nonatomic, strong) dispatch_queue_t completionQueue;
+
+/**
+ The dispatch group for `completionBlock`. If `NULL` (default), a private dispatch group is used.
+ */
+@property (nonatomic, strong) dispatch_group_t completionGroup;
 
 ///---------------------
 /// @name Initialization
@@ -142,12 +185,10 @@
  Creates an `NSURLSessionDataTask` with the specified request.
 
  @param request The HTTP request for the request.
- @param success A block object to be executed when the task finishes successfully. This block has no return value and takes three arguments: the server response, the serializer used to serialize the response data, and the response object created by that serializer.
- @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single arguments: the error describing the network or parsing error that occurred.
+ @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request
-                                      success:(void (^)(NSURLResponse *response, id responseObject))success
-                                      failure:(void (^)(NSError *error))failure;
+                            completionHandler:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
 
 ///---------------------------
 /// @name Running Upload Tasks
@@ -159,14 +200,12 @@
  @param request The HTTP request for the request.
  @param fileURL A URL to the local file to be uploaded.
  @param progress A block object to be executed multiple times as data is uploaded. This block has no return value and takes three arguments: the number of bytes written since the last time the progress block was called, the total bytes written, and the total bytes expected to be written during the request, as initially determined by the length of the HTTP body.
- @param success A block object to be executed when the task finishes successfully. This block has no return value and takes three arguments: the server response, the serializer used to serialize the response data, and the response object created by that serializer.
- @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single arguments: the error describing the network or parsing error that occurred.
+ @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request
                                          fromFile:(NSURL *)fileURL
-                                         progress:(void (^)(uint32_t bytesWritten, uint32_t totalBytesWritten, uint32_t totalBytesExpectedToWrite))progress
-                                          success:(void (^)(NSURLResponse *response, id responseObject))success
-                                          failure:(void (^)(NSError *error))failure;
+                                         progress:(NSProgress * __autoreleasing *)progress
+                                completionHandler:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
 
 /**
  Creates an `NSURLSessionUploadTask` with the specified request for an HTTP body.
@@ -174,14 +213,23 @@
  @param request The HTTP request for the request.
  @param bodyData A data object containing the HTTP body to be uploaded.
  @param progress A block object to be executed multiple times as data is uploaded. This block has no return value and takes three arguments: the number of bytes written since the last time the progress block was called, the total bytes written, and the total bytes expected to be written during the request, as initially determined by the length of the HTTP body.
- @param success A block object to be executed when the task finishes successfully. This block has no return value and takes three arguments: the server response, the serializer used to serialize the response data, and the response object created by that serializer.
- @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single arguments: the error describing the network or parsing error that occurred.
+ @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request
                                          fromData:(NSData *)bodyData
-                                         progress:(void (^)(uint32_t bytesWritten, uint32_t totalBytesWritten, uint32_t totalBytesExpectedToWrite))progress
-                                          success:(void (^)(NSURLResponse *response, id responseObject))success
-                                          failure:(void (^)(NSError *error))failure;
+                                         progress:(NSProgress * __autoreleasing *)progress
+                                completionHandler:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
+
+/**
+ Creates an `NSURLSessionUploadTask` with the specified streaming request.
+
+ @param request The HTTP request for the request.
+ @param progress A block object to be executed multiple times as data is uploaded. This block has no return value and takes three arguments: the number of bytes written since the last time the progress block was called, the total bytes written, and the total bytes expected to be written during the request, as initially determined by the length of the HTTP body.
+ @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
+ */
+- (NSURLSessionUploadTask *)uploadTaskWithStreamedRequest:(NSURLRequest *)request
+                                                 progress:(NSProgress * __autoreleasing *)progress
+                                        completionHandler:(void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
 
 ///-----------------------------
 /// @name Running Download Tasks
@@ -192,46 +240,26 @@
 
  @param request The HTTP request for the request.
  @param progress A block object to be executed multiple times as data is downloaded. This block has no return value and takes three arguments: the number of bytes read since the last time the progress block was called, the total bytes read, and the total bytes expected to be read from the server, as initially determined by the expected content size of the response object.
- @param success A block object to be executed when the task finishes successfully. This block takes a single argument, the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
- @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single arguments: the error describing the network or parsing error that occurred.
+ @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
+ @param completionHandler A block to be executed when a task finishes. This block has no return value and takes three arguments: the server response, the path of the downloaded file, and the error describing the network or parsing error that occurred, if any.
  */
 - (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
-                                             progress:(void (^)(uint32_t bytesRead, uint32_t totalBytesRead, uint32_t totalBytesExpectedToRead))progress
-                                              success:(NSURL * (^)(NSURLResponse *response))success
-                                              failure:(void (^)(NSError *error))failure;
+                                             progress:(NSProgress * __autoreleasing *)progress
+                                          destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
+                                    completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler;
 
 /**
  Creates an `NSURLSessionDownloadTask` with the specified resume data.
 
  @param resumeData The data used to resume downloading.
  @param progress A block object to be executed multiple times as data is downloaded. This block has no return value and takes three arguments: the number of bytes read since the last time the progress block was called, the total bytes read, and the total bytes expected to be read from the server, as initially determined by the expected content size of the response object.
- @param success A block object to be executed when the task finishes successfully. This block takes a single argument, the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
- @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the response data. This block has no return value and takes a single arguments: the error describing the network or parsing error that occurred.
+ @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
+ @param completionHandler A block to be executed when a task finishes. This block has no return value and takes three arguments: the server response, the path of the downloaded file, and the error describing the network or parsing error that occurred, if any.
  */
 - (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData
-                                                progress:(void (^)(uint32_t bytesRead, uint32_t totalBytesRead, uint32_t totalBytesExpectedToRead))progress
-                                                 success:(NSURL * (^)(NSURLResponse *response))success
-                                                 failure:(void (^)(NSError *error))failure;
-
-///---------------------------------
-/// @name Setting Progress Callbacks
-///---------------------------------
-
-/**
- Sets a callback to be called when an undetermined number of bytes have been uploaded to the server.
-
- @param block A block object to be called when an undetermined number of bytes have been uploaded to the server. This block has no return value and takes three arguments: the number of bytes written since the last time the upload progress block was called, the total bytes written, and the total bytes expected to be written during the request, as initially determined by the length of the HTTP body. This block may be called multiple times, and will execute on the session manager operation queue.
- */
-- (void)setUploadProgressForTask:(NSURLSessionTask *)task
-                      usingBlock:(void (^)(uint32_t bytesWritten, uint32_t totalBytesWritten, uint32_t totalBytesExpectedToWrite))block;
-
-/**
- Sets a callback to be called when an undetermined number of bytes have been downloaded from the server.
-
- @param block A block object to be called when an undetermined number of bytes have been downloaded from the server. This block has no return value and takes three arguments: the number of bytes read since the last time the download progress block was called, the total bytes read, and the total bytes expected to be read during the request, as initially determined by the expected content size of the `NSHTTPURLResponse` object. This block may be called multiple times, and will execute on the session manager operation queue.
- */
-- (void)setDownloadProgressForTask:(NSURLSessionTask *)task
-                        usingBlock:(void (^)(uint32_t bytesRead, uint32_t totalBytesRead, uint32_t totalBytesExpectedToRead))block;
+                                                progress:(NSProgress * __autoreleasing *)progress
+                                             destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
+                                       completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler;
 
 ///-----------------------------------------
 /// @name Setting Session Delegate Callbacks
@@ -258,7 +286,7 @@
 /**
  Sets a block to be executed when an HTTP request is attempting to perform a redirection to a different URL, as handled by the `NSURLSessionTaskDelegate` method `URLSession:willPerformHTTPRedirection:newRequest:completionHandler:`.
  
- @param block A block object to be executed when an HTTP rquest is attempting to perform a redirection to a different URL. The block returns the request to be made for the redirection, and takes four arguments: the session, the task, the redirection response, and the request corresponding to the redirection response.
+ @param block A block object to be executed when an HTTP request is attempting to perform a redirection to a different URL. The block returns the request to be made for the redirection, and takes four arguments: the session, the task, the redirection response, and the request corresponding to the redirection response.
  */
 - (void)setTaskWillPerformHTTPRedirectionBlock:(NSURLRequest * (^)(NSURLSession *session, NSURLSessionTask *task, NSURLResponse *response, NSURLRequest *request))block;
 
@@ -315,6 +343,13 @@
  */
 - (void)setDataTaskWillCacheResponseBlock:(NSCachedURLResponse * (^)(NSURLSession *session, NSURLSessionDataTask *dataTask, NSCachedURLResponse *proposedResponse))block;
 
+/**
+ Sets a block to be executed once all messages enqueued for a session have been delivered, as handled by the `NSURLSessionDataDelegate` method `URLSessionDidFinishEventsForBackgroundURLSession:`.
+ 
+ @param block A block object to be executed once all messages enqueued for a session have been delivered. The block has no return value and takes a single argument: the session.
+ */
+- (void)setDidFinishEventsForBackgroundURLSessionBlock:(void (^)(NSURLSession *session))block;
+
 ///-----------------------------------------------
 /// @name Setting Download Task Delegate Callbacks
 ///-----------------------------------------------
@@ -342,6 +377,8 @@
 
 @end
 
+#endif
+
 ///--------------------
 /// @name Notifications
 ///--------------------
@@ -352,7 +389,7 @@
 extern NSString * const AFNetworkingTaskDidStartNotification;
 
 /**
- Posted when a task finishes executing.
+ Posted when a task finishes executing. Includes a userInfo dictionary with additional information about the task.
  */
 extern NSString * const AFNetworkingTaskDidFinishNotification;
 
@@ -370,3 +407,28 @@ extern NSString * const AFURLSessionDidInvalidateNotification;
  Posted when a session download task encountered an error when moving the temporary download file to a specified destination.
  */
 extern NSString * const AFURLSessionDownloadTaskDidFailToMoveFileNotification;
+
+/**
+ The raw response data of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if response data exists for the task.
+ */
+extern NSString * const AFNetworkingTaskDidFinishResponseDataKey;
+
+/**
+ The serialized response object of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the response was serialized.
+ */
+extern NSString * const AFNetworkingTaskDidFinishSerializedResponseKey;
+
+/**
+ The response serializer used to serialize the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the task has an associated response serializer.
+ */
+extern NSString * const AFNetworkingTaskDidFinishResponseSerializerKey;
+
+/**
+ The file path associated with the download task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an the response data has been stored directly to disk.
+ */
+extern NSString * const AFNetworkingTaskDidFinishAssetPathKey;
+
+/**
+ Any error associated with the task, or the serialization of the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an error exists.
+ */
+extern NSString * const AFNetworkingTaskDidFinishErrorKey;

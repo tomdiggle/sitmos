@@ -19,11 +19,9 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "AFHTTPClient.h"
+#import "AFNetworking.h"
 
 #import <Foundation/Foundation.h>
-
-@class AFDownloadRequestOperation;
 
 extern NSString * const IGDevelopmentBaseURL;
 extern NSString * const IGDevelopmentPodcastFeedURL;
@@ -32,32 +30,10 @@ extern NSString * const IGBaseURL;
 extern NSString * const IGPodcastFeedURL;
 
 /**
- * The IGHTTPClient class provides a centralized point of control for network connections.
  *
- * You can access this object by invoking the sharedClient class method.
- *
- *      IGHTTPClient *sharedClient = [IGHTTPClient sharedClient];
  */
 
-@interface IGHTTPClient : AFHTTPClient
-
-/**
- * Returns an array of all the current download requests.
- */
-@property (nonatomic, strong, readonly) NSMutableArray *currentDownloadRequests;
-
-#pragma mark - Getting the HTTP Client Instance
-
-/**
- * @name Getting the HTTP Client Instance
- */
-
-/**
- * Returns the singleton HTTP client instance.
- *
- * @return The HTTP client instance.
- */
-+ (IGHTTPClient *)sharedClient;
+@interface IGNetworkManager : NSObject
 
 #pragma mark - Cellular Streaming
 
@@ -65,15 +41,7 @@ extern NSString * const IGPodcastFeedURL;
  * @name Cellular Streaming
  */
 
-/**
- * @return YES if cellular data streaming is allowed, NO otherwise.
- */
-+ (BOOL)allowCellularDataStreaming;
-
-/**
- * @return YES if cellular data downloading is allowed, NO otherwise.
- */
-+ (BOOL)allowCellularDataDownloading;
++ (BOOL)isOnCellularNetwork;
 
 #pragma mark - Development Mode
 
@@ -90,6 +58,13 @@ extern NSString * const IGPodcastFeedURL;
  */
 + (void)setDevelopmentModeEnabled:(BOOL)enabled;
 
+#pragma mark -
+
+/**
+ *
+ */
++ (NSString *)incompleteDownloadsDirectory;
+
 #pragma mark - Push Notifications
 
 /**
@@ -102,7 +77,8 @@ extern NSString * const IGPodcastFeedURL;
  * @param A token that identifies the device to Apple Push Notification Service (APNS).
  * @param The completion handler block to execute.
  */
-- (void)registerPushNotificationsForDevice:(NSData *)deviceToken completion:(void (^)(NSDictionary *result, NSError *error))completion;
+- (void)registerPushNotificationsForDevice:(NSData *)deviceToken
+                                completion:(void (^)(NSDictionary *result, NSError *error))completion;
 
 /**
  * Unregisters a device from receiving push notifications.
@@ -137,15 +113,22 @@ extern NSString * const IGPodcastFeedURL;
  * @param The URL to save the download to.
  * @param The completion handler block to execute.
  */
-- (void)downloadEpisodeWithURL:(NSURL *)downloadURL
-                    targetPath:(NSURL *)targetPath
-                    completion:(void (^)(BOOL success, NSError *error))completion;
+- (void)downloadEpisodeWithDownloadURL:(NSURL *)downloadURL
+                        destinationURL:(NSURL *)destinationURL
+                            completion:(void (^)(BOOL success, NSError *error))completion;
+
+#pragma mark - 
 
 /**
- * Returns the AFDownloadRequestOperation for the given URL.
+ * Download Tasks
  *
- * @return The request operation. Returns nil if a request operation is not found.
+ *
  */
-- (AFDownloadRequestOperation *)requestOperationForURL:(NSURL *)url;
++ (NSArray *)downloadTasks;
+
+/**
+ *
+ */
++ (NSURLSessionDownloadTask *)downloadTaskForURL:(NSURL *)url;
 
 @end

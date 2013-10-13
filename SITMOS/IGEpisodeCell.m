@@ -21,8 +21,7 @@
 
 #import "IGEpisodeCell.h"
 
-#import "IGHTTPClient.h"
-#import "AFDownloadRequestOperation.h"
+#import "IGNetworkManager.h"
 #import "NSDate+Helper.h"
 
 @interface IGEpisodeCell ()
@@ -34,6 +33,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *playedStatusImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
 @property (nonatomic, weak) IBOutlet UIProgressView *downloadProgressView;
+@property (nonatomic, strong) NSTimer *downloadProgressTimer;
 @property (nonatomic, strong) NSLayoutConstraint *pubDateAndTimeLeftLayoutConstraint;
 
 @end
@@ -60,60 +60,44 @@
 {
     [super layoutSubviews];
     
-    if (_downloadStatus == IGEpisodeDownloadStatusDownloading)
+    NSURLSessionDownloadTask *sessionTask = [IGNetworkManager downloadTaskForURL:self.downloadURL];
+    if (sessionTask)
     {
-        IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-        AFDownloadRequestOperation *operation = [httpClient requestOperationForURL:_downloadURL];
-        if (operation)
+        [self.titleLabel setTextColor:[self unplayedColor]];
+        
+        [self.downloadProgressView setHidden:NO];
+        [self.downloadSizeProgressLabel setHidden:NO];
+        [self.downloadButton setHidden:NO];
+        [self.summaryLabel setHidden:YES];
+        [self.playedStatusImageView setHidden:YES];
+        [self.pubDateAndTimeLeftLabel setHidden:YES];
+        [self.showNotesButton setHidden:YES];
+        
+        [self updateDownloadButtonImageForSessionState:sessionTask.state];
+        
+        if (![self.downloadProgressTimer isValid])
         {
-            [_titleLabel setTextColor:[self unplayedColor]];
-            
-            [_downloadProgressView setHidden:NO];
-            [_downloadSizeProgressLabel setHidden:NO];
-            [_downloadButton setHidden:NO];
-            [_summaryLabel setHidden:YES];
-            [_playedStatusImageView setHidden:YES];
-            [_pubDateAndTimeLeftLabel setHidden:YES];
-            [_showNotesButton setHidden:YES];
-            
-            if ([operation isPaused])
-            {
-                [_downloadButton setImage:[UIImage imageNamed:@"download-resume-button"]
-                                 forState:UIControlStateNormal];
-                [_downloadButton setAccessibilityLabel:NSLocalizedString(@"ResumeDownload", @"accessibility label for resume download")];
-            }
-            else
-            {
-                [_downloadButton setImage:[UIImage imageNamed:@"download-pause-button"]
-                                 forState:UIControlStateNormal];
-                [_downloadButton setAccessibilityLabel:NSLocalizedString(@"PauseDownload", @"accessibility label for pause download")];
-            }
-            
-            [operation setProgressiveDownloadProgressBlock:^(AFDownloadRequestOperation *operation, NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
-                NSString *totalBytesDownloaded = [NSByteCountFormatter stringFromByteCount:totalBytesReadForFile
-                                                                            countStyle:NSByteCountFormatterCountStyleDecimal];
-                NSString *totalBytesExpectedString = [NSByteCountFormatter stringFromByteCount:totalBytesExpectedToReadForFile
-                                                                                    countStyle:NSByteCountFormatterCountStyleBinary];
-                [_downloadSizeProgressLabel setText:[NSString stringWithFormat:NSLocalizedString(@"EpisodeDownloadProgress", @"text label for episode download progress"), totalBytesDownloaded, totalBytesExpectedString]];
-                
-                [_downloadProgressView setProgress:totalBytesReadForFile / (float)totalBytesExpectedToReadForFile
-                                          animated:YES];
-            }];
-        }
-        else
-        {
-            [self setDownloadStatus:IGEpisodeDownloadStatusNotDownloading];
+            self.downloadProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                                          target:self
+                                                                        selector:@selector(updateDownloadProgressView:)
+                                                                        userInfo:sessionTask
+                                                                         repeats:YES];
         }
     }
     else
     {
-        [_summaryLabel setHidden:NO];
-        [_playedStatusImageView setHidden:NO];
-        [_pubDateAndTimeLeftLabel setHidden:NO];
-        [_showNotesButton setHidden:NO];
-        [_downloadProgressView setHidden:YES];
-        [_downloadSizeProgressLabel setHidden:YES];
-        [_downloadButton setHidden:YES];
+        [self.summaryLabel setHidden:NO];
+        [self.playedStatusImageView setHidden:NO];
+        [self.pubDateAndTimeLeftLabel setHidden:NO];
+        [self.showNotesButton setHidden:NO];
+        [self.downloadProgressView setHidden:YES];
+        [self.downloadSizeProgressLabel setHidden:YES];
+        [self.downloadButton setHidden:YES];
+        
+        if ([self.downloadProgressTimer isValid])
+        {
+            [self.downloadProgressTimer invalidate];
+        }
     }
 }
 
@@ -123,11 +107,11 @@
 {
     if (downloadStatus == IGEpisodeDownloadStatusDownloaded)
     {
-        [_episodeDownloadedImageView setHidden:NO];
+        [self.episodeDownloadedImageView setHidden:NO];
     }
     else
     {
-        [_episodeDownloadedImageView setHidden:YES];
+        [self.episodeDownloadedImageView setHidden:YES];
     }
     
     _downloadStatus = downloadStatus;
@@ -210,6 +194,60 @@
 - (UIColor *)unplayedColor
 {
     return [UIColor blackColor];
+}
+
+#pragma mark - Update Download Progress
+
+- (void)updateDownloadProgressView:(id)sender
+{
+    NSURLSessionDownloadTask *sessionTask = (NSURLSessionDownloadTask *)[sender userInfo];
+    if (sessionTask.countOfBytesReceived == 0)
+    {
+        return;
+    }
+    
+    self.downloadProgressView.progress = (double)sessionTask.countOfBytesReceived / (double)sessionTask.countOfBytesExpectedToReceive;
+    
+    NSString *bytesReceived = [NSByteCountFormatter stringFromByteCount:sessionTask.countOfBytesReceived
+                                                             countStyle:NSByteCountFormatterCountStyleDecimal];
+    NSString *bytesExpectedToReceive = [NSByteCountFormatter stringFromByteCount:sessionTask.countOfBytesExpectedToReceive
+                                                                      countStyle:NSByteCountFormatterCountStyleBinary];
+    [self.downloadSizeProgressLabel setText:[NSString stringWithFormat:NSLocalizedString(@"EpisodeDownloadProgress", nil), bytesReceived, bytesExpectedToReceive]];
+}
+
+#pragma mark - 
+
+- (IBAction)pauseOrResumeDownload:(id)sender
+{
+    NSURLSessionDownloadTask *sessionTask = [IGNetworkManager downloadTaskForURL:self.downloadURL];
+    if (sessionTask.state == NSURLSessionTaskStateRunning)
+    {
+        [sessionTask suspend];
+        
+        [self updateDownloadButtonImageForSessionState:NSURLSessionTaskStateSuspended];
+    }
+    else
+    {
+        [sessionTask resume];
+        
+        [self updateDownloadButtonImageForSessionState:NSURLSessionTaskStateRunning];
+    }
+}
+
+- (void)updateDownloadButtonImageForSessionState:(NSURLSessionTaskState)state
+{
+    if (state == NSURLSessionTaskStateRunning)
+    {
+        [self.downloadButton setImage:[UIImage imageNamed:@"download-pause-button"]
+                             forState:UIControlStateNormal];
+        [self.downloadButton setAccessibilityLabel:NSLocalizedString(@"PauseDownload", nil)];
+    }
+    else
+    {
+        [self.downloadButton setImage:[UIImage imageNamed:@"download-resume-button"]
+                             forState:UIControlStateNormal];
+        [self.downloadButton setAccessibilityLabel:NSLocalizedString(@"ResumeDownload", nil)];
+    }
 }
 
 @end

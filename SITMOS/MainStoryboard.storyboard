@@ -114,6 +114,9 @@
                                                     <state key="normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="pauseOrResumeDownload:" destination="2xw-m7-VFT" eventType="touchUpInside" id="RN2-VI-Jhm"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yeo-XC-WMm" userLabel="Played Status Icon">
                                                     <rect key="frame" x="15" y="62" width="8" height="8"/>

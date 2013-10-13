@@ -22,7 +22,7 @@
 #import "IGAppDelegate.h"
 
 #import "IGEpisodesViewController.h"
-#import "IGHTTPClient.h"
+#import "IGNetworkManager.h"
 #import "IGMediaPlayer.h"
 #import "IGMediaAsset.h"
 #import "IGAPIKeys.h"
@@ -42,7 +42,7 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
     
 #ifdef DEVELOPMENT_MODE
-    [IGHTTPClient setDevelopmentModeEnabled:YES];
+    [IGNetworkManager setDevelopmentModeEnabled:YES];
 #endif
     
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -124,8 +124,8 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken:");
-    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
-    [httpClient registerPushNotificationsForDevice:deviceToken completion:nil];
+//    IGHTTPClient *httpClient = [IGHTTPClient sharedClient];
+//    [httpClient registerPushNotificationsForDevice:deviceToken completion:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
