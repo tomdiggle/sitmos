@@ -80,6 +80,8 @@
     self.pullToRefreshView.backgroundColor = [UIColor whiteColor];
     
     [self refreshPodcastFeed];
+    
+    [self observeMediaPlayerNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -421,6 +423,21 @@
     self.filteredEpisodeArray = [NSMutableArray arrayWithArray:tempArray];
 }
 
+#pragma mark - Observe Media Player Notifications
+
+- (void)observeMediaPlayerNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:IGMediaPlayerPlaybackEndedNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:IGMediaPlayerPlaybackFailedNotification
+                                               object:nil];
+}
+
 #pragma mark - Hide Search Bar
 
 - (void)hideSearchBar
@@ -513,6 +530,13 @@
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
     [self refreshPodcastFeed];
+}
+
+#pragma mark - Media Player Notification
+
+- (void)playbackStateChanged:(id)sender
+{
+    [self showNowPlayingButton];
 }
 
 @end
