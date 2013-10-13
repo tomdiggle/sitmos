@@ -425,12 +425,8 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 - (void)postNotification:(NSString *)notificationName
 {
-    NSNotification *notification = [NSNotification notificationWithName:notificationName
-                                                                 object:self
-                                                               userInfo:nil];
-    // Notifications are posted on the main thread.
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:notificationName object:self userInfo:nil]];
     });
 }
 
