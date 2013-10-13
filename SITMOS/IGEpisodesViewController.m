@@ -183,8 +183,7 @@
     [self updateEpisodeCell:episodeCell
                     episode:episode];
     
-    [[episodeCell showNotesButton] setTag:indexPath.row];
-    [[episodeCell downloadButton] setTag:indexPath.row];
+    [episodeCell.showNotesButton setTag:indexPath.row];
     
     UIView *selectedBackgroundView = [[UIView alloc] init];
     [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
@@ -344,7 +343,7 @@
     if ([identifier isEqualToString:@"audioPlayerSegue"] && [sender isKindOfClass:[UITableViewCell class]])
     {
         IGEpisodeCell *cell = (IGEpisodeCell *)sender;
-        IGEpisode *episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[[cell downloadButton] tag]];
+        IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title" withValue:cell.title];
         if ([episode isDownloading])
         {
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForCell:cell]
@@ -397,7 +396,7 @@
         if ([sender isKindOfClass:[UITableViewCell class]])
         {
             IGEpisodeCell *cell = (IGEpisodeCell *)sender;
-            episode = [[self.fetchedResultsController fetchedObjects] objectAtIndex:[[cell downloadButton] tag]];
+            episode = [IGEpisode MR_findFirstByAttribute:@"title" withValue:cell.title];
         }
         else
         {

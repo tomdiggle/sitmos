@@ -67,12 +67,7 @@
 @property (nonatomic, strong) NSURL *downloadURL;
 
 /**
- * Returns the button used to start, pause and resume the downloading of the episode.
- */
-@property (nonatomic, weak) IBOutlet UIButton *downloadButton;
-
-/**
- *
+ * Returns the button used to display the show notes view controller.
  */
 @property (nonatomic, weak) IBOutlet UIButton *showNotesButton;
 

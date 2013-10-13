@@ -33,6 +33,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *playedStatusImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
 @property (nonatomic, weak) IBOutlet UIProgressView *downloadProgressView;
+@property (nonatomic, weak) IBOutlet UIButton *downloadButton;
 @property (nonatomic, strong) NSTimer *downloadProgressTimer;
 @property (nonatomic, strong) NSLayoutConstraint *pubDateAndTimeLeftLayoutConstraint;
 
