@@ -29,19 +29,7 @@ extern NSString * const IGDevelopmentPodcastFeedURL;
 extern NSString * const IGBaseURL;
 extern NSString * const IGPodcastFeedURL;
 
-/**
- *
- */
-
 @interface IGNetworkManager : NSObject
-
-#pragma mark - Cellular Streaming
-
-/**
- * @name Cellular Streaming
- */
-
-+ (BOOL)isOnCellularNetwork;
 
 #pragma mark - Development Mode
 
@@ -50,20 +38,43 @@ extern NSString * const IGPodcastFeedURL;
  */
 
 /**
- * When enabling development mode the development podcast feeds will be used. 
+ * When enabling development mode the development podcast feeds will be used.
  *
  * @see IGDevelopmentBaseURL
- * @see IGDevelopmentAudioPodcastFeedURL
- * @see IGDevelopmentVideoPodcastFeedURL
+ * @see IGDevelopmentPodcastFeedURL
  */
 + (void)setDevelopmentModeEnabled:(BOOL)enabled;
 
-#pragma mark -
+#pragma mark - Cellular Streaming
 
 /**
- *
+ * @name Cellular Streaming
  */
-+ (NSString *)incompleteDownloadsDirectory;
+
+/**
+ * Returns YES is on cellular network, NO otherwise.
+ */
++ (BOOL)isOnCellularNetwork;
+
+#pragma mark - Obtaining Download Tasks
+
+/**
+ * @name Obtaining Download Tasks
+ */
+
+/**
+ * Returns an array of NSURLSessionDownloadTask's, nil if there are none.
+ */
++ (NSArray *)downloadTasks;
+
+/**
+ * Returns the NSURLSessionDownloadTask for the given URL.
+ *
+ * @param The URL of the NSURLSessionDownloadTask.
+ *
+ * @return The NSURLSessionDownloadTask for the given URL. Returns nil if a request operation is not found.
+ */
++ (NSURLSessionDownloadTask *)downloadTaskForURL:(NSURL *)url;
 
 #pragma mark - Push Notifications
 
@@ -116,19 +127,5 @@ extern NSString * const IGPodcastFeedURL;
 - (void)downloadEpisodeWithDownloadURL:(NSURL *)downloadURL
                         destinationURL:(NSURL *)destinationURL
                             completion:(void (^)(BOOL success, NSError *error))completion;
-
-#pragma mark - 
-
-/**
- * Download Tasks
- *
- *
- */
-+ (NSArray *)downloadTasks;
-
-/**
- *
- */
-+ (NSURLSessionDownloadTask *)downloadTaskForURL:(NSURL *)url;
 
 @end

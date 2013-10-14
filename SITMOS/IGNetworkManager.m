@@ -59,18 +59,18 @@ static NSDictionary *deviceToken = nil;
 
 @implementation IGNetworkManager
 
-#pragma mark - Cellular Streaming
-
-+ (BOOL)isOnCellularNetwork
-{
-    return [AFNetworkReachabilityManager.sharedManager isReachableViaWWAN];
-}
-
 #pragma mark - Development Mode
 
 + (void)setDevelopmentModeEnabled:(BOOL)enabled
 {
     __developmentMode = enabled;
+}
+
+#pragma mark - Cellular Streaming
+
++ (BOOL)isOnCellularNetwork
+{
+    return [AFNetworkReachabilityManager.sharedManager isReachableViaWWAN];
 }
 
 #pragma mark -
