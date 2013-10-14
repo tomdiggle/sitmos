@@ -382,7 +382,7 @@
     NSInteger minutesPlayed = (NSInteger)currentTime / 60 % 60;
     NSInteger hoursPlayed = ((NSInteger)currentTime / 60) / 60;
     
-    return hoursPlayed > 0 ? [NSString stringWithFormat:@"%2d:%02d:%02d", hoursPlayed, minutesPlayed, secondsPlayed] : [NSString stringWithFormat:@"%2d:%02d", minutesPlayed, secondsPlayed];
+    return [NSString stringWithFormat:@"%2d:%02d:%02d", hoursPlayed, minutesPlayed, secondsPlayed];
 }
 
 - (NSString *)durationString
@@ -394,7 +394,7 @@
     NSInteger minutesLeft = ((NSInteger)duration - (NSInteger)currentTime) / 60 % 60;
     NSInteger hoursLeft = (((NSInteger)duration - (NSInteger)currentTime) / 60) / 60;
     
-    return hoursLeft > 0 ? [NSString stringWithFormat:@"-%2d:%02d:%02d", hoursLeft, minutesLeft, secondsLeft] : [NSString stringWithFormat:@"-%1d:%02d", minutesLeft, secondsLeft];
+    return [NSString stringWithFormat:@"-%1d:%02d:%02d", hoursLeft, minutesLeft, secondsLeft];
 }
 
 #pragma mark - Playback Progress

@@ -850,28 +850,32 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="V9p-5W-qgW" userLabel="Buffering Indicator">
-                                        <rect key="frame" x="25" y="27" width="20" height="20"/>
+                                        <rect key="frame" x="42" y="27" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lk-Dc-Vdp" userLabel="Current Time Label">
-                                        <rect key="frame" x="20" y="29" width="25" height="15"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="0:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lk-Dc-Vdp" userLabel="Current Time Label">
+                                        <rect key="frame" x="20" y="29" width="42" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="mGp-F4-Pph" userLabel="Progress Slider">
-                                        <rect key="frame" x="51" y="20" width="213" height="34"/>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="mGp-F4-Pph" userLabel="Progress Slider">
+                                        <rect key="frame" x="68" y="20" width="179" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.32941176470588235" green="0.64313725490196072" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="6C9-zx-npl"/>
+                                            <constraint firstAttribute="width" constant="175" id="eEZ-TC-hZK"/>
+                                        </constraints>
                                         <connections>
                                             <action selector="seekToTime:" destination="mWg-Eo-bRS" eventType="valueChanged" id="UKO-3k-FC3"/>
                                             <action selector="seekToTimeStart:" destination="mWg-Eo-bRS" eventType="touchDown" id="j9L-xw-LLI"/>
                                             <action selector="seekToTimeStop:" destination="mWg-Eo-bRS" eventType="touchUpInside" id="2Qq-y7-EvS"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAw-5M-ydc" userLabel="Duration Label">
-                                        <rect key="frame" x="270" y="26" width="30" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAw-5M-ydc" userLabel="Duration Label">
+                                        <rect key="frame" x="253" y="26" width="47" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="dXT-q8-Vda"/>
@@ -916,16 +920,18 @@
                                 <color key="backgroundColor" red="0.92156862745098034" green="0.9137254901960784" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="rAw-5M-ydc" firstAttribute="bottom" secondItem="V9p-5W-qgW" secondAttribute="bottom" id="0l7-zc-Rqq"/>
-                                    <constraint firstItem="rAw-5M-ydc" firstAttribute="leading" secondItem="W0M-cq-mnr" secondAttribute="leading" constant="270" id="7lQ-Ce-1jA"/>
-                                    <constraint firstAttribute="trailing" secondItem="rAw-5M-ydc" secondAttribute="trailing" priority="750" constant="20" id="KcP-Uo-hSQ"/>
+                                    <constraint firstItem="rAw-5M-ydc" firstAttribute="leading" secondItem="W0M-cq-mnr" secondAttribute="leading" constant="253" id="7lQ-Ce-1jA"/>
+                                    <constraint firstAttribute="trailing" secondItem="rAw-5M-ydc" secondAttribute="trailing" constant="20" id="KcP-Uo-hSQ"/>
+                                    <constraint firstItem="2Lk-Dc-Vdp" firstAttribute="leading" relation="lessThanOrEqual" secondItem="W0M-cq-mnr" secondAttribute="leading" priority="750" constant="20" id="Kpg-XR-iTZ"/>
+                                    <constraint firstItem="mGp-F4-Pph" firstAttribute="leading" secondItem="2Lk-Dc-Vdp" secondAttribute="trailing" constant="8" id="TTx-df-CLl"/>
                                     <constraint firstItem="rAw-5M-ydc" firstAttribute="centerY" secondItem="mGp-F4-Pph" secondAttribute="centerY" id="U8a-f7-sEg"/>
-                                    <constraint firstItem="2Lk-Dc-Vdp" firstAttribute="leading" secondItem="W0M-cq-mnr" secondAttribute="leading" priority="750" constant="20" id="V7F-Me-3N5"/>
                                     <constraint firstItem="mGp-F4-Pph" firstAttribute="leading" secondItem="V9p-5W-qgW" secondAttribute="trailing" constant="8" symbolic="YES" id="YcP-lJ-hyc"/>
                                     <constraint firstAttribute="bottom" secondItem="rAw-5M-ydc" secondAttribute="bottom" constant="73" id="dsf-PM-WHb"/>
                                     <constraint firstItem="rAw-5M-ydc" firstAttribute="centerY" secondItem="2Lk-Dc-Vdp" secondAttribute="centerY" id="egl-zE-Ucv"/>
-                                    <constraint firstItem="mGp-F4-Pph" firstAttribute="leading" secondItem="2Lk-Dc-Vdp" secondAttribute="trailing" constant="8" id="kiJ-xL-e37"/>
+                                    <constraint firstItem="rAw-5M-ydc" firstAttribute="leading" secondItem="mGp-F4-Pph" secondAttribute="trailing" constant="8" id="uL9-vJ-bIB"/>
                                     <constraint firstItem="rAw-5M-ydc" firstAttribute="leading" secondItem="mGp-F4-Pph" secondAttribute="trailing" constant="8" id="uY6-26-ZHJ"/>
                                     <constraint firstItem="rAw-5M-ydc" firstAttribute="top" secondItem="W0M-cq-mnr" secondAttribute="top" constant="26" id="v1i-Ww-4Sr"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rAw-5M-ydc" secondAttribute="trailing" constant="20" id="ybL-cw-bsS"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -971,6 +977,7 @@
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
         <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
+        <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
