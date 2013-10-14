@@ -32,14 +32,14 @@
 /**
  * Returns the title of the episode.
  */
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 /**
  * Returns the summary of the episode.
  *
  * @discussion Only two lines of the summary is shown and it is truncated by NSLineBreakByTruncatingTail. 
  */
-@property (nonatomic, strong) NSString *summary;
+@property (nonatomic, copy) NSString *summary;
 
 /**
  * Returns the date the episode was published.
@@ -57,7 +57,7 @@
  *
  * @see pubDate
  */
-@property (nonatomic, strong) NSString *timeLeft;
+@property (nonatomic, copy) NSString *timeLeft;
 
 /**
  * Returns the download url of the episode.
