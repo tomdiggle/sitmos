@@ -23,7 +23,6 @@
 
 #import "IGNetworkManager.h"
 #import "IGMediaPlayer.h"
-#import "IGMediaAsset.h"
 #import "IGAPIKeys.h"
 #import "IGEpisodeImporter.h"
 #import "IGEpisode.h"
