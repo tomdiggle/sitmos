@@ -302,7 +302,7 @@
         {
             downloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"Download", nil)];
             downloadItem.action = ^{
-                if ([IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] objectForKey:IGAllowCellularDataDownloadingKey])
+                if ([IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataDownloadingKey])
                 {
                     [self showAllowCellularDataDownloadingAlertWithDownloadURL:[NSURL URLWithString:[episode downloadURL]]
                                                                     targetPath:[episode fileURL]];
@@ -353,7 +353,7 @@
             return NO;
         }
         
-        if (![episode isDownloaded] && [IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] objectForKey:IGAllowCellularDataStreamingKey])
+        if (![episode isDownloaded] && [IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataStreamingKey])
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
             cancelItem.action = ^{
