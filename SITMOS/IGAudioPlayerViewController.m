@@ -242,13 +242,20 @@
 {
     self.title = episode.title;
     
-    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
-    [mediaPlayer stop];
-    
     NSURL *contentURL = ([episode isDownloaded]) ? [episode fileURL] : [NSURL URLWithString:[episode downloadURL]];
     IGMediaAsset *asset = [[IGMediaAsset alloc] initWithTitle:[episode title]
                                                    contentURL:contentURL
                                                       isAudio:[episode isAudio]];
+    
+    IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
+    if ([[mediaPlayer.asset title] isEqualToString:asset.title] && mediaPlayer.playbackState == IGMediaPlayerPlaybackStatePlaying)
+    {
+        // No need to reload the media that is already playing
+        return;
+    }
+    
+    // Stop any media playing before loading new media so the current media's position gets saved
+    [mediaPlayer stop];
     
     [mediaPlayer setStartFromTime:[[episode progress] floatValue]];
     [mediaPlayer startWithAsset:asset];
