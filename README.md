@@ -19,10 +19,10 @@ If you are interested in helping test new versions of the app, all beta versions
 ## Attribution
 SITMOS - Podcast App uses the following third party components &amp; libraries:
 
-- [AFDownloadRequestOperation](https://github.com/steipete/AFDownloadRequestOperation) by Peter Steinberger
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) by Mattt Thompson
 - [MagicalRecord](https://github.com/magicalpanda/MagicalRecord) by Magical Panda Software
 - [NSDate-Helper](https://github.com/billymeltdown/nsdate-helper) by Billy Gray
+- [NSString+MD5](https://github.com/guilhermeandrade/NSString-MD5) by Guilherme Andrade
 - [OCHamcrest](https://github.com/hamcrest/OCHamcrest) by Jon Reid
 - [SSPullToRefresh](https://github.com/soffes/sspulltorefresh) by Sam Soffes
 - [TDNotificationPanel](https://github.com/tomdiggle/TDNotificationPanel) by Tom Diggle
