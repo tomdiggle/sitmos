@@ -503,7 +503,7 @@
 {
     IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
     [networkManager downloadEpisodeWithDownloadURL:downloadURL destinationURL:targetPath completion:^(BOOL success, NSError *error) {
-        if (!success && error)
+        if (error)
         {
             [TDNotificationPanel showNotificationInView:self.view
                                                   title:NSLocalizedString(@"FailedToDownloadEpisode", nil)
