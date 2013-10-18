@@ -162,6 +162,7 @@ static NSDictionary *deviceToken = nil;
     dispatch_once(&onceToken, ^{
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.idlegeniussoftware.sitmos.networking.session.episode.download"];
         downloadSessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
+        downloadSessionManager.securityPolicy = [AFSecurityPolicy defaultPolicy];
     });
     return downloadSessionManager;
 }
