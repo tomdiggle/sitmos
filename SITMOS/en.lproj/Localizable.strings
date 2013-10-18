@@ -117,9 +117,6 @@
 /* text label for failed to download episode */
 "FailedToDownloadEpisode" = "Failed to download episode";
 
-/* text label for all downloads paused */
-"AllDownloadsPaused" = "All downloads have been paused because background time has expired. Please open SITMOS to continue downloading.";
-
 /* text label for successfully imported episodes */
 "SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";
 
