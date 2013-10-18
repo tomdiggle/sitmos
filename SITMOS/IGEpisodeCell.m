@@ -41,6 +41,21 @@
 
 @implementation IGEpisodeCell
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    if ([self.downloadProgressTimer isValid])
+    {
+        [self.downloadProgressTimer invalidate];
+    }
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<Episode Title: %@>", self.title];
+}
+
 #pragma mark - Initializers
 
 - (void)awakeFromNib
@@ -53,6 +68,11 @@
                                                                           multiplier:1
                                                                             constant:15];
     [self addConstraint:self.pubDateAndTimeLeftLayoutConstraint];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(downloadTaskDidStart:)
+                                                 name:AFNetworkingTaskDidStartNotification
+                                               object:nil];
 }
 
 #pragma mark - Layout
@@ -61,45 +81,8 @@
 {
     [super layoutSubviews];
     
-    NSURLSessionDownloadTask *sessionTask = [IGNetworkManager downloadTaskForURL:self.downloadURL];
-    if (sessionTask)
-    {
-        [self.titleLabel setTextColor:[self unplayedColor]];
-        
-        [self.downloadProgressView setHidden:NO];
-        [self.downloadSizeProgressLabel setHidden:NO];
-        [self.downloadButton setHidden:NO];
-        [self.summaryLabel setHidden:YES];
-        [self.playedStatusImageView setHidden:YES];
-        [self.pubDateAndTimeLeftLabel setHidden:YES];
-        [self.showNotesButton setHidden:YES];
-        
-        [self updateDownloadButtonImageForSessionState:sessionTask.state];
-        
-        if (![self.downloadProgressTimer isValid])
-        {
-            self.downloadProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                                          target:self
-                                                                        selector:@selector(updateDownloadProgressView:)
-                                                                        userInfo:sessionTask
-                                                                         repeats:YES];
-        }
-    }
-    else
-    {
-        [self.summaryLabel setHidden:NO];
-        [self.playedStatusImageView setHidden:NO];
-        [self.pubDateAndTimeLeftLabel setHidden:NO];
-        [self.showNotesButton setHidden:NO];
-        [self.downloadProgressView setHidden:YES];
-        [self.downloadSizeProgressLabel setHidden:YES];
-        [self.downloadButton setHidden:YES];
-        
-        if ([self.downloadProgressTimer isValid])
-        {
-            [self.downloadProgressTimer invalidate];
-        }
-    }
+    NSURLSessionDownloadTask *task = [IGNetworkManager downloadTaskForURL:self.downloadURL];
+    [self updateCellForDownloadTask:task];
 }
 
 #pragma mark - Setters
@@ -235,6 +218,50 @@
     }
 }
 
+#pragma mark - 
+
+- (void)updateCellForDownloadTask:(NSURLSessionDownloadTask *)task
+{
+    if (task)
+    {
+        [self.titleLabel setTextColor:[self unplayedColor]];
+        
+        [self.downloadProgressView setHidden:NO];
+        [self.downloadSizeProgressLabel setHidden:NO];
+        [self.downloadButton setHidden:NO];
+        [self.summaryLabel setHidden:YES];
+        [self.playedStatusImageView setHidden:YES];
+        [self.pubDateAndTimeLeftLabel setHidden:YES];
+        [self.showNotesButton setHidden:YES];
+        
+        [self updateDownloadButtonImageForSessionState:task.state];
+        
+        if (![self.downloadProgressTimer isValid])
+        {
+            self.downloadProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                                          target:self
+                                                                        selector:@selector(updateDownloadProgressView:)
+                                                                        userInfo:task
+                                                                         repeats:YES];
+        }
+    }
+    else
+    {
+        [self.summaryLabel setHidden:NO];
+        [self.playedStatusImageView setHidden:NO];
+        [self.pubDateAndTimeLeftLabel setHidden:NO];
+        [self.showNotesButton setHidden:NO];
+        [self.downloadProgressView setHidden:YES];
+        [self.downloadSizeProgressLabel setHidden:YES];
+        [self.downloadButton setHidden:YES];
+        
+        if ([self.downloadProgressTimer isValid])
+        {
+            [self.downloadProgressTimer invalidate];
+        }
+    }
+}
+
 - (void)updateDownloadButtonImageForSessionState:(NSURLSessionTaskState)state
 {
     if (state == NSURLSessionTaskStateRunning)
@@ -248,6 +275,17 @@
         [self.downloadButton setImage:[UIImage imageNamed:@"download-resume-button"]
                              forState:UIControlStateNormal];
         [self.downloadButton setAccessibilityLabel:NSLocalizedString(@"ResumeDownload", nil)];
+    }
+}
+
+#pragma mark - Notification
+
+- (void)downloadTaskDidStart:(NSNotification *)notification
+{
+    NSURLSessionDownloadTask *task = (NSURLSessionDownloadTask *)notification.object;
+    if ([[task.originalRequest URL] isEqual:self.downloadURL])
+    {
+        [self updateCellForDownloadTask:task];
     }
 }
 

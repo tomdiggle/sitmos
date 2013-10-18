@@ -516,8 +516,6 @@
         
         [self.tableView reloadData];
     }];
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - SSPullToRefreshViewDelegate
