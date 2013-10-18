@@ -117,20 +117,6 @@ static NSDictionary *deviceToken = nil;
     return [networkManager.downloadSessionManager downloadTasks];
 }
 
-#pragma mark - Initializers
-
-- (instancetype)init
-{
-    if (!(self = [super init]))
-    {
-        return nil;
-    }
-    
-   [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    
-    return self;
-}
-
 #pragma mark - Podcast Feed URL
 
 - (NSURL *)podcastFeedURL

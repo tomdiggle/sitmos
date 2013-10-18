@@ -28,6 +28,7 @@
 #import "IGEpisode.h"
 #import "IGDefines.h"
 #import "TestFlight.h"
+#import "AFNetworkActivityIndicatorManager.h"
 
 @implementation IGAppDelegate
 
@@ -38,6 +39,8 @@
     [TestFlight takeOff:IGTestFlightAPIKey];
     
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"SITMOS.sqlite"];
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
 #ifdef DEVELOPMENT_MODE
     [IGNetworkManager setDevelopmentModeEnabled:YES];
