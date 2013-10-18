@@ -51,12 +51,10 @@
     [self registerDefaultSettings];
     [self importEpisodesFromMediaLibrary];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackStateChanged:)
-                                                     name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                   object:nil];
-    });
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:IGMediaPlayerPlaybackStatusChangedNotification
+                                               object:nil];
     
     return YES;
 }
