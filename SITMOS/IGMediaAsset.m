@@ -21,6 +21,10 @@
 
 #import "IGMediaAsset.h"
 
+NSString * const IGMediaAssetTitleKey = @"MediaAssetTitle";
+NSString * const IGMediaAssetContentURLKey = @"MediaAssetContentURL";
+NSString * const IGMediaAssetAudioKey = @"MediaAssetAudio";
+
 @interface IGMediaAsset () <NSCoding>
 
 @property (readwrite, nonatomic, copy) NSString *title;
@@ -48,9 +52,9 @@
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-    NSString *title = [decoder decodeObjectForKey:@"IGMediaPlayerAssetTitle"];
-    NSURL *contentURL = [decoder decodeObjectForKey:@"IGMediaPlayerAssetContentURL"];
-    BOOL isAudio = [decoder decodeBoolForKey:@"IGMediaPlayerAssetIsAudio"];
+    NSString *title = [decoder decodeObjectForKey:IGMediaAssetTitleKey];
+    NSURL *contentURL = [decoder decodeObjectForKey:IGMediaAssetContentURLKey];
+    BOOL isAudio = [decoder decodeBoolForKey:IGMediaAssetAudioKey];
     
     self = [self initWithTitle:title
                     contentURL:contentURL
@@ -61,9 +65,9 @@
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeObject:self.title forKey:@"IGMediaPlayerAssetTitle"];
-    [encoder encodeObject:self.contentURL forKey:@"IGMediaPlayerAssetContentURL"];
-    [encoder encodeBool:self.isAudio forKey:@"IGMediaPlayerAssetIsAudio"];
+    [encoder encodeObject:self.title forKey:IGMediaAssetTitleKey];
+    [encoder encodeObject:self.contentURL forKey:IGMediaAssetContentURLKey];
+    [encoder encodeBool:self.isAudio forKey:IGMediaAssetAudioKey];
 }
 
 @end
