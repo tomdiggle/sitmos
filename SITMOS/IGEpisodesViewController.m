@@ -185,10 +185,6 @@
                     episode:episode];
     
     [episodeCell.showNotesButton setTag:indexPath.row];
-    
-    UIView *selectedBackgroundView = [[UIView alloc] init];
-    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.329 green:0.643 blue:0.901 alpha:1]];
-    [episodeCell setSelectedBackgroundView:selectedBackgroundView];
     [episodeCell setAccessibilityTraits:UIAccessibilityTraitStartsMediaSession];
     
     return episodeCell;

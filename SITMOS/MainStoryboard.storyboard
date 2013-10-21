@@ -50,7 +50,7 @@
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="episodeCell" id="2xw-m7-VFT" customClass="IGEpisodeCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="episodeCell" id="2xw-m7-VFT" customClass="IGEpisodeCell">
                                         <rect key="frame" x="0.0" y="66" width="320" height="78"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2xw-m7-VFT" id="uli-ku-cjQ">
@@ -65,7 +65,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Episode Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="262" translatesAutoresizingMaskIntoConstraints="NO" id="cdL-Bx-KXw" userLabel="Summary Label">
                                                     <rect key="frame" x="15" y="23" width="262" height="35"/>
@@ -76,14 +76,14 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pub Date and Time Left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="laS-OU-o9q" userLabel="Pub Date and Time Left Label">
                                                     <rect key="frame" x="15" y="57" width="122" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="deviceRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWz-KL-Xu5" userLabel="Show Notes Button">
                                                     <rect key="frame" x="280" y="0.0" width="40" height="77"/>
@@ -98,7 +98,7 @@
                                                         <segue destination="vNQ-FR-lWF" kind="push" identifier="showNotesSegue" id="fj7-7K-LnH"/>
                                                     </connections>
                                                 </button>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="episode-downloaded-icon.png" highlightedImage="episode-downloaded-icon-highlighted.png" translatesAutoresizingMaskIntoConstraints="NO" id="F9i-70-ZhR" userLabel="Episode Downloaded Icon">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="episode-downloaded-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="F9i-70-ZhR" userLabel="Episode Downloaded Icon">
                                                     <rect key="frame" x="299" y="0.0" width="21" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -133,7 +133,7 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4T5-Du-IBQ" userLabel="Download Progress View">
                                                     <rect key="frame" x="15" y="40" width="260" height="2"/>
@@ -976,7 +976,6 @@
     </scenes>
     <resources>
         <image name="audio-player-bg.png" width="320" height="329"/>
-        <image name="episode-downloaded-icon-highlighted.png" width="21" height="22"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>

@@ -66,7 +66,6 @@
 		320A8AAB17E71B6600D4B06C /* media-player-hide-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B603F017AB0B7F000C8EEC /* media-player-hide-button@2x.png */; };
 		320A8AAC17E71B6600D4B06C /* episode-show-notes-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */; };
 		320A8AAD17E71B6600D4B06C /* audio-player-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32A3C5C615C99FF60083D165 /* audio-player-bg@2x.png */; };
-		320A8AAE17E71B6600D4B06C /* episode-half-played-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA517CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png */; };
 		320A8AAF17E71B6600D4B06C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CBA17AAAE2100838E66 /* Default@2x.png */; };
 		320A8AB017E71B6600D4B06C /* icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 32282D6415CDEB690005E3B6 /* icon-58.png */; };
 		320A8AB117E71B6600D4B06C /* play-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A515DC1B5700345666 /* play-button@2x.png */; };
@@ -74,7 +73,6 @@
 		320A8AB317E71B6600D4B06C /* pause-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 325920A915DC23D700345666 /* pause-button@2x.png */; };
 		320A8AB417E71B6600D4B06C /* progress-slider-thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32056E2915E1913F00235783 /* progress-slider-thumb@2x.png */; };
 		320A8AB517E71B6600D4B06C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB917AAAE2100838E66 /* Default-568h@2x.png */; };
-		320A8AB617E71B6600D4B06C /* episode-unplayed-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA317CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png */; };
 		320A8AB717E71B6600D4B06C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222F7C6170F6B4000E8E76E /* Settings.bundle */; };
 		320A8AB817E71B6600D4B06C /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB617AAADBD00838E66 /* icon-120.png */; };
 		320A8AB917E71B6600D4B06C /* seek-forward-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 321169B417AFC58D004AFB0D /* seek-forward-button@2x.png */; };
@@ -88,9 +86,7 @@
 		320A8AC117E71B6600D4B06C /* errorIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921EE17A3186800895986 /* errorIcon@2x.png */; };
 		320A8AC217E71B6600D4B06C /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921EF17A3186800895986 /* successIcon.png */; };
 		320A8AC317E71B6600D4B06C /* icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 32C69CB517AAADBD00838E66 /* icon-80.png */; };
-		320A8AC417E71B6600D4B06C /* episode-downloaded-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */; };
 		320A8AC517E71B6600D4B06C /* successIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 322921F017A3186800895986 /* successIcon@2x.png */; };
-		320A8AC617E71B6600D4B06C /* episode-show-notes-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */; };
 		320A8AD217E72E5900D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
 		320A8AD317E72E5A00D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
 		320A8AD417E72E5A00D4B06C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 320A8ACE17E72E5900D4B06C /* libTestFlight.a */; };
@@ -185,10 +181,6 @@
 		3277FEFE17E6F9E00068CCC9 /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3277FEFC17E6F9E00068CCC9 /* Defaults.plist */; };
 		327E9FBE1558F96400612C8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FBD1558F96300612C8B /* AVFoundation.framework */; };
 		327E9FC21559329A00612C8B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 327E9FC11559329A00612C8B /* CoreMedia.framework */; };
-		327FCBA017CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */; };
-		327FCBA217CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */; };
-		327FCBA417CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA317CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png */; };
-		327FCBA617CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 327FCBA517CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png */; };
 		3285E114156C43A0009E128A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3285E112156C43A0009E128A /* Localizable.strings */; };
 		328B4A8217EA4A4800777C28 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 328B4A4A17EA4A4800777C28 /* MagicalImportFunctions.m */; };
 		328B4A8317EA4A4800777C28 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 328B4A4A17EA4A4800777C28 /* MagicalImportFunctions.m */; };
@@ -418,10 +410,6 @@
 		3277FEFC17E6F9E00068CCC9 /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Defaults.plist; sourceTree = "<group>"; };
 		327E9FBD1558F96300612C8B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		327E9FC11559329A00612C8B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-downloaded-icon-highlighted@2x.png"; sourceTree = "<group>"; };
-		327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-show-notes-button-highlighted@2x.png"; sourceTree = "<group>"; };
-		327FCBA317CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-unplayed-icon-highlighted@2x.png"; sourceTree = "<group>"; };
-		327FCBA517CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "episode-half-played-icon-highlighted@2x.png"; sourceTree = "<group>"; };
 		3285E113156C43A0009E128A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		328B4A4917EA4A4800777C28 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		328B4A4A17EA4A4800777C28 /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
@@ -860,14 +848,10 @@
 				32C69CBA17AAAE2100838E66 /* Default@2x.png */,
 				325A76F917C0E13C0036C276 /* download-pause-button@2x.png */,
 				325A76FA17C0E13C0036C276 /* download-resume-button@2x.png */,
-				327FCB9F17CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png */,
 				3213C5ED174913C6003C0BC4 /* episode-downloaded-icon@2x.png */,
-				327FCBA517CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png */,
 				3213C5F5174A299C003C0BC4 /* episode-half-played-icon@2x.png */,
 				3277FEB017E61FF60068CCC9 /* episode-image-placeholder@2x.png */,
-				327FCBA117CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png */,
 				321F218B15B9FD8D00610DC0 /* episode-show-notes-button@2x.png */,
-				327FCBA317CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png */,
 				3213C5F117495570003C0BC4 /* episode-unplayed-icon@2x.png */,
 				32C69CB617AAADBD00838E66 /* icon-120.png */,
 				32282D6415CDEB690005E3B6 /* icon-58.png */,
@@ -1183,7 +1167,6 @@
 				320A8AAB17E71B6600D4B06C /* media-player-hide-button@2x.png in Resources */,
 				320A8AAC17E71B6600D4B06C /* episode-show-notes-button@2x.png in Resources */,
 				320A8AAD17E71B6600D4B06C /* audio-player-bg@2x.png in Resources */,
-				320A8AAE17E71B6600D4B06C /* episode-half-played-icon-highlighted@2x.png in Resources */,
 				320A8AAF17E71B6600D4B06C /* Default@2x.png in Resources */,
 				320A8AB017E71B6600D4B06C /* icon-58.png in Resources */,
 				320A8AB117E71B6600D4B06C /* play-button@2x.png in Resources */,
@@ -1191,7 +1174,6 @@
 				320A8AB317E71B6600D4B06C /* pause-button@2x.png in Resources */,
 				320A8AB417E71B6600D4B06C /* progress-slider-thumb@2x.png in Resources */,
 				320A8AB517E71B6600D4B06C /* Default-568h@2x.png in Resources */,
-				320A8AB617E71B6600D4B06C /* episode-unplayed-icon-highlighted@2x.png in Resources */,
 				320A8AB717E71B6600D4B06C /* Settings.bundle in Resources */,
 				320A8AB817E71B6600D4B06C /* icon-120.png in Resources */,
 				320A8AB917E71B6600D4B06C /* seek-forward-button@2x.png in Resources */,
@@ -1205,9 +1187,7 @@
 				320A8AC117E71B6600D4B06C /* errorIcon@2x.png in Resources */,
 				320A8AC217E71B6600D4B06C /* successIcon.png in Resources */,
 				320A8AC317E71B6600D4B06C /* icon-80.png in Resources */,
-				320A8AC417E71B6600D4B06C /* episode-downloaded-icon-highlighted@2x.png in Resources */,
 				320A8AC517E71B6600D4B06C /* successIcon@2x.png in Resources */,
-				320A8AC617E71B6600D4B06C /* episode-show-notes-button-highlighted@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1223,7 +1203,6 @@
 				32B603F117AB0B7F000C8EEC /* media-player-hide-button@2x.png in Resources */,
 				321F218D15B9FD8D00610DC0 /* episode-show-notes-button@2x.png in Resources */,
 				32A3C5C815C99FF60083D165 /* audio-player-bg@2x.png in Resources */,
-				327FCBA617CCEDD2007177B6 /* episode-half-played-icon-highlighted@2x.png in Resources */,
 				32C69CBC17AAAE2100838E66 /* Default@2x.png in Resources */,
 				32282D6615CDEB6A0005E3B6 /* icon-58.png in Resources */,
 				325920A715DC1B5700345666 /* play-button@2x.png in Resources */,
@@ -1231,7 +1210,6 @@
 				325920AB15DC23D700345666 /* pause-button@2x.png in Resources */,
 				32056E2B15E1913F00235783 /* progress-slider-thumb@2x.png in Resources */,
 				32C69CBB17AAAE2100838E66 /* Default-568h@2x.png in Resources */,
-				327FCBA417CCED53007177B6 /* episode-unplayed-icon-highlighted@2x.png in Resources */,
 				3222F7C7170F6B4000E8E76E /* Settings.bundle in Resources */,
 				32C69CB817AAADBD00838E66 /* icon-120.png in Resources */,
 				321169B517AFC58D004AFB0D /* seek-forward-button@2x.png in Resources */,
@@ -1245,9 +1223,7 @@
 				322921F417A3186800895986 /* errorIcon@2x.png in Resources */,
 				322921F517A3186800895986 /* successIcon.png in Resources */,
 				32C69CB717AAADBD00838E66 /* icon-80.png in Resources */,
-				327FCBA017CCEBE8007177B6 /* episode-downloaded-icon-highlighted@2x.png in Resources */,
 				322921F617A3186800895986 /* successIcon@2x.png in Resources */,
-				327FCBA217CCECCE007177B6 /* episode-show-notes-button-highlighted@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
