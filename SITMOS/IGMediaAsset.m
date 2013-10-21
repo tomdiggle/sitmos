@@ -31,7 +31,9 @@
 
 @implementation IGMediaAsset
 
-- (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio
+- (id)initWithTitle:(NSString *)title
+         contentURL:(NSURL *)contentURL
+            isAudio:(BOOL)audio
 {
     if (!(self = [super init])) return nil;
     
