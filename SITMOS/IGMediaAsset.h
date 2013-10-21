@@ -26,17 +26,17 @@
 /**
  * The title of the media currently playing.
  */
-@property (nonatomic, strong, readonly) NSString *title;
+@property (readonly, nonatomic, copy) NSString *title;
 
 /**
  * The url of the content currently playing.
  */
-@property (nonatomic, strong, readonly) NSURL *contentURL;
+@property (readonly, nonatomic, copy) NSURL *contentURL;
 
 /**
  *
  */
-@property (nonatomic, assign, readonly, getter = isAudio) BOOL audio;
+@property (readonly, nonatomic, assign, getter = isAudio) BOOL audio;
 
 /**
  *

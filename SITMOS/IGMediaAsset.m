@@ -23,9 +23,9 @@
 
 @interface IGMediaAsset () <NSCoding>
 
-@property (nonatomic, strong, readwrite) NSString *title;
-@property (nonatomic, strong, readwrite) NSURL *contentURL;
-@property (nonatomic, assign, readwrite, getter = isAudio) BOOL audio;
+@property (readwrite, nonatomic, copy) NSString *title;
+@property (readwrite, nonatomic, copy) NSURL *contentURL;
+@property (readwrite, nonatomic, assign, getter = isAudio) BOOL audio;
 
 @end
 
