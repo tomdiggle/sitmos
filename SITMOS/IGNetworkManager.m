@@ -21,11 +21,11 @@
 
 #import "IGNetworkManager.h"
 
+#import "IGAppDelegate.h"
 #import "IGXMLResponseSerialization.h"
 #import "IGPodcastFeedParser.h"
 #import "IGDefines.h"
 #import "IGAPIKeys.h"
-#import "UIApplication+LocalNotificationHelper.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "NSDate+Helper.h"
@@ -149,6 +149,20 @@ static NSDictionary *deviceToken = nil;
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.idlegeniussoftware.sitmos.networking.session.episode.download"];
         downloadSessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:sessionConfig];
         downloadSessionManager.securityPolicy = [AFSecurityPolicy defaultPolicy];
+        
+        [downloadSessionManager setDidFinishEventsForBackgroundURLSessionBlock:^(NSURLSession *session) {
+            IGAppDelegate *appDelegate = (IGAppDelegate *)[[UIApplication sharedApplication] delegate];
+            if (appDelegate.backgroundSessionCompletionHandler) {
+                void (^completionHandler)() = appDelegate.backgroundSessionCompletionHandler;
+                appDelegate.backgroundSessionCompletionHandler = nil;
+                completionHandler();
+            }
+            
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertBody = NSLocalizedString(@"AllEpisodesFinishedDownloading", nil);
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+        }];
     });
     return downloadSessionManager;
 }
@@ -253,16 +267,15 @@ static NSDictionary *deviceToken = nil;
     return NO;
 }
 
-#pragma mark -
+#pragma mark - Download Episode
 
 - (void)downloadEpisodeWithDownloadURL:(NSURL *)downloadURL destinationURL:(NSURL *)destinationURL completion:(void (^)(BOOL success, NSError *error))completion
 {
-    NSString *fileName = [NSString MD5Hash:[downloadURL absoluteString]];
-    NSString *resumeDataPath = [[IGNetworkManager incompleteDownloadsDirectory] stringByAppendingPathComponent:fileName];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:resumeDataPath])
+    NSData *resumeData = [self loadResumeDataForDownloadURL:downloadURL];
+    if (resumeData)
     {
-        NSData *resumeData = [NSData dataWithContentsOfFile:resumeDataPath];
         [self downloadEpisodeWithResumeData:resumeData downloadURL:downloadURL destinationURL:destinationURL completion:completion];
+        
         return;
     }
     
@@ -270,20 +283,14 @@ static NSDictionary *deviceToken = nil;
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     
     NSURLSessionDownloadTask *downloadTask = [self.downloadSessionManager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        
         return destinationURL;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         if (error)
         {
             NSData *resumeData = [[error userInfo] objectForKey:NSURLSessionDownloadTaskResumeData];
-            if (resumeData)
-            {
-                [[NSFileManager defaultManager] createFileAtPath:resumeDataPath contents:resumeData attributes:nil];
-            }
+            [self saveResumableData:resumeData withFileName:[NSString MD5Hash:[downloadURL absoluteString]]];
         }
-        
-        NSDictionary *parameters = @{ @"alertBody" : error ? NSLocalizedString(@"EpisodeDownloadFailed", nil) : NSLocalizedString(@"EpisodeDownloadFinished", nil),
-                                      @"soundName" : UILocalNotificationDefaultSoundName };
-        [UIApplication presentLocalNotificationNowWithParameters:parameters];
         
         if (completion)
         {
@@ -298,22 +305,14 @@ static NSDictionary *deviceToken = nil;
 - (void)downloadEpisodeWithResumeData:(NSData *)resumeData downloadURL:(NSURL *)downloadURL destinationURL:(NSURL *)destinationURL completion:(void (^)(BOOL success, NSError *error))completion
 {
     NSURLSessionDownloadTask *downloadTask = [self.downloadSessionManager downloadTaskWithResumeData:resumeData progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        
         return destinationURL;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         if (error)
         {
             NSData *resumeData = [[error userInfo] objectForKey:NSURLSessionDownloadTaskResumeData];
-            if (resumeData)
-            {
-                NSString *fileName = [NSString MD5Hash:[downloadURL absoluteString]];
-                NSString *resumeDataPath = [[IGNetworkManager incompleteDownloadsDirectory] stringByAppendingPathComponent:fileName];
-                [[NSFileManager defaultManager] createFileAtPath:resumeDataPath contents:resumeData attributes:nil];
-            }
+            [self saveResumableData:resumeData withFileName:[NSString MD5Hash:[downloadURL absoluteString]]];
         }
-        
-        NSDictionary *parameters = @{ @"alertBody" : error ? NSLocalizedString(@"EpisodeDownloadFailed", nil) : NSLocalizedString(@"EpisodeDownloadFinished", nil),
-                                      @"soundName" : UILocalNotificationDefaultSoundName };
-        [UIApplication presentLocalNotificationNowWithParameters:parameters];
         
         if (completion)
         {
@@ -323,6 +322,34 @@ static NSDictionary *deviceToken = nil;
         }
     }];
     [downloadTask resume];
+}
+
+- (void)saveResumableData:(NSData *)data withFileName:(NSString *)fileName
+{
+    if (!data || !fileName)
+    {
+        return;
+    }
+    
+    NSString *resumeDataPath = [[IGNetworkManager incompleteDownloadsDirectory] stringByAppendingPathComponent:fileName];
+    [[NSFileManager defaultManager] createFileAtPath:resumeDataPath contents:data attributes:nil];
+}
+
+- (NSData *)loadResumeDataForDownloadURL:(NSURL *)downloadURL
+{
+    if (!downloadURL)
+    {
+        return nil;
+    }
+    
+    NSString *fileName = [NSString MD5Hash:[downloadURL absoluteString]];
+    NSString *resumeDataPath = [[IGNetworkManager incompleteDownloadsDirectory] stringByAppendingPathComponent:fileName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:resumeDataPath])
+    {
+        return [NSData dataWithContentsOfFile:resumeDataPath];
+    }
+    
+    return nil;
 }
 
 @end

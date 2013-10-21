@@ -108,14 +108,11 @@
 /* accessibility hint for pauses episdoe */
 "PausesEpisode" = "Pauses episode.";
 
-/* text label for all episodes finished downloading */
-"EpisodeDownloadFinished" = "All episodes have finsihed downloading.";
+/* Local noticiation alert body when all downloads have finished */
+"AllEpisodesFinishedDownloading" = "All episodes have finished downloading.";
 
-/* text label for all episodes failed to download */
-"EpisodeDownloadFailed" = "All episodes have failed to download.";
-
-/* text label for failed to download episode */
-"FailedToDownloadEpisode" = "Failed to download episode";
+/* Title for notification displayed in app when a download has failed */
+"EpisodeFailedToDownload" = "'%@' failed to download.";
 
 /* text label for successfully imported episodes */
 "SuccessfullyImportedEpisodes" = "Successfully Imported %i Episodes";
@@ -128,9 +125,6 @@
 
 /* Release to refresh status */
 "Release to refresh..." = "Release to refresh...";
-
-/* text label for episode download progress */
-"EpisodeDownloadProgress" = "%@ of %@";
 
 /* accessibility label for resume download */
 "ResumeDownload" = "Resume download";
@@ -152,3 +146,6 @@
 
 /* text label for imported # episodes */
 "ImportedEpisodes" = "Imported %i Episodes";
+
+/* The text for download progress label in IGEpisodeCell */
+"Loading" = "Loading...";

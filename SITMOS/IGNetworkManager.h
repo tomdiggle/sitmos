@@ -111,10 +111,10 @@ extern NSString * const IGPodcastFeedURL;
  */
 - (void)syncPodcastFeedWithCompletion:(void (^)(BOOL success, NSArray *feedItems, NSError *error))completion;
 
-#pragma mark - Downloading Episode
+#pragma mark - Download Episode
 
 /**
- * @name Downloading Episode
+ * @name Download Episode
  */
 
 /**

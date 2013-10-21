@@ -35,7 +35,6 @@
 		320A8A7617E71B6600D4B06C /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
 		320A8A7717E71B6600D4B06C /* IGNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGNetworkManager.m */; };
 		320A8A7A17E71B6600D4B06C /* IGPodcastFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */; };
-		320A8A7B17E71B6600D4B06C /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		320A8A7E17E71B6600D4B06C /* IGSettingsSeekingBackwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA27B216DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m */; };
 		320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32BF7B1B16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m */; };
 		320A8A8117E71B6600D4B06C /* IGMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D0092E16EA830A00EAEA81 /* IGMediaAsset.m */; };
@@ -160,7 +159,6 @@
 		323923AE167F5E0500301439 /* RIButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923A9167F5E0500301439 /* RIButtonItem.m */; };
 		323923AF167F5E0500301439 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */; };
 		323923B0167F5E0500301439 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 323923AD167F5E0500301439 /* UIAlertView+Blocks.m */; };
-		323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */; };
 		323D5A3816B842770074E91F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323D5A3716B842770074E91F /* SystemConfiguration.framework */; };
 		32523DEE1688BFF0006E9FFB /* IGNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DED1688BFF0006E9FFB /* IGNetworkManager.m */; };
 		32523DF4168E4277006E9FFB /* IGPodcastFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32523DF3168E4277006E9FFB /* IGPodcastFeedParser.m */; };
@@ -390,8 +388,6 @@
 		323923AB167F5E0500301439 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
 		323923AC167F5E0500301439 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
 		323923AD167F5E0500301439 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
-		323D5A3316B824270074E91F /* UIApplication+LocalNotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+LocalNotificationHelper.h"; sourceTree = "<group>"; };
-		323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+LocalNotificationHelper.m"; sourceTree = "<group>"; };
 		323D5A3716B842770074E91F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		323D5A3916B842F30074E91F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32523DEC1688BFF0006E9FFB /* IGNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGNetworkManager.h; sourceTree = "<group>"; };
@@ -830,8 +826,6 @@
 		3263DE991756842000D74A1F /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				323D5A3316B824270074E91F /* UIApplication+LocalNotificationHelper.h */,
-				323D5A3416B824270074E91F /* UIApplication+LocalNotificationHelper.m */,
 				3263DEA11756A06900D74A1F /* UIViewController+IGNowPlayingButton.h */,
 				3263DEA21756A06900D74A1F /* UIViewController+IGNowPlayingButton.m */,
 			);
@@ -1337,7 +1331,6 @@
 				328B4ABF17EA4A4800777C28 /* MagicalRecord+ErrorHandling.m in Sources */,
 				320E10611802C90A0031B058 /* AFURLResponseSerialization.m in Sources */,
 				328B4A9B17EA4A4800777C28 /* NSManagedObject+MagicalDataImport.m in Sources */,
-				320A8A7B17E71B6600D4B06C /* UIApplication+LocalNotificationHelper.m in Sources */,
 				320A8A7E17E71B6600D4B06C /* IGSettingsSeekingBackwardViewController.m in Sources */,
 				320A8A8017E71B6600D4B06C /* IGSettingsSeekingForwardViewController.m in Sources */,
 				320A8A8117E71B6600D4B06C /* IGMediaAsset.m in Sources */,
@@ -1413,7 +1406,6 @@
 				328B4ABE17EA4A4800777C28 /* MagicalRecord+ErrorHandling.m in Sources */,
 				320E10601802C90A0031B058 /* AFURLResponseSerialization.m in Sources */,
 				328B4A9A17EA4A4800777C28 /* NSManagedObject+MagicalDataImport.m in Sources */,
-				323D5A3516B824270074E91F /* UIApplication+LocalNotificationHelper.m in Sources */,
 				32EA27B316DA71E300BB528E /* IGSettingsSeekingBackwardViewController.m in Sources */,
 				32BF7B1C16DA9E9F006B2459 /* IGSettingsSeekingForwardViewController.m in Sources */,
 				32D0092F16EA830A00EAEA81 /* IGMediaAsset.m in Sources */,

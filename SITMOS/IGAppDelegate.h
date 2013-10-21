@@ -24,5 +24,6 @@
 @interface IGAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+@property (copy) void (^backgroundSessionCompletionHandler)();
 
 @end
