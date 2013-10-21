@@ -99,8 +99,8 @@
 /* text label for importing episodes */
 "ImportingEpisodes" = "Importing Episodes";
 
-/* text label for error fetching feed */
-"ErrorFetchingFeed" = "Error Fetching Feed";
+/* Notification title for when a episode fails to download */
+"ErrorFetchingFeed" = "Error fetching feed";
 
 /* accessibility hint for plays episode */
 "PlaysEpisode" = "Plays episode.";
