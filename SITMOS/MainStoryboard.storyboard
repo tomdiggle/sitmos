@@ -170,8 +170,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="downloadButton" destination="PBQ-ED-iIT" id="wm9-mI-LEs"/>
+                                            <outlet property="downloadProgressLabel" destination="OVr-8d-Wf4" id="5Lh-Mt-Rl2"/>
                                             <outlet property="downloadProgressView" destination="4T5-Du-IBQ" id="Wan-P5-8rZ"/>
-                                            <outlet property="downloadSizeProgressLabel" destination="OVr-8d-Wf4" id="zbz-dN-ZC8"/>
                                             <outlet property="episodeDownloadedImageView" destination="F9i-70-ZhR" id="2HO-y5-dHC"/>
                                             <outlet property="playedStatusImageView" destination="yeo-XC-WMm" id="L5h-um-HGi"/>
                                             <outlet property="pubDateAndTimeLeftLabel" destination="laS-OU-o9q" id="QAF-8E-8gH"/>

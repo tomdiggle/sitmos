@@ -24,17 +24,21 @@
 #import "IGNetworkManager.h"
 #import "NSDate+Helper.h"
 
+static void * IGTaskStateChangedContext = &IGTaskStateChangedContext;
+static void * IGTaskReceivedDataContext = &IGTaskReceivedDataContext;
+
 @interface IGEpisodeCell ()
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *summaryLabel;
 @property (nonatomic, weak) IBOutlet UILabel *pubDateAndTimeLeftLabel;
-@property (nonatomic, weak) IBOutlet UILabel *downloadSizeProgressLabel;
+@property (nonatomic, weak) IBOutlet UILabel *downloadProgressLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *playedStatusImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *episodeDownloadedImageView;
 @property (nonatomic, weak) IBOutlet UIProgressView *downloadProgressView;
 @property (nonatomic, weak) IBOutlet UIButton *downloadButton;
-@property (nonatomic, strong) NSTimer *downloadProgressTimer;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic, strong) NSProgress *downloadProgress;
 @property (nonatomic, strong) NSLayoutConstraint *pubDateAndTimeLeftLayoutConstraint;
 
 @end
@@ -44,11 +48,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    if ([self.downloadProgressTimer isValid])
-    {
-        [self.downloadProgressTimer invalidate];
-    }
 }
 
 - (NSString *)description
@@ -82,7 +81,68 @@
     [super layoutSubviews];
     
     NSURLSessionDownloadTask *task = [IGNetworkManager downloadTaskForURL:self.downloadURL];
-    [self updateCellForDownloadTask:task];
+    if (task)
+    {
+        self.downloadTask = task;
+        [self layoutForDownloadTaskRunning];
+    }
+    else if (self.downloadTask && ![[self.downloadTask.originalRequest URL] isEqual:self.downloadURL])
+    {
+        // When the cell gets re-used and the re-used cell is now not downloading we need to update the UI.
+        [self layoutForDownloadTaskNotRunning];
+    }
+}
+
+- (void)layoutForDownloadTaskRunning
+{
+    if (!self.downloadProgress)
+    {
+        self.downloadProgress = [[NSProgress alloc] initWithParent:nil userInfo:@{NSProgressKindFile: NSProgressFileOperationKindDownloading}];
+        self.downloadProgress.kind = NSProgressKindFile;
+        self.downloadProgress.totalUnitCount = [self.downloadTask countOfBytesExpectedToReceive];
+        self.downloadProgress.completedUnitCount = [self.downloadTask countOfBytesReceived];
+    }
+    
+    self.downloadProgressView.progress = [self.downloadProgress fractionCompleted];
+    self.downloadProgressLabel.text = ([self.downloadProgress fractionCompleted] == 0) ? NSLocalizedString(@"Loading", nil) : self.downloadProgress.localizedAdditionalDescription;
+    
+    self.titleLabel.textColor = [self unplayedColor];
+    
+    [self.downloadProgressView setHidden:NO];
+    [self.downloadProgressLabel setHidden:NO];
+    [self.downloadButton setHidden:NO];
+    [self.summaryLabel setHidden:YES];
+    [self.playedStatusImageView setHidden:YES];
+    [self.pubDateAndTimeLeftLabel setHidden:YES];
+    [self.showNotesButton setHidden:YES];
+    
+    [self updateDownloadButtonImageForSessionState:NSURLSessionTaskStateRunning];
+    
+    [self.downloadTask addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:IGTaskStateChangedContext];
+    [self.downloadTask addObserver:self forKeyPath:@"countOfBytesReceived" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:IGTaskReceivedDataContext];
+}
+
+- (void)layoutForDownloadTaskNotRunning
+{
+    self.titleLabel.textColor = (self.playedStatus == IGEpisodePlayedStatusPlayed) ? [self playedColor] : [self unplayedColor];
+    
+    [self.summaryLabel setHidden:NO];
+    [self.playedStatusImageView setHidden:NO];
+    [self.pubDateAndTimeLeftLabel setHidden:NO];
+    [self.showNotesButton setHidden:NO];
+    [self.downloadProgressView setHidden:YES];
+    [self.downloadProgressLabel setHidden:YES];
+    [self.downloadButton setHidden:YES];
+    
+    @try
+    {
+        [self.downloadTask removeObserver:self forKeyPath:@"state" context:IGTaskStateChangedContext];
+        [self.downloadTask removeObserver:self forKeyPath:@"countOfBytesReceived" context:IGTaskReceivedDataContext];
+    } @catch (NSException *exception) {}
+    
+    self.downloadProgressView.progress = 0;
+    self.downloadTask = nil;
+    self.downloadProgress = nil;
 }
 
 #pragma mark - Setters
@@ -104,27 +164,24 @@
 }
 
 - (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
-{    
+{
     if (playedStatus == IGEpisodePlayedStatusUnplayed)
     {
-        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
         [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-unplayed-icon"]];
-        [self.playedStatusImageView setHighlightedImage:[UIImage imageNamed:@"episode-unplayed-icon-highlighted"]];
-        [self.titleLabel setTextColor:[self unplayedColor]];
+        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
+        self.titleLabel.textColor = [self unplayedColor];
     }
     else if (playedStatus == IGEpisodePlayedStatusHalfPlayed)
     {
-        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
         [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-half-played-icon"]];
-        [self.playedStatusImageView setHighlightedImage:[UIImage imageNamed:@"episode-half-played-icon-highlighted"]];
-        [self.titleLabel setTextColor:[self unplayedColor]];
+        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
+        self.titleLabel.textColor = [self unplayedColor];
     }
     else
     {
         [self.pubDateAndTimeLeftLayoutConstraint setConstant:15];
         [self.playedStatusImageView setImage:nil];
-        [self.playedStatusImageView setHighlightedImage:nil];
-        [self.titleLabel setTextColor:[self playedColor]];
+        self.titleLabel.textColor = [self playedColor];
     }
     
     _playedStatus = playedStatus;
@@ -168,7 +225,7 @@
     [_pubDateAndTimeLeftLabel setText:[NSString stringWithFormat:@"%@ - %@", [NSDate stringFromDate:_pubDate withFormat:@"dd MMM yyyy"], timeLeft]];
 }
 
-#pragma mark - Color's for the labels
+#pragma mark - Color's for the episode title label
 
 - (UIColor *)playedColor
 {
@@ -180,26 +237,7 @@
     return [UIColor blackColor];
 }
 
-#pragma mark - Update Download Progress
-
-- (void)updateDownloadProgressView:(id)sender
-{
-    NSURLSessionDownloadTask *sessionTask = (NSURLSessionDownloadTask *)[sender userInfo];
-    if (sessionTask.countOfBytesReceived == 0)
-    {
-        return;
-    }
-    
-    self.downloadProgressView.progress = (double)sessionTask.countOfBytesReceived / (double)sessionTask.countOfBytesExpectedToReceive;
-    
-    NSString *bytesReceived = [NSByteCountFormatter stringFromByteCount:sessionTask.countOfBytesReceived
-                                                             countStyle:NSByteCountFormatterCountStyleDecimal];
-    NSString *bytesExpectedToReceive = [NSByteCountFormatter stringFromByteCount:sessionTask.countOfBytesExpectedToReceive
-                                                                      countStyle:NSByteCountFormatterCountStyleBinary];
-    [self.downloadSizeProgressLabel setText:[NSString stringWithFormat:NSLocalizedString(@"EpisodeDownloadProgress", nil), bytesReceived, bytesExpectedToReceive]];
-}
-
-#pragma mark - 
+#pragma mark - Download Button
 
 - (IBAction)pauseOrResumeDownload:(id)sender
 {
@@ -215,50 +253,6 @@
         [sessionTask resume];
         
         [self updateDownloadButtonImageForSessionState:NSURLSessionTaskStateRunning];
-    }
-}
-
-#pragma mark - 
-
-- (void)updateCellForDownloadTask:(NSURLSessionDownloadTask *)task
-{
-    if (task)
-    {
-        [self.titleLabel setTextColor:[self unplayedColor]];
-        
-        [self.downloadProgressView setHidden:NO];
-        [self.downloadSizeProgressLabel setHidden:NO];
-        [self.downloadButton setHidden:NO];
-        [self.summaryLabel setHidden:YES];
-        [self.playedStatusImageView setHidden:YES];
-        [self.pubDateAndTimeLeftLabel setHidden:YES];
-        [self.showNotesButton setHidden:YES];
-        
-        [self updateDownloadButtonImageForSessionState:task.state];
-        
-        if (![self.downloadProgressTimer isValid])
-        {
-            self.downloadProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                                                          target:self
-                                                                        selector:@selector(updateDownloadProgressView:)
-                                                                        userInfo:task
-                                                                         repeats:YES];
-        }
-    }
-    else
-    {
-        [self.summaryLabel setHidden:NO];
-        [self.playedStatusImageView setHidden:NO];
-        [self.pubDateAndTimeLeftLabel setHidden:NO];
-        [self.showNotesButton setHidden:NO];
-        [self.downloadProgressView setHidden:YES];
-        [self.downloadSizeProgressLabel setHidden:YES];
-        [self.downloadButton setHidden:YES];
-        
-        if ([self.downloadProgressTimer isValid])
-        {
-            [self.downloadProgressTimer invalidate];
-        }
     }
 }
 
@@ -285,7 +279,83 @@
     NSURLSessionDownloadTask *task = (NSURLSessionDownloadTask *)notification.object;
     if ([[task.originalRequest URL] isEqual:self.downloadURL])
     {
-        [self updateCellForDownloadTask:task];
+        self.downloadTask = task;
+        [self layoutForDownloadTaskRunning];
+    }
+}
+
+#pragma mark - NSKeyValueObserving
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (context == IGTaskStateChangedContext && [keyPath isEqualToString:@"state"])
+    {
+        NSURLSessionTask *task = (NSURLSessionTask *)object;
+        if (![[task.originalRequest URL] isEqual:self.downloadURL])
+        {
+            return;
+        }
+        
+        switch (task.state)
+        {
+            case NSURLSessionTaskStateRunning:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self layoutForDownloadTaskRunning];
+                });
+                break;
+            }
+            case NSURLSessionTaskStateSuspended:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self updateDownloadButtonImageForSessionState:NSURLSessionTaskStateSuspended];
+                });
+                break;
+            }
+            case NSURLSessionTaskStateCompleted:
+            {
+                if (![object error])
+                {
+                    self.downloadStatus = IGEpisodeDownloadStatusDownloaded;
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self layoutForDownloadTaskNotRunning];
+                });
+                
+                @try
+                {
+                    [object removeObserver:self forKeyPath:@"state" context:IGTaskStateChangedContext];
+                    [object removeObserver:self forKeyPath:@"countOfBytesReceived" context:IGTaskReceivedDataContext];
+                } @catch (NSException *exception) {}
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else if (context == IGTaskReceivedDataContext && [keyPath isEqualToString:@"countOfBytesReceived"])
+    {
+        NSURLSessionTask *task = (NSURLSessionTask *)object;
+        if (![[task.originalRequest URL] isEqual:self.downloadURL])
+        {
+            return;
+        }
+
+        self.downloadProgress.totalUnitCount = task.countOfBytesExpectedToReceive;
+        self.downloadProgress.completedUnitCount = task.countOfBytesReceived;
+            
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.downloadProgressView.progress = self.downloadProgress.fractionCompleted;
+            self.downloadProgressLabel.text = self.downloadProgress.localizedAdditionalDescription;
+        });
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
