@@ -24,23 +24,32 @@
 @interface IGMediaAsset : NSObject
 
 /**
- * The title of the media currently playing.
+ * The title with which the asset was initialized. (read-only)
  */
 @property (readonly, nonatomic, copy) NSString *title;
 
 /**
- * The url of the content currently playing.
+ * The URL with which the asset was initialized. (read-only)
  */
 @property (readonly, nonatomic, copy) NSURL *contentURL;
 
 /**
- *
+ * Returns YES is media is audio, NO otherwise. (read-only)
  */
 @property (readonly, nonatomic, assign, getter = isAudio) BOOL audio;
 
 /**
- *
+ * @name Initialization
  */
-- (id)initWithTitle:(NSString *)title contentURL:(NSURL *)contentURL isAudio:(BOOL)audio;
+
+/**
+ * Initializes a new media asset with the specified title, content url and is audio. This is the designated initializer.
+ *
+ * @param title The title of the media playing.
+ * @param contentURL The location of the media
+ */
+- (id)initWithTitle:(NSString *)title
+         contentURL:(NSURL *)contentURL
+            isAudio:(BOOL)audio;
 
 @end
