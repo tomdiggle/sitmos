@@ -36,7 +36,6 @@
 #import "IGNetworkManager.h"
 #import "UIViewController+IGNowPlayingButton.h"
 #import "TDNotificationPanel.h"
-#import "TestFlight.h"
 
 @interface IGEpisodesViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UIDataSourceModelAssociation, SSPullToRefreshViewDelegate>
 
@@ -505,16 +504,15 @@
     [networkManager downloadEpisodeWithDownloadURL:downloadURL destinationURL:targetPath completion:^(BOOL success, NSError *error) {
         if (error)
         {
+            IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL" withValue:downloadURL];
             [TDNotificationPanel showNotificationInView:self.view
-                                                  title:NSLocalizedString(@"FailedToDownloadEpisode", nil)
+                                                  title:[NSString stringWithFormat:NSLocalizedString(@"EpisodeFailedToDownload", nil), episode.title]
                                                subtitle:[error localizedDescription]
                                                    type:TDNotificationTypeError
                                                    mode:TDNotificationModeText
                                             dismissible:YES
                                          hideAfterDelay:4];
         }
-        
-        [self.tableView reloadData];
     }];
 }
 
