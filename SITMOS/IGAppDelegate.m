@@ -52,8 +52,8 @@
     [self importEpisodesFromMediaLibrary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:IGMediaPlayerPlaybackStatusChangedNotification
+                                             selector:@selector(becomeFirstResponder:)
+                                                 name:IGMediaPlayerPlaybackStateLoadingNotification
                                                object:nil];
     
     return YES;
@@ -71,9 +71,7 @@
     IGMediaPlayer *mediaPlayer = [IGMediaPlayer sharedInstance];
     [mediaPlayer stop];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:IGMediaPlayerPlaybackStatusChangedNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     if ([self isFirstResponder])
     {
@@ -218,14 +216,17 @@
     return YES;
 }
 
-#pragma mark - Playback State Changed
+#pragma mark - Become First Responder
 
 /**
- * If the playback state changes to play and the app delegate is not already the first responder begin receiving remote control events and become the first responder.
+ * Only become first responder when playback begins, otherwise any music that is already playing from another app will be stopped.
  */
-- (void)playbackStateChanged:(NSNotification *)notification
+- (void)becomeFirstResponder:(NSNotification *)notification
 {
-    if ([self isFirstResponder]) return;
+    if ([self isFirstResponder])
+    {
+        return;
+    }
     
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
