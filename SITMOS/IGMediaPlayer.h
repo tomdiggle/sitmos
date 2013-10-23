@@ -22,20 +22,28 @@
 #import <Foundation/Foundation.h>
 
 /* Media Player Notifications */
-extern NSString * const IGMediaPlayerPlaybackStatusChangedNotification;
-extern NSString * const IGMediaPlayerPlaybackFailedNotification;
-extern NSString * const IGMediaPlayerPlaybackEndedNotification;
-extern NSString * const IGMediaPlayerPlaybackBufferEmptyNotification;
+extern NSString * const IGMediaPlayerPlaybackStateLoadingNotification;
+extern NSString * const IGMediaPlayerPlaybackStateBufferingNotification;
+extern NSString * const IGMediaPlayerPlaybackStatePlayingNotification;
+extern NSString * const IGMediaPlayerPlaybackStatePausedNotification;
+extern NSString * const IGMediaPlayerPlaybackStateStoppedNotification;
+extern NSString * const IGMediaPlayerPlaybackStateSeekingForwardNotification;
+extern NSString * const IGMediaPlayerPlaybackStateSeekingBackwardNotification;
+extern NSString * const IGMediaPlayerPlaybackStateFailedNotification;
+extern NSString * const IGMediaPlayerPlaybackStateDidReachEndNotification;
 extern NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification;
 
 typedef enum {
+    IGMediaPlayerPlaybackStateLoading,
     IGMediaPlayerPlaybackStateBuffering,
-    IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStatePlaying,
     IGMediaPlayerPlaybackStatePaused,
     IGMediaPlayerPlaybackStatePausedByInterruption,
+    IGMediaPlayerPlaybackStateStopped,
     IGMediaPlayerPlaybackStateSeekingForward,
-    IGMediaPlayerPlaybackStateSeekingBackward
+    IGMediaPlayerPlaybackStateSeekingBackward,
+    IGMediaPlayerPlaybackStateDidReachEnd,
+    IGMediaPlayerPlaybackStateFailed
 } IGMediaPlayerPlaybackState;
 
 typedef void (^IGMediaPlayerPausedBlock)(Float64 currentTime);

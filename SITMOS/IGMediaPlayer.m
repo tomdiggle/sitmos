@@ -31,11 +31,16 @@
 static NSString * const IGMediaPlayerCurrentAssetKey = @"MediaPlayerCurrentAsset";
 
 /* Media Player Notifications */
-NSString * const IGMediaPlayerPlaybackStatusChangedNotification = @"IGMediaPlayerPlaybackStatusChangedNotification";
-NSString * const IGMediaPlayerPlaybackFailedNotification = @"IGMediaPlayerPlaybackFailedNotification";
-NSString * const IGMediaPlayerPlaybackEndedNotification = @"IGMediaPlayerPlaybackEndedNotification";
-NSString * const IGMediaPlayerPlaybackBufferEmptyNotification = @"IGMediaPlayerPlaybackBufferEmptyNotification";
-NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"IGMediaPlayerPlaybackLikelyToKeepUpNotification";
+NSString * const IGMediaPlayerPlaybackStateLoadingNotification = @"com.idlegeniussoftware.media-player.playback.state.loading";
+NSString * const IGMediaPlayerPlaybackStateBufferingNotification = @"com.idlegeniussoftware.media-player.playback.state.buffering";
+NSString * const IGMediaPlayerPlaybackStatePlayingNotification = @"com.idlegeniussoftware.media-player.playback.state.playing";
+NSString * const IGMediaPlayerPlaybackStatePausedNotification = @"com.idlegeniussoftware.media-player.playback.state.paused";
+NSString * const IGMediaPlayerPlaybackStateStoppedNotification = @"com.idlegeniussoftware.media-player.playback.state.stopped";
+NSString * const IGMediaPlayerPlaybackStateSeekingForwardNotification = @"com.idlegeniussoftware.media-player.playback.state.seeking-forward";
+NSString * const IGMediaPlayerPlaybackStateSeekingBackwardNotification = @"com.idlegeniussoftware.media-player.playback.state.seeking-backward";
+NSString * const IGMediaPlayerPlaybackStateDidReachEndNotification = @"com.idlegeniussoftware.media-player.playback.state.did-reach-end";
+NSString * const IGMediaPlayerPlaybackStateFailedNotification = @"com.idlegeniussoftware.media-player.playback.state.failed";
+NSString * const IGMediaPlayerPlaybackLikelyToKeepUpNotification = @"com.idlegeniussoftware.media-player.playback.likely-to-keep-up";
 
 /* Asset Keys */
 NSString * const kTracksKey = @"tracks";
@@ -180,18 +185,19 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     }
     else if (context == IGMediaPlayerPlaybackBufferEmptyObservationContext)
     {
-        [self postNotification:IGMediaPlayerPlaybackBufferEmptyNotification];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateBufferingNotification object:self userInfo:nil]];
+        });
     }
     else if (context == IGMediaPlayerPlaybackLikelyToKeepUpObservationContext)
     {
-        [self postNotification:IGMediaPlayerPlaybackLikelyToKeepUpNotification];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackLikelyToKeepUpNotification object:self userInfo:nil]];
+        });
     }
     else
     {
-        [super observeValueForKeyPath:keyPath
-                             ofObject:object
-                               change:change
-                              context:context];
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
@@ -201,15 +207,20 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 {
     NSParameterAssert(asset != nil);
     
-    [self setAsset:asset];
-    [self setPlaybackState:IGMediaPlayerPlaybackStateBuffering];
+    self.asset = asset;
     
-    _urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
+    [self setPlaybackState:IGMediaPlayerPlaybackStateLoading];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateLoadingNotification object:self userInfo:nil]];
+    });
+    
+    self.urlAsset = [AVURLAsset assetWithURL:asset.contentURL];
     
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
-    [_urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
+    [self.urlAsset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self prepareToPlayAsset:_urlAsset
+            [self prepareToPlayAsset:self.urlAsset
                             withKeys:requestedKeys];
         });
     }];
@@ -310,43 +321,66 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 - (void)play
 {
-    [_player setRate:_playbackRate];
     [self setPlaybackState:IGMediaPlayerPlaybackStatePlaying];
-    [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStatePlayingNotification object:self userInfo:nil]];
+    });
+    
+    [_player setRate:_playbackRate];
 }
 
 - (void)pause
 {
+    [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStatePausedNotification object:self userInfo:nil]];
+    });
+    
     [_player pause];
     if (_pausedBlock)
     {
         _pausedBlock([self currentTime]);
     }
-    [self setPlaybackState:IGMediaPlayerPlaybackStatePaused];
-    [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
 }
 
 - (void)stop
 {
+    [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateStoppedNotification object:self userInfo:nil]];
+    });
+    
     [_player pause];
     if (_stoppedBlock)
     {
         _stoppedBlock([self currentTime], NO);
     }
-    [self setPlaybackState:IGMediaPlayerPlaybackStateStopped];
-    [self postNotification:IGMediaPlayerPlaybackStatusChangedNotification];
+    
     [self cleanUp];
 }
 
 - (void)beginSeekingForward
 {
     [self setPlaybackState:IGMediaPlayerPlaybackStateSeekingForward];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateSeekingForwardNotification object:self userInfo:nil]];
+    });
+    
     [_player setRate:2.0f];
 }
 
 - (void)beginSeekingBackward
 {
     [self setPlaybackState:IGMediaPlayerPlaybackStateSeekingBackward];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateSeekingBackwardNotification object:self userInfo:nil]];
+    });
+    
     [_player setRate:-2.0f];
 }
 
@@ -385,17 +419,21 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     }
 }
 
-/**
- * Invoked when the playback has ended. Sets the episode progress back to 0, removes the now playing info and posts the notification IGMediaPlayerPlaybackEndedNotification.
- */
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
+    [self setPlaybackState:IGMediaPlayerPlaybackStateDidReachEnd];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateDidReachEndNotification object:self userInfo:nil]];
+    });
+    
     if (_stoppedBlock)
     {
         _stoppedBlock([self currentTime], YES);
     }
+    
     [self removeNowPlayingInfo];
-    [self postNotification:IGMediaPlayerPlaybackEndedNotification];
+
     [self cleanUp];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IGMediaPlayerCurrentAssetKey];
@@ -403,7 +441,12 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 
 - (void)playbackFailed
 {
-    [self postNotification:IGMediaPlayerPlaybackFailedNotification];
+    [self setPlaybackState:IGMediaPlayerPlaybackStateFailed];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateFailedNotification object:self userInfo:nil]];
+    });
+    
     [self cleanUp];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:IGMediaPlayerCurrentAssetKey];
@@ -419,15 +462,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 - (void)seekToTime:(Float64)time
 {
     [_player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
-}
-
-#pragma mark - Notifications
-
-- (void)postNotification:(NSString *)notificationName
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:notificationName object:self userInfo:nil]];
-    });
 }
 
 #pragma mark - MPNowPlayingInfoCenter
