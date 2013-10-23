@@ -423,13 +423,13 @@
 - (void)observeMediaPlayerNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:IGMediaPlayerPlaybackEndedNotification
+                                             selector:@selector(showNowPlayingButton)
+                                                 name:IGMediaPlayerPlaybackStateDidReachEndNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:IGMediaPlayerPlaybackFailedNotification
+                                             selector:@selector(showNowPlayingButton)
+                                                 name:IGMediaPlayerPlaybackStateFailedNotification
                                                object:nil];
 }
 
@@ -522,13 +522,6 @@
 - (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view
 {
     [self refreshPodcastFeed];
-}
-
-#pragma mark - Media Player Notification
-
-- (void)playbackStateChanged:(id)sender
-{
-    [self showNowPlayingButton];
 }
 
 @end
