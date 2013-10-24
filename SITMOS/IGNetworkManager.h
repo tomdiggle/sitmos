@@ -45,11 +45,16 @@ extern NSString * const IGPodcastFeedURL;
  */
 + (void)setDevelopmentModeEnabled:(BOOL)enabled;
 
-#pragma mark - Cellular Streaming
+#pragma mark - Network Reachability
 
 /**
- * @name Cellular Streaming
+ * @name Network Reachability
  */
+
+/**
+ * Returns YES if network (Internet) is reachable, NO otherwise.
+ */
++ (BOOL)isNetworkReachable;
 
 /**
  * Returns YES is on cellular network, NO otherwise.

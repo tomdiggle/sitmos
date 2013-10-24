@@ -66,7 +66,12 @@ static NSDictionary *deviceToken = nil;
     __developmentMode = enabled;
 }
 
-#pragma mark - Cellular Streaming
+#pragma mark - Network Reachability
+
++ (BOOL)isNetworkReachable
+{
+    return [AFNetworkReachabilityManager.sharedManager isReachable];
+}
 
 + (BOOL)isOnCellularNetwork
 {

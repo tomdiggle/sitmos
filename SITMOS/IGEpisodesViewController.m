@@ -341,14 +341,14 @@
     {
         IGEpisodeCell *cell = (IGEpisodeCell *)sender;
         IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"title" withValue:cell.title];
-        if ([episode isDownloading])
+        if ([episode isDownloading] || (![episode isDownloaded] && ![IGNetworkManager isNetworkReachable]))
         {
+            // Do not stream the episode if it is downloading or it is not downloaded and there is no Internet.
             [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForCell:cell]
                                           animated:YES];
             return NO;
         }
-        
-        if (![episode isDownloaded] && [IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataStreamingKey])
+        else if (![episode isDownloaded] && [IGNetworkManager isOnCellularNetwork] && ![[NSUserDefaults standardUserDefaults] boolForKey:IGAllowCellularDataStreamingKey])
         {
             RIButtonItem *cancelItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"No", nil)];
             cancelItem.action = ^{
