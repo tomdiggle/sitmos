@@ -65,6 +65,9 @@
 {
     [super viewDidLoad];
     
+    // This is needed because the IGEpisodeCell separator insert is 0. When there no cells in the table view (like on first run straight after install) this overrides the table views default.
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    
     self.fetchedResultsController = [IGEpisode MR_fetchAllSortedBy:@"pubDate"
                                                          ascending:NO
                                                      withPredicate:nil

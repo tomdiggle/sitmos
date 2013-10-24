@@ -39,7 +39,6 @@ static void * IGTaskReceivedDataContext = &IGTaskReceivedDataContext;
 @property (nonatomic, weak) IBOutlet UIButton *downloadButton;
 @property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic, strong) NSProgress *downloadProgress;
-@property (nonatomic, strong) NSLayoutConstraint *pubDateAndTimeLeftLayoutConstraint;
 
 @end
 
@@ -59,15 +58,6 @@ static void * IGTaskReceivedDataContext = &IGTaskReceivedDataContext;
 
 - (void)awakeFromNib
 {
-    self.pubDateAndTimeLeftLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.pubDateAndTimeLeftLabel
-                                                                           attribute:NSLayoutAttributeLeading
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.contentView
-                                                                           attribute:NSLayoutAttributeLeading
-                                                                          multiplier:1
-                                                                            constant:15];
-    [self addConstraint:self.pubDateAndTimeLeftLayoutConstraint];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(downloadTaskDidStart:)
                                                  name:AFNetworkingTaskDidStartNotification
@@ -165,21 +155,17 @@ static void * IGTaskReceivedDataContext = &IGTaskReceivedDataContext;
 
 - (void)setPlayedStatus:(IGEpisodePlayedStatus)playedStatus
 {
+    self.titleLabel.textColor = [self unplayedColor];
     if (playedStatus == IGEpisodePlayedStatusUnplayed)
     {
         [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-unplayed-icon"]];
-        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
-        self.titleLabel.textColor = [self unplayedColor];
     }
     else if (playedStatus == IGEpisodePlayedStatusHalfPlayed)
     {
         [self.playedStatusImageView setImage:[UIImage imageNamed:@"episode-half-played-icon"]];
-        [self.pubDateAndTimeLeftLayoutConstraint setConstant:28];
-        self.titleLabel.textColor = [self unplayedColor];
     }
     else
     {
-        [self.pubDateAndTimeLeftLayoutConstraint setConstant:15];
         [self.playedStatusImageView setImage:nil];
         self.titleLabel.textColor = [self playedColor];
     }
