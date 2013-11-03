@@ -303,12 +303,12 @@ static void * IGTaskReceivedDataContext = &IGTaskReceivedDataContext;
             }
             case NSURLSessionTaskStateCompleted:
             {
-                if (![object error])
-                {
-                    self.downloadStatus = IGEpisodeDownloadStatusDownloaded;
-                }
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    if (![object error])
+                    {
+                        self.downloadStatus = IGEpisodeDownloadStatusDownloaded;
+                    }
+                    
                     [self layoutForDownloadTaskNotRunning];
                 });
                 
