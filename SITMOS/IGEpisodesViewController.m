@@ -502,7 +502,7 @@
     IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
     [networkManager downloadEpisodeWithDownloadURL:downloadURL destinationURL:targetPath completion:^(BOOL success, NSError *error) {
         // Don't display an error notification when the user cancels the download (error code -999).
-        if ([error code] != -999)
+        if (error && [error code] != -999)
         {
             IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL" withValue:downloadURL];
             [TDNotificationPanel showNotificationInView:self.view
