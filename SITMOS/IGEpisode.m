@@ -150,10 +150,19 @@
 
 - (void)deleteDownloadedEpisode
 {
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] removeItemAtPath:[[self fileURL] path] error:&error])
+    NSURLSessionDownloadTask *task = [IGNetworkManager downloadTaskForURL:[NSURL URLWithString:self.downloadURL]];
+    if (task)
     {
-        NSLog(@"Failed to delete episode at %@, reason %@", [[self fileURL] path], [error localizedDescription]);
+        [task cancel];
+    }
+    
+    if ([self isDownloaded])
+    {
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] removeItemAtPath:[[self fileURL] path] error:&error])
+        {
+            NSLog(@"Failed to delete episode at %@, reason %@", [[self fileURL] path], [error localizedDescription]);
+        }
     }
 }
 

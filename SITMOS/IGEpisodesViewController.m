@@ -284,7 +284,7 @@
         
         RIButtonItem *deleteDownloadItem = nil;
         RIButtonItem *downloadItem = nil;
-        if ([episode isDownloaded])
+        if ([episode isDownloaded] || [episode isDownloading])
         {
             deleteDownloadItem = [RIButtonItem itemWithLabel:NSLocalizedString(@"DeleteDownload", nil)];
             deleteDownloadItem.action = ^{
@@ -501,7 +501,8 @@
 {
     IGNetworkManager *networkManager = [[IGNetworkManager alloc] init];
     [networkManager downloadEpisodeWithDownloadURL:downloadURL destinationURL:targetPath completion:^(BOOL success, NSError *error) {
-        if (error)
+        // Don't display an error notification when the user cancels the download (error code -999).
+        if ([error code] != -999)
         {
             IGEpisode *episode = [IGEpisode MR_findFirstByAttribute:@"downloadURL" withValue:downloadURL];
             [TDNotificationPanel showNotificationInView:self.view
