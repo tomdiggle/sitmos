@@ -327,7 +327,9 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStatePlayingNotification object:self userInfo:nil]];
     });
     
-    [_player setRate:_playbackRate];
+    [self.player setRate:self.playbackRate];
+    
+    [self updateNowPlayingInfoPlaybackRate:@(self.playbackRate)];
 }
 
 - (void)pause
@@ -338,11 +340,14 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStatePausedNotification object:self userInfo:nil]];
     });
     
-    [_player pause];
-    if (_pausedBlock)
+    [self.player pause];
+    
+    if (self.pausedBlock)
     {
-        _pausedBlock([self currentTime]);
+        self.pausedBlock([self currentTime]);
     }
+    
+    [self updateNowPlayingInfoPlaybackRate:@(0.0)];
 }
 
 - (void)stop
@@ -370,7 +375,9 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateSeekingForwardNotification object:self userInfo:nil]];
     });
     
-    [_player setRate:2.0f];
+    [self.player setRate:2.0f];
+    
+    [self updateNowPlayingInfoPlaybackRate:@(2.0f)];
 }
 
 - (void)beginSeekingBackward
@@ -381,7 +388,9 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:IGMediaPlayerPlaybackStateSeekingBackwardNotification object:self userInfo:nil]];
     });
     
-    [_player setRate:-2.0f];
+    [self.player setRate:-2.0f];
+    
+    [self updateNowPlayingInfoPlaybackRate:@(-2.0f)];
 }
 
 - (void)endSeeking
@@ -409,7 +418,6 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     if (_playbackRate != playbackRate)
     {
         _playbackRate = playbackRate;
-        
         if (![self isPaused])
         {
             // If the player rate is changed while playback is paused
@@ -462,6 +470,11 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 - (void)seekToTime:(Float64)time
 {
     [_player seekToTime:CMTimeMakeWithSeconds(time, NSEC_PER_SEC)];
+    
+    MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+    NSMutableDictionary *nowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:playingInfoCenter.nowPlayingInfo];
+    [nowPlayingInfo setObject:@(time) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
 }
 
 #pragma mark - MPNowPlayingInfoCenter
@@ -491,6 +504,18 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 {
     MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
     [playingInfoCenter setNowPlayingInfo:nil];
+}
+
+/**
+ *
+ */
+- (void)updateNowPlayingInfoPlaybackRate:(NSNumber *)playbackRate
+{
+    MPNowPlayingInfoCenter *playingInfoCenter = [MPNowPlayingInfoCenter defaultCenter];
+    NSMutableDictionary *nowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:playingInfoCenter.nowPlayingInfo];
+    [nowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
+    [nowPlayingInfo setObject:@(self.currentTime) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    [playingInfoCenter setNowPlayingInfo:nowPlayingInfo];
 }
 
 #pragma mark - Handle Interruptions
