@@ -507,7 +507,9 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
 }
 
 /**
+ * Keeps the MPNowPlayingInfoPropertyPlaybackRate and MPNowPlayingInfoPropertyElapsedPlaybackTime properties in sync when playback rate is changed.
  *
+ * @param playbackRate The new playback rate of the AVPlayer.
  */
 - (void)updateNowPlayingInfoPlaybackRate:(NSNumber *)playbackRate
 {
