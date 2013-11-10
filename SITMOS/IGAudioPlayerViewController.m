@@ -67,8 +67,6 @@ static void * IGMediaPlayerPlaybackStateContext = &IGMediaPlayerPlaybackStateCon
     
     self.mediaPlayer = [IGMediaPlayer sharedInstance];
     
-    [self.mediaPlayer addObserver:self forKeyPath:kPlaybackStateKey options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:IGMediaPlayerPlaybackStateContext];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -113,6 +111,8 @@ static void * IGMediaPlayerPlaybackStateContext = &IGMediaPlayerPlaybackStateCon
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.mediaPlayer addObserver:self forKeyPath:kPlaybackStateKey options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:IGMediaPlayerPlaybackStateContext];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"media-player-hide-button"]
                                                                              style:UIBarButtonItemStyleBordered
