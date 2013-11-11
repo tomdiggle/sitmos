@@ -932,11 +932,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="9Lm-pu-43E" firstAttribute="leading" secondItem="W0M-cq-mnr" secondAttribute="leading" id="3Fv-OW-ohn"/>
                             <constraint firstAttribute="bottom" secondItem="W0M-cq-mnr" secondAttribute="bottom" id="8Gy-DH-O4Q"/>
-                            <constraint firstItem="9Lm-pu-43E" firstAttribute="top" secondItem="mt2-tK-h77" secondAttribute="top" id="Rad-bm-LCy"/>
-                            <constraint firstItem="W0M-cq-mnr" firstAttribute="top" secondItem="9Lm-pu-43E" secondAttribute="bottom" constant="64" id="cxy-pq-kn4"/>
+                            <constraint firstItem="9Lm-pu-43E" firstAttribute="leading" secondItem="W0M-cq-mnr" secondAttribute="leading" id="F37-MV-NMC"/>
+                            <constraint firstItem="9Lm-pu-43E" firstAttribute="top" secondItem="mt2-tK-h77" secondAttribute="top" id="Q2G-ub-JQb"/>
                             <constraint firstItem="W0M-cq-mnr" firstAttribute="leading" secondItem="mt2-tK-h77" secondAttribute="leading" id="dsc-MX-Aw9"/>
+                            <constraint firstItem="W0M-cq-mnr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9Lm-pu-43E" secondAttribute="bottom" id="tkR-fS-yIP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cC5-Vk-3BU">
@@ -970,7 +970,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="audio-player-bg.png" width="320" height="329"/>
+        <image name="audio-player-bg.png" width="320" height="320"/>
         <image name="episode-downloaded-icon.png" width="21" height="22"/>
         <image name="episode-show-notes-button.png" width="22" height="22"/>
         <image name="media-player-hide-button.png" width="28" height="14"/>
