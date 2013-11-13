@@ -528,11 +528,8 @@ static void * IGMediaPlayerPlaybackLikelyToKeepUpObservationContext = &IGMediaPl
     NSUInteger interruptionType = [[userInfo objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
     if (interruptionType == AVAudioSessionInterruptionTypeBegan)
     {
-        if ([self isPlaying])
-        {
-			[self pause];
-            [self setPlaybackState:IGMediaPlayerPlaybackStatePausedByInterruption];
-		}
+        [self pause];
+        [self setPlaybackState:IGMediaPlayerPlaybackStatePausedByInterruption];
     }
     else if (interruptionType == AVAudioSessionInterruptionTypeEnded)
     {
