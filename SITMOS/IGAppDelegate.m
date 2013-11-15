@@ -109,7 +109,7 @@
 
 #pragma mark - Push Notifications
 
-- (void)registerForPushNotifications
+/*- (void)registerForPushNotifications
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:IGEnablePushNotificationsKey])
     {
@@ -134,7 +134,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)remoteNotification
 {
     NSLog(@"Remote Notifications received: %@", remoteNotification);
-}
+}*/
 
 #pragma mark - Background Fetching
 
