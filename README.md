@@ -1,7 +1,7 @@
 # SITMOS - Podcast App
 Stay up to date with each episode of [SITMOS](http://sitmos.net) (Stuck in the Middle of Somewhere) podcast on your iPhone or iPod Touch.
 
-**You can download SITMOS - Podcast App [free on the App Store](https://itunes.apple.com/gb/app/sitmos-podcast-app/id567269025?mt=8).**
+# Due to SITMOS ending this app has now been retired.
 
 ## About Stuck in the Middle of Somewhere
 Actor/Writer Joel F Gardiner and Comedian Derek Sweet discuss whatever is on their minds. While video games are often the focus of conversation, topics of discussion can be almost anything.
@@ -12,9 +12,6 @@ Run the following commands to get started:
     $ git clone --recursive https://github.com/tomdiggle/sitmos.git
     $ cd sitmos
     $ rake setup
-    
-## Want to Beta Test?
-If you are interested in helping test new versions of the app, all beta versions are shipped via TestFlight. You can sign up [here](http://tflig.ht/OSDHqC).
 
 ## Attribution
 SITMOS - Podcast App uses the following third party components &amp; libraries:
